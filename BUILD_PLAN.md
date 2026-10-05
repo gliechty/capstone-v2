@@ -45,7 +45,11 @@ Stop and show:
 - page structure;
 - assessment-entry flow;
 - major UX assumptions;
-- selected stack / implementation approach if not previously approved.
+- selected stack / implementation approach if not previously approved;
+- where future authentication, billing, document/evidence processing, knowledge-base ingestion, provider replacement, and deployment/environment configuration would attach without reconstructing the deterministic assessment core;
+- the selected cross-cutting architecture patterns (state, persistence, validation, API/error boundaries) that later milestones should follow unless a reviewed change is approved.
+
+Do not implement deferred commercial/stretch features merely to prove extensibility.
 
 Do not spend significant time on visual polish before Milestone 2 is proven.
 
@@ -83,7 +87,15 @@ Golden Cases must verify:
 - multiplier application matches;
 - category weights match;
 - category scores match;
-- final raw and weighted scores match at the defined canonical precision.
+- final raw and weighted scores match at the defined canonical precision;
+- intermediate calculation traces identify the first divergent stage when a v1/v2 result differs.
+
+Before approving Milestone 2, document the numeric policy:
+- preserve source/config precision;
+- do not round intermediate calculations unless the methodology explicitly requires it;
+- keep presentation rounding separate from calculation values;
+- define any comparison tolerances explicitly and justify them;
+- do not widen tolerances merely to make Golden Tests pass.
 
 Also verify:
 - answers do not silently disappear during navigation or focus changes;
@@ -374,6 +386,37 @@ Do not:
 Show exactly what the source data supports before deciding how it appears in the product.
 
 ---
+
+# Cross-cutting portability and security requirements
+
+## Deployment portability
+
+The v2 research application must be deployable from a clean clone onto a fresh compatible host without changing application business logic.
+
+Requirements:
+- no Hetzner-specific business logic or hard-coded hostnames in the application core;
+- secrets and provider credentials supplied externally through environment/secret configuration;
+- changing OpenAI/Google/other provider credentials must not require source-code edits;
+- database/schema initialization and migrations must be reproducible;
+- required host/runtime assumptions must be documented;
+- deployment configuration should be version-controlled where practical, with secret values excluded;
+- provider-specific integrations should sit behind replaceable adapters/interfaces.
+
+The exact deployment mechanism is not prescribed here; the implementation may propose Docker, containers, platform deployment, or another reproducible approach.
+
+## Security gate
+
+Before exposing a capability publicly, verify appropriate controls for its attack surface, including:
+- server-side input/schema validation;
+- parameterized/safe database access;
+- authorization for privileged/admin actions when applicable;
+- secrets excluded from source/client bundles/logs;
+- dependency and secret scanning where tooling is available;
+- least-privilege credentials;
+- file-type/size/content validation for upload features when present;
+- non-sensitive production error handling.
+
+Do not expose maintenance/admin functionality publicly merely because user accounts/authentication are deferred.
 
 # Cross-cutting reliability requirements
 
