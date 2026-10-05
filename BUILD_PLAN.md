@@ -32,19 +32,23 @@ Create the two-surface product shell and a usable entry into the assessment with
 - clear CTA such as **Take the Assessment**.
 
 ### Assessment entry
-- launch assessment flow;
+- launch the dedicated full-page assessment flow;
 - collect SME metadata/context;
 - preserve session state;
-- route into the assessment experience.
+- let the user choose the approved quantitative-data input method;
+- route into the vertical single-focus questionnaire experience;
+- preserve skip/revisit behavior and visible unanswered-question state.
 
-The exact interaction pattern (modal, stepper, drawer, full-screen flow, etc.) is not fixed and may be proposed by the build system.
+The detailed interaction and visual rules are defined in `BUILD_PACK/01_PRODUCT_SPEC/UI_BRAND_GUIDE.md`. Agents may improve implementation details, but should not silently replace the defined full-page questionnaire interaction model with a modal, long static form, or materially different flow.
 
 ## Review gate
 
 Stop and show:
 - page structure;
 - assessment-entry flow;
-- major UX assumptions;
+- conformance with `UI_BRAND_GUIDE.md`, including landing, assessment setup, representative question card, progress navigation, category transition, and results shell;
+- selected fonts/design tokens/motion treatment and reduced-motion behavior;
+- major UX assumptions or proposed deviations;
 - selected stack / implementation approach if not previously approved;
 - where future authentication, billing, document/evidence processing, knowledge-base ingestion, provider replacement, and deployment/environment configuration would attach without reconstructing the deterministic assessment core;
 - the selected cross-cutting architecture patterns (state, persistence, validation, API/error boundaries) that later milestones should follow unless a reviewed change is approved.
