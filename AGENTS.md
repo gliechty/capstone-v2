@@ -159,6 +159,22 @@ Prefer designs that:
 
 Do not overengineer hypothetical scale. Avoid obvious designs that require rebuilding the core product to grow.
 
+### Architecture extensibility and consistency
+
+Before the initial application architecture/scaffold is approved, explicitly show where future capabilities could attach without reconstructing the deterministic assessment core. At minimum, identify credible extension seams for:
+
+- authentication / user accounts and authorization;
+- billing / subscriptions;
+- document/evidence processing such as utility-bill extraction;
+- knowledge-base/source ingestion;
+- model/provider replacement;
+- storage/database adapters;
+- deployment/environment configuration.
+
+Do **not** implement those future features merely to demonstrate extensibility.
+
+After the architecture/scaffold is approved, treat the selected core patterns as the working architecture. Do not gradually introduce competing approaches to state management, persistence, validation, API boundaries, error handling, or other cross-cutting concerns without a documented reason. Material architectural deviation requires a brief proposal/ADR and human review.
+
 ---
 
 # 6. Verification rules
@@ -172,6 +188,38 @@ Before claiming work is complete:
 - test failure/error paths for the changed capability;
 - verify no secrets were committed;
 - verify no temporary/mock values are being mistaken for production behavior.
+
+For any capability that will be reachable from the public internet, also perform an appropriate security gate before calling it deployable:
+
+- validate untrusted input server-side against explicit schemas;
+- use parameterized database access / safe ORM patterns rather than string-built queries;
+- enforce authorization at privileged/admin boundaries when such boundaries exist;
+- keep secrets out of source, prompts, logs, client bundles, and committed config;
+- run available secret/dependency/security scans;
+- use least-privilege credentials and service permissions;
+- restrict and validate uploaded files when file upload exists;
+- avoid exposing stack traces, credentials, or sensitive internals in production errors.
+
+If accounts/authentication are not yet in approved scope, do not compensate by exposing privileged maintenance/admin actions publicly.
+
+### Deterministic calculation trace and numeric policy
+
+For every scored question, the implementation must be able to produce a structured calculation trace sufficient to diagnose where a v1/v2 difference first appears. The trace should include, where applicable:
+
+- question ID and raw answer;
+- normalization method and relevant inputs;
+- normalized score;
+- resolved benchmark and benchmark ID/source;
+- base weight;
+- matched multiplier rule IDs and resulting multiplier;
+- category and category weight;
+- weighted contribution;
+- category/overall contribution;
+- configuration/method version.
+
+Do not use display-rounded values as inputs to later calculations.
+
+Before Milestone 2 scoring implementation is treated as complete, document the numeric representation and comparison policy. Preserve source/config precision, avoid intermediate rounding unless the methodology explicitly requires it, keep presentation rounding separate, and use explicit test tolerances only where justified. Never widen a tolerance ad hoc merely to make a Golden Test pass.
 
 Golden Tests are regression guards, not the objective function.
 
