@@ -1,0 +1,208 @@
+{
+  "name": "capstone-ai-final",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const sme = $('Normalize SME Profile From Body').first().json;\nconst rows = $input.all().map(item => item.json);\n\nconst activeRows = rows.filter(r => {\n  const val = String(r.active ?? \"\").toLowerCase().trim();\n  return val === \"true\" || val === \"yes\" || val === \"1\" || val === \"active\";\n});\n\nfunction normalize(value) {\n  return String(value ?? \"\")\n    .toLowerCase()\n    .trim()\n    .replace(/\\s+/g, \" \");\n}\n\nfunction splitTags(value) {\n  if (!value) return [];\n  return String(value)\n    .split(/[;,]/)\n    .map(v => v.trim())\n    .filter(Boolean);\n}\n\nfunction alias(value) {\n  const v = normalize(value);\n\n  const map = {\n    \"any\": \"any\",\n    \"all\": \"any\",\n    \"all smes\": \"any\",\n    \"universal\": \"any\",\n    \"always\": \"any\",\n\n    \"northamerica\": \"north america\",\n    \"north america\": \"north america\",\n    \"latam\": \"latam\",\n    \"eastern europe\": \"eastern europe\",\n    \"middle east\": \"middle east\",\n    \"south asia\": \"south asia\",\n    \"uk\": \"uk\",\n    \"eu\": \"eu\",\n    \"apac\": \"apac\",\n    \"oceania\": \"oceania\",\n    \"africa\": \"africa\",\n\n    \"manufacturing\": \"manufacturing (industrial / components)\",\n    \"manufacturing (industrial / components)\": \"manufacturing (industrial / components)\",\n    \"food & agro-processing\": \"food & agro-processing\",\n    \"food and agro-processing\": \"food & agro-processing\",\n    \"consumer goods\": \"consumer goods (apparel / fmcg)\",\n    \"consumer goods (apparel / fmcg)\": \"consumer goods (apparel / fmcg)\",\n    \"construction / materials\": \"construction / materials\",\n    \"construction and materials\": \"construction / materials\",\n    \"business / export services\": \"business / export services\",\n    \"business and export services\": \"business / export services\"\n  };\n\n  return map[v] || v;\n}\n\nfunction splitMulti(value) {\n  if (!value) return [];\n  if (Array.isArray(value)) {\n    return value.map(v => alias(v)).filter(Boolean);\n  }\n  return String(value)\n    .split(/[;,]/)\n    .map(v => alias(v))\n    .filter(Boolean);\n}\n\nfunction employeeBandRank(value) {\n  const canonical = String(value ?? \"\")\n    .toLowerCase()\n    .replace(/[–—]/g, \"-\")\n    .replace(/\\s*-\\s*/g, \"-\")\n    .replace(/,/g, \"\")\n    .replace(/\\s+/g, \" \")\n    .trim();\n\n  const ranks = {\n    \"1-10\": 1,\n    \"11-50\": 2,\n    \"51-250\": 3,\n    \"251-500\": 4,\n    \"501-1000\": 5,\n    \"1001+\": 6\n  };\n\n  return ranks[canonical] || null;\n}\n\nfunction matchesSize(row, sme) {\n  const size = normalize(row.size_applicability || row.size_relevance || \"all\");\n  const rank = employeeBandRank(sme.employee_band);\n\n  if (!size || size === \"all\" || size === \"all smes\") return true;\n\n  if (size === \"medium_plus\") {\n    if (!rank) return false;\n    return rank >= 3;\n  }\n\n  if (size === \"large\") {\n    if (!rank) return false;\n    return rank >= 5;\n  }\n\n  return true;\n}\n\nfunction matchesNewTriggers(row, sme) {\n  const industryTrigger = alias(row.industry_trigger || \"ANY\");\n  const marketTrigger = alias(row.market_trigger || \"ANY\");\n\n  const smeIndustry = alias(sme.industry);\n  const smeMarkets = [\n  ...splitMulti(sme.target_market_region),\n  alias(sme.company_location)\n].filter(Boolean);\n\n  const triggerIndustries = industryTrigger\n    ? String(industryTrigger).split(/[;,]/).map(v => alias(v)).filter(Boolean)\n    : ['any'];\n  const industryOk =\n    triggerIndustries.includes('any') ||\n    triggerIndustries.includes(smeIndustry);\n\n  const triggerMarkets = marketTrigger\n    ? String(marketTrigger).split(/[;,]/).map(v => alias(v)).filter(Boolean)\n    : ['any'];\n  const marketOk =\n    triggerMarkets.includes('any') ||\n    triggerMarkets.some(t => smeMarkets.includes(t));\n\n  return industryOk && marketOk && matchesSize(row, sme);\n}\n\nconst selected = activeRows\n  .filter(row => matchesNewTriggers(row, sme))\n  .map(row => ({\n    question_id: row.question_id,\n    question_text: row.question_text,\n    question_type: row.question_type,\n    trigger_value: row.trigger_value,\n    industry_trigger: row.industry_trigger,\n    market_trigger: row.market_trigger,\n    framework_source: row.framework_source,\n    base_weight: row.base_weight,\n    priority: row.priority,\n    active: row.active,\n    tags: splitTags(row.tags),\n    answer_scale_id: row.answer_scale_id,\n    response_type: row.response_type,\n    metric_id: row.metric_id,\n    category: row.category,\n    subcategory: row.subcategory,\n    rationale: row.rationale,\n    cluster_id: row.cluster_id,\n    size_applicability: row.size_applicability,\n    cluster_progression_level: row.cluster_progression_level\n  }));\n\nselected.sort((a, b) => {\n  const pa = Number(a.priority ?? 999999);\n  const pb = Number(b.priority ?? 999999);\n  return pa - pb;\n});\n\nreturn [\n  {\n    json: {\n      debug_sme_seen_by_select: sme,\n      debug_employee_band_raw: sme.employee_band,\n      debug_employee_band_rank: employeeBandRank(sme.employee_band),\n      debug_size_counts: {\n        all: selected.filter(q => normalize(q.size_applicability || \"all\") === \"all\").length,\n        medium_plus: selected.filter(q => normalize(q.size_applicability) === \"medium_plus\").length,\n        large: selected.filter(q => normalize(q.size_applicability) === \"large\").length\n      },\n      question_count: selected.length,\n      selected_questions: selected\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -128
+      ],
+      "id": "80d6b9ae-a034-46d9-a1fb-98e97dd16284",
+      "name": "Select Questions"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VWmhMXpAykkaKUiwrNBfUraXxD4d-d4zF818LMk5d10",
+          "mode": "list",
+          "cachedResultName": "QuestionBank_Config",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VWmhMXpAykkaKUiwrNBfUraXxD4d-d4zF818LMk5d10/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Test_Questions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VWmhMXpAykkaKUiwrNBfUraXxD4d-d4zF818LMk5d10/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        -128
+      ],
+      "id": "ff33fce4-8b4d-434a-9b4a-900bed604410",
+      "name": "Read QuestionBank",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qTrolie0MUmJ8jje",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ecbc180f-9206-49cd-827e-e438f63a61f6",
+              "name": "company_name",
+              "value": "={{ $json.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "32903a59-06ed-4aba-b0d7-579eca9bd3ed",
+              "name": "test_id",
+              "value": "={{ $json.test_id }}",
+              "type": "string"
+            },
+            {
+              "id": "1a80fca9-dac9-4207-9cc1-57ae8ef39a71",
+              "name": "question_count",
+              "value": "={{ $json.question_count }}",
+              "type": "number"
+            },
+            {
+              "id": "685d6583-cc43-4700-a058-f7f98774d00d",
+              "name": "questions",
+              "value": "={{ $json.selected_questions }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        -128
+      ],
+      "id": "584a3009-5689-429d-8da5-d0dce58fff66",
+      "name": "Format Question Output"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "final-preview-questions",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        -128
+      ],
+      "id": "259b61b5-60ca-4333-ab7f-9870e2e0f094",
+      "name": "Preview Questions API",
+      "webhookId": "af5fedbc-c9a6-45c4-9415-b551acfc2ba6"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1040,
+        -128
+      ],
+      "id": "fca1c9ad-1bee-489e-b29f-3727133ae17e",
+      "name": "Return Preview Questions"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\nlet body = input.body || {};\nif (typeof body === \"string\") {\n  body = JSON.parse(body);\n}\n\nconst sme = body.sme_context || {};\n\nreturn [{\n  json: {\n    test_id: null,\n    company_name: sme.company_name ?? null,\n    industry: sme.industry ?? null,\n    subindustry: sme.subindustry ?? null,\n    employee_band: sme.employee_band ?? null,\n    revenue_band: sme.revenue_band ?? null,\n    company_location: sme.company_location ?? null,\n    country: sme.country ?? null,\n    target_market_region: Array.isArray(sme.target_market_region)\n      ? sme.target_market_region\n      : sme.target_market_region\n        ? [sme.target_market_region]\n        : [],\n    target_buyer: sme.target_buyer ?? null,\n    business_goal: sme.business_goal ?? null,\n    notes: sme.notes ?? null\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        -128
+      ],
+      "id": "678e2b90-aa78-4f1b-9aed-f1174e5f32f2",
+      "name": "Normalize SME Profile From Body"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Read QuestionBank": {
+      "main": [
+        [
+          {
+            "node": "Select Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Questions": {
+      "main": [
+        [
+          {
+            "node": "Format Question Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preview Questions API": {
+      "main": [
+        [
+          {
+            "node": "Normalize SME Profile From Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Question Output": {
+      "main": [
+        [
+          {
+            "node": "Return Preview Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize SME Profile From Body": {
+      "main": [
+        [
+          {
+            "node": "Read QuestionBank",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "21e1acd0-e197-40ef-a17d-65f0579137fd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d00e76836cea65e4ed9329baded2ae6bf1ec80c37e0faf713e80de1529f3ea5"
+  },
+  "id": "EQOsymtYUIrg1vrA",
+  "tags": []
+}

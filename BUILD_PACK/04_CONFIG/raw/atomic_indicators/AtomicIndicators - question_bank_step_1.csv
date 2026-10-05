@@ -1,0 +1,150 @@
+question_id,question_text,question_type,trigger_value,category,subcategory,cluster_id,base_weight
+U-001,Does your company have a written environmental policy that applies to your own operations?,universal,Universal,Governance,policy,G-POLICY,3.86
+U-002,Does your environmental policy also cover your relationships with suppliers and upstream activities?,universal,Universal,Governance,policy_scope,G-POLICY,3.86
+U-003,Does your environmental policy address how your products or services affect customers or distributors?,universal,Universal,Governance,policy_scope,G-POLICY,3.86
+U-004,Has your company set a target to reduce its greenhouse gas emissions?,universal,Universal,Governance,strategy,G-STRAT,3.79
+U-005,Does your company have a plan to transition its business model toward a low-carbon or more sustainable future?,universal,Universal,Governance,strategy,G-STRAT,3.79
+U-006,"Does your company engage with your suppliers on environmental issues (e.g. energy, waste, or emissions)?",universal,Universal,Governance,supplier_engagement,G-SUP-MGMT,3.97
+U-007,Does your company consider environmental criteria when selecting or evaluating suppliers?,universal,Universal,Governance,procurement,G-SUP-MGMT,3.97
+U-008,Does your company use due diligence to identify negative sustainability impacts in your supply chain or operations?,universal,Universal,Governance,due_diligence,G-SUP-DD,4
+U-009,Does your company have a formal grievance or whistleblower mechanism that employees or stakeholders can use to report concerns?,universal,Universal,Governance,ethics_compliance,G-ETHICS,3.54
+U-010,Does your company have a code of conduct or social responsibility standards that you expect your suppliers to follow?,universal,Universal,Governance,supplier_management,G-ETHICS,3.54
+U-011,Has your company made a commitment to fight corruption and bribery in all your business activities?,universal,Universal,Governance,anti_corruption,G-ETHICS,3.54
+U-012,Do you collect and review data on the quality of your sustainability-related information (e.g. checking accuracy of environmental data)?,universal,Universal,Governance,quality_management,G-DATA-MGMT,4.01
+U-013,"Do you maintain documentation or records of how your environmental data (e.g. emissions, energy) is compiled and checked?",universal,Universal,Governance,documentation,G-DATA-MGMT,4.01
+U-014,Has your company formally committed to respecting internationally recognised human rights (e.g. ILO principles)?,universal,Universal,People,human_rights,P-LAB-RIGHTS,3.75
+U-015,Does your company have a policy that covers labour rights and fair working conditions for all employees?,universal,Universal,People,labor_rights,P-LAB-RIGHTS,3.75
+U-016,Does your company have a grievance mechanism that employees can use to raise workplace complaints or concerns?,universal,Universal,People,grievance_mechanism,P-GRIEV,3.9
+U-017,Have you identified which of your suppliers face significant actual or potential negative environmental impacts?,universal,Universal,Resources,environmental_impact,R-ENV-MGMT,3.92
+U-018,Does your company track its total energy consumption?,universal,Universal,Resources,energy_management,R-EN-CONSUMPTION,3.57
+U-019,Does your company track the total amount of waste it generates?,universal,Universal,Resources,waste_management,R-WST-GEN,4.08
+U-020,"Does your company track how much of its waste is diverted from landfill (e.g. recycled, reused, or composted)?",universal,Universal,Resources,waste_management,R-WST-GEN,4.08
+U-021,Does your company measure or estimate its direct greenhouse gas emissions (Scope 1)?,universal,Universal,Resources,emissions,R-EM-GHG-INV,4.02
+U-022,Does your company measure or estimate greenhouse gas emissions from purchased energy (Scope 2)?,universal,Universal,Resources,emissions,R-EM-GHG-INV,4.02
+U-023,"Does your company use any renewable energy sources (e.g. solar, wind, green electricity tariff)?",universal,Universal,Resources,energy_management,R-EN-RENEWABLE,3.88
+U-024,Does your company track the total volume of water it uses or withdraws?,universal,Universal,Resources,water_management,R-WAT-WITHDRAW,3.61
+U-025,"Has your company assessed which climate-related risks (e.g. extreme weather, rising costs) could affect your business?",universal,Universal,Resources,climate_risk,R-EM-CLIM-RISK,3.93
+U-026,Does your company have a plan to reduce the use of non-renewable or hazardous materials in your products or processes?,universal,Universal,Resources,resource_efficiency,R-RES-EFF,4
+U-027,Does your company support women-owned businesses or promote inclusive procurement in your supplier relationships?,universal,Universal,Community,inclusive_procurement,C-INC-PROC,4
+U-028,"Does your company publish a sustainability or ESG report (even informally, such as a summary for clients or stakeholders)?",universal,Universal,Governance,transparency,G-REPORT,4.26
+U-029,"Has your company set specific, measurable sustainability targets and do you track progress against them?",universal,Universal,Governance,strategy,G-STRAT,3.93
+U-030,Does your company track or report on the total amount of hazardous waste it generates?,universal,Universal,Resources,waste_management,R-WST-GEN,4.08
+I-001,"Does your company report its direct (Scope 1) greenhouse gas emissions, including emissions from agricultural activities?",industry,Food & Agro-processing,Resources,emissions,R-EM-GHG-INV,4.02
+I-002,Does your company report indirect greenhouse gas emissions from purchased energy used in food production or processing?,industry,Food & Agro-processing,Resources,emissions,R-EM-GHG-INV,4.02
+I-003,Does your company track or report CO2 emissions from land-use change linked to your agricultural inputs?,industry,Food & Agro-processing,Resources,emissions,R-EM-GHG-INV,4.02
+I-004,Does your company have a soil management plan for your farming or agricultural operations?,industry,Food & Agro-processing,Resources,soil_health,R-SOIL,3.99
+I-005,Has your company identified the main threats to soil health in your agricultural activities?,industry,Food & Agro-processing,Resources,soil_health,R-SOIL,3.99
+I-006,"Does your company use land management practices (e.g. conservation tillage, cover crops) to improve soil carbon or reduce emissions?",industry,Food & Agro-processing,Resources,land_management,R-LAND-USE,3.96
+I-007,Does your company track the land area used or affected by your agricultural or forestry operations?,industry,Food & Agro-processing,Resources,land_management,R-LAND-USE,3.96
+I-008,Do your farming or aquaculture operations follow a biodiversity or ecosystem management approach (e.g. preventing escapes of farmed species)?,industry,Food & Agro-processing,Resources,biodiversity,R-BIO,3.78
+I-009,Does your company comply with all applicable animal welfare laws and regulations?,industry,Food & Agro-processing,Resources,biodiversity,R-BIO,3.78
+I-010,Does your company have animal welfare standards certified by a third party?,industry,Food & Agro-processing,Governance,animal_welfare,R-ANIM,3.99
+I-011,Does your company track the survival or health rate of farmed animals or aquatic species in your operations?,industry,Food & Agro-processing,Governance,animal_welfare,R-ANIM,3.99
+I-012,Does your company report what percentage of its products contain genetically modified organisms (GMOs)?,industry,Food & Agro-processing,Resources,gmo_management,R-AGRI,3.67
+I-013,"Does your company report the total value or volume of its biological assets (e.g. crops, livestock, fish stocks)?",industry,Food & Agro-processing,Resources,agriculture,R-AGRI,4.03
+I-014,Has your company identified and addressed any nutritional or health concerns related to your products?,industry,Food & Agro-processing,Community,product_impact,C-PROD-IMPACT,3.73
+I-015,Does your company report the share of revenue from products marketed for their health or nutritional benefits?,industry,Food & Agro-processing,Community,product_impact,C-PROD-IMPACT,3.73
+I-016,Does your company use cover crops or other carbon-sequestration practices on your agricultural land?,industry,Food & Agro-processing,Resources,land_management,R-EM-REMOVALS,3.97
+I-017,Has your company set specific greenhouse gas reduction targets for your food processing or agricultural products?,industry,Consumer Goods (Apparel / FMCG),Resources,targets,R-EM-TARGETS,3.49
+I-018,Does your company use a Restricted Substance List (RSL) to manage chemicals in your products or manufacturing processes?,industry,Consumer Goods (Apparel / FMCG),Resources,chemicals_management,R-CHEM-MGMT,3.98
+I-019,Do you conduct laboratory testing on finished products to check for restricted or harmful substances?,industry,Consumer Goods (Apparel / FMCG),Resources,product_safety,R-CHEM-MGMT,3.98
+I-020,Does your company collect primary (directly measured) data for all processes under its ownership or control for GHG reporting?,industry,Consumer Goods (Apparel / FMCG),Governance,data_collection,G-DATA-MGMT,3.87
+I-021,Does your company assess the quality of the activity data and emissions factors it uses for GHG reporting?,industry,Consumer Goods (Apparel / FMCG),Governance,data_quality,G-DATA-MGMT,3.87
+I-022,Does your company track its total energy consumption (in gigajoules or equivalent) from all sources?,industry,Manufacturing (Industrial / Components),Resources,energy,R-EN-CONSUMPTION,3.57
+I-023,Does your company report what percentage of its energy comes from renewable sources?,industry,Manufacturing (Industrial / Components),Resources,energy,R-EN-CONSUMPTION,3.57
+I-024,"Does your company track and report total water withdrawal by source (e.g. municipal, groundwater)?",industry,Manufacturing (Industrial / Components),Resources,water_management,R-WAT-WITHDRAW,3.58
+I-025,Does your company report air quality emissions such as nitrogen oxides (NOx) or particulate matter from your operations?,industry,Manufacturing (Industrial / Components),Resources,air_quality,R-EM-AIR-POLL,3.97
+I-026,Does your company report the percentage of raw materials sourced from renewable resources?,industry,Manufacturing (Industrial / Components),Resources,materials,R-MAT-USE,3.69
+I-027,Does your company track and report the total weight of wood-fibre raw materials it procures and the share from certified sources?,industry,Manufacturing (Industrial / Components),Resources,sustainable_sourcing,R-MAT-USE,3.69
+I-028,Does your company generate revenue from remanufactured products or remanufacturing services?,industry,Manufacturing (Industrial / Components),Resources,circular_economy,R-WST-CIRC,4
+I-029,Does your company have programmes to collect end-of-life products for remanufacturing or recycling?,industry,Manufacturing (Industrial / Components),Resources,circular_economy,R-WST-CIRC,4
+I-030,Does your company track the number of process safety incidents or transport incidents in your operations?,industry,Manufacturing (Industrial / Components),Governance,operational_safety,R-INCIDENTS,3.26
+I-031,Does your company report revenue generated from products specifically designed to reduce resource use during their use phase?,industry,Manufacturing (Industrial / Components),Resources,product_design,R-RES-EFF,3.25
+I-032,Does your company source biomass renewable energy from materials certified to third-party sustainability standards?,industry,Manufacturing (Industrial / Components),Resources,materials,R-EN-RENEWABLE,3.76
+I-033,Do any of your manufactured products include NOx or particulate matter emission performance data (e.g. for diesel engines)?,industry,Manufacturing (Industrial / Components),Resources,product_sustainability,R-EM-AIR-POLL,3.97
+I-034,Does your company perform stakeholder engagement as part of project planning or site selection due diligence?,industry,Construction / Materials,Community,stakeholder_engagement,C-COMMUNITY,3.54
+I-035,"Does your company assess the adequacy of existing public infrastructure (electricity, water, wastewater) when selecting sites?",industry,Construction / Materials,Community,urban_planning,C-COMMUNITY,3.54
+I-036,Does your company use environmentally focused design principles (e.g. green building standards) when designing products or structures?,industry,Construction / Materials,Resources,lifecycle_impact,G-PROD-SUSTAIN,4
+I-037,Has your company conducted Life Cycle Assessments (LCAs) for any of your products or construction materials?,industry,Construction / Materials,Resources,lifecycle_impact,G-PROD-SUSTAIN,4
+I-038,Does your company provide Environmental Product Declarations (EPDs) for any of your products?,industry,Construction / Materials,Governance,lifecycle_impact,G-PROD-SUSTAIN,4
+I-039,Does your company track the total weight of wood-fibre materials it purchases and the share from certified forestlands?,industry,Construction / Materials,Resources,wood_supply_chain,R-FOREST,4.01
+I-040,Does your company have a formal process for integrating environmental considerations into site selection and site design?,industry,Construction / Materials,Resources,environmental_management,R-ENV-MGMT,3.59
+I-041,Does your company track the number of environmental permit non-compliance incidents in your operations?,industry,Construction / Materials,Resources,environmental_compliance,R-ENV-MGMT,3.59
+I-042,Does your company report its backlog for renewable energy or green building projects?,industry,Construction / Materials,Resources,business_mix,R-EN-RENEWABLE,3.88
+I-043,Has your company identified how many of your construction sites or controlled lots are located in flood-risk zones?,industry,Construction / Materials,Governance,climate_risk,R-EM-CLIM-RISK,3.93
+I-044,Has your company carried out a climate change risk exposure analysis for your operations or project pipeline?,industry,Construction / Materials,Governance,climate_risk,R-EM-CLIM-RISK,3.93
+I-045,Do you have a strategy for managing physical and financial risks from climate change across your construction projects?,industry,Construction / Materials,Governance,climate_risk,R-EM-CLIM-RISK,3.93
+I-046,Does your company provide employees with training on environmental regulations and clean-up procedures relevant to construction?,industry,Construction / Materials,People,training,P-LAB-TRAIN,3.31
+I-047,"Does your company have policies on how it collects, uses, and protects customer data and privacy?",industry,Business / Export Services,Governance,data_privacy,G-DATA-PRIV,3.64
+I-048,Does your company have an approach to identifying and managing information security vulnerabilities?,industry,Business / Export Services,Governance,data_security,G-DATA-SEC,3.82
+I-049,Do you provide employee training on data security and cyber risks?,industry,Business / Export Services,Governance,data_security,G-DATA-SEC,3.82
+I-050,Does your company have policies relating to targeted advertising and how customer data is used for marketing?,industry,Business / Export Services,Governance,data_privacy,G-ADVERTISING,3.95
+I-051,Does your company track monetary losses from legal proceedings related to false or deceptive advertising?,industry,Business / Export Services,Governance,advertising_integrity,G-ADVERTISING,3.95
+I-052,Does your company conduct regular employee engagement surveys?,industry,Business / Export Services,People,employee_engagement,P-LAB-ENGAGE,4
+I-053,Does your company track and report on gender representation at all levels of management and among all employees?,industry,Business / Export Services,People,diversity_inclusion,P-DEI,3.4
+I-054,Does your company report the percentage of gender representation at the executive and non-executive management levels?,industry,Business / Export Services,People,diversity_inclusion,P-DEI,3.4
+I-055,Does your company implement input stream management to control the chemical recipes or reagents used in your manufacturing processes?,industry,Consumer Goods (Apparel / FMCG),Resources,chemicals_management,R-CHEM-MGMT,3.98
+I-056,Does your company perform source-category-specific investigations to verify the quality of your GHG inventory data?,industry,Food & Agro-processing,Governance,quality_management,G-DATA-MGMT,4.01
+I-057,Does your company track water withdrawal volumes for your manufacturing or production facilities?,industry,Consumer Goods (Apparel / FMCG),Resources,water_management,R-WAT-WITHDRAW,3.58
+I-058,Does your company report major non-conformance rates from food safety audits (e.g. GFSI-recognised audits)?,industry,Food & Agro-processing,Governance,food_safety,G-ASSURE,3.54
+I-059,Does your company report the percentage of your revenue that comes from products carrying safety and responsible usage information?,industry,Food & Agro-processing,Governance,consumer_protection,C-PROD-IMPACT,4.05
+I-060,Does your company track its total energy consumption across food production and processing operations?,industry,Food & Agro-processing,Resources,energy,R-EN-CONSUMPTION,3.57
+I-061,Does your company have a formal Occupational Health and Safety Management System (OHSMS) covering your worksites?,industry,Construction / Materials,People,health_safety,P-HS-OHS,3.5
+I-062,Does your company perform hazard identification and risk assessments for all construction or operational processes?,industry,Construction / Materials,People,health_safety,P-HS-OHS,3.5
+I-063,Does your company track the total weight of waste generated and the proportion diverted from disposal (e.g. recycled or recovered)?,industry,Manufacturing (Industrial / Components),Resources,waste_management,R-WST-CIRC,4
+I-064,Has your company set product-related GHG reduction targets for your apparel or consumer goods range?,industry,Consumer Goods (Apparel / FMCG),Resources,targets,R-EM-TARGETS,3.49
+I-065,"Does your company track diversity and inclusion metrics (e.g. gender, ethnicity) for your workforce in the construction sector?",industry,Construction / Materials,People,diversity_inclusion,P-DEI,3.4
+M-001,Does your company have a plan to ensure its business model is compatible with the transition to a 1.5°C climate pathway?,market,EU,Resources,climate_transition,R-EM-TRANSITION,3.95
+M-002,Has your company explained why climate change is or is not considered a material topic for your business?,market,EU,Resources,climate_change,R-EM-TRANSITION,3.95
+M-003,Does your company have an anti-corruption and anti-bribery policy?,market,EU,Governance,business_ethics,G-ETHICS,3.64
+M-004,Does your company maintain a whistleblower protection policy?,market,EU,Governance,business_ethics,G-ETHICS,3.64
+M-005,Do any members of your board or senior leadership have sustainability-linked incentives in their compensation?,market,EU,Governance,compensation,G-ETHICS,3.64
+M-006,Does your company track the proportion of workers covered by collective bargaining agreements?,market,EU,People,labor_relations,P-LAB-RIGHTS,3.77
+M-007,Has your company identified child labour or forced labour risks in your value chain?,market,EU,People,human_rights,P-LAB-RIGHTS,3.77
+M-008,Are your Scope 1 and Scope 2 emissions verified by an independent third party at a reasonable assurance level?,market,North America,Governance,audit_assurance,G-ASSURE,4
+M-009,Does your company provide a copy of your assurance provider's full report as part of your emissions disclosure?,market,North America,Governance,audit_assurance,G-ASSURE,4
+M-010,"Does your company publish a formal sustainability or ESG report aligned with recognised frameworks (e.g. GRI, ISSB, SASB)?",market,North America,Governance,transparency,G-REPORT,4.26
+M-011,Does your company disclose the nature of its business operations and principal activities in a publicly available report?,market,APAC,Governance,transparency,G-REPORT,4.26
+M-012,Does your company disclose its accounting policies or financial reporting methods in a public document?,market,APAC,Governance,transparency,G-REPORT,4.26
+M-013,Does your company disclose the total amount spent on research and development activities?,market,APAC,Resources,innovation,G-REPORT,4.26
+M-014,"Does your company track the total weight of waste generated, and the amount diverted from landfill?",market,APAC,Resources,waste_management,R-WST-GEN,4.08
+M-015,"Does your company track the total weight of waste generated, and the amount diverted from landfill?",market,APAC,Resources,waste_management,R-WST-GEN,4.08
+M-016,"Does your company track the total weight of waste generated, and the amount diverted from landfill?",market,South Asia,Resources,waste_management,R-WST-GEN,4.08
+M-017,Does your company separately track and report hazardous waste generation?,market,APAC,Resources,waste_management,R-WST-GEN,4.08
+M-018,Does your company separately track and report hazardous waste generation?,market,South Asia,Resources,waste_management,R-WST-GEN,4.08
+M-019,Does your company track average training hours provided per employee per year?,market,APAC,People,training,P-LAB-TRAIN,3.97
+M-020,Does your company record the number of child labour and forced labour incidents identified in your operations or supply chain?,market,APAC,People,labor,P-LAB-PRACTICES,3.75
+M-021,Does your company record the number of child labour and forced labour incidents identified in your operations or supply chain?,market,South Asia,People,labor,P-LAB-PRACTICES,3.75
+M-022,Has your company identified operations or suppliers at high risk of child labour?,market,APAC,People,labor,P-LAB-PRACTICES,3.75
+M-023,Has your company identified operations or suppliers at high risk of child labour?,market,South Asia,People,labor,P-LAB-PRACTICES,3.75
+M-024,Does your company disclose the total number of directors on your board?,market,APAC,Governance,governance,G-GOV-STRUCT,3.58
+M-025,Does your company disclose the total number of directors on your board?,market,South Asia,Governance,governance,G-GOV-STRUCT,3.58
+M-026,Does your company have a Whistleblowing Policy to protect employees who report concerns?,market,APAC,Governance,governance,G-GOV-STRUCT,3.58
+M-027,Does your company have a Whistleblowing Policy to protect employees who report concerns?,market,South Asia,Governance,governance,G-GOV-STRUCT,3.58
+M-028,Does your company track the number of substantiated customer privacy breach complaints?,market,APAC,Governance,governance,G-GOV-STRUCT,3.58
+M-029,Does your company track the number of substantiated customer privacy breach complaints?,market,South Asia,Governance,governance,G-GOV-STRUCT,3.58
+M-030,Does your company report the total hours of training provided per employee per year?,market,APAC,People,training,P-LAB-TRAIN,3.69
+M-031,Does your company report the total hours of training provided per employee per year?,market,South Asia,People,training,P-LAB-TRAIN,3.69
+M-032,Does your company have a mechanism for employees to raise and have resolved workplace grievances?,market,South Asia,People,grievance_mechanism,P-GRIEV,3.95
+M-033,"Does your company report total water withdrawal broken down by source (e.g. groundwater, surface water, municipal supply)?",market,South Asia,Resources,water_management,R-WAT-WITHDRAW,3.61
+M-034,Has your company implemented a Zero Liquid Discharge mechanism or similar water treatment system?,market,South Asia,Resources,water_management,R-WAT-WITHDRAW,3.61
+M-035,Does your company have procedures for sustainable sourcing of inputs from suppliers?,market,South Asia,Resources,procurement,G-SUP-MGMT,3.27
+M-036,Does your company track what percentage of its input materials are sustainably sourced?,market,South Asia,Resources,procurement,G-SUP-MGMT,3.27
+M-037,Does your company track the share of input materials sourced directly from small-scale or micro enterprises?,market,South Asia,Community,procurement,G-SUP-MGMT,3.27
+M-038,Does your company disclose what percentage of its revenue comes from products labelled with safety or responsible usage information?,market,South Asia,Governance,consumer_protection,C-PROD-IMPACT,4.05
+M-039,Has your company established mechanisms to prevent illegal or unfair business practices?,market,South Asia,Governance,compliance,G-COMPLY,3.23
+M-040,"Does your company ensure timely payment of all applicable taxes, levies, and duties?",market,South Asia,Governance,compliance,G-COMPLY,3.23
+M-041,Does your company have a policy on data privacy covering how customer data is protected?,market,South Asia,Governance,data_privacy,G-DATA-PRIV,3.64
+M-042,Does your company track and report progress against sustainability plans or commitments you have previously disclosed?,market,Oceania,Governance,strategy,G-STRAT,3.93
+M-043,"Does your company set specific, quantitative sustainability targets (e.g. emissions reduction percentages, water targets)?",market,Oceania,Governance,strategy,G-STRAT,3.93
+M-044,Does your company use metrics to monitor progress toward sustainability targets on a regular basis?,market,Oceania,Governance,strategy,G-STRAT,3.93
+M-045,Does your company publicly disclose material sustainability-related risks that could affect your business?,market,Middle East,Governance,risk_management,G-RISK,3.76
+M-046,Has your company identified sustainability risks that could affect your cash flows or financial performance?,market,Middle East,Governance,financial_impact,G-RISK,3.76
+M-047,Has your company identified sustainability risks that could affect your access to finance or investment?,market,Middle East,Governance,financial_impact,G-RISK,3.76
+M-048,Has your company identified climate-related risks (physical or transitional) relevant to your operations or market context?,market,Africa,Governance,risk_management,G-RISK,3.76
+M-049,Does your company have a formal Occupational Health and Safety Management System (OHSMS)?,market,LATAM,People,health_safety,P-HS-OHS,3.5
+M-050,Does your company conduct hazard identification and risk assessments across all key operational processes?,market,LATAM,People,health_safety,P-HS-OHS,3.5
+M-051,Does your company record and track workplace accidents and incidents?,market,LATAM,People,health_safety,P-HS-OHS,3.5
+M-052,Does your company identify the use of non-renewable materials in its production and work to reduce them?,market,LATAM,Resources,resource_efficiency,R-RES-EFF,4
+M-053,Does your company use eco-friendly or biodegradable packaging for its products?,market,LATAM,Resources,resource_efficiency,R-RES-EFF,4
+M-054,Does your company have a transition plan that sets out how it will align its operations with a low-carbon economy?,market,UK,Resources,climate_transition,R-EM-TRANSITION,3.95

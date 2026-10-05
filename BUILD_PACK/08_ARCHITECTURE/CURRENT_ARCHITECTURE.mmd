@@ -1,0 +1,40 @@
+flowchart TD
+    U[SME User / Browser]
+    C[Caddy HTTPS Reverse Proxy]
+    A[Appsmith EE<br/>SME Assessment Tool]
+    QAPI[n8n<br/>final-preview-questions]
+    RAPI[n8n<br/>capstone-ai-output-final]
+    QS[(Google Sheets<br/>QuestionBank / Test_Questions)]
+    SC[(Google Sheets<br/>AnswerScales<br/>MetricBenchmarks<br/>MultiplierRules<br/>CategoryWeights)]
+    DI[(Google Sheets<br/>DocumentIndex)]
+    DC[(Google Sheets<br/>DocumentChunks)]
+    OAI[OpenAI<br/>Recommendation Model]
+    NDB[NocoDB<br/>legacy/test only]
+    PG[(PostgreSQL 15<br/>NocoDB backing DB)]
+    V[(Docker volumes<br/>n8n / Appsmith / Postgres)]
+
+    U -->|HTTPS| C
+    C --> A
+
+    A -->|SME context| QAPI
+    QAPI --> QS
+    QS --> QAPI
+    QAPI -->|selected ordered questions| A
+
+    SC -->|scoring config| A
+    A -->|AssessmentScoring<br/>deterministic| A
+
+    A -->|SME + scored payload| RAPI
+    RAPI --> DI
+    RAPI --> DC
+    DI --> RAPI
+    DC --> RAPI
+    RAPI -->|grounded prompt| OAI
+    OAI -->|model output| RAPI
+    RAPI -->|raw OpenAI response| A
+    A -->|parse JSON + render| U
+
+    NDB --> PG
+    V -. persistence .-> A
+    V -. persistence .-> RAPI
+    V -. persistence .-> PG

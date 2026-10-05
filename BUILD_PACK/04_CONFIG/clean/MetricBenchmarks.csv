@@ -1,0 +1,63 @@
+metric_id,metric_name,benchmark_group_type,benchmark_group_value,unit,normalization_method,param_1,param_2,param_3,min_value,max_value,direction,notes,active
+MET_RE_SHARE,Renewable electricity share,global,all,%,identity_percent,,,,0,100,higher_better,60% input becomes 60 score,TRUE
+MET_EN_INT_REV,Energy intensity per revenue,industry,Manufacturing (Industrial / Components),kWh/USD,inverse_linear_cap,0,2,,0,2,lower_better,"0 is best, 2+ is capped at worst",TRUE
+MET_WASTE_DIV,Waste diversion rate,global,all,%,identity_percent,,,,0,100,higher_better,Direct percentage scoring,TRUE
+MET_TURNOVER,Employee turnover,industry,Business / Export Services,%,banded,10,20,35,0,100,lower_better,"<=10 strong, 10–20 moderate, >35 weak",TRUE
+working_hours,avg working hours per employee,global,all,hours/week,gaussian,40,10,,0,100,neutral,"Gaussian centered at 40, std 10. Keeps meaningful differentiation (a 60hr week still scores ~67%) while not punishing a 37-38hr week",TRUE
+ft_employee_percent,% full-time employees,global,all,%,identity_percent,,,,0,100,higher_better,Raw percentage is used directly as normalized score,TRUE
+workplace_injury_rate,Workplace injury rate,global,all,incidents per 100 employees,inverse_count,,,,0,100,lower_better,S = 1 / (1 + injuries),TRUE
+safety_training_frequency,Safety training frequency,global,all,times per year,linear_cap,2,,,0,100,higher_better,"S = min(x / 2, 1)",TRUE
+voluntary_turnover_rate,Voluntary turnover rate,global,all,percent,exponential_decay,5,10,,0,100,lower_better,"S=max(0,min(1,exp(-10*(x-0.13))))",FALSE
+voluntary_turnover_rate,Voluntary turnover rate,industry,Business / Export Services,percent,exponential_decay,15,10,,0,100,lower_better,<=15% excellent for services,TRUE
+voluntary_turnover_rate,Voluntary turnover rate,industry,Consumer Goods (Apparel / FMCG),percent,exponential_decay,15,10,,0,100,lower_better,<=15% excellent for apparel/FMCG,TRUE
+voluntary_turnover_rate,Voluntary turnover rate,industry,Construction / Materials,percent,exponential_decay,15,10,,0,100,lower_better,<=15% excellent for construction,TRUE
+voluntary_turnover_rate,Voluntary turnover rate,industry,Food & Agro-processing,percent,exponential_decay,20,10,,0,100,lower_better,<=20% reflects high seasonal churn,TRUE
+voluntary_turnover_rate,Voluntary turnover rate,industry,Manufacturing (Industrial / Components),percent,exponential_decay,12,10,,0,100,lower_better,<=12% excellent for manufacturing,TRUE
+regulatory_fines_3y,Regulatory fines in last 3 years,global,all,count,inverse_count,,,,0,100,lower_better,S = 1 / (1 + fines),TRUE
+open_violations,Open regulatory violations,global,all,count,inverse_count,,,,0,100,lower_better,S = 1 / (1 + violations),TRUE
+env_policy_existence,Environmental policy / SBTi existence,global,all,boolean,identity_boolean,,,,0,100,higher_better,Binary existence indicator,TRUE
+supplier_screening_existence,Supplier screening methodology existence,global,all,boolean,identity_boolean,,,,0,100,higher_better,Binary existence indicator,TRUE
+community_program_existence,Community impact / philanthropy program existence,global,all,boolean,identity_boolean,,,,0,100,higher_better,Binary existence indicator,TRUE
+pretax_profit_donated,Percent of pre-tax profit donated,global,all,percent,linear_cap,2,,,0,100,higher_better,Enter whole-number percent in sandbox; 1 means 1% threshold,TRUE
+employee_volunteer_hours,Employee volunteer hours,global,all,hours,linear_cap,8,,,0,100,higher_better,"S = min(x / 8, 1)",TRUE
+waste_diverted_percent,Percent diverted from landfill,global,all,percent,identity_percent,,,,0,100,higher_better,Direct percentage scoring,TRUE
+local_sourcing_percent,Percent of materials sourced within 100 miles,global,all,percent,linear_cap,50,,,0,100,higher_better,"50% or above scores 100, below 50% scales linearly.",TRUE
+recycled_input_content,Percent recycled input content,global,all,percent,identity_percent,,,,0,100,higher_better,Direct percentage scoring,TRUE
+water_intensity_bus,Water use intensity,industry,Business / Export Services,m3/USD,benchmark_inverse_ratio,0.008737,,,0,100,lower_better,"S=100/(1+x/0.008737). At x=μ, score=50.",TRUE
+water_intensity_manuf,Water use intensity,industry,Manufacturing (Industrial / Components),m3/USD,benchmark_inverse_ratio,0.026021,,,0,100,lower_better,S=100/(1+x/0.026021).,TRUE
+water_intensity_const,Water use intensity,industry,Construction / Materials,m3/USD,benchmark_inverse_ratio,0.000037,,,0,100,lower_better,S=100/(1+x/0.000037).,TRUE
+water_intensity_food,Water use intensity,industry,Food & Agro-processing,m3/USD,benchmark_inverse_ratio,0.000415,,,0,100,lower_better,S=100/(1+x/0.000415).,TRUE
+water_intensity_cg,Water use intensity,industry,Consumer Goods (Apparel / FMCG),m3/USD,benchmark_inverse_ratio,0.046512,,,0,100,lower_better,S=100/(1+x/0.046512).,TRUE
+hazardous_waste_percent,Percent hazardous waste,industry,Business / Export Services,percent,exponential_decay,2,10,,0,100,lower_better,<=2% threshold for services,TRUE
+hazardous_waste_percent,Percent hazardous waste,industry,Consumer Goods (Apparel / FMCG),percent,exponential_decay,5,10,,0,100,lower_better,<=5% threshold for apparel/FMCG,TRUE
+hazardous_waste_percent,Percent hazardous waste,industry,Construction / Materials,percent,exponential_decay,8,10,,0,100,lower_better,<=8% threshold for construction,TRUE
+hazardous_waste_percent,Percent hazardous waste,industry,Food & Agro-processing,percent,exponential_decay,3,10,,0,100,lower_better,<=3% threshold for food,TRUE
+hazardous_waste_percent,Percent hazardous waste,industry,Manufacturing (Industrial / Components),percent,exponential_decay,15,10,,0,100,lower_better,<=15% threshold for manufacturing,TRUE
+energy_intensity_bus,Energy intensity,industry,Business / Export Services,kWh/USD,benchmark_inverse_ratio,0.102,,,0,100,lower_better,S=100/(1+x/0.102).,TRUE
+energy_intensity_manuf,Energy intensity,industry,Manufacturing (Industrial / Components),kWh/USD,benchmark_inverse_ratio,2.82,,,0,100,lower_better,S=100/(1+x/2.82).,TRUE
+energy_intensity_const,Energy intensity,industry,Construction / Materials,kWh/USD,benchmark_inverse_ratio,0.379,,,0,100,lower_better,S=100/(1+x/0.379).,TRUE
+energy_intensity_food,Energy intensity,industry,Food & Agro-processing,kWh/USD,benchmark_inverse_ratio,0.131,,,0,100,lower_better,S=100/(1+x/0.131).,TRUE
+energy_intensity_cg,Energy intensity,industry,Consumer Goods (Apparel / FMCG),kWh/USD,benchmark_inverse_ratio,0.635,,,0,100,lower_better,S=100/(1+x/0.635).,TRUE
+carbon_intensity_bus,Scope 1+2 GHG emissions intensity,industry,Business / Export Services,tCO2e/USD,benchmark_inverse_ratio,0.00018,,,0,100,lower_better,S=100/(1+x/0.00018).,TRUE
+carbon_intensity_manuf,Scope 1+2 GHG emissions intensity,industry,Manufacturing (Industrial / Components),tCO2e/USD,benchmark_inverse_ratio,0.00677,,,0,100,lower_better,S=100/(1+x/0.00677).,TRUE
+carbon_intensity_const,Scope 1+2 GHG emissions intensity,industry,Construction / Materials,tCO2e/USD,benchmark_inverse_ratio,0.00008,,,0,100,lower_better,S=100/(1+x/0.00001).,TRUE
+carbon_intensity_food,Scope 1+2 GHG emissions intensity,industry,Food & Agro-processing,tCO2e/USD,benchmark_inverse_ratio,0.00004,,,0,100,lower_better,S=100/(1+x/0.00003).,TRUE
+carbon_intensity_cg,Scope 1+2 GHG emissions intensity,industry,Consumer Goods (Apparel / FMCG),tCO2e/USD,benchmark_inverse_ratio,0.0001,,,0,100,lower_better,S=100/(1+x/0.0001).,TRUE
+waste_intensity_bus,Waste intensity,industry,Business / Export Services,kg/USD,benchmark_inverse_ratio,0.125,,,0,100,lower_better,S=100/(1+x/0.125).,TRUE
+waste_intensity_manuf,Waste intensity,industry,Manufacturing (Industrial / Components),kg/USD,benchmark_inverse_ratio,2.75,,,0,100,lower_better,S=100/(1+x/2.75).,TRUE
+waste_intensity_const,Waste intensity,industry,Construction / Materials,kg/USD,benchmark_inverse_ratio,0.3,,,0,100,lower_better,S=100/(1+x/0.2).,TRUE
+waste_intensity_food,Waste intensity,industry,Food & Agro-processing,kg/USD,benchmark_inverse_ratio,0.5,,,0,100,lower_better,S=100/(1+x/0.5).,TRUE
+waste_intensity_cg,Waste intensity,industry,Consumer Goods (Apparel / FMCG),kg/USD,benchmark_inverse_ratio,0.9,,,0,100,lower_better,S=100/(1+x/0.9).,TRUE
+labor_training_hours_bus,Avg training hours per employee/year,industry,Business / Export Services,hours/employee/year,linear_cap,45,,,0,100,higher_better,"S=100*min(1,x/51).",TRUE
+labor_training_hours_manuf,Avg training hours per employee/year,industry,Manufacturing (Industrial / Components),hours/employee/year,linear_cap,64,,,0,100,higher_better,"S=100*min(1,x/64).",TRUE
+labor_training_hours_const,Avg training hours per employee/year,industry,Construction / Materials,hours/employee/year,linear_cap,55,,,0,100,higher_better,"S=100*min(1,x/55).",TRUE
+labor_training_hours_food,Avg training hours per employee/year,industry,Food & Agro-processing,hours/employee/year,linear_cap,55,,,0,100,higher_better,"S=100*min(1,x/60).",TRUE
+labor_training_hours,Avg training hours per employee/year,industry,Consumer Goods (Apparel / FMCG),hours/employee/year,linear_cap,40,,,0,100,higher_better,"S=100*min(1,x/40).",TRUE
+sustainability_rd_percent,R&D spend toward sustainability,global,all,percent of revenue,linear_cap,5,,,0,100,higher_better,"S=100*min(x/5,1). Full marks at >=5% of revenue.",TRUE
+water_withdrawal_m3,Total water withdrawal,global,all,m3/yr,identity_boolean,,,,0,100,reported_better,Absolute disclosure; intensity scored separately. Source: CDP Water; GRI 303.,TRUE
+gender_representation_mgmt,Female representation in management,global,all,%,linear_cap,50,,,0,100,higher_better,"S=100*min(x/50,1). Parity (50%) = full marks. Source: UN Women WEPs; ILO.",TRUE
+collective_bargaining_pct,Workers covered by collective bargaining,global,all,%,linear_cap,50,,,0,100,higher_better,"50% coverage or above scores 100. Below 50%, the score scales linearly.",TRUE
+privacy_breaches_count,Substantiated customer privacy breaches,global,all,count/yr,inverse_count,,,,0,100,lower_better,S = 1/(1+breaches). Source: GRI 418; SASB TC-SI-220a.3.,TRUE
+process_safety_incidents,Process / transport safety incidents,global,all,count/yr,inverse_count,,,,0,100,lower_better,S = 1/(1+incidents). Source: SASB Industrials; OSHA recordable framework.,TRUE
+certified_inputs_pct,Certified-sustainable input share,global,all,%,identity_percent,,,,0,100,higher_better,"Direct percentage. Source: FSC, RSPO, RTRS, Bonsucro, PEFC.",TRUE
+gmo_share_pct,GMO content of products,global,all,%,inverse_percentage,,,,0,100,lower_better,Inverse percentage scoring,TRUE

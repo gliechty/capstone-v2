@@ -1,0 +1,1308 @@
+{
+  "case_id": "GOLDEN_02_FOOD_AGRO",
+  "captured_from": "current live v1",
+  "captured_at": "2026-10-03T07:04:44Z",
+  "question_selection": {
+    "expected_count": 55,
+    "actual_count": 55,
+    "expected_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-003",
+      "I-006",
+      "I-008",
+      "I-010",
+      "I-022",
+      "I-023",
+      "I-026",
+      "I-029",
+      "I-031",
+      "I-035",
+      "I-040",
+      "I-041",
+      "I-047",
+      "I-055",
+      "I-061",
+      "I-068",
+      "I-074",
+      "M-001",
+      "M-010",
+      "M-028",
+      "M-036",
+      "M-037"
+    ],
+    "actual_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-003",
+      "I-006",
+      "I-008",
+      "I-010",
+      "I-022",
+      "I-023",
+      "I-026",
+      "I-029",
+      "I-031",
+      "I-035",
+      "I-040",
+      "I-041",
+      "I-047",
+      "I-055",
+      "I-061",
+      "I-068",
+      "I-074",
+      "M-001",
+      "M-010",
+      "M-028",
+      "M-036",
+      "M-037"
+    ],
+    "question_set_match": true,
+    "missing_ids": [],
+    "unexpected_ids": [],
+    "order_match": true,
+    "source": "Start Assessment network response (question_count + questions[].question_id), cross-checked against rendered question cards"
+  },
+  "scoring": {
+    "raw_overall": {
+      "points_earned": 11648.93,
+      "total_possible": 22297,
+      "overall_percent": 52.2,
+      "categories_answered": 4
+    },
+    "weighted_overall": {
+      "weighted_score": 52,
+      "max_score": 100,
+      "weights_found": true,
+      "industry": "Food & Agro-processing",
+      "breakdown": [
+        {
+          "category": "Governance",
+          "raw_percent": 60.4,
+          "weight": 0.31,
+          "weighted_contribution": 18.724
+        },
+        {
+          "category": "People",
+          "raw_percent": 100,
+          "weight": 0.1,
+          "weighted_contribution": 10
+        },
+        {
+          "category": "Resources",
+          "raw_percent": 42,
+          "weight": 0.49,
+          "weighted_contribution": 20.58
+        },
+        {
+          "category": "Community",
+          "raw_percent": 27.2,
+          "weight": 0.1,
+          "weighted_contribution": 2.72
+        }
+      ]
+    },
+    "category_scores": [
+      {
+        "category": "Governance",
+        "points_earned": 4727.25,
+        "total_possible": 7825.1,
+        "category_percent": 60.4,
+        "questions_answered": 20
+      },
+      {
+        "category": "People",
+        "points_earned": 1825,
+        "total_possible": 1825,
+        "category_percent": 100,
+        "questions_answered": 5
+      },
+      {
+        "category": "Resources",
+        "points_earned": 4696.68,
+        "total_possible": 11176.9,
+        "category_percent": 42,
+        "questions_answered": 26
+      },
+      {
+        "category": "Community",
+        "points_earned": 400,
+        "total_possible": 1470,
+        "category_percent": 27.2,
+        "questions_answered": 4
+      }
+    ],
+    "weighted_category_breakdown": [
+      {
+        "category": "Governance",
+        "points_earned": 4727.25,
+        "total_possible": 7825.1,
+        "raw_category_percent": 60.4,
+        "category_weight": 0.31,
+        "weighted_contribution": 18.72,
+        "questions_answered": 20
+      },
+      {
+        "category": "People",
+        "points_earned": 1825,
+        "total_possible": 1825,
+        "raw_category_percent": 100,
+        "category_weight": 0.1,
+        "weighted_contribution": 10,
+        "questions_answered": 5
+      },
+      {
+        "category": "Resources",
+        "points_earned": 4696.68,
+        "total_possible": 11176.9,
+        "raw_category_percent": 42,
+        "category_weight": 0.49,
+        "weighted_contribution": 20.58,
+        "questions_answered": 26
+      },
+      {
+        "category": "Community",
+        "points_earned": 400,
+        "total_possible": 1470,
+        "raw_category_percent": 27.2,
+        "category_weight": 0.1,
+        "weighted_contribution": 2.72,
+        "questions_answered": 4
+      }
+    ],
+    "question_level": [
+      {
+        "question_id": "U-001",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 386,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 386,
+        "final_score_possible": 386,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-002",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 401,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 401,
+        "final_score_possible": 401,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-004",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 426,
+        "final_score_possible": 426,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-005",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 379,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 379,
+        "final_score_possible": 379,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-006",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 66,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 264,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 264,
+        "final_score_possible": 400,
+        "completion_percent": 66,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-007",
+        "answer_as_recorded": "Informal engagement",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 198.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 198.5,
+        "final_score_possible": 397,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-008",
+        "answer_as_recorded": "Advanced",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 401,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 401,
+        "final_score_possible": 401,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-009",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-010",
+        "answer_as_recorded": "No policy",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-020 (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 407.1,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-012",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 193,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 193,
+        "final_score_possible": 386,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-013",
+        "answer_as_recorded": "Planned",
+        "normalized_score": 25,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 94.75,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 94.75,
+        "final_score_possible": 379,
+        "completion_percent": 25,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-014",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 397,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 397,
+        "final_score_possible": 397,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-015",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 393,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 393,
+        "final_score_possible": 393,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-018",
+        "answer_as_recorded": "2",
+        "normalized_score": 100,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 350,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 350,
+        "final_score_possible": 350,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-019",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-020",
+        "answer_as_recorded": "40",
+        "normalized_score": 100,
+        "normalization_method": "gaussian",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-021",
+        "answer_as_recorded": "5",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-022",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 393,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 393,
+        "final_score_possible": 393,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-023",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-007 (1.25x)"
+        ],
+        "final_score": 502.5,
+        "final_score_possible": 502.5,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-024",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 0,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-007 (1.25x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 502.5,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-025",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.57,
+        "weighted_score": 357,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 357,
+        "final_score_possible": 357,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-026",
+        "answer_as_recorded": "50",
+        "normalized_score": 50,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.88,
+        "weighted_score": 194,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 194,
+        "final_score_possible": 388,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-027",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.92,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 392,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-028",
+        "answer_as_recorded": "Sustained",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 400,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 400,
+        "final_score_possible": 400,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-029",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.61,
+        "weighted_score": 361,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 361,
+        "final_score_possible": 361,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-030",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.08,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006b (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 469.2,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-031",
+        "answer_as_recorded": "50",
+        "normalized_score": 50,
+        "normalization_method": "identity_percent",
+        "base_weight": 4.08,
+        "weighted_score": 204,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006b (1.15x)"
+        ],
+        "final_score": 234.6,
+        "final_score_possible": 469.2,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-032",
+        "answer_as_recorded": "0",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 4.08,
+        "weighted_score": 408,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006b (1.15x)"
+        ],
+        "final_score": 469.2,
+        "final_score_possible": 469.2,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-033",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.7,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 370,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-034",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 400,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 400,
+        "final_score_possible": 400,
+        "completion_percent": 100,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-035",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 350,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-036",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 350,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "I-003",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.99,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 399,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-006",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-008",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.99,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 399,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-010",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.87,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 387,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-022",
+        "answer_as_recorded": "0",
+        "normalized_score": 100,
+        "normalization_method": "inverse_percentage",
+        "base_weight": 3.67,
+        "weighted_score": 367,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 367,
+        "final_score_possible": 367,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-023",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.78,
+        "weighted_score": 0,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-009 (1.35x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 510.3,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-026",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 397,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-029",
+        "answer_as_recorded": "None",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.96,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 396,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-031",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.99,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 399,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-035",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.78,
+        "weighted_score": 378,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-009 (1.35x)"
+        ],
+        "final_score": 510.3,
+        "final_score_possible": 510.3,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-040",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 0,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-007 (1.25x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 502.5,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-041",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-007 (1.25x)"
+        ],
+        "final_score": 502.5,
+        "final_score_possible": 502.5,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-047",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.99,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 399,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-055",
+        "answer_as_recorded": "50",
+        "normalized_score": 0,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.02,
+        "weighted_score": 0,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-007 (1.25x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 502.5,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-061",
+        "answer_as_recorded": "50",
+        "normalized_score": 0.26,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.57,
+        "weighted_score": 0.93,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0.93,
+        "final_score_possible": 357,
+        "completion_percent": 0.3,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-068",
+        "answer_as_recorded": "50",
+        "normalized_score": 0,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.61,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 361,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-074",
+        "answer_as_recorded": "50",
+        "normalized_score": 0.99,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.08,
+        "weighted_score": 4.04,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006b (1.15x)"
+        ],
+        "final_score": 4.65,
+        "final_score_possible": 469.2,
+        "completion_percent": 1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-001",
+        "answer_as_recorded": "Internal review only",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 132,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 132,
+        "final_score_possible": 400,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-010",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 426,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-028",
+        "answer_as_recorded": "0",
+        "normalized_score": 100,
+        "normalization_method": "inverse_count",
+        "base_weight": 3.5,
+        "weighted_score": 350,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 350,
+        "final_score_possible": 350,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-036",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 400,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 400,
+        "final_score_possible": 400,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-037",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      }
+    ],
+    "capture_method": "raw_state_or_network",
+    "category_weights": {
+      "industry": "Food & Agro-processing",
+      "people_weight": 0.1,
+      "governance_weight": 0.31,
+      "community_weight": 0.1,
+      "resources_weight": 0.49,
+      "notes": "Food & Agro-processing (n=144) — Resources-dominant (49%): water, land, biodiversity, food safety, and waste dominate the indicator set. Governance secondary (31%) via certifications/traceability. Both People and Community hit the 10% floor — this sector's source framework is overwhelmingly resource- and governance-weighted."
+    },
+    "scoring_summary_ids": {
+      "lowest": [
+        "U-010",
+        "U-024",
+        "U-027",
+        "U-030",
+        "U-033"
+      ],
+      "highest": [
+        "I-035",
+        "U-023",
+        "I-041",
+        "U-032",
+        "U-004"
+      ],
+      "weakest_categories": [
+        "Community",
+        "Resources",
+        "Governance",
+        "People"
+      ]
+    },
+    "matched_rules_by_question": {
+      "U-010": [
+        "MR-020@1.15"
+      ],
+      "U-023": [
+        "MR-007@1.25"
+      ],
+      "U-024": [
+        "MR-007@1.25"
+      ],
+      "U-030": [
+        "MR-006b@1.15"
+      ],
+      "U-031": [
+        "MR-006b@1.15"
+      ],
+      "U-032": [
+        "MR-006b@1.15"
+      ],
+      "I-023": [
+        "MR-009@1.35"
+      ],
+      "I-035": [
+        "MR-009@1.35"
+      ],
+      "I-040": [
+        "MR-007@1.25"
+      ],
+      "I-041": [
+        "MR-007@1.25"
+      ],
+      "I-055": [
+        "MR-007@1.25"
+      ],
+      "I-074": [
+        "MR-006b@1.15"
+      ]
+    },
+    "answered_question_count": 55,
+    "sme_context_as_sent": {
+      "company_name": "Golden Agro Foods Co.",
+      "industry": "Food & Agro-processing",
+      "subindustry": "Organic Packaged Foods",
+      "employee_band": "51 - 250",
+      "revenue_band": "$1M-$5M",
+      "company_location": "LATAM",
+      "country": "Peru",
+      "target_market_region": [
+        "North America",
+        "LATAM"
+      ],
+      "target_buyer": "Consumer Brands",
+      "business_goal": "Access new markets",
+      "notes": "Golden regression case derived from Final Tool Testing; ignore legacy tester QA comments and old score/output judgments."
+    },
+    "capture_notes": [
+      "Top-level scoring objects copied verbatim from the scoring payload the app sent with the recommendation request (intercepted network request body); transcription verified by SHA-256 against the in-browser value.",
+      "answered_questions/category_debug arrays from the payload are represented by question_level (read from rendered question cards) plus matched_rules_by_question; question_text was omitted as it is static QuestionBank content."
+    ]
+  },
+  "recommendation_output": {
+    "executive_summary": "Golden Agro Foods Co. shows strong people management practices, including health and safety training, fair working conditions, and a strong injury record. The biggest improvement opportunity for accessing new consumer-brand markets in North America and LATAM is to strengthen “Resources” performance—especially credible, complete climate and materials/waste information that buyers can compare across suppliers. You already track energy and water and have emissions targets, but key elements are missing or inconsistent (notably purchased electricity emissions, waste tracking, and packaging choices). The raw overall score is 52.2% and the industry-weighted overall score is 52%, reflecting that Resources—currently a weaker area for the company—carries high importance in Food & Agro-processing.",
+    "priority_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "Complete and standardize your GHG inventory for processing and land-based ingredients (with consistent allocation rules)",
+        "why_it_matters": "Consumer brands increasingly need comparable, decision-useful climate data from suppliers, and agricultural/land impacts can materially change reported emissions. Using consistent allocation methods across co-products helps prevent double counting and improves credibility of product footprints.",
+        "recommended_action": "Build one consolidated GHG file that clearly separates: (1) direct fuel/process emissions, (2) purchased electricity/heat emissions, and (3) land/ingredient-related emissions/removals where relevant. Define and document a single allocation method for any shared processes that produce multiple outputs (e.g., co-products), and use it consistently across emissions and any removals reporting. If you plan to report removals (e.g., soil carbon), set up an ongoing monitoring plan and a process to record and report any carbon stock losses in the year they occur. Keep methods and assumptions in a buyer-ready appendix.",
+        "evidence": [
+          {
+            "doc_title": "Land Sector and Removals Standard",
+            "source": "GHG Protocol",
+            "pages_or_section": "Page 31 & 33, Requirement 9 (consistent allocation across categories)",
+            "link": "https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link "
+          },
+          {
+            "doc_title": "Land Sector and Removals Standard",
+            "source": "GHG Protocol",
+            "pages_or_section": "Page 54, Requirement 15 (account for net land carbon stock losses on agricultural lands)",
+            "link": "https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link "
+          },
+          {
+            "doc_title": "Land Sector and Removals Standard",
+            "source": "GHG Protocol",
+            "pages_or_section": "Page 68, Requirement 23 (monitoring plan, permanence and reporting reversals/losses)",
+            "link": "https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link "
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 2,
+        "title": "Strengthen sustainable sourcing proof-points using credible third-party certifications where they fit your product lines",
+        "why_it_matters": "Downstream food companies disclose and compare the share of revenue tied to products certified to environmental and social sustainability standards as a way to manage supply risk and increase transparency. For an organic packaged foods exporter, certification coverage and clear documentation can make your sustainability claims easier for consumer-brand buyers to trust and communicate.",
+        "recommended_action": "Map your current product portfolio and ingredients to identify where you already have third-party certifications and where coverage is missing. For priority product lines aimed at North America, package a simple “certification and chain-of-custody dossier” per SKU: certificate(s), scope, validity, and which farms/ingredients are covered. Where you don’t yet have third-party certification but have strong practices (e.g., integrated pest management or an organic system plan), select one or two high-impact certifications to pursue first, based on buyer conversations and ingredient risk.",
+        "evidence": [
+          {
+            "doc_title": "Food Retailers & Distributors Sustainability Accounting Standard",
+            "source": "SASB",
+            "pages_or_section": "Page 32, FB-FR-430a.1 (disclose revenue from products certified to environmental/social sustainability standards; examples include Organic, Fairtrade, Rainforest Alliance)",
+            "link": "https://drive.google.com/file/d/1I1--4z5O7N8XGmTdPKtzrL2Rtnmo0dGN/view?usp=share_link "
+          }
+        ],
+        "related_categories": [
+          "Governance",
+          "Resources",
+          "Community"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 3,
+        "title": "Put in place basic waste and packaging measurement to enable credible packaging improvements",
+        "why_it_matters": "You report that you do not track total waste generated and you do not use eco-friendly/biodegradable packaging; this makes it hard to identify cost-saving waste reductions and to substantiate packaging improvements for consumer-brand buyers. A clear baseline also supports better sustainability reporting and procurement discussions.",
+        "recommended_action": "Start a low-overhead waste baseline: track monthly total waste by main streams (e.g., organic/food waste, packaging scrap, general waste) and record how much is recycled/reused/composted versus disposed; keep weight tickets or vendor invoices as evidence. In parallel, run a packaging “bill of materials” review for top-selling SKUs and prioritize 1–2 changes that are easiest to trial (e.g., lightweighting, increased recyclability, or switching one component to a more sustainable option). Update your ESG summary with: total waste generated and % diverted, plus packaging material changes and rationale.",
+        "evidence": [
+          {
+            "doc_title": "Best practices in sustainability by Peruvian MSMEs",
+            "source": "GRI",
+            "pages_or_section": "Report (practical guidance for SMEs on measuring and communicating environmental impacts to improve competitiveness)",
+            "link": "https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources"
+        ],
+        "implementation_difficulty": "Low"
+      },
+      {
+        "priority_rank": 4,
+        "title": "Move from informal to structured supplier environmental risk screening (starting with land and ecosystem impacts)",
+        "why_it_matters": "You have supplier standards and consider environmental criteria in selection, but you have not identified which suppliers have significant negative environmental impacts, and supplier engagement is informal. A simple risk screen helps focus effort on the few suppliers and sourcing regions most likely to drive land-use, biodiversity, and emissions exposure.",
+        "recommended_action": "Create a supplier environmental risk register covering your top suppliers by spend/volume and any high-risk commodities. For each, capture: sourcing origin, whether land-based production is involved, known land/ecosystem risks, and what evidence exists (certifications, audits, or farm practices). Prioritize the top tier for structured engagement: request basic data on farm practices and land management, and align on a small set of information you will update annually. Where you eventually quantify land carbon impacts, ensure land carbon stock changes and losses are captured in your accounting approach.",
+        "evidence": [
+          {
+            "doc_title": "Land Sector and Removals Standard",
+            "source": "GHG Protocol",
+            "pages_or_section": "Page 54, Requirement 15 (account for land carbon stock losses on agricultural lands, including from degradation and disturbances)",
+            "link": "https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link "
+          },
+          {
+            "doc_title": "Agricultural Products Sustainability Accounting Standard",
+            "source": "SASB",
+            "pages_or_section": "Standard overview (industry-specific metrics used to assess sustainability risks in agricultural supply chains, including environmental impacts of ingredient sourcing)",
+            "link": "https://drive.google.com/file/d/1c24lRGTzbz3c8ptQkcXqBBcvNfuGPjK6/view?usp=share_link "
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 5,
+        "title": "Publish an anti-bribery and corruption commitment that matches your existing governance controls",
+        "why_it_matters": "You have a grievance/whistleblower mechanism but no public anti-corruption and anti-bribery commitment, which can create avoidable friction in buyer onboarding and distributor relationships. A clear commitment also supports consistent expectations for staff and third parties.",
+        "recommended_action": "Draft a short, public anti-bribery and corruption statement (website + supplier onboarding pack) and connect it to practical controls you already have: reporting channels, non-retaliation, and consequences for violations. Add a simple annual sign-off for managers and any third parties who handle sales, customs/logistics, or procurement. Include the commitment and reporting channel in your supplier code of conduct materials so expectations are consistent across your value chain.",
+        "evidence": [
+          {
+            "doc_title": "Best practices in sustainability by Peruvian MSMEs",
+            "source": "GRI",
+            "pages_or_section": "Report (SME-focused practices for improving sustainability management and buyer attractiveness through clearer policies and communication)",
+            "link": "https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Governance"
+        ],
+        "implementation_difficulty": "Low"
+      }
+    ],
+    "key_gaps": [
+      {
+        "category": "Resources",
+        "gap": "Incomplete environmental measurement and product impact management: purchased electricity/heat emissions measurement is missing in one place, waste generation is not tracked, and packaging is not yet eco-friendly/biodegradable—limiting credible buyer-facing disclosure.",
+        "evidence": [
+          {
+            "doc_title": "Best practices in sustainability by Peruvian MSMEs",
+            "source": "GRI",
+            "pages_or_section": "Report (practical guidance on measuring and communicating environmental impacts for competitiveness)",
+            "link": "https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Resources",
+        "gap": "Supplier environmental risk identification is weak: suppliers with significant actual/potential environmental impacts have not been identified, despite having general supplier standards and environmental selection criteria.",
+        "evidence": [
+          {
+            "doc_title": "Agricultural Products Sustainability Accounting Standard",
+            "source": "SASB",
+            "pages_or_section": "Standard overview (metrics for environmental impacts of ingredient sourcing and supply chain risk management)",
+            "link": "https://drive.google.com/file/d/1c24lRGTzbz3c8ptQkcXqBBcvNfuGPjK6/view?usp=share_link "
+          }
+        ]
+      },
+      {
+        "category": "Community",
+        "gap": "Limited structured community impact activity: there is no formal community investment/philanthropy program and no supported employee volunteer hours, which reduces positive local-impact storytelling for market access.",
+        "evidence": [
+          {
+            "doc_title": "Best practices in sustainability by Peruvian MSMEs",
+            "source": "GRI",
+            "pages_or_section": "Report (examples and guidance for SMEs to improve competitiveness by communicating social and environmental impacts)",
+            "link": "https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link"
+          }
+        ]
+      }
+    ],
+    "grounding_notes": "Recommendations are anchored in your disclosed weaknesses (no waste tracking, no eco-friendly packaging, informal supplier environmental engagement, no public anti-bribery commitment) and in buyer-facing disclosure expectations reflected in the retrieved standards. The GHG and land-impact recommendations are grounded in the GHG Protocol Land Sector and Removals Standard requirements on consistent allocation, accounting for land carbon stock losses, and monitoring permanence for any removals claims. Certification guidance is grounded in SASB’s Food Retailers & Distributors standard disclosure concept that buyers track revenue from third-party certified products as evidence of sustainable sourcing and transparency. Where the retrieved evidence is more general (e.g., SME sustainability management practices), actions are framed as practical, low-overhead steps suitable for a 51–250 employee, $1M–$5M company seeking market access."
+  },
+  "recommendation_output_raw": [
+    {
+      "id": "msg_08dce391ffc10c9b006ac0a8e9f8e887d1b23c42104d45dfec",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"executive_summary\": \"Golden Agro Foods Co. shows strong people management practices, including health and safety training, fair working conditions, and a strong injury record. The biggest improvement opportunity for accessing new consumer-brand markets in North America and LATAM is to strengthen “Resources” performance—especially credible, complete climate and materials/waste information that buyers can compare across suppliers. You already track energy and water and have emissions targets, but key elements are missing or inconsistent (notably purchased electricity emissions, waste tracking, and packaging choices). The raw overall score is 52.2% and the industry-weighted overall score is 52%, reflecting that Resources—currently a weaker area for the company—carries high importance in Food & Agro-processing.\",\n  \"priority_recommendations\": [\n    {\n      \"priority_rank\": 1,\n      \"title\": \"Complete and standardize your GHG inventory for processing and land-based ingredients (with consistent allocation rules)\",\n      \"why_it_matters\": \"Consumer brands increasingly need comparable, decision-useful climate data from suppliers, and agricultural/land impacts can materially change reported emissions. Using consistent allocation methods across co-products helps prevent double counting and improves credibility of product footprints.\",\n      \"recommended_action\": \"Build one consolidated GHG file that clearly separates: (1) direct fuel/process emissions, (2) purchased electricity/heat emissions, and (3) land/ingredient-related emissions/removals where relevant. Define and document a single allocation method for any shared processes that produce multiple outputs (e.g., co-products), and use it consistently across emissions and any removals reporting. If you plan to report removals (e.g., soil carbon), set up an ongoing monitoring plan and a process to record and report any carbon stock losses in the year they occur. Keep methods and assumptions in a buyer-ready appendix.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Land Sector and Removals Standard\",\n          \"source\": \"GHG Protocol\",\n          \"pages_or_section\": \"Page 31 & 33, Requirement 9 (consistent allocation across categories)\",\n          \"link\": \"https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link \"\n        },\n        {\n          \"doc_title\": \"Land Sector and Removals Standard\",\n          \"source\": \"GHG Protocol\",\n          \"pages_or_section\": \"Page 54, Requirement 15 (account for net land carbon stock losses on agricultural lands)\",\n          \"link\": \"https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link \"\n        },\n        {\n          \"doc_title\": \"Land Sector and Removals Standard\",\n          \"source\": \"GHG Protocol\",\n          \"pages_or_section\": \"Page 68, Requirement 23 (monitoring plan, permanence and reporting reversals/losses)\",\n          \"link\": \"https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link \"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 2,\n      \"title\": \"Strengthen sustainable sourcing proof-points using credible third-party certifications where they fit your product lines\",\n      \"why_it_matters\": \"Downstream food companies disclose and compare the share of revenue tied to products certified to environmental and social sustainability standards as a way to manage supply risk and increase transparency. For an organic packaged foods exporter, certification coverage and clear documentation can make your sustainability claims easier for consumer-brand buyers to trust and communicate.\",\n      \"recommended_action\": \"Map your current product portfolio and ingredients to identify where you already have third-party certifications and where coverage is missing. For priority product lines aimed at North America, package a simple “certification and chain-of-custody dossier” per SKU: certificate(s), scope, validity, and which farms/ingredients are covered. Where you don’t yet have third-party certification but have strong practices (e.g., integrated pest management or an organic system plan), select one or two high-impact certifications to pursue first, based on buyer conversations and ingredient risk.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Food Retailers & Distributors Sustainability Accounting Standard\",\n          \"source\": \"SASB\",\n          \"pages_or_section\": \"Page 32, FB-FR-430a.1 (disclose revenue from products certified to environmental/social sustainability standards; examples include Organic, Fairtrade, Rainforest Alliance)\",\n          \"link\": \"https://drive.google.com/file/d/1I1--4z5O7N8XGmTdPKtzrL2Rtnmo0dGN/view?usp=share_link \"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\",\n        \"Resources\",\n        \"Community\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 3,\n      \"title\": \"Put in place basic waste and packaging measurement to enable credible packaging improvements\",\n      \"why_it_matters\": \"You report that you do not track total waste generated and you do not use eco-friendly/biodegradable packaging; this makes it hard to identify cost-saving waste reductions and to substantiate packaging improvements for consumer-brand buyers. A clear baseline also supports better sustainability reporting and procurement discussions.\",\n      \"recommended_action\": \"Start a low-overhead waste baseline: track monthly total waste by main streams (e.g., organic/food waste, packaging scrap, general waste) and record how much is recycled/reused/composted versus disposed; keep weight tickets or vendor invoices as evidence. In parallel, run a packaging “bill of materials” review for top-selling SKUs and prioritize 1–2 changes that are easiest to trial (e.g., lightweighting, increased recyclability, or switching one component to a more sustainable option). Update your ESG summary with: total waste generated and % diverted, plus packaging material changes and rationale.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Best practices in sustainability by Peruvian MSMEs\",\n          \"source\": \"GRI\",\n          \"pages_or_section\": \"Report (practical guidance for SMEs on measuring and communicating environmental impacts to improve competitiveness)\",\n          \"link\": \"https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\"\n      ],\n      \"implementation_difficulty\": \"Low\"\n    },\n    {\n      \"priority_rank\": 4,\n      \"title\": \"Move from informal to structured supplier environmental risk screening (starting with land and ecosystem impacts)\",\n      \"why_it_matters\": \"You have supplier standards and consider environmental criteria in selection, but you have not identified which suppliers have significant negative environmental impacts, and supplier engagement is informal. A simple risk screen helps focus effort on the few suppliers and sourcing regions most likely to drive land-use, biodiversity, and emissions exposure.\",\n      \"recommended_action\": \"Create a supplier environmental risk register covering your top suppliers by spend/volume and any high-risk commodities. For each, capture: sourcing origin, whether land-based production is involved, known land/ecosystem risks, and what evidence exists (certifications, audits, or farm practices). Prioritize the top tier for structured engagement: request basic data on farm practices and land management, and align on a small set of information you will update annually. Where you eventually quantify land carbon impacts, ensure land carbon stock changes and losses are captured in your accounting approach.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Land Sector and Removals Standard\",\n          \"source\": \"GHG Protocol\",\n          \"pages_or_section\": \"Page 54, Requirement 15 (account for land carbon stock losses on agricultural lands, including from degradation and disturbances)\",\n          \"link\": \"https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link \"\n        },\n        {\n          \"doc_title\": \"Agricultural Products Sustainability Accounting Standard\",\n          \"source\": \"SASB\",\n          \"pages_or_section\": \"Standard overview (industry-specific metrics used to assess sustainability risks in agricultural supply chains, including environmental impacts of ingredient sourcing)\",\n          \"link\": \"https://drive.google.com/file/d/1c24lRGTzbz3c8ptQkcXqBBcvNfuGPjK6/view?usp=share_link \"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 5,\n      \"title\": \"Publish an anti-bribery and corruption commitment that matches your existing governance controls\",\n      \"why_it_matters\": \"You have a grievance/whistleblower mechanism but no public anti-corruption and anti-bribery commitment, which can create avoidable friction in buyer onboarding and distributor relationships. A clear commitment also supports consistent expectations for staff and third parties.\",\n      \"recommended_action\": \"Draft a short, public anti-bribery and corruption statement (website + supplier onboarding pack) and connect it to practical controls you already have: reporting channels, non-retaliation, and consequences for violations. Add a simple annual sign-off for managers and any third parties who handle sales, customs/logistics, or procurement. Include the commitment and reporting channel in your supplier code of conduct materials so expectations are consistent across your value chain.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Best practices in sustainability by Peruvian MSMEs\",\n          \"source\": \"GRI\",\n          \"pages_or_section\": \"Report (SME-focused practices for improving sustainability management and buyer attractiveness through clearer policies and communication)\",\n          \"link\": \"https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Low\"\n    }\n  ],\n  \"key_gaps\": [\n    {\n      \"category\": \"Resources\",\n      \"gap\": \"Incomplete environmental measurement and product impact management: purchased electricity/heat emissions measurement is missing in one place, waste generation is not tracked, and packaging is not yet eco-friendly/biodegradable—limiting credible buyer-facing disclosure.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Best practices in sustainability by Peruvian MSMEs\",\n          \"source\": \"GRI\",\n          \"pages_or_section\": \"Report (practical guidance on measuring and communicating environmental impacts for competitiveness)\",\n          \"link\": \"https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Resources\",\n      \"gap\": \"Supplier environmental risk identification is weak: suppliers with significant actual/potential environmental impacts have not been identified, despite having general supplier standards and environmental selection criteria.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Agricultural Products Sustainability Accounting Standard\",\n          \"source\": \"SASB\",\n          \"pages_or_section\": \"Standard overview (metrics for environmental impacts of ingredient sourcing and supply chain risk management)\",\n          \"link\": \"https://drive.google.com/file/d/1c24lRGTzbz3c8ptQkcXqBBcvNfuGPjK6/view?usp=share_link \"\n        }\n      ]\n    },\n    {\n      \"category\": \"Community\",\n      \"gap\": \"Limited structured community impact activity: there is no formal community investment/philanthropy program and no supported employee volunteer hours, which reduces positive local-impact storytelling for market access.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Best practices in sustainability by Peruvian MSMEs\",\n          \"source\": \"GRI\",\n          \"pages_or_section\": \"Report (examples and guidance for SMEs to improve competitiveness by communicating social and environmental impacts)\",\n          \"link\": \"https://drive.google.com/file/d/1Z92u3jFL8KSdgwmL9e_CwDPGBY6ysPN8/view?usp=share_link\"\n        }\n      ]\n    }\n  ],\n  \"grounding_notes\": \"Recommendations are anchored in your disclosed weaknesses (no waste tracking, no eco-friendly packaging, informal supplier environmental engagement, no public anti-bribery commitment) and in buyer-facing disclosure expectations reflected in the retrieved standards. The GHG and land-impact recommendations are grounded in the GHG Protocol Land Sector and Removals Standard requirements on consistent allocation, accounting for land carbon stock losses, and monitoring permanence for any removals claims. Certification guidance is grounded in SASB’s Food Retailers & Distributors standard disclosure concept that buyers track revenue from third-party certified products as evidence of sustainable sourcing and transparency. Where the retrieved evidence is more general (e.g., SME sustainability management practices), actions are framed as practical, low-overhead steps suitable for a 51–250 employee, $1M–$5M company seeking market access.\"\n}"
+        }
+      ],
+      "role": "assistant"
+    }
+  ],
+  "recommendation_capture_method": "raw_json",
+  "qa": {
+    "all_non_null_answers_applied": true,
+    "score_capture_complete": true,
+    "recommendation_schema_complete": true,
+    "evidence_fields_checked": true,
+    "no_internal_ids_in_user_prose": true,
+    "status": "PASS",
+    "notes": [
+      "App normalises employee band display/value: seed '51-250' → payload '51 - 250' (same option).",
+      "7 evidence link value(s) carry trailing whitespace (still resolvable after trim): https://drive.google.com/file/d/1Bb-f4-f4O_45xy48BluxqngFqKeaDekD/view?usp=share_link, https://drive.google.com/file/d/1I1--4z5O7N8XGmTdPKtzrL2Rtnmo0dGN/view?usp=share_link, https://drive.google.com/file/d/1c24lRGTzbz3c8ptQkcXqBBcvNfuGPjK6/view?usp=share_link",
+      "Profile \"notes\" value was entered verbatim into the \"Additional Context / Requirements\" field and is echoed into the LLM context."
+    ]
+  }
+}

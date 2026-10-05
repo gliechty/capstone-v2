@@ -1,0 +1,13 @@
+{
+    servers {
+        protocols h1 h2
+    }
+}
+
+n8n.flowagentai.website {
+    reverse_proxy 127.0.0.1:5678
+}
+
+appsmith.flowagentai.website {
+    reverse_proxy 127.0.0.1:9080
+}

@@ -1,0 +1,1210 @@
+{
+  "case_id": "GOLDEN_05_CONSUMER_GOODS",
+  "captured_from": "current live v1",
+  "captured_at": "2026-10-03T07:26:51Z",
+  "question_selection": {
+    "expected_count": 52,
+    "actual_count": 52,
+    "expected_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-009",
+      "I-012",
+      "I-024",
+      "I-027",
+      "I-036",
+      "I-049",
+      "I-053",
+      "I-059",
+      "I-066",
+      "I-072",
+      "M-001",
+      "M-003",
+      "M-008",
+      "M-010",
+      "M-011",
+      "M-018",
+      "M-024",
+      "M-029",
+      "M-038"
+    ],
+    "actual_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-009",
+      "I-012",
+      "I-024",
+      "I-027",
+      "I-036",
+      "I-049",
+      "I-053",
+      "I-059",
+      "I-066",
+      "I-072",
+      "M-001",
+      "M-003",
+      "M-008",
+      "M-010",
+      "M-011",
+      "M-018",
+      "M-024",
+      "M-029",
+      "M-038"
+    ],
+    "question_set_match": true,
+    "missing_ids": [],
+    "unexpected_ids": [],
+    "order_match": true,
+    "source": "Start Assessment network response (question_count + questions[].question_id), cross-checked against rendered question cards"
+  },
+  "scoring": {
+    "raw_overall": {
+      "points_earned": 14744.11,
+      "total_possible": 20231.7,
+      "overall_percent": 72.9,
+      "categories_answered": 4
+    },
+    "weighted_overall": {
+      "weighted_score": 70.4,
+      "max_score": 100,
+      "weights_found": true,
+      "industry": "Consumer Goods (Apparel / FMCG)",
+      "breakdown": [
+        {
+          "category": "Governance",
+          "raw_percent": 82.1,
+          "weight": 0.29,
+          "weighted_contribution": 23.808999999999997
+        },
+        {
+          "category": "People",
+          "raw_percent": 64.9,
+          "weight": 0.16,
+          "weighted_contribution": 10.384
+        },
+        {
+          "category": "Resources",
+          "raw_percent": 69.1,
+          "weight": 0.45,
+          "weighted_contribution": 31.095
+        },
+        {
+          "category": "Community",
+          "raw_percent": 50.7,
+          "weight": 0.1,
+          "weighted_contribution": 5.07
+        }
+      ]
+    },
+    "category_scores": [
+      {
+        "category": "Governance",
+        "points_earned": 7137.46,
+        "total_possible": 8698.7,
+        "category_percent": 82.1,
+        "questions_answered": 22
+      },
+      {
+        "category": "People",
+        "points_earned": 1458.8,
+        "total_possible": 2247,
+        "category_percent": 64.9,
+        "questions_answered": 6
+      },
+      {
+        "category": "Resources",
+        "points_earned": 5402.85,
+        "total_possible": 7816,
+        "category_percent": 69.1,
+        "questions_answered": 20
+      },
+      {
+        "category": "Community",
+        "points_earned": 745,
+        "total_possible": 1470,
+        "category_percent": 50.7,
+        "questions_answered": 4
+      }
+    ],
+    "weighted_category_breakdown": [
+      {
+        "category": "Governance",
+        "points_earned": 7137.46,
+        "total_possible": 8698.7,
+        "raw_category_percent": 82.1,
+        "category_weight": 0.29,
+        "weighted_contribution": 23.81,
+        "questions_answered": 22
+      },
+      {
+        "category": "People",
+        "points_earned": 1458.8,
+        "total_possible": 2247,
+        "raw_category_percent": 64.9,
+        "category_weight": 0.16,
+        "weighted_contribution": 10.38,
+        "questions_answered": 6
+      },
+      {
+        "category": "Resources",
+        "points_earned": 5402.85,
+        "total_possible": 7816,
+        "raw_category_percent": 69.1,
+        "category_weight": 0.45,
+        "weighted_contribution": 31.09,
+        "questions_answered": 20
+      },
+      {
+        "category": "Community",
+        "points_earned": 745,
+        "total_possible": 1470,
+        "raw_category_percent": 50.7,
+        "category_weight": 0.1,
+        "weighted_contribution": 5.07,
+        "questions_answered": 4
+      }
+    ],
+    "question_level": [
+      {
+        "question_id": "U-001",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 386,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 386,
+        "final_score_possible": 386,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-002",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 200.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 200.5,
+        "final_score_possible": 401,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-004",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 489.9,
+        "final_score_possible": 489.9,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-005",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 379,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 379,
+        "final_score_possible": 379,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-006",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 66,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 264,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 264,
+        "final_score_possible": 400,
+        "completion_percent": 66,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-007",
+        "answer_as_recorded": "Structured program",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 397,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 397,
+        "final_score_possible": 397,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-008",
+        "answer_as_recorded": "Advanced",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 401,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 401,
+        "final_score_possible": 401,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-009",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-010",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-012",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 386,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 386,
+        "final_score_possible": 386,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-013",
+        "answer_as_recorded": "Partially implemented",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 189.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 189.5,
+        "final_score_possible": 379,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-014",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 198.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 198.5,
+        "final_score_possible": 397,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-015",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 196.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196.5,
+        "final_score_possible": 393,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-018",
+        "answer_as_recorded": "1",
+        "normalized_score": 50,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 175,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 175,
+        "final_score_possible": 350,
+        "completion_percent": 50,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-019",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 375,
+        "completion_percent": 0,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-020",
+        "answer_as_recorded": "40",
+        "normalized_score": 100,
+        "normalization_method": "gaussian",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-021",
+        "answer_as_recorded": "13",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-022",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 393,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 393,
+        "final_score_possible": 393,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-023",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 402,
+        "final_score_possible": 402,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-024",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 402,
+        "final_score_possible": 402,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-025",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.57,
+        "weighted_score": 357,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 357,
+        "final_score_possible": 357,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-026",
+        "answer_as_recorded": "20",
+        "normalized_score": 20,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.88,
+        "weighted_score": 77.6,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 77.6,
+        "final_score_possible": 388,
+        "completion_percent": 20,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-027",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.92,
+        "weighted_score": 196,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196,
+        "final_score_possible": 392,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-028",
+        "answer_as_recorded": "Implemented",
+        "normalized_score": 75,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 300,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 300,
+        "final_score_possible": 400,
+        "completion_percent": 75,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-029",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.61,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 361,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-030",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.08,
+        "weighted_score": 408,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 408,
+        "final_score_possible": 408,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-031",
+        "answer_as_recorded": "30",
+        "normalized_score": 30,
+        "normalization_method": "identity_percent",
+        "base_weight": 4.08,
+        "weighted_score": 122.4,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 122.4,
+        "final_score_possible": 408,
+        "completion_percent": 30,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-032",
+        "answer_as_recorded": "2",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 4.08,
+        "weighted_score": 408,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 408,
+        "final_score_possible": 408,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-033",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.7,
+        "weighted_score": 370,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 370,
+        "final_score_possible": 370,
+        "completion_percent": 100,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-034",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 200,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 200,
+        "final_score_possible": 400,
+        "completion_percent": 50,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-035",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 350,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-036",
+        "answer_as_recorded": "1",
+        "normalized_score": 50,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 175,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 175,
+        "final_score_possible": 350,
+        "completion_percent": 50,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "I-009",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.87,
+        "weighted_score": 387,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 387,
+        "final_score_possible": 387,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-012",
+        "answer_as_recorded": "Basic",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.87,
+        "weighted_score": 127.71,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 127.71,
+        "final_score_possible": 387,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-024",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.98,
+        "weighted_score": 398,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 398,
+        "final_score_possible": 398,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-027",
+        "answer_as_recorded": "None",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.49,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 349,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-036",
+        "answer_as_recorded": "Implemented",
+        "normalized_score": 75,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.98,
+        "weighted_score": 298.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 298.5,
+        "final_score_possible": 398,
+        "completion_percent": 75,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-049",
+        "answer_as_recorded": "Always",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.98,
+        "weighted_score": 398,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 398,
+        "final_score_possible": 398,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-053",
+        "answer_as_recorded": "0.00012",
+        "normalized_score": 45.45,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.02,
+        "weighted_score": 182.71,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 182.71,
+        "final_score_possible": 402,
+        "completion_percent": 45.5,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-059",
+        "answer_as_recorded": "0.3",
+        "normalized_score": 67.91,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.57,
+        "weighted_score": 242.44,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 242.44,
+        "final_score_possible": 357,
+        "completion_percent": 67.9,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-066",
+        "answer_as_recorded": "29",
+        "normalized_score": 0.16,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.61,
+        "weighted_score": 0.58,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0.58,
+        "final_score_possible": 361,
+        "completion_percent": 0.2,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-072",
+        "answer_as_recorded": "0.04",
+        "normalized_score": 95.74,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.08,
+        "weighted_score": 390.62,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 390.62,
+        "final_score_possible": 408,
+        "completion_percent": 95.7,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-001",
+        "answer_as_recorded": "Limited external assurance",
+        "normalized_score": 66,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 264,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 264,
+        "final_score_possible": 400,
+        "completion_percent": 66,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-008",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-010",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 213,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 244.95,
+        "final_score_possible": 489.9,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-011",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 489.9,
+        "final_score_possible": 489.9,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-018",
+        "answer_as_recorded": "0",
+        "normalized_score": 100,
+        "normalization_method": "inverse_count",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-024",
+        "answer_as_recorded": "16",
+        "normalized_score": 40,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.97,
+        "weighted_score": 158.8,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 158.8,
+        "final_score_possible": 397,
+        "completion_percent": 40,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-029",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-038",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 426,
+        "final_score_possible": 426,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      }
+    ],
+    "capture_method": "raw_state_or_network",
+    "category_weights": {
+      "industry": "Consumer Goods (Apparel / FMCG)",
+      "people_weight": 0.16,
+      "governance_weight": 0.29,
+      "community_weight": 0.1,
+      "resources_weight": 0.45,
+      "notes": "Consumer Goods (Apparel / FMCG) (n=68) — Resources hit the ceiling (raw 50% → capped at 0.50), driven by water, chemicals, packaging, and supply-chain material indicators. Governance remains strong (29%) for traceability and product compliance. Community was floored from 0% → 10% (no community-facing indicators clustered here)."
+    },
+    "scoring_summary_ids": {
+      "lowest": [
+        "U-019",
+        "U-029",
+        "U-035",
+        "I-027",
+        "I-066"
+      ],
+      "highest": [
+        "U-004",
+        "M-011",
+        "M-038",
+        "U-030",
+        "U-032"
+      ],
+      "weakest_categories": [
+        "Community",
+        "People",
+        "Resources",
+        "Governance"
+      ]
+    },
+    "matched_rules_by_question": {
+      "U-004": [
+        "MR-B11@1.15"
+      ],
+      "M-010": [
+        "MR-B11@1.15"
+      ],
+      "M-011": [
+        "MR-B11@1.15"
+      ]
+    },
+    "answered_question_count": 52,
+    "sme_context_as_sent": {
+      "company_name": "Golden Consumer Goods Co.",
+      "industry": "Consumer Goods (Apparel / FMCG)",
+      "subindustry": "Household Goods / FMCG",
+      "employee_band": "251 - 500",
+      "revenue_band": "$25M-$50M",
+      "company_location": "APAC",
+      "country": "Vietnam",
+      "target_market_region": [
+        "North America",
+        "APAC"
+      ],
+      "target_buyer": "Enterprise",
+      "business_goal": "Prepare for procurement questionnaires",
+      "notes": "Golden regression case derived from Final Tool Testing; ignore legacy tester QA comments and old score/output judgments."
+    },
+    "capture_notes": [
+      "Top-level scoring objects copied verbatim from the scoring payload the app sent with the recommendation request (intercepted network request body); transcription verified by SHA-256 against the in-browser value.",
+      "answered_questions/category_debug arrays from the payload are represented by question_level (read from rendered question cards) plus matched_rules_by_question; question_text was omitted as it is static QuestionBank content."
+    ]
+  },
+  "recommendation_output": {
+    "executive_summary": "Golden Consumer Goods Co. shows strong governance maturity for an APAC-based consumer-goods supplier selling to enterprise buyers, with written policies, supplier engagement, a grievance mechanism, and sustainability reporting already in place. The biggest improvement opportunity is strengthening “People” fundamentals—especially formalising labour-rights and fair-working-conditions expectations—so procurement questionnaires can be answered consistently for both your own operations and supply-chain oversight. Resources performance is solid on energy, emissions, waste and chemicals controls, but would be strengthened by closing the major gap on water measurement and water/wastewater risk visibility. The raw overall score is 72.9% and the industry-weighted overall score is 70.3%, reflecting that Resources carries higher importance for consumer goods suppliers and is an area with clear, addressable gaps.",
+    "priority_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "Create a written labour rights & fair working conditions policy and make it auditable across your operations and supplier code",
+        "why_it_matters": "You indicated you do not have a written labour-rights/fair-working-conditions policy, which is a common enterprise procurement red flag even when other governance controls exist. Apparel/FMCG buyers also expect supplier codes of conduct and audits to cover core labour and EHS topics such as working hours, non-discrimination, minimum age, compensation, freedom of association, anti-harassment, and safe workplaces.",
+        "recommended_action": "Draft and approve a concise Labour & Working Conditions Policy covering working hours/overtime, non-discrimination, minimum age, compensation, freedom of association/worker voice, respectful workplace (anti-harassment/anti-abuse), and safe working conditions. Align your supplier code of conduct to include these same minimum labour and environmental health & safety elements, then update supplier onboarding/renewals to reference the code. Build an audit-ready checklist so internal teams or third parties can verify compliance and track non-conformances and corrective actions, focusing first on Tier 1 suppliers where you have the most leverage.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Pages 17-18 (labour code of conduct minimum criteria; audit definition and scope)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          },
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 19-20 (non-conformance and corrective action expectations; context on resolving priority issues)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "People",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 2,
+        "title": "Implement water measurement and add wastewater visibility for relevant processes and suppliers",
+        "why_it_matters": "You currently do not track total water withdrawal/usage, which creates a major blind spot for an FMCG/apparel supply chain where wet processes can drive material risk. Enterprise-facing disclosures in this sector commonly ask for supplier wastewater compliance and data collection beyond Tier 1 for water-intensive activities.",
+        "recommended_action": "Start metering and recording total water withdrawal/consumption at each site (monthly) and establish a simple water balance (inputs vs. major uses). Map whether your operations or suppliers perform wet processes (e.g., dyeing, washing, printing, wet finishing); if yes, add a supplier questionnaire that requests evidence of wastewater discharge compliance and any violations/notices. Where direct Higg FEM use is not practical, collect equivalent inventory data (water, wastewater, chemicals, waste, energy/GHG) and basic reduction targets from priority facilities to support procurement responses and risk reviews.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 13 (wastewater discharge compliance expectations for Tier 1 and beyond Tier 1 suppliers; scope of wet processes)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          },
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 16 (Higg FEM or equivalent environmental data assessment categories including water and wastewater)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 3,
+        "title": "Strengthen supplier environmental due diligence with a standard facility data assessment and clearer tier coverage",
+        "why_it_matters": "You indicated only some use of environmental criteria in supplier evaluation and only some identification of suppliers with significant environmental impacts, which can limit how confidently you answer enterprise procurement questionnaires. Sector guidance highlights collecting consistent facility-level inventory data (energy & GHG, water, wastewater, waste, air emissions, chemicals management) and clarifying Tier 1 vs. beyond Tier 1 coverage.",
+        "recommended_action": "Create a supplier segmentation (Tier 1 and key beyond Tier 1 where material impacts occur) and define “priority facilities” by risk (wet processes, chemical intensity, high waste/water footprint). Roll out one standard environmental data pack aligned to the categories used in common facility assessments (EMS, energy/GHG, water, wastewater, waste, air emissions, chemicals). Require annual submission plus supporting evidence for high-risk facilities, and use the results to set supplier improvement actions and timelines. Track completion rates by tier so you can report progress clearly to buyers.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 16 (facility environmental module or equivalent assessment and required data categories; Tier 1 and beyond Tier 1 reporting)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 4,
+        "title": "Make renewable energy claims procurement-ready by documenting the instrument and certificate handling",
+        "why_it_matters": "You report a share of renewable energy, and enterprise buyers often scrutinize whether renewable electricity claims are supported by appropriate contractual instruments and certificate retirement practices. Clear documentation reduces the risk of inconsistent answers across questionnaires and improves credibility of climate claims.",
+        "recommended_action": "For each site, document the renewable energy source type (on-site generation, purchased green power product, or power purchase agreement) and keep the underlying contracts/invoices. Where certificates are involved (e.g., renewable energy certificates or guarantees of origin), document how they are retained and retired/cancelled on your behalf so the company can credibly claim the renewable attribute. Add a short note to your ESG summary describing your definition of renewable energy and what evidence you maintain, so procurement teams can validate quickly.",
+        "evidence": [
+          {
+            "doc_title": "E-commerce Sustainability Accounting Standard",
+            "source": "SASB",
+            "pages_or_section": "Page 8, CG-EC-130a.1 (renewable energy definition; criteria for PPAs and certificate retention/retirement)",
+            "link": "https://drive.google.com/file/d/1OCaGZMZqt277RdXUYtjVLOr3Xv6a90sg/view?usp=share_link "
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Low"
+      },
+      {
+        "priority_rank": 5,
+        "title": "Close the gap on product-level carbon targets by piloting product footprinting for a priority SKU family",
+        "why_it_matters": "You have a company-wide emissions reduction target but no product-level GHG-reduction targets, which can be a common procurement request for consumer goods portfolios. A product life-cycle approach helps you pinpoint the largest drivers (materials, processing, packaging, logistics, use/end-of-life) and translate corporate goals into actionable product changes.",
+        "recommended_action": "Select 1–2 high-volume product lines (or a representative SKU family) and map a cradle-to-grave footprint boundary that includes upstream materials and key processing steps, plus distribution and end-of-life where feasible. Use supplier primary data where available and focus first on the largest contributors (often materials and wet processing). From the results, set a product improvement plan (e.g., material substitutions, supplier process improvements, packaging/logistics changes) and establish an internal cadence to update the footprint as supplier data quality improves.",
+        "evidence": [
+          {
+            "doc_title": "Product Life Cycle Accounting and Reporting Standard",
+            "source": "GHG Protocol",
+            "pages_or_section": "Standard (product life-cycle GHG quantification and reporting across the value chain)",
+            "link": "https://drive.google.com/file/d/1o_CGOspUE8ipUaRtuAdE9Nl5H2uimJq_/view?usp=share_link "
+          }
+        ],
+        "related_categories": [
+          "Resources"
+        ],
+        "implementation_difficulty": "High"
+      }
+    ],
+    "key_gaps": [
+      {
+        "category": "People",
+        "gap": "No written labour rights and fair working conditions policy for employees, despite having other governance mechanisms.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Pages 17-18 (minimum labour and EHS criteria expected in a labour code of conduct; audit definition)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Resources",
+        "gap": "No tracking of total water use/withdrawal, limiting visibility on water risk and wastewater-linked impacts in operations and the supply chain.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 13 (supplier wastewater discharge compliance and scope of wet processes)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Community",
+        "gap": "No employee volunteer programme supported last year, which limits evidence of community engagement beyond donations/philanthropy.",
+        "evidence": [
+          {
+            "doc_title": "Apparel, Accessories & Footwear Sustainability Accounting Standard",
+            "source": "IFRS Foundation",
+            "pages_or_section": "Page 17-20 (focus on supply-chain labour practices, transparency and corrective actions as buyer-relevant social performance signals)",
+            "link": "https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link"
+          }
+        ]
+      }
+    ],
+    "grounding_notes": "Recommendations were prioritised using Golden Consumer Goods Co.’s self-reported answers (notably: no written labour policy; no water tracking; partial supplier environmental screening; 20% renewable energy; no product-level GHG targets), then anchored to retrieved, enterprise-relevant disclosure expectations from the Apparel, Accessories & Footwear Sustainability Accounting Standard (IFRS Foundation) and renewable-energy claim criteria from the E-commerce Sustainability Accounting Standard (SASB). The product footprint pilot is grounded in the GHG Protocol Product Life Cycle Standard’s life-cycle accounting approach; it is framed as a limited pilot to stay realistic for a 251–500 employee, $25M–$50M SME preparing procurement questionnaire responses."
+  },
+  "recommendation_output_raw": [
+    {
+      "id": "msg_04cc30c960bb1d0a006ac0ae1cf84c87d1870d92536a8651bc",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"executive_summary\": \"Golden Consumer Goods Co. shows strong governance maturity for an APAC-based consumer-goods supplier selling to enterprise buyers, with written policies, supplier engagement, a grievance mechanism, and sustainability reporting already in place. The biggest improvement opportunity is strengthening “People” fundamentals—especially formalising labour-rights and fair-working-conditions expectations—so procurement questionnaires can be answered consistently for both your own operations and supply-chain oversight. Resources performance is solid on energy, emissions, waste and chemicals controls, but would be strengthened by closing the major gap on water measurement and water/wastewater risk visibility. The raw overall score is 72.9% and the industry-weighted overall score is 70.3%, reflecting that Resources carries higher importance for consumer goods suppliers and is an area with clear, addressable gaps.\",\n  \"priority_recommendations\": [\n    {\n      \"priority_rank\": 1,\n      \"title\": \"Create a written labour rights & fair working conditions policy and make it auditable across your operations and supplier code\",\n      \"why_it_matters\": \"You indicated you do not have a written labour-rights/fair-working-conditions policy, which is a common enterprise procurement red flag even when other governance controls exist. Apparel/FMCG buyers also expect supplier codes of conduct and audits to cover core labour and EHS topics such as working hours, non-discrimination, minimum age, compensation, freedom of association, anti-harassment, and safe workplaces.\",\n      \"recommended_action\": \"Draft and approve a concise Labour & Working Conditions Policy covering working hours/overtime, non-discrimination, minimum age, compensation, freedom of association/worker voice, respectful workplace (anti-harassment/anti-abuse), and safe working conditions. Align your supplier code of conduct to include these same minimum labour and environmental health & safety elements, then update supplier onboarding/renewals to reference the code. Build an audit-ready checklist so internal teams or third parties can verify compliance and track non-conformances and corrective actions, focusing first on Tier 1 suppliers where you have the most leverage.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Pages 17-18 (labour code of conduct minimum criteria; audit definition and scope)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 19-20 (non-conformance and corrective action expectations; context on resolving priority issues)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"People\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 2,\n      \"title\": \"Implement water measurement and add wastewater visibility for relevant processes and suppliers\",\n      \"why_it_matters\": \"You currently do not track total water withdrawal/usage, which creates a major blind spot for an FMCG/apparel supply chain where wet processes can drive material risk. Enterprise-facing disclosures in this sector commonly ask for supplier wastewater compliance and data collection beyond Tier 1 for water-intensive activities.\",\n      \"recommended_action\": \"Start metering and recording total water withdrawal/consumption at each site (monthly) and establish a simple water balance (inputs vs. major uses). Map whether your operations or suppliers perform wet processes (e.g., dyeing, washing, printing, wet finishing); if yes, add a supplier questionnaire that requests evidence of wastewater discharge compliance and any violations/notices. Where direct Higg FEM use is not practical, collect equivalent inventory data (water, wastewater, chemicals, waste, energy/GHG) and basic reduction targets from priority facilities to support procurement responses and risk reviews.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 13 (wastewater discharge compliance expectations for Tier 1 and beyond Tier 1 suppliers; scope of wet processes)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 16 (Higg FEM or equivalent environmental data assessment categories including water and wastewater)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 3,\n      \"title\": \"Strengthen supplier environmental due diligence with a standard facility data assessment and clearer tier coverage\",\n      \"why_it_matters\": \"You indicated only some use of environmental criteria in supplier evaluation and only some identification of suppliers with significant environmental impacts, which can limit how confidently you answer enterprise procurement questionnaires. Sector guidance highlights collecting consistent facility-level inventory data (energy & GHG, water, wastewater, waste, air emissions, chemicals management) and clarifying Tier 1 vs. beyond Tier 1 coverage.\",\n      \"recommended_action\": \"Create a supplier segmentation (Tier 1 and key beyond Tier 1 where material impacts occur) and define “priority facilities” by risk (wet processes, chemical intensity, high waste/water footprint). Roll out one standard environmental data pack aligned to the categories used in common facility assessments (EMS, energy/GHG, water, wastewater, waste, air emissions, chemicals). Require annual submission plus supporting evidence for high-risk facilities, and use the results to set supplier improvement actions and timelines. Track completion rates by tier so you can report progress clearly to buyers.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 16 (facility environmental module or equivalent assessment and required data categories; Tier 1 and beyond Tier 1 reporting)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 4,\n      \"title\": \"Make renewable energy claims procurement-ready by documenting the instrument and certificate handling\",\n      \"why_it_matters\": \"You report a share of renewable energy, and enterprise buyers often scrutinize whether renewable electricity claims are supported by appropriate contractual instruments and certificate retirement practices. Clear documentation reduces the risk of inconsistent answers across questionnaires and improves credibility of climate claims.\",\n      \"recommended_action\": \"For each site, document the renewable energy source type (on-site generation, purchased green power product, or power purchase agreement) and keep the underlying contracts/invoices. Where certificates are involved (e.g., renewable energy certificates or guarantees of origin), document how they are retained and retired/cancelled on your behalf so the company can credibly claim the renewable attribute. Add a short note to your ESG summary describing your definition of renewable energy and what evidence you maintain, so procurement teams can validate quickly.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"E-commerce Sustainability Accounting Standard\",\n          \"source\": \"SASB\",\n          \"pages_or_section\": \"Page 8, CG-EC-130a.1 (renewable energy definition; criteria for PPAs and certificate retention/retirement)\",\n          \"link\": \"https://drive.google.com/file/d/1OCaGZMZqt277RdXUYtjVLOr3Xv6a90sg/view?usp=share_link \"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Low\"\n    },\n    {\n      \"priority_rank\": 5,\n      \"title\": \"Close the gap on product-level carbon targets by piloting product footprinting for a priority SKU family\",\n      \"why_it_matters\": \"You have a company-wide emissions reduction target but no product-level GHG-reduction targets, which can be a common procurement request for consumer goods portfolios. A product life-cycle approach helps you pinpoint the largest drivers (materials, processing, packaging, logistics, use/end-of-life) and translate corporate goals into actionable product changes.\",\n      \"recommended_action\": \"Select 1–2 high-volume product lines (or a representative SKU family) and map a cradle-to-grave footprint boundary that includes upstream materials and key processing steps, plus distribution and end-of-life where feasible. Use supplier primary data where available and focus first on the largest contributors (often materials and wet processing). From the results, set a product improvement plan (e.g., material substitutions, supplier process improvements, packaging/logistics changes) and establish an internal cadence to update the footprint as supplier data quality improves.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Product Life Cycle Accounting and Reporting Standard\",\n          \"source\": \"GHG Protocol\",\n          \"pages_or_section\": \"Standard (product life-cycle GHG quantification and reporting across the value chain)\",\n          \"link\": \"https://drive.google.com/file/d/1o_CGOspUE8ipUaRtuAdE9Nl5H2uimJq_/view?usp=share_link \"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\"\n      ],\n      \"implementation_difficulty\": \"High\"\n    }\n  ],\n  \"key_gaps\": [\n    {\n      \"category\": \"People\",\n      \"gap\": \"No written labour rights and fair working conditions policy for employees, despite having other governance mechanisms.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Pages 17-18 (minimum labour and EHS criteria expected in a labour code of conduct; audit definition)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Resources\",\n      \"gap\": \"No tracking of total water use/withdrawal, limiting visibility on water risk and wastewater-linked impacts in operations and the supply chain.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 13 (supplier wastewater discharge compliance and scope of wet processes)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Community\",\n      \"gap\": \"No employee volunteer programme supported last year, which limits evidence of community engagement beyond donations/philanthropy.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Apparel, Accessories & Footwear Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation\",\n          \"pages_or_section\": \"Page 17-20 (focus on supply-chain labour practices, transparency and corrective actions as buyer-relevant social performance signals)\",\n          \"link\": \"https://drive.google.com/file/d/1GVsW27PYuGNnoX993G8G7epZlgJdvbFP/view?usp=share_link\"\n        }\n      ]\n    }\n  ],\n  \"grounding_notes\": \"Recommendations were prioritised using Golden Consumer Goods Co.’s self-reported answers (notably: no written labour policy; no water tracking; partial supplier environmental screening; 20% renewable energy; no product-level GHG targets), then anchored to retrieved, enterprise-relevant disclosure expectations from the Apparel, Accessories & Footwear Sustainability Accounting Standard (IFRS Foundation) and renewable-energy claim criteria from the E-commerce Sustainability Accounting Standard (SASB). The product footprint pilot is grounded in the GHG Protocol Product Life Cycle Standard’s life-cycle accounting approach; it is framed as a limited pilot to stay realistic for a 251–500 employee, $25M–$50M SME preparing procurement questionnaire responses.\"\n}"
+        }
+      ],
+      "role": "assistant"
+    }
+  ],
+  "recommendation_capture_method": "raw_json",
+  "qa": {
+    "all_non_null_answers_applied": true,
+    "score_capture_complete": true,
+    "recommendation_schema_complete": true,
+    "evidence_fields_checked": true,
+    "no_internal_ids_in_user_prose": true,
+    "status": "PASS",
+    "notes": [
+      "App normalises employee band display/value: seed '251-500' → payload '251 - 500' (same option).",
+      "2 evidence link value(s) carry trailing whitespace (still resolvable after trim): https://drive.google.com/file/d/1OCaGZMZqt277RdXUYtjVLOr3Xv6a90sg/view?usp=share_link, https://drive.google.com/file/d/1o_CGOspUE8ipUaRtuAdE9Nl5H2uimJq_/view?usp=share_link",
+      "SOFT: executive_summary cites industry-weighted score [70.3]% but scoring payload weighted_score is 70.4.",
+      "Profile \"notes\" value was entered verbatim into the \"Additional Context / Requirements\" field and is echoed into the LLM context."
+    ]
+  }
+}

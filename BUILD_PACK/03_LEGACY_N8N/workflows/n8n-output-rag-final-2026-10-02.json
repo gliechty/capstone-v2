@@ -1,0 +1,452 @@
+{
+  "name": "capstone-ai-output-final",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "capstone-ai-output-final",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        -304
+      ],
+      "id": "a9bd4975-4c7e-4a28-b572-d5574c8db3f0",
+      "name": "Webhook",
+      "webhookId": "2f5526c6-f70e-4f2a-adc6-b6f7faae5a2a"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88d00ed2-2d75-4543-ad54-b04468f8a439",
+              "name": "company_name",
+              "value": "={{ $json.body.sme_context.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "906eb44e-e397-44dd-9409-baca340bec6e",
+              "name": "industry",
+              "value": "={{ $json.body.sme_context.industry }}",
+              "type": "string"
+            },
+            {
+              "id": "8aa63993-2f3c-433a-9da4-fb263bfa09a5",
+              "name": "subindustry",
+              "value": "={{ $json.body.sme_context.subindustry }}",
+              "type": "string"
+            },
+            {
+              "id": "10145c5e-90a0-4b07-93a7-d5af0f9b2ad7",
+              "name": "employee_band",
+              "value": "={{ $json.body.sme_context.employee_band }}",
+              "type": "string"
+            },
+            {
+              "id": "1a150271-e281-4595-8fd5-0427eabc1ed3",
+              "name": "revenue_band",
+              "value": "={{ $json.body.sme_context.revenue_band }}",
+              "type": "string"
+            },
+            {
+              "id": "05a42bec-15f5-4d22-8c59-ba7abdbd1fbe",
+              "name": "company_location",
+              "value": "={{ $json.body.sme_context.company_location }}",
+              "type": "string"
+            },
+            {
+              "id": "69e47c38-a48b-47af-abf7-c553e31ba0da",
+              "name": "country",
+              "value": "={{ $json.body.sme_context.country }}",
+              "type": "string"
+            },
+            {
+              "id": "0df35238-0662-44a6-bdf3-d3c993c9f7d3",
+              "name": "target_market_region",
+              "value": "={{ $json.body.sme_context.target_market_region || [] }}",
+              "type": "string"
+            },
+            {
+              "id": "81b6ff4a-5792-4d69-a149-7d5465ec2a9c",
+              "name": "target_buyer",
+              "value": "={{ $json.body.sme_context.target_buyer }}",
+              "type": "string"
+            },
+            {
+              "id": "f8a88d08-f22a-46f9-977e-e5286ab3cdec",
+              "name": "business_goal",
+              "value": "={{ $json.body.sme_context.business_goal }}",
+              "type": "string"
+            },
+            {
+              "id": "52162ada-e416-48c1-9e10-972c8fc5a8ca",
+              "name": "notes",
+              "value": "={{ $json.body.sme_context.notes }}",
+              "type": "string"
+            },
+            {
+              "id": "1193a848-b07d-46f4-816a-cfeb7c13dca0",
+              "name": "subindustry_norm",
+              "value": "={{ ($json.body.sme_context.subindustry|| '' ).toLowerCase().trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "bf55d4c9-3102-4170-b3e7-86f94bc31e4b",
+              "name": "company_location_norm",
+              "value": "={{ ($json.body.sme_context.company_location|| '' ).toLowerCase().trim()  }}",
+              "type": "string"
+            },
+            {
+              "id": "2c372b8c-cd1a-4da4-9098-7f95551b1939",
+              "name": "country_norm",
+              "value": "={{ ($json.body.sme_context.country|| '' ).toLowerCase().trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "c2fc7544-07a4-41c4-89db-1a1f69769553",
+              "name": "raw_overall",
+              "value": "={{ $json.body.raw_overall || {} }}",
+              "type": "string"
+            },
+            {
+              "id": "39c96074-ebdd-424f-860c-5e5a1457ebad",
+              "name": "weighted_overall ",
+              "value": "={{ $json.body.weighted_overall || {} }}",
+              "type": "string"
+            },
+            {
+              "id": "1a201e04-f064-4a62-9711-b358dd9b41cc",
+              "name": "category_scores   ",
+              "value": "={{ $json.body.category_scores || [] }}",
+              "type": "string"
+            },
+            {
+              "id": "4aef0de0-e74a-48d2-b1b4-1f6436bbd597",
+              "name": "weighted_category_breakdown",
+              "value": "={{ $json.body.weighted_category_breakdown || [] }}",
+              "type": "string"
+            },
+            {
+              "id": "de1af5ad-80b8-4c8f-a5db-0c43c5be10f9",
+              "name": "category_debug ",
+              "value": "={{ $json.body.category_debug || {} }}",
+              "type": "string"
+            },
+            {
+              "id": "ff7abfd9-8ded-4b55-8700-0b935ee53f54",
+              "name": "category_weights ",
+              "value": "={{ $json.body.category_weights || {} }}",
+              "type": "string"
+            },
+            {
+              "id": "c94d2fcd-9aa0-4ec4-8eec-43df664d78b9",
+              "name": "scoring_summary",
+              "value": "={{ $json.body.scoring_summary || {} }}",
+              "type": "string"
+            },
+            {
+              "id": "51b28335-d6dc-4105-829e-1bafc2bf1326",
+              "name": "answered_questions",
+              "value": "={{ $json.body.answered_questions || [] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -304
+      ],
+      "id": "1d8cc6c9-07c1-4e27-994a-580a6424f3d4",
+      "name": "Normalize Retrieval Outputs"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1I03tLS4SmE6BiRXYDojRAuYYJHPhZH9cu563O2PpKiM",
+          "mode": "list",
+          "cachedResultName": "DocumentIndex",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1I03tLS4SmE6BiRXYDojRAuYYJHPhZH9cu563O2PpKiM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "DocumentIndex",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1I03tLS4SmE6BiRXYDojRAuYYJHPhZH9cu563O2PpKiM/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        640,
+        -304
+      ],
+      "id": "f8b6e171-821c-4f32-8e3a-014173e277d8",
+      "name": "Get DocumentIndex",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qTrolie0MUmJ8jje",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const sme = $('Normalize Retrieval Outputs').item.json;\nconst docs = $input.all();\n\n// ---------- helpers ----------\nfunction norm(value) {\n  return String(value || '').toLowerCase().trim();\n}\n\nfunction splitList(value) {\n  return String(value || '')\n    .split(/[;,]/)\n    .map(v => v.trim().toLowerCase())\n    .filter(Boolean);\n}\n\nfunction fieldMatches(docValue, smeValue) {\n  const d = norm(docValue);\n  const s = norm(smeValue);\n\n  if (!d || d === 'any' || d === 'all') return true;\n  if (!s) return false;\n\n  const dList = splitList(d);\n  const sList = splitList(s);\n\n  return dList.some(x => sList.includes(x));\n}\n\nfunction tagMatches(docTags, smeText) {\n  const tags = splitList(docTags);\n  const text = norm(smeText);\n\n  if (!tags.length || !text) return 0;\n\n  let count = 0;\n  for (const tag of tags) {\n    if (text.includes(tag)) count += 1;\n  }\n  return count;\n}\n\nfunction priorityScore(value) {\n  const p = norm(value);\n  if (p === 'high') return 3;\n  if (p === 'medium') return 2;\n  if (p === 'low') return 1;\n\n  const n = Number(value);\n  return Number.isFinite(n) ? n : 0;\n}\n\n// ---------- SME context ----------\nconst smeIndustry = norm(sme.industry);\nconst smeRegion = norm(sme.target_market_region);\nconst smeBuyer = norm(sme.target_buyer);\nconst smeGoal = norm(sme.business_goal);\nconst smeNotes = norm(sme.notes);\nconst smeSubindustry = norm(sme.subindustry);\nconst smeLocation = norm(sme.company_location);\n\nconst smeContextText = [\n  sme.industry,\n  sme.subindustry,\n  sme.target_market_region,\n  sme.target_buyer,\n  sme.business_goal,\n  sme.notes\n].filter(Boolean).join(' ').toLowerCase();\n\n// ---------- score docs ----------\nconst scored = docs\n  .map(item => {\n    const doc = item.json;\n\n    const active = norm(doc.active);\n    if (active && active !== 'true') return null;\n\n    let score = 0;\n    const reasons = [];\n\n    // priority base\n    const pScore = priorityScore(doc.priority);\n    score += pScore;\n    if (pScore > 0) reasons.push(`priority: ${doc.priority}`);\n\n    // industry\n    if (fieldMatches(doc.industry, smeIndustry)) {\n      score += 4;\n      if (norm(doc.industry) && norm(doc.industry) !== 'any') {\n        reasons.push(`industry match: ${doc.industry}`);\n      }\n    }\n\n    // region\n    if (fieldMatches(doc.region, smeRegion) || fieldMatches(doc.region, smeLocation)) {\n      score += 3;\n      if (norm(doc.region) && norm(doc.region) !== 'any') {\n        reasons.push(`region match: ${doc.region}`);\n      }\n    }\n\n    // buyer type\n    if (fieldMatches(doc.buyer_type, smeBuyer)) {\n      score += 3;\n      if (norm(doc.buyer_type) && norm(doc.buyer_type) !== 'any') {\n        reasons.push(`buyer match: ${doc.buyer_type}`);\n      }\n    }\n\n    // topic tags\n    const tagHitCount = tagMatches(doc.topic_tags, smeContextText);\n    if (tagHitCount > 0) {\n      score += tagHitCount * 2;\n      reasons.push(`topic tag hits: ${tagHitCount}`);\n    }\n\n    // summary relevance\n    const summaryHits = tagMatches(doc.summary, `${smeGoal} ${smeNotes} ${smeSubindustry}`);\n    if (summaryHits > 0) {\n      score += Math.min(summaryHits, 2);\n      reasons.push('summary relevance');\n    }\n\n    return {\n      json: {\n        doc_id: doc.doc_id || '',\n        doc_title: doc.doc_title || '',\n        doc_type: doc.doc_type || '',\n        source: doc.source || '',\n        category: doc.category || '',\n        industry: doc.industry || '',\n        region: doc.region || '',\n        buyer_type: doc.buyer_type || '',\n        topic_tags: doc.topic_tags || '',\n        priority: doc.priority || '',\n        active: doc.active || '',\n        summary: doc.summary || '',\n        link: doc.link || '',\n        retrieval_score: score,\n        retrieval_reasons: reasons,\n        sme_test_id: sme.test_id,\n        sme_company_name: sme.company_name\n      }\n    };\n  })\n  .filter(Boolean)\n  .sort((a, b) => b.json.retrieval_score - a.json.retrieval_score);\n\nreturn scored.slice(0, 8);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        -304
+      ],
+      "id": "b726a61e-40d2-4d2b-88f2-c0876fb0f704",
+      "name": "Select Matching Documents"
+    },
+    {
+      "parameters": {
+        "jsCode": "const sme = $('Normalize Retrieval Outputs').first().json;\nconst docs = $('Select Matching Documents').all();\nconst chunks = $('Select Matching Chunks').all();\n\nfunction parseMaybeJson(value, fallback) {\n  if (value === null || value === undefined || value === '') return fallback;\n  if (Array.isArray(value) || typeof value === 'object') return value;\n\n  if (typeof value === 'string') {\n    try {\n      return JSON.parse(value);\n    } catch (e) {\n      return fallback;\n    }\n  }\n\n  return fallback;\n}\n\nreturn [\n  {\n    json: {\n      company_name: sme.company_name || '',\n      industry: sme.industry || '',\n      subindustry: sme.subindustry || '',\n      employee_band: sme.employee_band || '',\n      revenue_band: sme.revenue_band || '',\n      company_location: sme.company_location || '',\n      country: sme.country || '',\n      target_market_region: parseMaybeJson(sme.target_market_region, []),\n      target_buyer: sme.target_buyer || '',\n      business_goal: sme.business_goal || '',\n      notes: sme.notes || '',\n\n      raw_overall: parseMaybeJson(sme.raw_overall, {}),\n      weighted_overall: parseMaybeJson(sme.weighted_overall, {}),\n      category_scores: parseMaybeJson(sme.category_scores, []),\n      weighted_category_breakdown: parseMaybeJson(sme.weighted_category_breakdown, []),\n      scoring_summary: parseMaybeJson(sme.scoring_summary, {}),\n      answered_questions: parseMaybeJson(sme.answered_questions, []),\n\n      retrieved_documents: docs.map(d => ({\n        doc_id: d.json.doc_id || '',\n        doc_title: d.json.doc_title || '',\n        doc_type: d.json.doc_type || '',\n        source: d.json.source || '',\n        category: d.json.category || '',\n        industry: d.json.industry || '',\n        region: d.json.region || '',\n        buyer_type: d.json.buyer_type || '',\n        topic_tags: d.json.topic_tags || '',\n        priority: d.json.priority || '',\n        summary: d.json.summary || '',\n        link: d.json.link || '',\n        retrieval_score: d.json.retrieval_score || 0,\n        retrieval_reasons: d.json.retrieval_reasons || []\n      })),\n\n      retrieved_chunks: chunks.map(c => ({\n        chunk_id: c.json.chunk_id || '',\n        doc_title: c.json.doc_title || '',\n        chunk_text: c.json.chunk_text || '',\n        source_section_or_page: c.json.source_section_or_page || '',\n        summary: c.json.summary || '',\n        evidence_type: c.json.evidence_type || '',\n        category: c.json.category || '',\n        subcategory: c.json.subcategory || '',\n        tags: c.json.tags || '',\n        industry_scope: c.json.industry_scope || '',\n        buyer_scope: c.json.buyer_scope || '',\n        region_scope: c.json.region_scope || '',\n        strength: c.json.strength || '',\n        citation_label: c.json.citation_label || '',\n        retrieval_score: c.json.retrieval_score || 0,\n        retrieval_reasons: c.json.retrieval_reasons || []\n      }))\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        -80
+      ],
+      "id": "e42584a1-d5c5-4db9-8791-b5fcab097c61",
+      "name": "Format Retrieval Output"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1168,
+        -80
+      ],
+      "id": "5799df09-1312-416c-8ba2-54fb4cd17d88",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $input.first().json;\n\nconst sme = {\n  company_name: payload.company_name || \"\",\n  industry: payload.industry || \"\",\n  subindustry: payload.subindustry || \"\",\n  employee_band: payload.employee_band || \"\",\n  revenue_band: payload.revenue_band || \"\",\n  company_location: payload.company_location || \"\",\n  country: payload.country || \"\",\n  target_market_region: Array.isArray(payload.target_market_region)\n    ? payload.target_market_region\n    : [],\n  target_buyer: payload.target_buyer || \"\",\n  business_goal: payload.business_goal || \"\",\n  notes: payload.notes || \"\"\n};\n\nconst rawOverall = payload.raw_overall || {};\n\nconst weightedCategoryBreakdown = Array.isArray(payload.weighted_category_breakdown)\n  ? payload.weighted_category_breakdown\n  : [];\n\nconst weightedOverall =\n  payload.weighted_overall &&\n  Object.keys(payload.weighted_overall).length > 0\n    ? payload.weighted_overall\n    : {\n        weighted_score: Number(\n          weightedCategoryBreakdown\n            .reduce((sum, row) => sum + Number(row.weighted_contribution || 0), 0)\n            .toFixed(1)\n        ),\n        derived: true\n      };\n\nconst categoryScores =\n  Array.isArray(payload.category_scores) && payload.category_scores.length > 0\n    ? payload.category_scores\n    : weightedCategoryBreakdown.map(row => ({\n        category: row.category,\n        category_percent: row.raw_category_percent,\n        questions_answered: row.questions_answered,\n        points_earned: row.points_earned,\n        total_possible: row.total_possible\n      }));\n\nconst scoringSummary = payload.scoring_summary || {};\nconst answeredQuestions = Array.isArray(payload.answered_questions) ? payload.answered_questions : [];\nconst docs = Array.isArray(payload.retrieved_documents) ? payload.retrieved_documents : [];\nconst chunks = Array.isArray(payload.retrieved_chunks) ? payload.retrieved_chunks : [];\n\nconst prompt = `\nYou are generating grounded sustainability recommendations for an SME.\n \nYou must use:\n- the SME context\n- the scoring outputs\n- the retrieved documents\n- the retrieved chunks\n \nYou must NOT introduce:\n- specific laws, standards, buyer requirements, or numeric thresholds unless they are supported by retrieved evidence.\n \nYou MAY make bounded, practical recommendations when:\n- the SME answer indicates a clear weakness, and\n- retrieved evidence is partial or adjacent.\n \nIn such cases, integrate the inference naturally into the recommendation prose.\n- Do not use labels like \"(inference)\", \"(inferences)\", or similar markers.\n- Use natural language such as \"a practical next step would be\" or \"this suggests\".\n \nOUTPUT FORMAT:\nReturn valid JSON with this exact structure:\n{\n  \"executive_summary\": \"string\",\n  \"priority_recommendations\": [\n    {\n      \"priority_rank\": 1,\n      \"title\": \"string\",\n      \"why_it_matters\": \"string\",\n      \"recommended_action\": \"string\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"string\",\n          \"source\": \"string\",\n          \"pages_or_section\": \"string\",\n          \"link\": \"string\"\n        }\n      ],\n      \"related_categories\": [\"Category\"],\n      \"implementation_difficulty\": \"Low|Medium|High\"\n    }\n  ],\n  \"key_gaps\": [\n    {\n      \"category\": \"string\",\n      \"gap\": \"string\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"string\",\n          \"source\": \"string\",\n          \"pages_or_section\": \"string\",\n          \"link\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"grounding_notes\": \"string\"\n}\n \nSME CONTEXT:\n${JSON.stringify(sme, null, 2)}\n \nSCORING OUTPUTS:\n${JSON.stringify({\n  raw_overall: rawOverall,\n  weighted_overall: weightedOverall,\n  category_scores: categoryScores,\n  weighted_category_breakdown: weightedCategoryBreakdown,\n  answered_questions: answeredQuestions\n}, null, 2)}\n \nRETRIEVED DOCUMENTS:\n${JSON.stringify(docs, null, 2)}\n \nRETRIEVED CHUNKS:\n${JSON.stringify(chunks, null, 2)}\n \nINSTRUCTIONS FOR GENERATION:\n \n- Start with the SME's actual answer values first, then use retrieved chunk evidence, then use scores as a supporting signal.\n- Always place recommendations within the SME's specific context: their industry, size, location, business goal, and any notes they provided.\n- Do not let scores dominate when the SME answer itself is more informative.\n- Use scores primarily to identify priority areas.\n \nSIZE-APPROPRIATE RECOMMENDATIONS:\n- Always factor in the SME's size (employee_band and revenue_band) when framing recommendations.\n- Recommendations must be realistic for a company of that scale.\n- For small or micro SMEs (under 50 employees or under $5M revenue): prioritise low-cost, low-overhead actions. Avoid recommending dedicated sustainability staff, enterprise software, or third-party audits unless directly supported by retrieved evidence.\n- For medium SMEs (50–500 employees): recommendations may include structured programmes and basic third-party verification where evidence supports it.\n- For larger SMEs (500+ employees): fuller disclosure frameworks and formal management systems are appropriate where evidence supports it.\n \n- When retrieved chunks are relevant:\n  - explicitly paraphrase their substance in plain language\n  - include specific metrics or disclosure elements where applicable (e.g., total energy consumed, % grid electricity, % renewable energy)\n  - reference multiple sources when they corroborate the same concept\n \n- Prefer chunk-grounded reasoning over score-only reasoning.\n \n- Rank recommendations by highest impact improvement opportunity, prioritising:\n  1) lowest scoring areas,\n  2) high buyer/procurement relevance for the SME's target market and buyer type,\n  3) areas supported by strong retrieved evidence.\n \n- Avoid repeating similar recommendations; combine related actions into a single stronger recommendation when possible.\n \n- Keep recommendations concise:\n  - \"why_it_matters\": maximum 2 sentences\n  - \"recommended_action\": maximum ~120 words, structured as clear steps\n \n- Use clear, direct, professional language. Avoid overly academic phrasing.\n \n- Do NOT expose:\n  - internal question IDs (e.g., U-023, M-008)\n  - chunk IDs\n  - system/debug fields\n \n- All output must be user-facing. Do not expose internal system fields, IDs, or debugging artifacts.\n \n- When referring to a weak area, describe it in plain language using the metric itself (e.g. \"greenhouse gas tracking\" not \"Scope 1 emissions score\").\n \n- For evidence:\n  - The \"evidence\" array must include: doc_title, source, pages_or_section, link\n  - Narrative text should reference sources concisely (Title + Source + pages)\n  - Do NOT include raw URLs in narrative text\n \n- Evidence should be concise and human-readable. Avoid repeating long URLs in narrative text.\n \n- When retrieved chunks are used, reflect their substance clearly in why_it_matters or recommended_action, including specific definitions, metrics, or expectations where relevant.\n \nEXECUTIVE SUMMARY:\n- Write the executive_summary as a 3–4 sentence narrative. \n- Lead with the SME's strongest performing area.\n- Then name the single biggest gap or improvement opportunity.\n- Close with one sentence stating: the raw overall score, the industry-weighted overall score, and a brief plain-language explanation that the weighted score reflects how important each category is for this specific industry.\n- Example closing sentence: \"The raw score is 64% and the industry-weighted score is 58%, reflecting that Resources — a relatively weak area for this company — carries high importance in the freight forwarding sector.\"\n- Do NOT describe category weighting as replacing or canceling question-level scoring.\n- If weighted_overall.derived is true, you may still refer to it as the industry-weighted score.\n \n- If evidence is sparse:\n  - provide a bounded inference\n  - clearly label it as such using natural language (not artifact labels)\n \n- Keep key_gaps diagnostic and short, not repetitive of recommendations.\n \n- Return no more than:\n  - 5 priority_recommendations\n  - 3 key_gaps\n \n- Return JSON only. Do not include markdown or explanatory text.\n`.trim();\n\nreturn [\n  {\n    json: {\n      sme_context: sme,\n      raw_overall: rawOverall,\n      weighted_overall: weightedOverall,\n      category_scores: categoryScores,\n      weighted_category_breakdown: weightedCategoryBreakdown,\n      scoring_summary: scoringSummary,\n      answered_questions: answeredQuestions,\n      retrieved_documents: docs,\n      retrieved_chunks: chunks,\n      recommendation_prompt: prompt\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -80
+      ],
+      "id": "219e51ce-8d99-4524-a8a7-2d61b143f4a9",
+      "name": "Build Recommendation Prompt"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "GPT-5.2"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "={{ $json.recommendation_prompt }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        816,
+        -80
+      ],
+      "id": "766b2956-8e55-43d4-a79f-685ca88fa9c4",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kylh6yNQGr3QAqdB",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1e0MR_brING81zPX6Ls9wVP28LP7bKpBIAVbPWYLeOgg",
+          "mode": "list",
+          "cachedResultName": "DocumentChunks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e0MR_brING81zPX6Ls9wVP28LP7bKpBIAVbPWYLeOgg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e0MR_brING81zPX6Ls9wVP28LP7bKpBIAVbPWYLeOgg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        -304
+      ],
+      "id": "ba9a06bc-32f0-42c3-a05f-03ce01c204d8",
+      "name": "Get DocumentChunks",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qTrolie0MUmJ8jje",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const sme = $('Normalize Retrieval Outputs').first().json;\nconst matchedDocs = $('Select Matching Documents').all().map(i => i.json);\nconst chunks = $input.all();\n\n// ---------- helpers ----------\nfunction norm(value) {\n  return String(value || '').toLowerCase().trim();\n}\n\nfunction splitList(value) {\n  return String(value || '')\n    .split(/[;,]/)\n    .map(v => v.trim().toLowerCase())\n    .filter(Boolean);\n}\n\nfunction fieldMatches(chunkValue, smeValue) {\n  const c = norm(chunkValue);\n  const s = norm(smeValue);\n\n  if (!c || c === 'any' || c === 'all' || c === 'multi' || c === 'global') return true;\n  if (!s) return false;\n\n  const cList = splitList(c);\n  const sList = splitList(s);\n\n  return cList.some(x => sList.includes(x));\n}\n\nfunction tagHitCount(chunkTags, text) {\n  const tags = splitList(chunkTags);\n  const body = norm(text);\n\n  if (!tags.length || !body) return 0;\n\n  let count = 0;\n  for (const tag of tags) {\n    if (body.includes(tag)) count += 1;\n  }\n  return count;\n}\n\nfunction strengthScore(value) {\n  const s = norm(value);\n  if (s === 'high') return 3;\n  if (s === 'medium') return 2;\n  if (s === 'low') return 1;\n  return 0;\n}\n\n// ---------- SME context ----------\nconst smeIndustry = norm(sme.industry);\nconst smeRegion = norm(sme.target_market_region);\nconst smeBuyer = norm(sme.target_buyer);\nconst smeGoal = norm(sme.business_goal);\nconst smeNotes = norm(sme.notes);\nconst smeSubindustry = norm(sme.subindustry);\nconst smeLocation = norm(sme.company_location);\n\nconst smeContextText = [\n  sme.industry,\n  sme.subindustry,\n  sme.target_market_region,\n  sme.target_buyer,\n  sme.business_goal,\n  sme.notes\n].filter(Boolean).join(' ').toLowerCase();\n\n// ---------- matched docs lookup ----------\nconst matchedDocTitles = new Set(\n  matchedDocs.map(d => norm(d.doc_title)).filter(Boolean)\n);\n\nconst matchedDocByTitle = new Map(\n  matchedDocs.map(d => [norm(d.doc_title), d])\n);\n\n// ---------- score chunks ----------\nconst scored = chunks\n  .map(item => {\n    const chunk = item.json;\n    const chunkDocTitle = norm(chunk.doc_title);\n\n    // only consider chunks from already-matched documents\n    if (!matchedDocTitles.has(chunkDocTitle)) return null;\n\n    const parentDoc = matchedDocByTitle.get(chunkDocTitle) || {};\n\n    let score = 0;\n    const reasons = [];\n\n    // inherit parent doc retrieval score\n    const parentScore = Number(parentDoc.retrieval_score || 0);\n    score += parentScore;\n    if (parentScore > 0) reasons.push(`parent doc score: ${parentScore}`);\n\n    // strength\n    const sScore = strengthScore(chunk.strength);\n    score += sScore;\n    if (sScore > 0) reasons.push(`strength: ${chunk.strength}`);\n\n    // industry\n    if (fieldMatches(chunk.industry_scope, smeIndustry)) {\n      score += 3;\n      reasons.push(`industry_scope match: ${chunk.industry_scope}`);\n    }\n\n    // region\n    if (fieldMatches(chunk.region_scope, smeRegion) || fieldMatches(chunk.region_scope, smeLocation)) {\n      score += 2;\n      reasons.push(`region_scope match: ${chunk.region_scope}`);\n    }\n\n    // buyer\n    if (fieldMatches(chunk.buyer_scope, smeBuyer)) {\n      score += 2;\n      reasons.push(`buyer_scope match: ${chunk.buyer_scope}`);\n    }\n\n    // tags against SME context\n    const tagHits = tagHitCount(chunk.tags, smeContextText);\n    if (tagHits > 0) {\n      score += tagHits * 2;\n      reasons.push(`chunk tag hits: ${tagHits}`);\n    }\n\n    // summary relevance\n    const summaryHits = tagHitCount(chunk.summary, `${smeGoal} ${smeNotes} ${smeSubindustry}`);\n    if (summaryHits > 0) {\n      score += Math.min(summaryHits, 2);\n      reasons.push('chunk summary relevance');\n    }\n\n    return {\n      json: {\n        chunk_id: chunk.chunk_id || '',\n        doc_title: chunk.doc_title || '',\n        chunk_text: chunk.chunk_text || '',\n        source_section_or_page: chunk.source_section_or_page || '',\n        summary: chunk.summary || '',\n        evidence_type: chunk.evidence_type || '',\n        category: chunk.category || '',\n        subcategory: chunk.subcategory || '',\n        tags: chunk.tags || '',\n        industry_scope: chunk.industry_scope || '',\n        buyer_scope: chunk.buyer_scope || '',\n        region_scope: chunk.region_scope || '',\n        strength: chunk.strength || '',\n        citation_label: chunk.citation_label || '',\n        retrieval_score: score,\n        retrieval_reasons: reasons\n      }\n    };\n  })\n  .filter(Boolean)\n  .sort((a, b) => b.json.retrieval_score - a.json.retrieval_score);\n\n// keep this small for the prompt\nreturn scored.slice(0, 18);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        -304
+      ],
+      "id": "8689d5f7-7188-4d05-a7a6-ef954c7c18f3",
+      "name": "Select Matching Chunks"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Retrieval Outputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get DocumentIndex": {
+      "main": [
+        [
+          {
+            "node": "Select Matching Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Retrieval Outputs": {
+      "main": [
+        [
+          {
+            "node": "Get DocumentIndex",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Matching Documents": {
+      "main": [
+        [
+          {
+            "node": "Get DocumentChunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Retrieval Output": {
+      "main": [
+        [
+          {
+            "node": "Build Recommendation Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Recommendation Prompt": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get DocumentChunks": {
+      "main": [
+        [
+          {
+            "node": "Select Matching Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Matching Chunks": {
+      "main": [
+        [
+          {
+            "node": "Format Retrieval Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b58a1e56-840e-4313-906f-687753fcab7d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d00e76836cea65e4ed9329baded2ae6bf1ec80c37e0faf713e80de1529f3ea5"
+  },
+  "id": "hshhGzseY17rqVqn",
+  "tags": []
+}

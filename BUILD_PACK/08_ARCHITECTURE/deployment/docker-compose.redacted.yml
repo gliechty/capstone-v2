@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: <REDACTED>
+      POSTGRES_PASSWORD: <REDACTED>
+      POSTGRES_DB: <REDACTED>
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  nocodb:
+    image: nocodb/nocodb:latest
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      NC_DB: <REDACTED>
+    depends_on:
+      - postgres
+
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_SECURE_COOKIE=<REDACTED>
+      - N8N_ENCRYPTION_KEY=<REDACTED>
+      - N8N_EDITOR_BASE_URL=<REDACTED>
+      - WEBHOOK_URL=<REDACTED>
+      - N8N_PROXY_HOPS=<REDACTED>
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+  appsmith:
+    image: index.docker.io/appsmith/appsmith-ee
+    container_name: appsmith
+    restart: unless-stopped
+    ports:
+      - "9080:80"
+      - "9443:443"
+    volumes:
+      - appsmith-stacks:/appsmith-stacks
+
+volumes:
+  postgres_data:
+  n8n_data:
+  appsmith-stacks:

@@ -1,0 +1,1444 @@
+{
+  "case_id": "GOLDEN_03_BUSINESS_EXPORT",
+  "captured_from": "current live v1",
+  "captured_at": "2026-10-03T07:13:57Z",
+  "question_selection": {
+    "expected_count": 63,
+    "actual_count": 63,
+    "expected_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-002",
+      "I-005",
+      "I-007",
+      "I-015",
+      "I-016",
+      "I-017",
+      "I-020",
+      "I-052",
+      "I-058",
+      "I-065",
+      "I-071",
+      "IM-1",
+      "M-002",
+      "M-003",
+      "M-007",
+      "M-008",
+      "M-011",
+      "M-015",
+      "M-016",
+      "M-017",
+      "M-018",
+      "M-023",
+      "M-024",
+      "M-029",
+      "M-031",
+      "M-033",
+      "M-035",
+      "M-038",
+      "M-039",
+      "M-040"
+    ],
+    "actual_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-002",
+      "I-005",
+      "I-007",
+      "I-015",
+      "I-016",
+      "I-017",
+      "I-020",
+      "I-052",
+      "I-058",
+      "I-065",
+      "I-071",
+      "IM-1",
+      "M-002",
+      "M-003",
+      "M-007",
+      "M-008",
+      "M-011",
+      "M-015",
+      "M-016",
+      "M-017",
+      "M-018",
+      "M-023",
+      "M-024",
+      "M-029",
+      "M-031",
+      "M-033",
+      "M-035",
+      "M-038",
+      "M-039",
+      "M-040"
+    ],
+    "question_set_match": true,
+    "missing_ids": [],
+    "unexpected_ids": [],
+    "order_match": true,
+    "source": "Start Assessment network response (question_count + questions[].question_id), cross-checked against rendered question cards"
+  },
+  "scoring": {
+    "raw_overall": {
+      "points_earned": 16086.92,
+      "total_possible": 24697.3,
+      "overall_percent": 65.1,
+      "categories_answered": 4
+    },
+    "weighted_overall": {
+      "weighted_score": 64.9,
+      "max_score": 100,
+      "weights_found": true,
+      "industry": "Business / Export Services",
+      "breakdown": [
+        {
+          "category": "Governance",
+          "raw_percent": 73.1,
+          "weight": 0.42,
+          "weighted_contribution": 30.701999999999998
+        },
+        {
+          "category": "People",
+          "raw_percent": 66.7,
+          "weight": 0.26,
+          "weighted_contribution": 17.342000000000002
+        },
+        {
+          "category": "Resources",
+          "raw_percent": 58.2,
+          "weight": 0.22,
+          "weighted_contribution": 12.804
+        },
+        {
+          "category": "Community",
+          "raw_percent": 40.8,
+          "weight": 0.1,
+          "weighted_contribution": 4.08
+        }
+      ]
+    },
+    "category_scores": [
+      {
+        "category": "Governance",
+        "points_earned": 8202.39,
+        "total_possible": 11227.3,
+        "category_percent": 73.1,
+        "questions_answered": 28
+      },
+      {
+        "category": "People",
+        "points_earned": 2834.19,
+        "total_possible": 4249,
+        "category_percent": 66.7,
+        "questions_answered": 11
+      },
+      {
+        "category": "Resources",
+        "points_earned": 4317.64,
+        "total_possible": 7424,
+        "category_percent": 58.2,
+        "questions_answered": 19
+      },
+      {
+        "category": "Community",
+        "points_earned": 732.7,
+        "total_possible": 1797,
+        "category_percent": 40.8,
+        "questions_answered": 5
+      }
+    ],
+    "weighted_category_breakdown": [
+      {
+        "category": "Governance",
+        "points_earned": 8202.39,
+        "total_possible": 11227.3,
+        "raw_category_percent": 73.1,
+        "category_weight": 0.42,
+        "weighted_contribution": 30.7,
+        "questions_answered": 28
+      },
+      {
+        "category": "People",
+        "points_earned": 2834.19,
+        "total_possible": 4249,
+        "raw_category_percent": 66.7,
+        "category_weight": 0.26,
+        "weighted_contribution": 17.34,
+        "questions_answered": 11
+      },
+      {
+        "category": "Resources",
+        "points_earned": 4317.64,
+        "total_possible": 7424,
+        "raw_category_percent": 58.2,
+        "category_weight": 0.22,
+        "weighted_contribution": 12.8,
+        "questions_answered": 19
+      },
+      {
+        "category": "Community",
+        "points_earned": 732.7,
+        "total_possible": 1797,
+        "raw_category_percent": 40.8,
+        "category_weight": 0.1,
+        "weighted_contribution": 4.08,
+        "questions_answered": 5
+      }
+    ],
+    "question_level": [
+      {
+        "question_id": "U-001",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 386,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 386,
+        "final_score_possible": 386,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-002",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 200.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 200.5,
+        "final_score_possible": 401,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-004",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 0,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-019a (1.25x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 532.5,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-005",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 379,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 379,
+        "final_score_possible": 379,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-006",
+        "answer_as_recorded": "Basic",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 132,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 132,
+        "final_score_possible": 400,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-007",
+        "answer_as_recorded": "Informal engagement",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 198.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 198.5,
+        "final_score_possible": 397,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-008",
+        "answer_as_recorded": "Basic",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 132.33,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 132.33,
+        "final_score_possible": 401,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-009",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-010",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-012",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 386,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-013",
+        "answer_as_recorded": "Partially implemented",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 189.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 189.5,
+        "final_score_possible": 379,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-014",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 198.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 198.5,
+        "final_score_possible": 397,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-015",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 196.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196.5,
+        "final_score_possible": 393,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-018",
+        "answer_as_recorded": "1",
+        "normalized_score": 50,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 175,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 175,
+        "final_score_possible": 350,
+        "completion_percent": 50,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-019",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-020",
+        "answer_as_recorded": "45",
+        "normalized_score": 88.25,
+        "normalization_method": "gaussian",
+        "base_weight": 3.75,
+        "weighted_score": 330.94,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 330.94,
+        "final_score_possible": 375,
+        "completion_percent": 88.3,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-021",
+        "answer_as_recorded": "2",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-022",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 196.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196.5,
+        "final_score_possible": 393,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-023",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 402,
+        "final_score_possible": 402,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-024",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 402,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-025",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.57,
+        "weighted_score": 357,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 357,
+        "final_score_possible": 357,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-026",
+        "answer_as_recorded": "20",
+        "normalized_score": 20,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.88,
+        "weighted_score": 77.6,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 77.6,
+        "final_score_possible": 388,
+        "completion_percent": 20,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-027",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.92,
+        "weighted_score": 196,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196,
+        "final_score_possible": 392,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-028",
+        "answer_as_recorded": "Planned",
+        "normalized_score": 25,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 100,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 100,
+        "final_score_possible": 400,
+        "completion_percent": 25,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-029",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.61,
+        "weighted_score": 361,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 361,
+        "final_score_possible": 361,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-030",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.08,
+        "weighted_score": 408,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 408,
+        "final_score_possible": 408,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-031",
+        "answer_as_recorded": "40",
+        "normalized_score": 40,
+        "normalization_method": "identity_percent",
+        "base_weight": 4.08,
+        "weighted_score": 163.2,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 163.2,
+        "final_score_possible": 408,
+        "completion_percent": 40,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-032",
+        "answer_as_recorded": "5",
+        "normalized_score": 74.08,
+        "normalization_method": "exponential_decay",
+        "base_weight": 4.08,
+        "weighted_score": 302.25,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 302.25,
+        "final_score_possible": 408,
+        "completion_percent": 74.1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-033",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.7,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 370,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-034",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-035",
+        "answer_as_recorded": "10",
+        "normalized_score": 100,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 350,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 350,
+        "final_score_possible": 350,
+        "completion_percent": 100,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-036",
+        "answer_as_recorded": "2",
+        "normalized_score": 100,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 350,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 350,
+        "final_score_possible": 350,
+        "completion_percent": 100,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "I-002",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 66,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.82,
+        "weighted_score": 252.12,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-012 (1.35x)"
+        ],
+        "final_score": 340.36,
+        "final_score_possible": 515.7,
+        "completion_percent": 66,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-005",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.95,
+        "weighted_score": 395,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 395,
+        "final_score_possible": 395,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-007",
+        "answer_as_recorded": "Always",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.82,
+        "weighted_score": 382,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-012 (1.35x)"
+        ],
+        "final_score": 515.7,
+        "final_score_possible": 515.7,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-015",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.4,
+        "weighted_score": 340,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-013 (1.25x)"
+        ],
+        "final_score": 425,
+        "final_score_possible": 425,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "I-016",
+        "answer_as_recorded": "Sometimes",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 200,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 200,
+        "final_score_possible": 400,
+        "completion_percent": 50,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "I-017",
+        "answer_as_recorded": "12",
+        "normalized_score": 24,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.4,
+        "weighted_score": 81.6,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-013 (1.25x)"
+        ],
+        "final_score": 102,
+        "final_score_possible": 425,
+        "completion_percent": 24,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "I-020",
+        "answer_as_recorded": "3",
+        "normalized_score": 100,
+        "normalization_method": "banded",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "I-052",
+        "answer_as_recorded": "0.05",
+        "normalized_score": 0.36,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.02,
+        "weighted_score": 1.45,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 1.45,
+        "final_score_possible": 402,
+        "completion_percent": 0.4,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-058",
+        "answer_as_recorded": "0.05",
+        "normalized_score": 67.11,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.57,
+        "weighted_score": 239.58,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 239.58,
+        "final_score_possible": 357,
+        "completion_percent": 67.1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-065",
+        "answer_as_recorded": "0.003",
+        "normalized_score": 74.44,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.61,
+        "weighted_score": 268.73,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 268.73,
+        "final_score_possible": 361,
+        "completion_percent": 74.4,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-071",
+        "answer_as_recorded": "1",
+        "normalized_score": 11.11,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.08,
+        "weighted_score": 45.33,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 45.33,
+        "final_score_possible": 408,
+        "completion_percent": 11.1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "IM-1",
+        "answer_as_recorded": "Advanced",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.64,
+        "weighted_score": 364,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-011 (1.35x)"
+        ],
+        "final_score": 491.4,
+        "final_score_possible": 491.4,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-002",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.23,
+        "weighted_score": 323,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-B06 (1.25x)"
+        ],
+        "final_score": 403.75,
+        "final_score_possible": 403.75,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-007",
+        "answer_as_recorded": "Always",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.23,
+        "weighted_score": 323,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-B06 (1.25x)"
+        ],
+        "final_score": 403.75,
+        "final_score_possible": 403.75,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-008",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-011",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-019a (1.25x)"
+        ],
+        "final_score": 532.5,
+        "final_score_possible": 532.5,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-015",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.27,
+        "weighted_score": 327,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 327,
+        "final_score_possible": 327,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-016",
+        "answer_as_recorded": "Advanced",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.64,
+        "weighted_score": 364,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 364,
+        "final_score_possible": 364,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-017",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.64,
+        "weighted_score": 182,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 182,
+        "final_score_possible": 364,
+        "completion_percent": 50,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-018",
+        "answer_as_recorded": "0",
+        "normalized_score": 100,
+        "normalization_method": "inverse_count",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-023",
+        "answer_as_recorded": "30",
+        "normalized_score": 30,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.27,
+        "weighted_score": 98.1,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 98.1,
+        "final_score_possible": 327,
+        "completion_percent": 30,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-024",
+        "answer_as_recorded": "10",
+        "normalized_score": 25,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.97,
+        "weighted_score": 99.25,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 99.25,
+        "final_score_possible": 397,
+        "completion_percent": 25,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-029",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 375,
+        "completion_percent": 0,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-031",
+        "answer_as_recorded": "68",
+        "normalized_score": 100,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.77,
+        "weighted_score": 377,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 377,
+        "final_score_possible": 377,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-033",
+        "answer_as_recorded": "Partially implemented",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.95,
+        "weighted_score": 197.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 197.5,
+        "final_score_possible": 395,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-035",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.95,
+        "weighted_score": 395,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 395,
+        "final_score_possible": 395,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-038",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 426,
+        "final_score_possible": 426,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-039",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.61,
+        "weighted_score": 180.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 180.5,
+        "final_score_possible": 361,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-040",
+        "answer_as_recorded": "5",
+        "normalized_score": 10,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.27,
+        "weighted_score": 32.7,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 32.7,
+        "final_score_possible": 327,
+        "completion_percent": 10,
+        "category_label_on_card": "Community"
+      }
+    ],
+    "capture_method": "raw_state_or_network",
+    "category_weights": {
+      "industry": "Business / Export Services",
+      "people_weight": 0.26,
+      "governance_weight": 0.42,
+      "community_weight": 0.1,
+      "resources_weight": 0.22,
+      "notes": "Business / Export Services (n=118) — Governance-dominant (raw 46%), People strong (28%). Services firms have a heavier HR / compliance footprint than a physical one. Community was floored from 2.5% → 10%: few direct neighborhood-impact indicators for office-based activity."
+    },
+    "scoring_summary_ids": {
+      "lowest": [
+        "U-004",
+        "U-012",
+        "U-024",
+        "U-033",
+        "U-034"
+      ],
+      "highest": [
+        "M-011",
+        "I-007",
+        "IM-1",
+        "M-038",
+        "I-015"
+      ],
+      "weakest_categories": [
+        "Community",
+        "Resources",
+        "People",
+        "Governance"
+      ]
+    },
+    "matched_rules_by_question": {
+      "U-004": [
+        "MR-019a@1.25"
+      ],
+      "I-002": [
+        "MR-012@1.35"
+      ],
+      "I-007": [
+        "MR-012@1.35"
+      ],
+      "I-015": [
+        "MR-013@1.25"
+      ],
+      "I-017": [
+        "MR-013@1.25"
+      ],
+      "IM-1": [
+        "MR-011@1.35"
+      ],
+      "M-002": [
+        "MR-B06@1.25"
+      ],
+      "M-007": [
+        "MR-B06@1.25"
+      ],
+      "M-011": [
+        "MR-019a@1.25"
+      ]
+    },
+    "answered_question_count": 63,
+    "sme_context_as_sent": {
+      "company_name": "Golden Export Services Co.",
+      "industry": "Business / Export Services",
+      "subindustry": "Freight Forwarding",
+      "employee_band": "1001+",
+      "revenue_band": "$50M+",
+      "company_location": "South Asia",
+      "country": "India",
+      "target_market_region": [
+        "APAC",
+        "EU"
+      ],
+      "target_buyer": "Export Buyer",
+      "business_goal": "Access new markets",
+      "notes": "Golden regression case derived from Final Tool Testing; ignore legacy tester QA comments and old score/output judgments."
+    },
+    "capture_notes": [
+      "Top-level scoring objects copied verbatim from the scoring payload the app sent with the recommendation request (intercepted network request body); transcription verified by SHA-256 against the in-browser value.",
+      "answered_questions/category_debug arrays from the payload are represented by question_level (read from rendered question cards) plus matched_rules_by_question; question_text was omitted as it is static QuestionBank content."
+    ]
+  },
+  "recommendation_output": {
+    "executive_summary": "Golden Export Services Co. shows strong governance foundations for a large freight-forwarding business, including a written environmental policy, anti-corruption commitments, and established whistleblowing and data-privacy practices. The biggest improvement opportunity for market access—especially with EU-facing buyers—is to strengthen climate and transport footprint transparency beyond current partial practices (notably, electricity-related emissions are not measured and sustainability reporting is not published). Resources performance is mixed: energy, water, and waste are tracked, but renewable energy share is limited and waste diversion is moderate, suggesting operational efficiency and decarbonisation levers remain. The raw score is 65.1% and the industry-weighted score is 64.9%, reflecting that categories like Resources and Governance carry higher importance for freight forwarding and export services buyers assessing operational and value-chain impacts.",
+    "priority_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "Build a buyer-ready transport emissions “footprint pack” (Scope 1 + electricity + outsourced transport) and link it to targets",
+        "why_it_matters": "You already measure direct operational emissions and have an emissions-reduction target, but you do not measure electricity-related emissions and have only partial transition planning. Logistics buyers commonly evaluate freight forwarders on a complete transport footprint that includes outsourced carriers and clear progress against targets.",
+        "recommended_action": "Create a single annual (and client-ready) footprint pack that includes: (1) gross global direct emissions in CO2e using a consistent consolidation approach aligned with financial reporting; (2) purchased electricity/heat emissions (using utility bills and spend/consumption data you already track); and (3) a tank-to-wheels footprint per tonne-kilometre that covers own assets plus contract carriers and outsourced freight forwarding across modes. Then document your short- and long-term emissions strategy: target type, baseline year, timelines, mechanisms, and performance vs target; assign ownership and add basic data-quality checks and an evidence file for calculations.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 8 (Scope 1 gross emissions in CO2e; consolidation aligned with financial reporting approach)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 9 (strategy/plan, targets, baseline year, performance against targets, mechanisms and risks)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 18 (tank-to-wheels footprint per tonne-kilometre; includes contract carriers and outsourced freight forwarding; multi-modal scope)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 2,
+        "title": "Formalise contract carrier safety due diligence and incident reporting across road operations",
+        "why_it_matters": "As a freight forwarder, safety performance and contractor carrier oversight can be a material disruption risk, especially where road transport is subcontracted. Buyers increasingly expect clear due diligence processes (screening, audits, monitoring) and consistent reporting of accidents and incidents for both direct and contracted workers.",
+        "recommended_action": "Standardise your contractor safety management approach: (1) define screening criteria and onboarding checks for contract carriers (including alignment to your codes of conduct); (2) implement a monitoring routine that can include periodic audits, performance reviews, and corrective action tracking; (3) create one incident register that captures road transport accidents and incidents involving both direct and contracted personnel during work time, using consistent definitions; and (4) include contractor safety expectations in contracts and operational SOPs so that reporting and investigation steps are consistent across branches and lanes.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 19 (due diligence for contractor carrier safety, audits/screening/codes of conduct, monitoring contractor compliance)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 22–23 (report total road transport accidents/incidents involving direct and contracted employees; definitions and minimum scope)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Governance",
+          "People"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 3,
+        "title": "Publish a concise annual sustainability summary tailored to logistics buyer topics (EU-ready messaging)",
+        "why_it_matters": "You do not publish a sustainability/ESG report, which can slow down buyer due diligence and market-entry conversations even when practices exist. For logistics and commercial services providers, buyers often look for a clear, consistent set of disclosures on emissions strategy, safety, labor practices, and ethics.",
+        "recommended_action": "Publish a short annual sustainability summary (web PDF is sufficient) that consolidates: your environmental policy and how your services affect downstream customers; gross operational emissions and the plan/targets (with baseline and progress); transport footprint methodology and coverage of contract carriers; road safety incidents and contractor safety oversight approach; workforce policies and key people metrics you already track (e.g., diversity representation, engagement survey cadence); and business ethics/data privacy. Include a simple data governance note describing how sustainability data is compiled and checked, and keep an archive for buyer requests.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 8–9 (emissions disclosure expectations and target/strategy elements commonly requested by enterprise buyers)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 19, 22–23 (contract carrier safety due diligence; reporting accidents/incidents for direct and contracted workers)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Professional & Commercial Services Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Topic coverage (data security, workforce diversity, employee engagement, professional integrity, data privacy, business ethics)",
+            "link": "https://drive.google.com/file/d/1Irvdm4gWMugkHW5R4n5BhEgWf508hy-y/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Governance",
+          "Resources",
+          "People"
+        ],
+        "implementation_difficulty": "Low"
+      },
+      {
+        "priority_rank": 4,
+        "title": "Strengthen energy transition actions by improving renewable share and fuel transparency in transport operations",
+        "why_it_matters": "You track energy consumption but report a relatively low renewable energy share, and your broader low-carbon transition planning is only partially implemented. In logistics, fuel and energy transparency (including renewable fuel/sustainable fuel shares where relevant) is a common buyer-facing indicator of decarbonisation progress.",
+        "recommended_action": "Expand energy and fuel transparency and action: (1) break down energy use by major operational sources (offices/warehouses/owned fleet) and assign reduction initiatives per source; (2) report fuel consumed for road vs air-related operations and track the percentage of renewable fuel (road) and sustainable fuel (air) where applicable; (3) set procurement and facilities actions to increase renewable electricity sourcing over time (starting with sites where contracting is easiest); and (4) integrate these actions into your emissions target delivery plan so progress can be demonstrated year over year.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 10–11 (disclose aggregate fuel consumed by road vs air; disclose % renewable fuel and % sustainable fuel)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 9 (activities and investments required to achieve emissions plans/targets; risks or limiting factors)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 5,
+        "title": "Move from basic supply-chain sustainability due diligence to a structured carrier/supplier risk program",
+        "why_it_matters": "Your current due diligence and supplier engagement on environmental issues is basic or informal, despite having supplier standards and some environmental criteria. A structured approach helps prioritize the highest-impact carriers and service partners, and supports more credible transport footprint reporting and risk management.",
+        "recommended_action": "Create a tiered supplier/carrier sustainability program: (1) map your supplier and carrier base and identify which partners are most material to environmental and safety impacts (e.g., high-volume lanes, emissions-intensive modes, safety-sensitive operations); (2) incorporate a short set of environmental and safety questions into onboarding and annual reviews; (3) request consistent activity data from priority partners to support footprint calculations; and (4) define escalation steps—improvement plan, follow-up review, or re-tendering—when performance is poor. Align the data requested to your transport footprint and safety oversight disclosures to avoid duplicative questionnaires.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 18–19 (supply chain footprint includes contract carriers; expectation to describe due diligence and management of contractor carrier safety)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          },
+          {
+            "doc_title": "Technical Guidance for Calculating Scope 3 Emissions",
+            "source": "WRI & WBCSD",
+            "pages_or_section": "Overview (value chain emissions calculation methods used for supplier engagement and carbon management)",
+            "link": "https://drive.google.com/file/d/15tZwRpWCOzJq0B1kkGzLUnG6cHpqWAQk/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Governance",
+          "Resources"
+        ],
+        "implementation_difficulty": "Medium"
+      }
+    ],
+    "key_gaps": [
+      {
+        "category": "Resources",
+        "gap": "Electricity/heat-related emissions are not measured, limiting a complete operational footprint and weakening buyer-facing climate disclosures.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 8–9 (expectation for robust emissions disclosure and management strategy/targets)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Governance",
+        "gap": "No published sustainability/ESG report, creating friction in enterprise procurement and EU market conversations even when internal policies and tracking exist.",
+        "evidence": [
+          {
+            "doc_title": "Air Freight & Logistics Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Page 8–9 (common buyer-facing disclosure set: emissions metrics plus strategy/targets and performance)",
+            "link": "https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Community",
+        "gap": "Limited formalization of community and inclusive procurement: no formal community investment program and no support for women-owned businesses/inclusive procurement, despite having employee volunteering and donations.",
+        "evidence": [
+          {
+            "doc_title": "Professional & Commercial Services Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Topic coverage (workforce diversity and related buyer evaluation areas that can extend into inclusive practices)",
+            "link": "https://drive.google.com/file/d/1Irvdm4gWMugkHW5R4n5BhEgWf508hy-y/view?usp=share_link"
+          }
+        ]
+      }
+    ],
+    "grounding_notes": "Recommendations were prioritised using the company’s answers (e.g., no Scope 2 measurement, no ESG report, basic due diligence and informal supplier engagement) and then grounded in logistics-industry disclosure expectations in the Air Freight & Logistics Sustainability Accounting Standard (IFRS Foundation/SASB) covering emissions calculation/strategy, multi-modal footprint including contract carriers, and contractor safety oversight and incident reporting. Where evidence is adjacent (e.g., broader value-chain emissions methods), the Scope 3 calculation guidance (WRI/WBCSD) was used to support practical supplier data collection and engagement steps without introducing unsupported legal requirements or thresholds."
+  },
+  "recommendation_output_raw": [
+    {
+      "id": "msg_0692941e62c84134006ac0ab0d525c87d18efd94f3a853a66b",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"executive_summary\": \"Golden Export Services Co. shows strong governance foundations for a large freight-forwarding business, including a written environmental policy, anti-corruption commitments, and established whistleblowing and data-privacy practices. The biggest improvement opportunity for market access—especially with EU-facing buyers—is to strengthen climate and transport footprint transparency beyond current partial practices (notably, electricity-related emissions are not measured and sustainability reporting is not published). Resources performance is mixed: energy, water, and waste are tracked, but renewable energy share is limited and waste diversion is moderate, suggesting operational efficiency and decarbonisation levers remain. The raw score is 65.1% and the industry-weighted score is 64.9%, reflecting that categories like Resources and Governance carry higher importance for freight forwarding and export services buyers assessing operational and value-chain impacts.\",\n  \"priority_recommendations\": [\n    {\n      \"priority_rank\": 1,\n      \"title\": \"Build a buyer-ready transport emissions “footprint pack” (Scope 1 + electricity + outsourced transport) and link it to targets\",\n      \"why_it_matters\": \"You already measure direct operational emissions and have an emissions-reduction target, but you do not measure electricity-related emissions and have only partial transition planning. Logistics buyers commonly evaluate freight forwarders on a complete transport footprint that includes outsourced carriers and clear progress against targets.\",\n      \"recommended_action\": \"Create a single annual (and client-ready) footprint pack that includes: (1) gross global direct emissions in CO2e using a consistent consolidation approach aligned with financial reporting; (2) purchased electricity/heat emissions (using utility bills and spend/consumption data you already track); and (3) a tank-to-wheels footprint per tonne-kilometre that covers own assets plus contract carriers and outsourced freight forwarding across modes. Then document your short- and long-term emissions strategy: target type, baseline year, timelines, mechanisms, and performance vs target; assign ownership and add basic data-quality checks and an evidence file for calculations.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 8 (Scope 1 gross emissions in CO2e; consolidation aligned with financial reporting approach)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 9 (strategy/plan, targets, baseline year, performance against targets, mechanisms and risks)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 18 (tank-to-wheels footprint per tonne-kilometre; includes contract carriers and outsourced freight forwarding; multi-modal scope)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 2,\n      \"title\": \"Formalise contract carrier safety due diligence and incident reporting across road operations\",\n      \"why_it_matters\": \"As a freight forwarder, safety performance and contractor carrier oversight can be a material disruption risk, especially where road transport is subcontracted. Buyers increasingly expect clear due diligence processes (screening, audits, monitoring) and consistent reporting of accidents and incidents for both direct and contracted workers.\",\n      \"recommended_action\": \"Standardise your contractor safety management approach: (1) define screening criteria and onboarding checks for contract carriers (including alignment to your codes of conduct); (2) implement a monitoring routine that can include periodic audits, performance reviews, and corrective action tracking; (3) create one incident register that captures road transport accidents and incidents involving both direct and contracted personnel during work time, using consistent definitions; and (4) include contractor safety expectations in contracts and operational SOPs so that reporting and investigation steps are consistent across branches and lanes.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 19 (due diligence for contractor carrier safety, audits/screening/codes of conduct, monitoring contractor compliance)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 22–23 (report total road transport accidents/incidents involving direct and contracted employees; definitions and minimum scope)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\",\n        \"People\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 3,\n      \"title\": \"Publish a concise annual sustainability summary tailored to logistics buyer topics (EU-ready messaging)\",\n      \"why_it_matters\": \"You do not publish a sustainability/ESG report, which can slow down buyer due diligence and market-entry conversations even when practices exist. For logistics and commercial services providers, buyers often look for a clear, consistent set of disclosures on emissions strategy, safety, labor practices, and ethics.\",\n      \"recommended_action\": \"Publish a short annual sustainability summary (web PDF is sufficient) that consolidates: your environmental policy and how your services affect downstream customers; gross operational emissions and the plan/targets (with baseline and progress); transport footprint methodology and coverage of contract carriers; road safety incidents and contractor safety oversight approach; workforce policies and key people metrics you already track (e.g., diversity representation, engagement survey cadence); and business ethics/data privacy. Include a simple data governance note describing how sustainability data is compiled and checked, and keep an archive for buyer requests.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 8–9 (emissions disclosure expectations and target/strategy elements commonly requested by enterprise buyers)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 19, 22–23 (contract carrier safety due diligence; reporting accidents/incidents for direct and contracted workers)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Professional & Commercial Services Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Topic coverage (data security, workforce diversity, employee engagement, professional integrity, data privacy, business ethics)\",\n          \"link\": \"https://drive.google.com/file/d/1Irvdm4gWMugkHW5R4n5BhEgWf508hy-y/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\",\n        \"Resources\",\n        \"People\"\n      ],\n      \"implementation_difficulty\": \"Low\"\n    },\n    {\n      \"priority_rank\": 4,\n      \"title\": \"Strengthen energy transition actions by improving renewable share and fuel transparency in transport operations\",\n      \"why_it_matters\": \"You track energy consumption but report a relatively low renewable energy share, and your broader low-carbon transition planning is only partially implemented. In logistics, fuel and energy transparency (including renewable fuel/sustainable fuel shares where relevant) is a common buyer-facing indicator of decarbonisation progress.\",\n      \"recommended_action\": \"Expand energy and fuel transparency and action: (1) break down energy use by major operational sources (offices/warehouses/owned fleet) and assign reduction initiatives per source; (2) report fuel consumed for road vs air-related operations and track the percentage of renewable fuel (road) and sustainable fuel (air) where applicable; (3) set procurement and facilities actions to increase renewable electricity sourcing over time (starting with sites where contracting is easiest); and (4) integrate these actions into your emissions target delivery plan so progress can be demonstrated year over year.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 10–11 (disclose aggregate fuel consumed by road vs air; disclose % renewable fuel and % sustainable fuel)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 9 (activities and investments required to achieve emissions plans/targets; risks or limiting factors)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 5,\n      \"title\": \"Move from basic supply-chain sustainability due diligence to a structured carrier/supplier risk program\",\n      \"why_it_matters\": \"Your current due diligence and supplier engagement on environmental issues is basic or informal, despite having supplier standards and some environmental criteria. A structured approach helps prioritize the highest-impact carriers and service partners, and supports more credible transport footprint reporting and risk management.\",\n      \"recommended_action\": \"Create a tiered supplier/carrier sustainability program: (1) map your supplier and carrier base and identify which partners are most material to environmental and safety impacts (e.g., high-volume lanes, emissions-intensive modes, safety-sensitive operations); (2) incorporate a short set of environmental and safety questions into onboarding and annual reviews; (3) request consistent activity data from priority partners to support footprint calculations; and (4) define escalation steps—improvement plan, follow-up review, or re-tendering—when performance is poor. Align the data requested to your transport footprint and safety oversight disclosures to avoid duplicative questionnaires.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 18–19 (supply chain footprint includes contract carriers; expectation to describe due diligence and management of contractor carrier safety)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Technical Guidance for Calculating Scope 3 Emissions\",\n          \"source\": \"WRI & WBCSD\",\n          \"pages_or_section\": \"Overview (value chain emissions calculation methods used for supplier engagement and carbon management)\",\n          \"link\": \"https://drive.google.com/file/d/15tZwRpWCOzJq0B1kkGzLUnG6cHpqWAQk/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\",\n        \"Resources\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    }\n  ],\n  \"key_gaps\": [\n    {\n      \"category\": \"Resources\",\n      \"gap\": \"Electricity/heat-related emissions are not measured, limiting a complete operational footprint and weakening buyer-facing climate disclosures.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 8–9 (expectation for robust emissions disclosure and management strategy/targets)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Governance\",\n      \"gap\": \"No published sustainability/ESG report, creating friction in enterprise procurement and EU market conversations even when internal policies and tracking exist.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Air Freight & Logistics Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Page 8–9 (common buyer-facing disclosure set: emissions metrics plus strategy/targets and performance)\",\n          \"link\": \"https://drive.google.com/file/d/1GJdWzNdyWaH11omRL7Le_qgVNyJuhe2L/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Community\",\n      \"gap\": \"Limited formalization of community and inclusive procurement: no formal community investment program and no support for women-owned businesses/inclusive procurement, despite having employee volunteering and donations.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Professional & Commercial Services Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Topic coverage (workforce diversity and related buyer evaluation areas that can extend into inclusive practices)\",\n          \"link\": \"https://drive.google.com/file/d/1Irvdm4gWMugkHW5R4n5BhEgWf508hy-y/view?usp=share_link\"\n        }\n      ]\n    }\n  ],\n  \"grounding_notes\": \"Recommendations were prioritised using the company’s answers (e.g., no Scope 2 measurement, no ESG report, basic due diligence and informal supplier engagement) and then grounded in logistics-industry disclosure expectations in the Air Freight & Logistics Sustainability Accounting Standard (IFRS Foundation/SASB) covering emissions calculation/strategy, multi-modal footprint including contract carriers, and contractor safety oversight and incident reporting. Where evidence is adjacent (e.g., broader value-chain emissions methods), the Scope 3 calculation guidance (WRI/WBCSD) was used to support practical supplier data collection and engagement steps without introducing unsupported legal requirements or thresholds.\"\n}"
+        }
+      ],
+      "role": "assistant"
+    }
+  ],
+  "recommendation_capture_method": "raw_json",
+  "qa": {
+    "all_non_null_answers_applied": true,
+    "score_capture_complete": true,
+    "recommendation_schema_complete": true,
+    "evidence_fields_checked": true,
+    "no_internal_ids_in_user_prose": true,
+    "status": "PASS",
+    "notes": [
+      "Profile \"notes\" value was entered verbatim into the \"Additional Context / Requirements\" field and is echoed into the LLM context."
+    ]
+  }
+}

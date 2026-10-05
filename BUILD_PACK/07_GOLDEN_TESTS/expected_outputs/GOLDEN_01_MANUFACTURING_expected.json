@@ -1,0 +1,1168 @@
+{
+  "case_id": "GOLDEN_01_MANUFACTURING",
+  "captured_from": "current live v1",
+  "captured_at": "2026-10-03T06:36:20Z",
+  "question_selection": {
+    "expected_count": 56,
+    "actual_count": 56,
+    "expected_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-004",
+      "I-013",
+      "I-025",
+      "I-030",
+      "I-032",
+      "I-037",
+      "I-048",
+      "I-056",
+      "I-062",
+      "I-064",
+      "I-069",
+      "I-075",
+      "M-001",
+      "M-003",
+      "M-008",
+      "M-010",
+      "M-011",
+      "M-014",
+      "M-018",
+      "M-022",
+      "M-024",
+      "M-029",
+      "M-038"
+    ],
+    "actual_ids": [
+      "U-001",
+      "U-002",
+      "U-003",
+      "U-004",
+      "U-005",
+      "U-006",
+      "U-007",
+      "U-008",
+      "U-009",
+      "U-010",
+      "U-012",
+      "U-013",
+      "U-014",
+      "U-015",
+      "U-018",
+      "U-019",
+      "U-020",
+      "U-021",
+      "U-022",
+      "U-023",
+      "U-024",
+      "U-025",
+      "U-026",
+      "U-027",
+      "U-028",
+      "U-029",
+      "U-030",
+      "U-031",
+      "U-032",
+      "U-033",
+      "U-034",
+      "U-035",
+      "U-036",
+      "I-004",
+      "I-013",
+      "I-025",
+      "I-030",
+      "I-032",
+      "I-037",
+      "I-048",
+      "I-056",
+      "I-062",
+      "I-064",
+      "I-069",
+      "I-075",
+      "M-001",
+      "M-003",
+      "M-008",
+      "M-010",
+      "M-011",
+      "M-014",
+      "M-018",
+      "M-022",
+      "M-024",
+      "M-029",
+      "M-038"
+    ],
+    "question_set_match": true,
+    "missing_ids": [],
+    "unexpected_ids": [],
+    "order_match": true,
+    "source": "Start Assessment network response (question_count + questions[].question_id), cross-checked against rendered question cards"
+  },
+  "scoring": {
+    "raw_overall": {
+      "points_earned": 5214.0,
+      "total_possible": 22010,
+      "overall_percent": 23.7
+    },
+    "weighted_overall": {
+      "weighted_score": 24.8,
+      "max_score": 100
+    },
+    "category_scores": [
+      {
+        "category": "Governance",
+        "points_earned": 1887,
+        "total_possible": 9424,
+        "category_percent": 20.0
+      },
+      {
+        "category": "People",
+        "points_earned": 1354,
+        "total_possible": 2335,
+        "category_percent": 58.0
+      },
+      {
+        "category": "Resources",
+        "points_earned": 1973,
+        "total_possible": 8781,
+        "category_percent": 22.5
+      },
+      {
+        "category": "Community",
+        "points_earned": 0,
+        "total_possible": 1470,
+        "category_percent": 0.0
+      }
+    ],
+    "weighted_category_breakdown": null,
+    "question_level": [
+      {
+        "question_id": "U-001",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 386,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-002",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 401,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-003",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 354,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 354,
+        "final_score_possible": 354,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-004",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 489.9,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-005",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 379,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-006",
+        "answer_as_recorded": "Basic",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 132,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 132,
+        "final_score_possible": 400,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-007",
+        "answer_as_recorded": "Don't engage",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 397,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-008",
+        "answer_as_recorded": "Basic",
+        "normalized_score": 33,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.01,
+        "weighted_score": 132.33,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 132.33,
+        "final_score_possible": 401,
+        "completion_percent": 33,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-009",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 354,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-010",
+        "answer_as_recorded": "No policy",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.54,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 354,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-012",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.86,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 386,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-013",
+        "answer_as_recorded": "Planned",
+        "normalized_score": 25,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.79,
+        "weighted_score": 94.75,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 94.75,
+        "final_score_possible": 379,
+        "completion_percent": 25,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-014",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 397,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-015",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 393,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "U-018",
+        "answer_as_recorded": "1",
+        "normalized_score": 50,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 175,
+        "multiplier": 1.25,
+        "matched_multiplier_rules": [
+          "MR-004a (1.25x)"
+        ],
+        "final_score": 218.75,
+        "final_score_possible": 437.5,
+        "completion_percent": 50,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-019",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-020",
+        "answer_as_recorded": "40",
+        "normalized_score": 100,
+        "normalization_method": "gaussian",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-021",
+        "answer_as_recorded": "10",
+        "normalized_score": 100,
+        "normalization_method": "exponential_decay",
+        "base_weight": 3.75,
+        "weighted_score": 375,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 375,
+        "final_score_possible": 375,
+        "completion_percent": 100,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "U-022",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 196.5,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196.5,
+        "final_score_possible": 393,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-023",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 402,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-024",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.02,
+        "weighted_score": 402,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 402,
+        "final_score_possible": 402,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-025",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.57,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 357,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-026",
+        "answer_as_recorded": "10",
+        "normalized_score": 10,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.88,
+        "weighted_score": 38.8,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 38.8,
+        "final_score_possible": 388,
+        "completion_percent": 10,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-027",
+        "answer_as_recorded": "Some",
+        "normalized_score": 50,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.92,
+        "weighted_score": 196,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 196,
+        "final_score_possible": 392,
+        "completion_percent": 50,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-028",
+        "answer_as_recorded": "Planned",
+        "normalized_score": 25,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 100,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 100,
+        "final_score_possible": 400,
+        "completion_percent": 25,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-029",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.61,
+        "weighted_score": 361,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-002 (1.35x)"
+        ],
+        "final_score": 487.35,
+        "final_score_possible": 487.35,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-030",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.08,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006a (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 469.2,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-031",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "identity_percent",
+        "base_weight": 4.08,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006a (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 469.2,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-032",
+        "answer_as_recorded": "40",
+        "normalized_score": 8.21,
+        "normalization_method": "exponential_decay",
+        "base_weight": 4.08,
+        "weighted_score": 33.5,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006a (1.15x)"
+        ],
+        "final_score": 38.52,
+        "final_score_possible": 469.2,
+        "completion_percent": 8.2,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "U-033",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.7,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 370,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-034",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-035",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 350,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "U-036",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.5,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 350,
+        "completion_percent": 0,
+        "category_label_on_card": "Community"
+      },
+      {
+        "question_id": "I-004",
+        "answer_as_recorded": "2",
+        "normalized_score": 33.33,
+        "normalization_method": "inverse_count",
+        "base_weight": 3.26,
+        "weighted_score": 108.66,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 108.66,
+        "final_score_possible": 326,
+        "completion_percent": 33.3,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-013",
+        "answer_as_recorded": "None",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.87,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 387,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "I-025",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 397,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 397,
+        "final_score_possible": 397,
+        "completion_percent": 100,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-030",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "identity_percent",
+        "base_weight": 3.69,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 369,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-032",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-037",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.97,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 397,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-048",
+        "answer_as_recorded": "None",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-056",
+        "answer_as_recorded": null,
+        "normalized_score": null,
+        "normalization_method": null,
+        "base_weight": null,
+        "weighted_score": null,
+        "multiplier": null,
+        "matched_multiplier_rules": [],
+        "final_score": null,
+        "final_score_possible": null,
+        "completion_percent": null,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-062",
+        "answer_as_recorded": "20",
+        "normalized_score": 12.36,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.57,
+        "weighted_score": 44.13,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-001 (1.35x)"
+        ],
+        "final_score": 59.58,
+        "final_score_possible": 481.95,
+        "completion_percent": 12.4,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-064",
+        "answer_as_recorded": "0",
+        "normalized_score": 0,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.25,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 325,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-069",
+        "answer_as_recorded": "20",
+        "normalized_score": 0.13,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 3.61,
+        "weighted_score": 0.47,
+        "multiplier": 1.35,
+        "matched_multiplier_rules": [
+          "MR-002 (1.35x)"
+        ],
+        "final_score": 0.63,
+        "final_score_possible": 487.35,
+        "completion_percent": 0.1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "I-075",
+        "answer_as_recorded": "20",
+        "normalized_score": 12.09,
+        "normalization_method": "benchmark_inverse_ratio",
+        "base_weight": 4.08,
+        "weighted_score": 49.33,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-006a (1.15x)"
+        ],
+        "final_score": 56.73,
+        "final_score_possible": 469.2,
+        "completion_percent": 12.1,
+        "category_label_on_card": "Resources"
+      },
+      {
+        "question_id": "M-001",
+        "answer_as_recorded": "None",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 400,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-003",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 358,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-008",
+        "answer_as_recorded": "Formal",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.58,
+        "weighted_score": 358,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 358,
+        "final_score_possible": 358,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-010",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 0,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 0,
+        "final_score_possible": 489.9,
+        "completion_percent": 0,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-011",
+        "answer_as_recorded": "Yes",
+        "normalized_score": 100,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 426,
+        "multiplier": 1.15,
+        "matched_multiplier_rules": [
+          "MR-B11 (1.15x)"
+        ],
+        "final_score": 489.9,
+        "final_score_possible": 489.9,
+        "completion_percent": 100,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-014",
+        "answer_as_recorded": "Planned",
+        "normalized_score": 25,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 98.25,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 98.25,
+        "final_score_possible": 393,
+        "completion_percent": 25,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-018",
+        "answer_as_recorded": "2",
+        "normalized_score": 33.33,
+        "normalization_method": "inverse_count",
+        "base_weight": 3.58,
+        "weighted_score": 119.32,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 119.32,
+        "final_score_possible": 358,
+        "completion_percent": 33.3,
+        "category_label_on_card": "Governance"
+      },
+      {
+        "question_id": "M-022",
+        "answer_as_recorded": "Don't track",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.93,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 393,
+        "completion_percent": 0,
+        "category_label_on_card": null
+      },
+      {
+        "question_id": "M-024",
+        "answer_as_recorded": "1",
+        "normalized_score": 2.5,
+        "normalization_method": "linear_cap",
+        "base_weight": 3.97,
+        "weighted_score": 9.93,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 9.93,
+        "final_score_possible": 397,
+        "completion_percent": 2.5,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-029",
+        "answer_as_recorded": "No",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 3.75,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 375,
+        "completion_percent": 0,
+        "category_label_on_card": "People"
+      },
+      {
+        "question_id": "M-038",
+        "answer_as_recorded": "No policy",
+        "normalized_score": 0,
+        "normalization_method": "answer_scale",
+        "base_weight": 4.26,
+        "weighted_score": 0,
+        "multiplier": 1,
+        "matched_multiplier_rules": [],
+        "final_score": 0,
+        "final_score_possible": 426,
+        "completion_percent": 0,
+        "category_label_on_card": "Resources"
+      }
+    ],
+    "capture_method": "rendered_ui",
+    "capture_notes": [
+      "Score widget values read from the rendered results card (overall %, points, industry-weighted %, per-category bar labels; category points are shown rounded to integers by the UI).",
+      "Per-category industry weights / weighted contributions were not displayed and the scoring request payload was not intercepted for this first case, so weighted_category_breakdown is null rather than reconstructed.",
+      "question_level read from the rendered question cards after all answers were entered."
+    ]
+  },
+  "recommendation_output": {
+    "executive_summary": "Golden Manufacturing Co.’s strongest area is People: you already have a written labour-rights policy, standard working hours, and a formal whistleblowing policy/mechanism in place. The biggest improvement opportunity is Resources data readiness—especially establishing complete energy and emissions baselines (beyond purchased electricity) and a reliable waste data system, which are commonly requested in export procurement questionnaires. Governance is also held back by the absence of an environmental policy and limited controls to assure sustainability data quality and consistency. The raw overall score is 23.7% and the industry-weighted overall score is 24.8%, reflecting that Resources—currently weak for Golden—carries high importance for industrial/components manufacturing.",
+    "priority_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "Build a complete energy baseline (total energy, grid share, renewables) and tie it to procurement-ready disclosure",
+        "why_it_matters": "You currently estimate purchased electricity emissions but do not track total energy consumption, which makes it hard to answer buyer questionnaires consistently. Industry disclosure guidance expects total energy use across all sources plus the split between grid electricity and renewable energy.",
+        "recommended_action": "Set up a simple monthly energy ledger covering all sources you use: purchased electricity plus any direct fuels used on-site or for company vehicles, and any heating/cooling/steam purchased. Convert into one consolidated total energy figure and record (a) % from grid electricity and (b) % from renewable energy. Assign data owners (Facilities/Finance), keep source documents (utility bills, fuel invoices), and add a basic review step each month so figures are repeatable and explainable to North America/Oceania buyers.",
+        "evidence": [
+          {
+            "doc_title": "Industrial Machinery & Goods Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Energy Management Metrics, p. 7-8",
+            "link": "https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 2,
+        "title": "Implement waste measurement and hazardous-waste segregation reporting (with diversion tracking)",
+        "why_it_matters": "You do not track total waste generated or diversion, and you report a high share of hazardous waste—this combination creates immediate questionnaire risk and cost/control blind spots. Consistent waste data also supports safer handling and clearer evidence to customers.",
+        "recommended_action": "Start with a waste register that records, by month: total waste generated by major streams (general, recyclable, hazardous), how each stream is treated (recycled/reused vs. disposed), and which contractor takes it. Use existing manifests/invoices as primary evidence; if data is missing, request weights from waste contractors and add simple internal weighing or container count-to-weight estimates for key streams. Summarize two outputs for buyers: total waste generated and % diverted from landfill, plus the % that is hazardous by mass.",
+        "evidence": [
+          {
+            "doc_title": "Sustainability Meets Growth: A Roadmap for SMEs and Mid-Sized Manufacturers",
+            "source": "World Economic Forum",
+            "pages_or_section": "Roadmap overview (reporting, operational efficiency, supplier engagement)",
+            "link": "https://drive.google.com/file/d/1CFxaDiOUd_L5b-DpfBdkhCPirUXgUbuD/view?usp=share_link"
+          },
+          {
+            "doc_title": "Simplified ESG Disclosure Guide (SEDG) Version 2",
+            "source": "Capital Markets Malaysia (CMM)",
+            "pages_or_section": "SME ESG disclosure structure (environmental metrics and reporting approach)",
+            "link": "https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view"
+          }
+        ],
+        "related_categories": [
+          "Resources"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 3,
+        "title": "Expand greenhouse-gas tracking beyond purchased electricity and improve data-quality controls",
+        "why_it_matters": "You do not measure emissions from your own operations (e.g., fuels/vehicles), and you also do not assess the quality of emission activity data and factors—this undermines credibility when responding to procurement questionnaires. Buyers typically expect clear boundaries, documented methods, and repeatable calculations year to year.",
+        "recommended_action": "Create a GHG inventory file that (1) defines organizational boundaries for Golden’s Malaysia operations, (2) captures direct fuel use (e.g., forklifts, generators, company vehicles) and purchased electricity/heat, and (3) documents calculation methods, sources, and assumptions. Add a basic quality check: second-person review of activity data completeness (all meters/invoices included) and consistent emission-factor use. As a practical next step, use the same documentation approach to pilot one relevant value-chain category (e.g., purchased goods/transport) where you already have supplier or logistics data.",
+        "evidence": [
+          {
+            "doc_title": "Technical Guidance for Calculating Scope 3 Emissions",
+            "source": "WRI & WBCSD",
+            "pages_or_section": "Overview of value chain categories and practical calculation approaches (guidance document)",
+            "link": "https://drive.google.com/file/d/15tZwRpWCOzJq0B1kkGzLUnG6cHpqWAQk/view?usp=share_link"
+          },
+          {
+            "doc_title": "Sustainability Meets Growth: A Roadmap for SMEs and Mid-Sized Manufacturers",
+            "source": "World Economic Forum",
+            "pages_or_section": "Roadmap overview (scope 3, supplier engagement, reporting)",
+            "link": "https://drive.google.com/file/d/1CFxaDiOUd_L5b-DpfBdkhCPirUXgUbuD/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "Resources",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      },
+      {
+        "priority_rank": 4,
+        "title": "Create a short environmental policy and a buyer-ready ESG disclosure pack aligned to SME disclosure guidance",
+        "why_it_matters": "You do not have a written environmental policy or an ESG report, which makes it harder to answer procurement questionnaires consistently and demonstrate management commitment. A lightweight disclosure pack also forces internal alignment on what you track, how, and who approves it.",
+        "recommended_action": "Draft a 1–2 page environmental policy covering operational impacts (energy, emissions, water, waste) and how you manage downstream impacts relevant to electronics assembly (e.g., responsible materials use and end-of-life considerations where applicable). Then produce a concise “ESG Factsheet” for buyers: business overview, key metrics you can support with records (energy total and renewables split; air emissions monitoring status; water use; waste and hazardous waste), and governance items (whistleblowing, labour policy). Update quarterly and keep a version-controlled file as your single source of truth.",
+        "evidence": [
+          {
+            "doc_title": "Simplified ESG Disclosure Guide (SEDG) Version 2",
+            "source": "Capital Markets Malaysia (CMM)",
+            "pages_or_section": "SME-oriented standardized ESG disclosures (guide framework)",
+            "link": "https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view"
+          },
+          {
+            "doc_title": "Sustainability Reporting Handbook for Vietnamese Companies",
+            "source": "IFC; State Securities Commission of Vietnam",
+            "pages_or_section": "Practical sustainability reporting approach and performance indicators (handbook)",
+            "link": "https://drive.google.com/file/d/1TsSV94C2twmClf9Z-CajZRIqeCGB5z7r/view"
+          }
+        ],
+        "related_categories": [
+          "Governance"
+        ],
+        "implementation_difficulty": "Low"
+      },
+      {
+        "priority_rank": 5,
+        "title": "Strengthen safety performance reporting beyond training frequency (incident, near-miss, and contractor coverage)",
+        "why_it_matters": "You provide health and safety training annually but have recorded incidents, and you do not yet show standardized safety performance metrics. Procurement teams often look for consistent incident/near-miss reporting that covers both employees and contractors.",
+        "recommended_action": "Add routine tracking of: total recordable incidents, fatalities (if any), and near misses, reported separately for direct employees and contractors you supervise. Use a consistent calculation basis using hours worked so results can be compared year to year, and link learnings to corrective actions (e.g., top 3 causes and preventive controls). Include these metrics in your buyer ESG factsheet alongside training frequency to show both leading and lagging indicators.",
+        "evidence": [
+          {
+            "doc_title": "Industrial Machinery & Goods Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Workforce Health & Safety Metrics, p. 9-10",
+            "link": "https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link"
+          }
+        ],
+        "related_categories": [
+          "People",
+          "Governance"
+        ],
+        "implementation_difficulty": "Medium"
+      }
+    ],
+    "key_gaps": [
+      {
+        "category": "Resources",
+        "gap": "Incomplete resource and emissions baselines: total energy is not tracked, direct operational emissions are not measured, and waste totals/diversion are not tracked despite meaningful hazardous waste share.",
+        "evidence": [
+          {
+            "doc_title": "Industrial Machinery & Goods Sustainability Accounting Standard",
+            "source": "IFRS Foundation (SASB)",
+            "pages_or_section": "Energy Management Metrics, p. 7-8",
+            "link": "https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link"
+          }
+        ]
+      },
+      {
+        "category": "Governance",
+        "gap": "Low policy and data-governance readiness for procurement: no written environmental policy, limited documentation of how environmental data is compiled/checked, and no ESG reporting package.",
+        "evidence": [
+          {
+            "doc_title": "Simplified ESG Disclosure Guide (SEDG) Version 2",
+            "source": "Capital Markets Malaysia (CMM)",
+            "pages_or_section": "SME-oriented standardized ESG disclosures (guide framework)",
+            "link": "https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view"
+          }
+        ]
+      },
+      {
+        "category": "Community",
+        "gap": "No formal community investment, volunteer programme, or inclusive procurement approach is in place, leaving this section of buyer questionnaires blank.",
+        "evidence": [
+          {
+            "doc_title": "Simplified ESG Disclosure Guide (SEDG) Version 2",
+            "source": "Capital Markets Malaysia (CMM)",
+            "pages_or_section": "SME ESG disclosure structure (social/community disclosures)",
+            "link": "https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view"
+          }
+        ]
+      }
+    ],
+    "grounding_notes": "Recommendations are grounded primarily in (a) Golden’s self-reported gaps (no environmental policy; no total energy tracking; no Scope 1 measurement; no waste tracking/diversion; limited data-quality checks; limited supplier environmental engagement), and (b) procurement-relevant, industry-specific disclosure expectations from the IFRS Foundation (SASB) Industrial Machinery & Goods standard (energy and safety metrics). Where evidence is more general (SME disclosure pack, roadmap), it is used to justify a lightweight, questionnaire-ready reporting approach suitable for a 251–500 employee manufacturer in Malaysia exporting to North America and Oceania."
+  },
+  "recommendation_output_raw": [
+    {
+      "id": "msg_0af0bc2f1efab883006ac0a2642b9c87d1953a6cbeeb8a91cd",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\n  \"executive_summary\": \"Golden Manufacturing Co.’s strongest area is People: you already have a written labour-rights policy, standard working hours, and a formal whistleblowing policy/mechanism in place. The biggest improvement opportunity is Resources data readiness—especially establishing complete energy and emissions baselines (beyond purchased electricity) and a reliable waste data system, which are commonly requested in export procurement questionnaires. Governance is also held back by the absence of an environmental policy and limited controls to assure sustainability data quality and consistency. The raw overall score is 23.7% and the industry-weighted overall score is 24.8%, reflecting that Resources—currently weak for Golden—carries high importance for industrial/components manufacturing.\",\n  \"priority_recommendations\": [\n    {\n      \"priority_rank\": 1,\n      \"title\": \"Build a complete energy baseline (total energy, grid share, renewables) and tie it to procurement-ready disclosure\",\n      \"why_it_matters\": \"You currently estimate purchased electricity emissions but do not track total energy consumption, which makes it hard to answer buyer questionnaires consistently. Industry disclosure guidance expects total energy use across all sources plus the split between grid electricity and renewable energy.\",\n      \"recommended_action\": \"Set up a simple monthly energy ledger covering all sources you use: purchased electricity plus any direct fuels used on-site or for company vehicles, and any heating/cooling/steam purchased. Convert into one consolidated total energy figure and record (a) % from grid electricity and (b) % from renewable energy. Assign data owners (Facilities/Finance), keep source documents (utility bills, fuel invoices), and add a basic review step each month so figures are repeatable and explainable to North America/Oceania buyers.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Industrial Machinery & Goods Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Energy Management Metrics, p. 7-8\",\n          \"link\": \"https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 2,\n      \"title\": \"Implement waste measurement and hazardous-waste segregation reporting (with diversion tracking)\",\n      \"why_it_matters\": \"You do not track total waste generated or diversion, and you report a high share of hazardous waste—this combination creates immediate questionnaire risk and cost/control blind spots. Consistent waste data also supports safer handling and clearer evidence to customers.\",\n      \"recommended_action\": \"Start with a waste register that records, by month: total waste generated by major streams (general, recyclable, hazardous), how each stream is treated (recycled/reused vs. disposed), and which contractor takes it. Use existing manifests/invoices as primary evidence; if data is missing, request weights from waste contractors and add simple internal weighing or container count-to-weight estimates for key streams. Summarize two outputs for buyers: total waste generated and % diverted from landfill, plus the % that is hazardous by mass.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Sustainability Meets Growth: A Roadmap for SMEs and Mid-Sized Manufacturers\",\n          \"source\": \"World Economic Forum\",\n          \"pages_or_section\": \"Roadmap overview (reporting, operational efficiency, supplier engagement)\",\n          \"link\": \"https://drive.google.com/file/d/1CFxaDiOUd_L5b-DpfBdkhCPirUXgUbuD/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Simplified ESG Disclosure Guide (SEDG) Version 2\",\n          \"source\": \"Capital Markets Malaysia (CMM)\",\n          \"pages_or_section\": \"SME ESG disclosure structure (environmental metrics and reporting approach)\",\n          \"link\": \"https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 3,\n      \"title\": \"Expand greenhouse-gas tracking beyond purchased electricity and improve data-quality controls\",\n      \"why_it_matters\": \"You do not measure emissions from your own operations (e.g., fuels/vehicles), and you also do not assess the quality of emission activity data and factors—this undermines credibility when responding to procurement questionnaires. Buyers typically expect clear boundaries, documented methods, and repeatable calculations year to year.\",\n      \"recommended_action\": \"Create a GHG inventory file that (1) defines organizational boundaries for Golden’s Malaysia operations, (2) captures direct fuel use (e.g., forklifts, generators, company vehicles) and purchased electricity/heat, and (3) documents calculation methods, sources, and assumptions. Add a basic quality check: second-person review of activity data completeness (all meters/invoices included) and consistent emission-factor use. As a practical next step, use the same documentation approach to pilot one relevant value-chain category (e.g., purchased goods/transport) where you already have supplier or logistics data.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Technical Guidance for Calculating Scope 3 Emissions\",\n          \"source\": \"WRI & WBCSD\",\n          \"pages_or_section\": \"Overview of value chain categories and practical calculation approaches (guidance document)\",\n          \"link\": \"https://drive.google.com/file/d/15tZwRpWCOzJq0B1kkGzLUnG6cHpqWAQk/view?usp=share_link\"\n        },\n        {\n          \"doc_title\": \"Sustainability Meets Growth: A Roadmap for SMEs and Mid-Sized Manufacturers\",\n          \"source\": \"World Economic Forum\",\n          \"pages_or_section\": \"Roadmap overview (scope 3, supplier engagement, reporting)\",\n          \"link\": \"https://drive.google.com/file/d/1CFxaDiOUd_L5b-DpfBdkhCPirUXgUbuD/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"Resources\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    },\n    {\n      \"priority_rank\": 4,\n      \"title\": \"Create a short environmental policy and a buyer-ready ESG disclosure pack aligned to SME disclosure guidance\",\n      \"why_it_matters\": \"You do not have a written environmental policy or an ESG report, which makes it harder to answer procurement questionnaires consistently and demonstrate management commitment. A lightweight disclosure pack also forces internal alignment on what you track, how, and who approves it.\",\n      \"recommended_action\": \"Draft a 1–2 page environmental policy covering operational impacts (energy, emissions, water, waste) and how you manage downstream impacts relevant to electronics assembly (e.g., responsible materials use and end-of-life considerations where applicable). Then produce a concise “ESG Factsheet” for buyers: business overview, key metrics you can support with records (energy total and renewables split; air emissions monitoring status; water use; waste and hazardous waste), and governance items (whistleblowing, labour policy). Update quarterly and keep a version-controlled file as your single source of truth.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Simplified ESG Disclosure Guide (SEDG) Version 2\",\n          \"source\": \"Capital Markets Malaysia (CMM)\",\n          \"pages_or_section\": \"SME-oriented standardized ESG disclosures (guide framework)\",\n          \"link\": \"https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view\"\n        },\n        {\n          \"doc_title\": \"Sustainability Reporting Handbook for Vietnamese Companies\",\n          \"source\": \"IFC; State Securities Commission of Vietnam\",\n          \"pages_or_section\": \"Practical sustainability reporting approach and performance indicators (handbook)\",\n          \"link\": \"https://drive.google.com/file/d/1TsSV94C2twmClf9Z-CajZRIqeCGB5z7r/view\"\n        }\n      ],\n      \"related_categories\": [\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Low\"\n    },\n    {\n      \"priority_rank\": 5,\n      \"title\": \"Strengthen safety performance reporting beyond training frequency (incident, near-miss, and contractor coverage)\",\n      \"why_it_matters\": \"You provide health and safety training annually but have recorded incidents, and you do not yet show standardized safety performance metrics. Procurement teams often look for consistent incident/near-miss reporting that covers both employees and contractors.\",\n      \"recommended_action\": \"Add routine tracking of: total recordable incidents, fatalities (if any), and near misses, reported separately for direct employees and contractors you supervise. Use a consistent calculation basis using hours worked so results can be compared year to year, and link learnings to corrective actions (e.g., top 3 causes and preventive controls). Include these metrics in your buyer ESG factsheet alongside training frequency to show both leading and lagging indicators.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Industrial Machinery & Goods Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Workforce Health & Safety Metrics, p. 9-10\",\n          \"link\": \"https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link\"\n        }\n      ],\n      \"related_categories\": [\n        \"People\",\n        \"Governance\"\n      ],\n      \"implementation_difficulty\": \"Medium\"\n    }\n  ],\n  \"key_gaps\": [\n    {\n      \"category\": \"Resources\",\n      \"gap\": \"Incomplete resource and emissions baselines: total energy is not tracked, direct operational emissions are not measured, and waste totals/diversion are not tracked despite meaningful hazardous waste share.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Industrial Machinery & Goods Sustainability Accounting Standard\",\n          \"source\": \"IFRS Foundation (SASB)\",\n          \"pages_or_section\": \"Energy Management Metrics, p. 7-8\",\n          \"link\": \"https://drive.google.com/file/d/1kqzGIXBpHJJIVu85WFDjtJnCqdEUIt_2/view?usp=share_link\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Governance\",\n      \"gap\": \"Low policy and data-governance readiness for procurement: no written environmental policy, limited documentation of how environmental data is compiled/checked, and no ESG reporting package.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Simplified ESG Disclosure Guide (SEDG) Version 2\",\n          \"source\": \"Capital Markets Malaysia (CMM)\",\n          \"pages_or_section\": \"SME-oriented standardized ESG disclosures (guide framework)\",\n          \"link\": \"https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view\"\n        }\n      ]\n    },\n    {\n      \"category\": \"Community\",\n      \"gap\": \"No formal community investment, volunteer programme, or inclusive procurement approach is in place, leaving this section of buyer questionnaires blank.\",\n      \"evidence\": [\n        {\n          \"doc_title\": \"Simplified ESG Disclosure Guide (SEDG) Version 2\",\n          \"source\": \"Capital Markets Malaysia (CMM)\",\n          \"pages_or_section\": \"SME ESG disclosure structure (social/community disclosures)\",\n          \"link\": \"https://drive.google.com/file/d/1YwpMh-7FSWQf6D-HgO3T9wbl5VqAN_Dy/view\"\n        }\n      ]\n    }\n  ],\n  \"grounding_notes\": \"Recommendations are grounded primarily in (a) Golden’s self-reported gaps (no environmental policy; no total energy tracking; no Scope 1 measurement; no waste tracking/diversion; limited data-quality checks; limited supplier environmental engagement), and (b) procurement-relevant, industry-specific disclosure expectations from the IFRS Foundation (SASB) Industrial Machinery & Goods standard (energy and safety metrics). Where evidence is more general (SME disclosure pack, roadmap), it is used to justify a lightweight, questionnaire-ready reporting approach suitable for a 251–500 employee manufacturer in Malaysia exporting to North America and Oceania.\"\n}"
+        }
+      ],
+      "role": "assistant"
+    }
+  ],
+  "recommendation_capture_method": "raw_json",
+  "qa": {
+    "all_non_null_answers_applied": true,
+    "score_capture_complete": true,
+    "recommendation_schema_complete": true,
+    "evidence_fields_checked": true,
+    "no_internal_ids_in_user_prose": true,
+    "status": "PASS",
+    "notes": [
+      "Scoring captured from rendered UI only; recommendation output captured as raw JSON from the network response.",
+      "I-056 seeded answer is null and was left blank; app accepted submission and excluded I-056 from total_possible (card shows \"ERROR: No answer provided\").",
+      "UI defect: M-022 question card renders an empty \"Category:\" label, but the score widget counts it under Governance (Governance possible 9424 = 9030.7 from labelled Governance cards + 393 from M-022).",
+      "Profile \"notes\" value was entered verbatim into the \"Additional Context / Requirements\" field and is echoed into the LLM context."
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+answer_scale_id,answer_option,raw_value,normalized_score,display_order,active
+YN,Yes,1,100,1,TRUE
+YN,No,0,0,2,TRUE
+PARTIAL_3,No,0,0,1,TRUE
+PARTIAL_3,Some,1,50,2,TRUE
+PARTIAL_3,Yes,2,100,3,TRUE
+NUMERIC_INPUT,Direct numeric input,0,0,1,TRUE
+PROGRESS_5,None,0,0,1,TRUE
+PROGRESS_5,Planned,0.25,25,2,TRUE
+PROGRESS_5,Partially implemented,0.5,50,3,TRUE
+PROGRESS_5,Implemented,0.75,75,4,TRUE
+PROGRESS_5,Sustained,1,100,5,TRUE
+FREQUENCY_3,Never,0,0,1,TRUE
+FREQUENCY_3,Sometimes,0.5,50,2,TRUE
+FREQUENCY_3,Always,1,100,3,TRUE
+MATURITY_4,None,0,0,1,TRUE
+MATURITY_4,Basic,0.33,33,2,TRUE
+MATURITY_4,Formal,0.66,66,3,TRUE
+MATURITY_4,Advanced,1,100,4,TRUE
+COVERAGE_4,Not covered,0,0,1,TRUE
+COVERAGE_4,Self only,0.33,33,2,TRUE
+COVERAGE_4,Self + direct suppliers,0.66,66,3,TRUE
+COVERAGE_4,Full value chain,1,100,4,TRUE
+ASSURANCE_4,None,0,0,1,TRUE
+ASSURANCE_4,Internal review only,0.33,33,2,TRUE
+ASSURANCE_4,Limited external assurance,0.66,66,3,TRUE
+ASSURANCE_4,Reasonable external assurance,1,100,4,TRUE
+POLICY_3,No policy,0,0,1,TRUE
+POLICY_3,Informal,0.5,50,2,TRUE
+POLICY_3,Formal,1,100,3,TRUE
+SUPPLIER_ENGAGE_3,Don't engage,0,0,1,TRUE
+SUPPLIER_ENGAGE_3,Informal engagement,0.5,50,2,TRUE
+SUPPLIER_ENGAGE_3,Structured program,1,100,3,TRUE
+FREQ_DEFINED_3,Never,0,0,1,TRUE
+FREQ_DEFINED_3,less than once a year,0.5,50,2,TRUE
+FREQ_DEFINED_3,twice a year or more,1,100,3,TRUE
+TRACK_REPORT_4,Don't track,0,0,1,TRUE
+TRACK_REPORT_4,Track some,0.33,33,2,TRUE
+TRACK_REPORT_4,Track all (don't report),0.66,66,3,TRUE
+TRACK_REPORT_4,Track and report,1,100,4,TRUE
