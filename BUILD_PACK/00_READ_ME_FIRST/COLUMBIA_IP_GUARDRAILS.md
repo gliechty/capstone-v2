@@ -103,6 +103,20 @@ Without explicit human approval following IP review, agents should not implement
 
 If such an opportunity arises, surface it briefly and stop before implementation.
 
+### Commercial opportunity discovered during implementation
+
+If ordinary implementation work reveals a potentially valuable commercial capability, method, dataset, workflow, or product feature that is **not necessary to satisfy the approved Climate School scope**, stop before designing, prototyping, or implementing it in detail.
+
+Identify the opportunity only at the level necessary to explain:
+- what was discovered;
+- why it appears commercially relevant;
+- why it is not required for the current research deliverable;
+- what minimal non-commercial implementation can proceed without it.
+
+Then invoke the `IP REVIEW REQUIRED` structure below and wait for human direction.
+
+Do not use agent autonomy to turn an incidental research-build discovery into embryonic SaaS differentiation inside the paid-research codebase.
+
 ## 4. Agent IP-review trigger
 
 When a proposed change may create something materially beyond the current research requirement, output:
