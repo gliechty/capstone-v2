@@ -1,13 +1,60 @@
-/* Infrastructure defaults only; visual design remains a later M1 review. */
+/* M1.1 visual system. Category colors are presentation tokens, not engine rules. */
 :root {
-  --surface: #faf9f6;
-  --text: #202b33;
-  --accent: #235a75;
-  --font-body: Arial, Helvetica, sans-serif;
-  --motion-duration: 200ms;
-  --motion-easing: ease-out;
+  --surface: #faf8f3;
+  --surface-raised: #fffdf9;
+  --surface-muted: #efeae1;
+  --text: #282b29;
+  --text-muted: #5f625c;
+  --accent: #9d402d;
+  --accent-hover: #7c3021;
+  --accent-soft: #f2e1d8;
+  --on-accent: #fffdf9;
+  --border: #d5d0c5;
+  --border-strong: #85877c;
+  --category-people: #76516b;
+  --category-governance: #49647c;
+  --category-community: #886029;
+  --category-resources: #4b6e61;
+  --font-body: var(--font-manrope), "Segoe UI", Arial, sans-serif;
+  --font-size-display: clamp(2.5rem, 1.75rem + 3vw, 4rem);
+  --font-size-heading: clamp(2rem, 1.5rem + 1.5vw, 2.625rem);
+  --font-size-subheading: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+  --font-size-body: 1.0625rem;
+  --font-size-small: 0.875rem;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --leading-body: 1.7;
+  --leading-heading: 1.15;
+  --tracking-heading: -0.04em;
+  --space-unit: 0.25rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --section-space: clamp(3rem, 6vw, 6rem);
+  --page-gutter: clamp(1.25rem, 4vw, 3rem);
+  --content-width: 74rem;
+  --text-width: 40rem;
+  --corner-control: 0.625rem;
+  --corner-panel: 0.875rem;
+  --border-width: 1px;
+  --elevation-panel: 0 2px 8px #282b2908;
+  --focus-width: 3px;
+  --focus-offset: 4px;
+  --control-height: 3rem;
+  --motion-duration: 220ms;
+  --motion-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --motion-distance: 0.375rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --motion-duration: 0ms; }
+  :root {
+    --motion-duration: 0ms;
+    --motion-distance: 0rem;
+  }
 }

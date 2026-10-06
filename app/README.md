@@ -1,7 +1,7 @@
 # Capstone v2 application scaffold
 
-This single package lives beside the immutable Build Pack. Only infrastructure is implemented.
-The root page is a development marker, not the product landing page.
+This single package lives beside the immutable Build Pack. M1.1 adds the UI system and landing-page shell.
+The root page introduces the research. Assessment entry and the demo video are explicitly unavailable in this preview.
 
 ## Local setup
 
@@ -46,7 +46,7 @@ Dependency locking and the Node major are recorded. Security/dependency checks m
 
 ## Scope
 
-No landing page, assessment flow, reducer state implementation, config importer, scoring,
+No assessment flow, reducer state implementation, config importer, scoring,
 recommendations, calculator, persistence, or maintenance feature is implemented.
 Radix and Zod remain approved choices to introduce when an implemented interaction or boundary needs them.
 
@@ -54,3 +54,7 @@ Radix and Zod remain approved choices to introduce when an implemented interacti
 
 See [ADR 0002](docs/adr/0002-eslint-10-next-plugin.md) for the approved direct Next plugin, React and accessibility checks.
 The known development-only braces advisory remains visible in npm audit; see [the risk register](docs/DEPENDENCY_RISKS.md).
+
+## M1.1 visual review
+
+See [the UI review record](docs/M1.1-UI-REVIEW.md) for tokens, font licensing, copy provenance, scope decisions and browser coverage.
