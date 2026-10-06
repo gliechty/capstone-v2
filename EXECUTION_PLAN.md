@@ -1,8 +1,8 @@
-\# EXECUTION\_PLAN.md
+# EXECUTION_PLAN.md
 
 
 
-\## Purpose
+## Purpose
 
 
 
@@ -10,15 +10,15 @@ This document is the operational build roadmap for Capstone v2.
 
 
 
-It sits below `BUILD\_PLAN.md`:
+It sits below `BUILD_PLAN.md`:
 
 
 
-\- `BUILD\_PLAN.md` defines major milestones and human review gates.
+- `BUILD_PLAN.md` defines major milestones and human review gates.
 
-\- `EXECUTION\_PLAN.md` breaks those milestones into right-sized implementation steps.
+- `EXECUTION_PLAN.md` breaks those milestones into right-sized implementation steps.
 
-\- The Google Sheet `Build Checklist` → `v2.0` mirrors this plan for human project tracking.
+- The Google Sheet `Build Checklist` → `v2.0` mirrors this plan for human project tracking.
 
 
 
@@ -38,25 +38,25 @@ The intended loop is:
 
 
 
-\---
+---
 
 
 
-\# Status conventions
+# Status conventions
 
 
 
-\- `COMPLETE` — implemented, verified, reviewed, committed.
+- `COMPLETE` — implemented, verified, reviewed, committed.
 
-\- `CURRENT` — explicitly authorized for implementation.
+- `CURRENT` — explicitly authorized for implementation.
 
-\- `PENDING` — not yet authorized.
+- `PENDING` — not yet authorized.
 
-\- `BLOCKED` — requires methodology, scope, IP, or other explicit approval.
+- `BLOCKED` — requires methodology, scope, IP, or other explicit approval.
 
-\- `STRETCH` — optional after required scope is stable.
+- `STRETCH` — optional after required scope is stable.
 
-\- `RESEARCH` — experimental work that must not silently alter the core product.
+- `RESEARCH` — experimental work that must not silently alter the core product.
 
 
 
@@ -64,49 +64,49 @@ Only the human project owner may change a step to `COMPLETE` or authorize the ne
 
 
 
-\---
+---
 
 
 
-\# Milestone 1 — Product shell and assessment entry
+# Milestone 1 — Product shell and assessment entry
 
 
 
-\## M1.0 — Scaffold + architecture baseline
+## M1.0 — Scaffold + architecture baseline
 
-\*\*Status:\*\* COMPLETE
+**Status:** COMPLETE
 
 
 
-\### Purpose
+### Purpose
 
 Create a safe, reproducible technical foundation before product features.
 
 
 
-\### Output
+### Output
 
-\- Next.js / React / TypeScript application scaffold
+- Next.js / React / TypeScript application scaffold
 
-\- testing infrastructure
+- testing infrastructure
 
-\- linting and architecture-boundary enforcement
+- linting and architecture-boundary enforcement
 
-\- design-token foundation
+- design-token foundation
 
-\- architecture decision records
+- architecture decision records
 
-\- single verification command: `npm run verify`
+- single verification command: `npm run verify`
 
 
 
-\### Dependencies
+### Dependencies
 
 Approved architecture and Build Pack control documents.
 
 
 
-\### Notes
+### Notes
 
 Completed on branch `milestone-1-scaffold`.
 
@@ -116,79 +116,79 @@ No substantive Capstone product functionality was implemented in this step.
 
 
 
-\---
+---
 
 
 
-\## M1.1 — UI system + landing-page shell
+## M1.1 — UI system + landing-page shell
 
-\*\*Status:\*\* CURRENT
+**Status:** COMPLETE
 
 
 
-\### Purpose
+### Purpose
 
 Establish the product visual language and the public/context surface.
 
 
 
-\### Output
+### Output
 
-\- approved design-token implementation
+- approved design-token implementation
 
-\- typography
+- typography
 
-\- spacing
+- spacing
 
-\- color system
+- color system
 
-\- borders/radii
+- borders/radii
 
-\- motion treatment
+- motion treatment
 
-\- reduced-motion behavior
+- reduced-motion behavior
 
-\- responsive landing-page shell
+- responsive landing-page shell
 
-\- problem/context section
+- problem/context section
 
-\- About / approach section
+- About / approach section
 
-\- video placeholder
+- video placeholder
 
-\- research / verification section
+- research / verification section
 
-\- clear `Take the Assessment` CTA
-
-
-
-\### Dependencies
-
-\- M1.0
-
-\- `BUILD\_PACK/01\_PRODUCT\_SPEC/UI\_BRAND\_GUIDE.md`
+- clear `Take the Assessment` CTA
 
 
 
-\### Boundaries
+### Dependencies
+
+- M1.0
+
+- `BUILD_PACK/01_PRODUCT_SPEC/UI_BRAND_GUIDE.md`
+
+
+
+### Boundaries
 
 Do not implement:
 
-\- assessment setup
+- assessment setup
 
-\- questionnaire behavior
+- questionnaire behavior
 
-\- scoring
+- scoring
 
-\- recommendations
+- recommendations
 
-\- calculator
+- calculator
 
-\- database/persistence
+- database/persistence
 
-\- admin/maintenance features
+- admin/maintenance features
 
-\- commercial/stretch features
+- commercial/stretch features
 
 
 
@@ -196,47 +196,51 @@ Keep visual polish controlled until the deterministic core is proven.
 
 
 
-\---
+---
+
+
+### Notes
+
+Implemented and verified. Public-facing copy remains provisional pending research/client review; this does not block the approved UI shell.
+
+
+## M1.2 — Assessment setup + session state
+
+**Status:** CURRENT
 
 
 
-\## M1.2 — Assessment setup + session state
-
-\*\*Status:\*\* PENDING
-
-
-
-\### Purpose
+### Purpose
 
 Collect SME context and begin a resilient assessment session.
 
 
 
-\### Output
+### Output
 
-\- dedicated full-page assessment setup flow
+- dedicated full-page assessment setup flow
 
-\- SME metadata/context fields
+- SME metadata/context fields
 
-\- quantitative-input method choice
+- quantitative-input method choice
 
-\- React reducer/context state
+- React reducer/context state
 
-\- browser session persistence
+- browser session persistence
 
-\- route into questionnaire flow
-
-
-
-\### Dependencies
-
-\- M1.1
-
-\- approved SME metadata/context fields
+- route into questionnaire flow
 
 
 
-\### Notes
+### Dependencies
+
+- M1.1
+
+- approved SME metadata/context fields
+
+
+
+### Notes
 
 Manual quantitative input is the initial default.
 
@@ -246,57 +250,57 @@ Calculator and upload paths may remain disabled/placeholders until their milesto
 
 
 
-\---
+---
 
 
 
-\## M1.3 — Questionnaire shell + progress/navigation
+## M1.3 — Questionnaire shell + progress/navigation
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Implement the approved assessment interaction model before real scoring logic.
 
 
 
-\### Output
+### Output
 
-\- vertical single-focus / roller-style question cards
+- vertical single-focus / roller-style question cards
 
-\- active-card emphasis
+- active-card emphasis
 
-\- desktop progress rail
+- desktop progress rail
 
-\- compact mobile progress equivalent
+- compact mobile progress equivalent
 
-\- skip behavior
+- skip behavior
 
-\- revisit behavior
+- revisit behavior
 
-\- answered/unanswered/current state
+- answered/unanswered/current state
 
-\- direct question navigation
+- direct question navigation
 
-\- category-transition treatment
+- category-transition treatment
 
-\- final unanswered-question review behavior
+- final unanswered-question review behavior
 
-\- reduced-motion support
-
-
-
-\### Dependencies
-
-\- M1.2
-
-\- `UI\_BRAND\_GUIDE.md`
+- reduced-motion support
 
 
 
-\### Notes
+### Dependencies
+
+- M1.2
+
+- `UI_BRAND_GUIDE.md`
+
+
+
+### Notes
 
 Representative or mock questions may be used at this stage.
 
@@ -306,113 +310,113 @@ Missing answers must never silently become zero.
 
 
 
-\---
+---
 
 
 
-\## M1.4 — Results shell + Milestone 1 review
+## M1.4 — Results shell + Milestone 1 review
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Prove the end-to-end product shell without pretending scoring or recommendations are implemented.
 
 
 
-\### Output
+### Output
 
-\- `/results` route
+- `/results` route
 
-\- score-summary shell
+- score-summary shell
 
-\- category visualization shell
+- category visualization shell
 
-\- executive-summary section shell
+- executive-summary section shell
 
-\- gaps section shell
+- gaps section shell
 
-\- recommendation section shell
+- recommendation section shell
 
-\- prominent report-download CTA shell
+- prominent report-download CTA shell
 
-\- Milestone 1 review package
+- Milestone 1 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M1.1–M1.3.
 
 
 
-\### Review gate
+### Review gate
 
 Stop and review Milestone 1 before beginning Milestone 2.
 
 
 
-\---
+---
 
 
 
-\# Milestone 2 — Deterministic assessment core and Golden parity
+# Milestone 2 — Deterministic assessment core and Golden parity
 
 
 
-\## M2.1 — Canonical config schemas + loader
+## M2.1 — Canonical config schemas + loader
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Make the preserved Capstone configuration readable by the new application without hard-coding it.
 
 
 
-\### Output
+### Output
 
 Typed schemas and repository/loading interfaces for:
 
-\- QuestionBank
+- QuestionBank
 
-\- AnswerScales
+- AnswerScales
 
-\- MetricBenchmarks
+- MetricBenchmarks
 
-\- MultiplierRules
+- MultiplierRules
 
-\- CategoryWeights
+- CategoryWeights
 
-\- DocumentIndex
+- DocumentIndex
 
-\- DocumentChunks
+- DocumentChunks
 
 
 
 Also:
 
-\- validation
+- validation
 
-\- config-version identity
+- config-version identity
 
-\- explicit load failures
-
-
-
-\### Dependencies
-
-\- Milestone 1 approved
-
-\- canonical clean config files
+- explicit load failures
 
 
 
-\### Notes
+### Dependencies
+
+- Milestone 1 approved
+
+- canonical clean config files
+
+
+
+### Notes
 
 No production database is required for this step.
 
@@ -422,95 +426,95 @@ Versioned repository files may serve as the initial runtime authority.
 
 
 
-\---
+---
 
 
 
-\## M2.2 — Deterministic question selection + ordering
+## M2.2 — Deterministic question selection + ordering
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Reproduce which questions each SME receives and in what order.
 
 
 
-\### Output
+### Output
 
 Pure deterministic selection and ordering engine driven by:
 
-\- active state
+- active state
 
-\- industry
+- industry
 
-\- market/location
+- market/location
 
-\- size
+- size
 
-\- priority/order rules
+- priority/order rules
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.1.
 
 
 
-\### Verification
+### Verification
 
 Golden cases must match expected question IDs and ordering.
 
 
 
-\### Notes
+### Notes
 
 Do not introduce buyer/goal-based question selection unless explicitly approved as a methodology change.
 
 
 
-\---
+---
 
 
 
-\## M2.3 — Answer persistence + normalization/benchmarks
+## M2.3 — Answer persistence + normalization/benchmarks
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Reliably capture answers and reproduce normalized question scores.
 
 
 
-\### Output
+### Output
 
-\- answer-state integration
+- answer-state integration
 
-\- robust persistence through navigation/focus changes
+- robust persistence through navigation/focus changes
 
-\- normalization library
+- normalization library
 
-\- benchmark resolver
+- benchmark resolver
 
-\- missing-data handling
+- missing-data handling
 
-\- question-level normalized outputs
+- question-level normalized outputs
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.1–M2.2.
 
 
 
-\### Notes
+### Notes
 
 Fix the v1 answer-loss/focus-change defect.
 
@@ -520,261 +524,261 @@ Missing values must never silently become zero.
 
 
 
-\---
+---
 
 
 
-\## M2.4 — Base weights + contextual multipliers
+## M2.4 — Base weights + contextual multipliers
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Reproduce contextual weighting deterministically.
 
 
 
-\### Output
+### Output
 
-\- base-weight application
+- base-weight application
 
-\- multiplier-rule matching
+- multiplier-rule matching
 
-\- matched rule IDs
+- matched rule IDs
 
-\- resulting multiplier
+- resulting multiplier
 
-\- explainable multiplier trace
+- explainable multiplier trace
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.1–M2.3.
 
 
 
-\### Notes
+### Notes
 
 Do not convert current config values or caps into permanent engine assumptions.
 
 
 
-\---
+---
 
 
 
-\## M2.5 — Category weighting + score aggregation
+## M2.5 — Category weighting + score aggregation
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Reproduce category and overall scoring.
 
 
 
-\### Output
+### Output
 
-\- weighted question contributions
+- weighted question contributions
 
-\- category aggregation
+- category aggregation
 
-\- category scores
+- category scores
 
-\- raw overall score
+- raw overall score
 
-\- industry-weighted overall score
+- industry-weighted overall score
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.4.
 
 
 
-\### Notes
+### Notes
 
 Calculation precision must remain separate from presentation rounding.
 
 
 
-\---
+---
 
 
 
-\## M2.6 — Calculation trace + numeric policy
+## M2.6 — Calculation trace + numeric policy
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Make every score explainable and every parity failure diagnosable.
 
 
 
-\### Output
+### Output
 
 Structured calculation trace containing, where applicable:
 
-\- question ID
+- question ID
 
-\- raw answer
+- raw answer
 
-\- normalization method and inputs
+- normalization method and inputs
 
-\- normalized score
+- normalized score
 
-\- benchmark ID/source
+- benchmark ID/source
 
-\- base weight
+- base weight
 
-\- matched multiplier rule IDs
+- matched multiplier rule IDs
 
-\- resulting multiplier
+- resulting multiplier
 
-\- category
+- category
 
-\- category weight
+- category weight
 
-\- weighted contribution
+- weighted contribution
 
-\- overall contribution
+- overall contribution
 
-\- config/method version
+- config/method version
 
 
 
 Also:
 
-\- documented numeric representation policy
+- documented numeric representation policy
 
-\- source/config precision rules
+- source/config precision rules
 
-\- intermediate-rounding rules
+- intermediate-rounding rules
 
-\- presentation-rounding rules
+- presentation-rounding rules
 
-\- explicit Golden comparison tolerance
+- explicit Golden comparison tolerance
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.3–M2.5.
 
 
 
-\### Notes
+### Notes
 
 Never widen tolerances merely to make Golden Tests pass.
 
 
 
-\---
+---
 
 
 
-\## M2.7 — Golden parity + basic score visualizations
+## M2.7 — Golden parity + basic score visualizations
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Prove the deterministic core against the preserved v1 behavior.
 
 
 
-\### Output
+### Output
 
-\- Golden Test matrix for all five Golden SMEs
+- Golden Test matrix for all five Golden SMEs
 
-\- selected-question parity
+- selected-question parity
 
-\- normalization parity
+- normalization parity
 
-\- weight parity
+- weight parity
 
-\- multiplier parity
+- multiplier parity
 
-\- category-score parity
+- category-score parity
 
-\- overall-score parity
+- overall-score parity
 
-\- documented reconciliation of known v1 defects
+- documented reconciliation of known v1 defects
 
-\- basic overall/category score visualizations
+- basic overall/category score visualizations
 
-\- Milestone 2 review package
+- Milestone 2 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.1–M2.6 plus Golden fixtures.
 
 
 
-\### Review gate
+### Review gate
 
 The deterministic core must be approved before recommendation logic becomes authoritative.
 
 
 
-\---
+---
 
 
 
-\# Milestone 3 — Recommendations, results, and durable report
+# Milestone 3 — Recommendations, results, and durable report
 
 
 
-\## M3.1 — Recommendation service + provider boundary
+## M3.1 — Recommendation service + provider boundary
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Replace the v1 n8n recommendation runtime with a maintainable application service boundary.
 
 
 
-\### Output
+### Output
 
-\- recommendation-service interface
+- recommendation-service interface
 
-\- server-side provider adapter
+- server-side provider adapter
 
-\- model configuration
+- model configuration
 
-\- structured request/response schema
+- structured request/response schema
 
-\- timeout/error handling
+- timeout/error handling
 
-\- provider-replacement seam
-
-
-
-\### Dependencies
-
-\- M2 approved
-
-\- preserved runtime recommendation prompt
+- provider-replacement seam
 
 
 
-\### Notes
+### Dependencies
+
+- M2 approved
+
+- preserved runtime recommendation prompt
+
+
+
+### Notes
 
 Do not recreate n8n literally unless justified.
 
@@ -784,41 +788,41 @@ Deterministic scoring must remain available if the model provider is unavailable
 
 
 
-\---
+---
 
 
 
-\## M3.2 — RAG source/chunk retrieval
+## M3.2 — RAG source/chunk retrieval
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Reproduce grounded evidence selection before recommendation generation.
 
 
 
-\### Output
+### Output
 
-\- DocumentIndex ranking
+- DocumentIndex ranking
 
-\- DocumentChunks ranking
+- DocumentChunks ranking
 
-\- document/chunk join logic
+- document/chunk join logic
 
-\- evidence bundle passed to recommendation generation
+- evidence bundle passed to recommendation generation
 
 
 
-\### Dependencies
+### Dependencies
 
 M3.1 plus canonical DocumentIndex/DocumentChunks.
 
 
 
-\### Notes
+### Notes
 
 Start from preserved v1 metadata-ranking behavior.
 
@@ -828,55 +832,55 @@ Vector/embedding retrieval is not required unless separately justified.
 
 
 
-\---
+---
 
 
 
-\## M3.3 — Structured recommendation generation
+## M3.3 — Structured recommendation generation
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Generate grounded recommendations consistent with authoritative deterministic results.
 
 
 
-\### Output
+### Output
 
-\- model call
+- model call
 
-\- structured output parsing/validation
+- structured output parsing/validation
 
-\- evidence/source validation
+- evidence/source validation
 
-\- numeric-score consistency checks
+- numeric-score consistency checks
 
-\- schema-valid recommendation payload
+- schema-valid recommendation payload
 
 
 
-\### Dependencies
+### Dependencies
 
 M3.1–M3.2.
 
 
 
-\### Verification
+### Verification
 
 Recommendations must:
 
-\- not contradict deterministic scores
+- not contradict deterministic scores
 
-\- not invent sources
+- not invent sources
 
-\- align materially with weak areas
+- align materially with weak areas
 
-\- remain relevant to SME context
+- remain relevant to SME context
 
-\- repeat scores exactly when scores appear in prose
+- repeat scores exactly when scores appear in prose
 
 
 
@@ -884,47 +888,47 @@ Exact prose parity is not required.
 
 
 
-\---
+---
 
 
 
-\## M3.4 — Results, gaps, recommendations + evidence UI
+## M3.4 — Results, gaps, recommendations + evidence UI
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Turn deterministic and AI outputs into a clear results narrative.
 
 
 
-\### Output
+### Output
 
-\- overall score display
+- overall score display
 
-\- category score display
+- category score display
 
-\- executive summary
+- executive summary
 
-\- visual key-gap cards
+- visual key-gap cards
 
-\- ranked recommended actions
+- ranked recommended actions
 
-\- evidence/source presentation
+- evidence/source presentation
 
-\- authoritative score charts
+- authoritative score charts
 
 
 
-\### Dependencies
+### Dependencies
 
 M2.7 and M3.3.
 
 
 
-\### Notes
+### Notes
 
 Default to a vertical narrative rather than tabs.
 
@@ -934,97 +938,97 @@ The current deterministic score remains authoritative.
 
 
 
-\---
+---
 
 
 
-\## M3.5 — Durable report / PDF
+## M3.5 — Durable report / PDF
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Create a portable assessment record independent of the live browser session.
 
 
 
-\### Output
+### Output
 
 Downloadable report containing:
 
-\- SME profile/context
+- SME profile/context
 
-\- answers/skips
+- answers/skips
 
-\- question scores
+- question scores
 
-\- category scores
+- category scores
 
-\- overall scores
+- overall scores
 
-\- gaps
+- gaps
 
-\- recommendations
+- recommendations
 
-\- evidence/sources
+- evidence/sources
 
-\- config/method version
+- config/method version
 
 
 
-\### Dependencies
+### Dependencies
 
 M3.4.
 
 
 
-\### Notes
+### Notes
 
 Print-ready HTML is acceptable initially if it satisfies the durable-report requirement.
 
 
 
-\---
+---
 
 
 
-\## M3.6 — Failure, latency + recommendation regression review
+## M3.6 — Failure, latency + recommendation regression review
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Prove the recommendation layer is reliable and degrades gracefully.
 
 
 
-\### Output
+### Output
 
-\- provider-failure tests
+- provider-failure tests
 
-\- timeout tests
+- timeout tests
 
-\- deterministic fallback behavior
+- deterministic fallback behavior
 
-\- recommendation regression checks
+- recommendation regression checks
 
-\- latency measurements
+- latency measurements
 
-\- Milestone 3 review package
+- Milestone 3 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M3.1–M3.5.
 
 
 
-\### Notes
+### Notes
 
 Aim for approximately 10 seconds or less under normal test conditions where practical.
 
@@ -1034,149 +1038,149 @@ Scores, charts, deterministic gaps, and report generation must still work when A
 
 
 
-\---
+---
 
 
 
-\# Milestone 4 — Emissions calculator and quantitative input flow
+# Milestone 4 — Emissions calculator and quantitative input flow
 
 
 
-\## M4.1 — Reconcile calculator methodology + fixtures
+## M4.1 — Reconcile calculator methodology + fixtures
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Turn the preserved spreadsheet into a trustworthy implementation reference.
 
 
 
-\### Output
+### Output
 
-\- verified calculator formula decisions
+- verified calculator formula decisions
 
-\- discrepancy log
+- discrepancy log
 
-\- unit assumptions
+- unit assumptions
 
-\- calculator regression fixtures
-
-
-
-\### Dependencies
-
-\- M3 approved
-
-\- emissions calculator workbook/spec
+- calculator regression fixtures
 
 
 
-\### Notes
+### Dependencies
+
+- M3 approved
+
+- emissions calculator workbook/spec
+
+
+
+### Notes
 
 Do not blindly port unverified spreadsheet formulas.
 
 
 
-\---
+---
 
 
 
-\## M4.2 — Calculator engine + UI
+## M4.2 — Calculator engine + UI
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Provide a usable deterministic emissions-calculation path.
 
 
 
-\### Output
+### Output
 
-\- calculator inputs
+- calculator inputs
 
-\- unit handling
+- unit handling
 
-\- deterministic calculations
+- deterministic calculations
 
-\- validation
+- validation
 
-\- correction/edit flow
+- correction/edit flow
 
-\- calculator UI
+- calculator UI
 
 
 
-\### Dependencies
+### Dependencies
 
 M4.1.
 
 
 
-\### Notes
+### Notes
 
 Calculator logic remains separate from scoring semantics.
 
 
 
-\---
+---
 
 
 
-\## M4.3 — Canonical metric mapping + autofill
+## M4.3 — Canonical metric mapping + autofill
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Resolve quantitative values into assessment inputs without asking for the same information twice.
 
 
 
-\### Output
+### Output
 
-\- stable `metric\_id` mapping
+- stable `metric_id` mapping
 
-\- units/provenance
+- units/provenance
 
-\- questionnaire autofill
+- questionnaire autofill
 
-\- duplicate-input suppression
+- duplicate-input suppression
 
-\- user correction capability
+- user correction capability
 
 
 
-\### Dependencies
+### Dependencies
 
 M4.2 plus canonical metric identities.
 
 
 
-\---
+---
 
 
 
-\## M4.4 — End-to-end quantitative flow + review
+## M4.4 — End-to-end quantitative flow + review
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Prove calculator/manual values correctly enter the deterministic assessment core.
 
 
 
-\### Output
+### Output
 
 Demonstrated flow:
 
@@ -1190,61 +1194,61 @@ Plus Milestone 4 review package.
 
 
 
-\### Dependencies
+### Dependencies
 
 M4.1–M4.3 and Milestone 2 engine.
 
 
 
-\### Notes
+### Notes
 
 Utility-bill/evidence extraction remains stretch unless explicitly approved.
 
 
 
-\---
+---
 
 
 
-\# Milestone 5 — Basic config and knowledge-base maintenance
+# Milestone 5 — Basic config and knowledge-base maintenance
 
-\*\*Milestone classification:\*\* CURRENT / REQUIRED
-
-
-
-\## M5.1 — Persistence + config/version data model
-
-\*\*Status:\*\* PENDING
+**Milestone classification:** CURRENT / REQUIRED
 
 
 
-\### Purpose
+## M5.1 — Persistence + config/version data model
+
+**Status:** PENDING
+
+
+
+### Purpose
 
 Introduce durable storage only once maintenance/versioning requires it.
 
 
 
-\### Output
+### Output
 
-\- typed persistence/data-access layer
+- typed persistence/data-access layer
 
-\- schema migrations
+- schema migrations
 
-\- config-version records
+- config-version records
 
-\- source/document records
+- source/document records
 
-\- publication state
+- publication state
 
 
 
-\### Dependencies
+### Dependencies
 
 M4 approved plus architecture review.
 
 
 
-\### Notes
+### Notes
 
 This is the likely point to introduce PostgreSQL and a typed data layer such as Drizzle.
 
@@ -1254,283 +1258,283 @@ Do not scatter raw database access throughout the application.
 
 
 
-\---
+---
 
 
 
-\## M5.2 — Protected maintainer/admin boundary
+## M5.2 — Protected maintainer/admin boundary
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Keep privileged maintenance capabilities separate from the public assessment.
 
 
 
-\### Output
+### Output
 
-\- protected maintenance route/service boundary
+- protected maintenance route/service boundary
 
-\- authorization approach appropriate to deployment
+- authorization approach appropriate to deployment
 
-\- clear separation from public runtime
+- clear separation from public runtime
 
 
 
-\### Dependencies
+### Dependencies
 
 M5.1 plus security requirements.
 
 
 
-\### Notes
+### Notes
 
 Do not expose admin functionality publicly merely because end-user accounts are deferred.
 
 
 
-\---
+---
 
 
 
-\## M5.3 — Config import, staging + validation
+## M5.3 — Config import, staging + validation
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Let maintainers update approved config datasets without application source-code edits.
 
 
 
-\### Output
+### Output
 
-\- import flow
+- import flow
 
-\- staging state
+- staging state
 
-\- schema validation
+- schema validation
 
-\- referential validation
+- referential validation
 
-\- validation report before activation
+- validation report before activation
 
 
 
-\### Dependencies
+### Dependencies
 
 M5.1–M5.2.
 
 
 
-\### Notes
+### Notes
 
 Canonical config entities remain independently addressable and versioned.
 
 
 
-\---
+---
 
 
 
-\## M5.4 — Knowledge-base/source maintenance
+## M5.4 — Knowledge-base/source maintenance
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Let maintainers update recommendation source material safely.
 
 
 
-\### Output
+### Output
 
-\- source/document update flow
+- source/document update flow
 
-\- DocumentIndex maintenance
+- DocumentIndex maintenance
 
-\- DocumentChunks maintenance
+- DocumentChunks maintenance
 
-\- validation
+- validation
 
 
 
-\### Dependencies
+### Dependencies
 
 M5.1–M5.3.
 
 
 
-\### Notes
+### Notes
 
 Automated source-to-config regeneration belongs to Milestone 5A.
 
 
 
-\---
+---
 
 
 
-\## M5.5 — Activation, live-version selection + fallback
+## M5.5 — Activation, live-version selection + fallback
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Make configuration changes reversible and auditable.
 
 
 
-\### Output
+### Output
 
-\- publish/select live config version
+- publish/select live config version
 
-\- assessment/report records retain config version
+- assessment/report records retain config version
 
-\- original Capstone config retained permanently
+- original Capstone config retained permanently
 
-\- rollback/fallback flow
+- rollback/fallback flow
 
 
 
-\### Dependencies
+### Dependencies
 
 M5.3–M5.4.
 
 
 
-\---
+---
 
 
 
-\## M5.6 — Maintenance security/deployment + review
+## M5.6 — Maintenance security/deployment + review
 
-\*\*Status:\*\* PENDING
+**Status:** PENDING
 
 
 
-\### Purpose
+### Purpose
 
 Prove the maintenance path is safe, portable, reproducible, and operational.
 
 
 
-\### Output
+### Output
 
-\- security checks
+- security checks
 
-\- clean-clone deployment/migration test
+- clean-clone deployment/migration test
 
-\- backup/fallback demonstration
+- backup/fallback demonstration
 
-\- Milestone 5 review package
+- Milestone 5 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M5.1–M5.5.
 
 
 
-\---
+---
 
 
 
-\# Milestone 5A — Automated source-document to config regeneration
+# Milestone 5A — Automated source-document to config regeneration
 
-\*\*Milestone classification:\*\* NEEDS EXPLICIT APPROVAL
-
-
-
-\## M5A.0 — Scope/IP approval gate
-
-\*\*Status:\*\* BLOCKED
+**Milestone classification:** NEEDS EXPLICIT APPROVAL
 
 
 
-\### Purpose
+## M5A.0 — Scope/IP approval gate
+
+**Status:** BLOCKED
+
+
+
+### Purpose
 
 Confirm automated source-to-config regeneration is within approved scope and IP boundaries before implementation.
 
 
 
-\### Output
+### Output
 
 Explicit human authorization and documented research/IP boundary.
 
 
 
-\### Dependencies
+### Dependencies
 
-\- Prof. Guo / funded-scope clarification
+- Prof. Guo / funded-scope clarification
 
-\- Columbia IP guardrails
+- Columbia IP guardrails
 
 
 
-\### Notes
+### Notes
 
 Do not design or prototype detailed commercial/proprietary differentiation merely because it becomes technically possible.
 
 
 
-\---
+---
 
 
 
-\## M5A.1 — Automated source-to-config pipeline
+## M5A.1 — Automated source-to-config pipeline
 
-\*\*Status:\*\* BLOCKED
+**Status:** BLOCKED
 
 
 
-\### Purpose
+### Purpose
 
 Automate the preserved Capstone transformation sequence for future source sets.
 
 
 
-\### Potential output
+### Potential output
 
-\- document indexing
+- document indexing
 
-\- document chunking
+- document chunking
 
-\- AtomicIndicator extraction
+- AtomicIndicator extraction
 
-\- AtomicIndicator normalization/transformation
+- AtomicIndicator normalization/transformation
 
-\- clustering/frequency/context processing
+- clustering/frequency/context processing
 
-\- base-weight generation
+- base-weight generation
 
-\- MultiplierRules generation
+- MultiplierRules generation
 
-\- CategoryWeights generation
+- CategoryWeights generation
 
-\- QuestionBank generation/refinement
+- QuestionBank generation/refinement
 
-\- related retrieval/config artifacts
+- related retrieval/config artifacts
 
 
 
-\### Dependencies
+### Dependencies
 
 M5A.0 approval plus preserved provenance/prompts.
 
 
 
-\### Notes
+### Notes
 
 This is a maintenance workflow, not a runtime assessment path.
 
@@ -1540,365 +1544,365 @@ Semantic prompt/method changes require human approval.
 
 
 
-\---
+---
 
 
 
-\## M5A.2 — Review, publish + rollback
+## M5A.2 — Review, publish + rollback
 
-\*\*Status:\*\* BLOCKED
+**Status:** BLOCKED
 
 
 
-\### Purpose
+### Purpose
 
 Keep regenerated configuration human-reviewed, versioned, and reversible.
 
 
 
-\### Output
+### Output
 
-\- generated-artifact review
+- generated-artifact review
 
-\- validation
+- validation
 
-\- version publication
+- version publication
 
-\- rollback to original Capstone baseline
+- rollback to original Capstone baseline
 
-\- Milestone 5A review package
+- Milestone 5A review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M5A.1.
 
 
 
-\---
+---
 
 
 
-\# Milestone 6 — Interactive levers
+# Milestone 6 — Interactive levers
 
-\*\*Milestone classification:\*\* STRETCH
-
-
-
-\## M6.1 — Define eligible lever mappings
-
-\*\*Status:\*\* STRETCH
+**Milestone classification:** STRETCH
 
 
 
-\### Purpose
+## M6.1 — Define eligible lever mappings
+
+**Status:** STRETCH
+
+
+
+### Purpose
 
 Identify operational variables with a deterministic relationship to scoring.
 
 
 
-\### Output
+### Output
 
 Approximately 2–3 candidate levers mapped to:
 
-\- canonical metrics
+- canonical metrics
 
-\- current values
+- current values
 
-\- allowed ranges
+- allowed ranges
 
-\- deterministic scoring paths
+- deterministic scoring paths
 
 
 
-\### Dependencies
+### Dependencies
 
 Validated scoring/calculator outputs plus methodology review.
 
 
 
-\### Notes
+### Notes
 
 AI may rank eligible levers but may not invent the mathematical relationship between a lever and score.
 
 
 
-\---
+---
 
 
 
-\## M6.2 — What-if sliders + shadow score
+## M6.2 — What-if sliders + shadow score
 
-\*\*Status:\*\* STRETCH
+**Status:** STRETCH
 
 
 
-\### Purpose
+### Purpose
 
 Let users explore plausible improvement scenarios without overwriting authoritative results.
 
 
 
-\### Output
+### Output
 
-\- slider controls
+- slider controls
 
-\- immediate deterministic recomputation
+- immediate deterministic recomputation
 
-\- authoritative current score
+- authoritative current score
 
-\- clearly distinct what-if / ghost score
+- clearly distinct what-if / ghost score
 
 
 
-\### Dependencies
+### Dependencies
 
 M6.1 plus deterministic engine.
 
 
 
-\---
+---
 
 
 
-\## M6.3 — Lever review gate
+## M6.3 — Lever review gate
 
-\*\*Status:\*\* STRETCH
+**Status:** STRETCH
 
 
 
-\### Purpose
+### Purpose
 
 Verify mappings and ensure no scoring methodology was silently altered.
 
 
 
-\### Output
+### Output
 
-\- lever rationale
+- lever rationale
 
-\- canonical metric mapping
+- canonical metric mapping
 
-\- baseline vs what-if examples
+- baseline vs what-if examples
 
-\- Milestone 6 review package
+- Milestone 6 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M6.1–M6.2.
 
 
 
-\---
+---
 
 
 
-\# Milestone 7 — Quick vs Full assessment
+# Milestone 7 — Quick vs Full assessment
 
-\*\*Milestone classification:\*\* STRETCH / METHODOLOGY REVIEW
-
-
-
-\## M7.0 — Quick vs Full methodology approval
-
-\*\*Status:\*\* BLOCKED
+**Milestone classification:** STRETCH / METHODOLOGY REVIEW
 
 
 
-\### Purpose
+## M7.0 — Quick vs Full methodology approval
+
+**Status:** BLOCKED
+
+
+
+### Purpose
 
 Define how a shortened assessment can produce useful screening value without misleading comparability.
 
 
 
-\### Output
+### Output
 
 Approved methodology proposal, potentially using:
 
-\- distinct screening score
+- distinct screening score
 
-\- core-question-only score
+- core-question-only score
 
-\- statistically calibrated approximation
+- statistically calibrated approximation
 
-\- another explicitly reviewed method
+- another explicitly reviewed method
 
 
 
-\### Dependencies
+### Dependencies
 
 Validated deterministic engine plus methodology review.
 
 
 
-\### Notes
+### Notes
 
 Do not simply remove questions and reuse the Full score label.
 
 
 
-\---
+---
 
 
 
-\## M7.1 — Implement + validate shortened assessment
+## M7.1 — Implement + validate shortened assessment
 
-\*\*Status:\*\* BLOCKED
+**Status:** BLOCKED
 
 
 
-\### Purpose
+### Purpose
 
 Build the approved Quick mode only after its methodology is approved.
 
 
 
-\### Output
+### Output
 
-\- Quick assessment flow
+- Quick assessment flow
 
-\- approved score treatment
+- approved score treatment
 
-\- validation evidence
+- validation evidence
 
-\- Milestone 7 review package
+- Milestone 7 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M7.0 approval.
 
 
 
-\---
+---
 
 
 
-\# Milestone 8 — Alan/Henry external benchmark layer
+# Milestone 8 — Alan/Henry external benchmark layer
 
-\*\*Milestone classification:\*\* RESEARCH EXPERIMENT
-
-
-
-\## M8.1 — Audit Alan/Henry research applicability
-
-\*\*Status:\*\* RESEARCH
+**Milestone classification:** RESEARCH EXPERIMENT
 
 
 
-\### Purpose
+## M8.1 — Audit Alan/Henry research applicability
+
+**Status:** RESEARCH
+
+
+
+### Purpose
 
 Define exactly what the large-company China/HKEX/EU research can legitimately support.
 
 
 
-\### Output
+### Output
 
-\- source/coverage/fit memo
+- source/coverage/fit memo
 
-\- limitations
+- limitations
 
-\- allowable comparison claims
+- allowable comparison claims
 
-\- explicit distinction from SME evidence
+- explicit distinction from SME evidence
 
 
 
-\### Dependencies
+### Dependencies
 
 Preserved Alan/Henry research package.
 
 
 
-\### Notes
+### Notes
 
 The source population is not SMEs.
 
 
 
-\---
+---
 
 
 
-\## M8.2 — External benchmark experiment/display
+## M8.2 — External benchmark experiment/display
 
-\*\*Status:\*\* RESEARCH
+**Status:** RESEARCH
 
 
 
-\### Purpose
+### Purpose
 
 Test an external-context layer without contaminating the core SME score.
 
 
 
-\### Potential output
+### Potential output
 
-\- peer/external benchmark display
+- peer/external benchmark display
 
-\- contextual recommendation evidence
+- contextual recommendation evidence
 
-\- verification/research-page comparison
+- verification/research-page comparison
 
-\- reporting-frequency comparison
+- reporting-frequency comparison
 
 
 
-\### Dependencies
+### Dependencies
 
 M8.1.
 
 
 
-\### Notes
+### Notes
 
 Do not alter core weights or scores by default.
 
 
 
-\---
+---
 
 
 
-\## M8.3 — Adoption decision + review
+## M8.3 — Adoption decision + review
 
-\*\*Status:\*\* RESEARCH
+**Status:** RESEARCH
 
 
 
-\### Purpose
+### Purpose
 
 Decide whether the experimental benchmark layer belongs in the product.
 
 
 
-\### Output
+### Output
 
-\- experiment findings
+- experiment findings
 
-\- limitations
+- limitations
 
-\- keep / modify / drop decision
+- keep / modify / drop decision
 
-\- Milestone 8 review package
+- Milestone 8 review package
 
 
 
-\### Dependencies
+### Dependencies
 
 M8.1–M8.2.
 
 
 
-\---
+---
 
 
 
-\# Cross-cutting execution rules
+# Cross-cutting execution rules
 
 
 
@@ -1906,75 +1910,75 @@ These apply to every execution step.
 
 
 
-\## Scope discipline
+## Scope discipline
 
-\- Work only on the explicitly authorized step.
+- Work only on the explicitly authorized step.
 
-\- Do not silently begin the next step.
+- Do not silently begin the next step.
 
-\- Do not add stretch/commercial functionality because it seems convenient.
+- Do not add stretch/commercial functionality because it seems convenient.
 
-\- If a required change crosses milestone or IP boundaries, stop for review.
-
-
-
-\## Build Pack protection
-
-\- Do not modify `BUILD\_PACK` during ordinary implementation unless explicitly authorized.
-
-\- Treat it as the evidence/methodology baseline.
+- If a required change crosses milestone or IP boundaries, stop for review.
 
 
 
-\## Deterministic-core protection
+## Build Pack protection
 
-\- Scoring remains deterministic.
+- Do not modify `BUILD_PACK` during ordinary implementation unless explicitly authorized.
 
-\- AI may not replace config-driven scoring logic.
-
-\- AI failure must not break the core assessment once that capability exists.
+- Treat it as the evidence/methodology baseline.
 
 
 
-\## Config protection
+## Deterministic-core protection
+
+- Scoring remains deterministic.
+
+- AI may not replace config-driven scoring logic.
+
+- AI failure must not break the core assessment once that capability exists.
+
+
+
+## Config protection
 
 Keep these conceptual entities distinct:
 
-\- QuestionBank
+- QuestionBank
 
-\- AnswerScales
+- AnswerScales
 
-\- MetricBenchmarks
+- MetricBenchmarks
 
-\- MultiplierRules
+- MultiplierRules
 
-\- CategoryWeights
+- CategoryWeights
 
-\- DocumentIndex
+- DocumentIndex
 
-\- DocumentChunks
+- DocumentChunks
 
 
 
-\## Testing
+## Testing
 
 Before a step is presented as complete:
 
-\- run relevant unit tests
+- run relevant unit tests
 
-\- run integration/browser tests where appropriate
+- run integration/browser tests where appropriate
 
-\- run typecheck
+- run typecheck
 
-\- run lint
+- run lint
 
-\- run build
+- run build
 
-\- run Golden Tests when applicable
+- run Golden Tests when applicable
 
-\- test relevant error/failure paths
+- test relevant error/failure paths
 
-\- verify no secrets or generated junk are being committed
+- verify no secrets or generated junk are being committed
 
 
 
@@ -1982,73 +1986,69 @@ Use `npm run verify` as the baseline verification command once applicable.
 
 
 
-\## Git discipline
+## Git discipline
 
-\- Keep changes scoped to the current execution step.
+- Keep changes scoped to the current execution step.
 
-\- Do not commit or push unless explicitly authorized.
+- Do not commit or push unless explicitly authorized.
 
-\- Keep commits coherent and reviewable.
+- Keep commits coherent and reviewable.
 
-\- Do not rewrite shared history.
+- Do not rewrite shared history.
 
-\- Never commit secrets.
+- Never commit secrets.
 
 
 
-\## Completion report
+## Completion report
 
 At the end of each meaningful execution step, report:
 
 
 
-\### Changed
+### Changed
 
 What was implemented or modified.
 
 
 
-\### Verified
+### Verified
 
 Tests/checks run and results.
 
 
 
-\### Decisions
+### Decisions
 
 Notable implementation choices.
 
 
 
-\### Deviations
+### Deviations
 
 Any intentional difference from spec/baseline.
 
 
 
-\### Risks / open questions
+### Risks / open questions
 
 Anything needing human review.
 
 
 
-\### Next
+### Next
 
 The next proposed action without starting it.
 
 
 
-\---
+---
 
 
 
-\# Current position
+# Current position
 
-
-
-\- M1.0 — COMPLETE
-
-\- M1.1 — CURRENT
-
-\- all later steps — not yet authorized unless explicitly marked otherwise by the human project owner
-
+- M1.0 — COMPLETE
+- M1.1 — COMPLETE
+- M1.2 — CURRENT
+- all later steps are not yet authorized unless explicitly marked otherwise.
