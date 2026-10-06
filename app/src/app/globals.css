@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme inline {
+  --color-background: var(--surface);
+  --color-foreground: var(--text);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-body);
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-body);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}

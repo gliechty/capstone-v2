@@ -1,0 +1,13 @@
+/* Infrastructure defaults only; visual design remains a later M1 review. */
+:root {
+  --surface: #faf9f6;
+  --text: #202b33;
+  --accent: #235a75;
+  --font-body: Arial, Helvetica, sans-serif;
+  --motion-duration: 200ms;
+  --motion-easing: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-duration: 0ms; }
+}
