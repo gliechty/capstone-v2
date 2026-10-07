@@ -16,20 +16,20 @@ test("landing page exposes the required context, approach, demo and research sec
   expect(screen.getByRole("region", { name: /Grounded in research/ })).toBeVisible();
 });
 
-test("unimplemented assessment and video are clearly unavailable", () => {
+test("assessment links to the preview and video remains unavailable", () => {
   render(<LandingPage />);
-  const cta = screen.getByRole("button", { name: "Take the Assessment" });
-  expect(cta).toBeDisabled();
-  expect(cta).toHaveAccessibleDescription(/Assessment coming soon/);
+  const cta = screen.getByRole("link", { name: "Take the Assessment" });
+  expect(cta).toHaveAttribute("href", "/assessment");
+  expect(cta).toHaveAccessibleDescription(/mock questionnaire/);
   expect(screen.getByText(/Video placeholder/)).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
-  expect(screen.queryByRole("link", { name: /Take the Assessment/ })).not.toBeInTheDocument();
 });
 
-test("all landing links resolve to real sections within the page", () => {
+test("landing links resolve to sections or the assessment route", () => {
   render(<LandingPage />);
   for (const link of screen.getAllByRole("link")) {
     const href = link.getAttribute("href");
+    if (href === "/assessment") continue;
     expect(href).toMatch(/^#[a-z-]+$/);
     expect(document.getElementById(href!.slice(1))).not.toBeNull();
   }

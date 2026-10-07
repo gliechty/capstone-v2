@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
+@import "../styles/assessment.css";
 
 @theme inline {
   --color-background: var(--surface);
@@ -39,6 +40,7 @@
 
 @layer base {
   html { scroll-behavior: smooth; }
+  html:has(.landing-header) { scroll-padding-top: var(--landing-header-height, 10rem); }
   body {
     margin: 0;
     background: var(--surface);
@@ -63,6 +65,7 @@
 }
 
 @layer components {
+  .landing-header { position: sticky; top: 0; z-index: 5; background: var(--surface); }
   .page-container {
     width: 100%;
     max-width: var(--content-width);

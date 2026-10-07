@@ -14,7 +14,7 @@ for (const viewport of [
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sustainability,in your context.");
     await expect(page).toHaveTitle("Capstone | Sustainability in context");
-    await expect(page.getByRole("button", { name: "Take the Assessment" })).toBeDisabled();
+    await expect(page.getByRole("link", { name: "Take the Assessment" })).toHaveAttribute("href", "/assessment");
     await expect(page.getByText(/Video placeholder/)).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -41,6 +41,8 @@ test("keyboard users can skip navigation, follow anchors and open research discl
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Take the Assessment" })).toBeFocused();
+  await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: /Explore the approach/ })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#approach$/);
@@ -65,10 +67,31 @@ test("normal motion is brief and UI tokens reach the rendered controls", async (
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   expect(await page.locator(".intro-enter").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.22s");
-  expect(await page.getByRole("button", { name: "Take the Assessment" }).evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
+  expect(await page.getByRole("link", { name: "Take the Assessment" }).evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
 });
 
 test("unknown routes return an actual not-found response", async ({ request }) => {
   const response = await request.get("/not-an-implemented-feature");
   expect(response.status()).toBe(404);
 });
+
+for (const width of [1440, 390, 320]) {
+  test("sticky header keeps anchor targets visible at " + width + "px", async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/");
+    for (const target of ["context", "approach", "research"]) {
+      await page.locator('header a[href="#' + target + '"]').click();
+      await expect.poll(async () => {
+        const header = await page.locator("header").boundingBox();
+        const section = await page.locator("#" + target).boundingBox();
+        return section!.y >= header!.y + header!.height - 1;
+      }).toBe(true);
+      await expect.poll(async () => Math.round((await page.locator("header").boundingBox())!.y)).toBe(0);
+    }
+    await page.getByRole("link", { name: "Back to top" }).click();
+    await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+    const header = await page.locator("header").boundingBox();
+    const heading = await page.getByRole("heading", { level: 1 }).boundingBox();
+    expect(heading!.y).toBeGreaterThanOrEqual(header!.height);
+  });
+}

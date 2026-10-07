@@ -1,7 +1,7 @@
 # Capstone v2 application scaffold
 
-This single package lives beside the immutable Build Pack. M1.1 adds the UI system and landing-page shell.
-The root page introduces the research. Assessment entry and the demo video are explicitly unavailable in this preview.
+This single package lives beside the immutable Build Pack. M1.1 provides the UI system and landing-page shell; M1.2–M1.3 add a mock assessment interaction preview.
+The root page introduces the research. The assessment CTA opens /assessment. The demo video remains a placeholder.
 
 ## Local setup
 
@@ -46,9 +46,9 @@ Dependency locking and the Node major are recorded. Security/dependency checks m
 
 ## Scope
 
-No assessment flow, reducer state implementation, config importer, scoring,
-recommendations, calculator, persistence, or maintenance feature is implemented.
-Radix and Zod remain approved choices to introduce when an implemented interaction or boundary needs them.
+The assessment flow uses reducer/context and validated browser session storage. No canonical config importer, scoring,
+results page, recommendations, calculator, database or maintenance feature is implemented.
+Zod validates session snapshots. Radix remains an approved option only when an interaction needs it.
 
 ## Lint compatibility and dependency risk
 
@@ -58,3 +58,7 @@ The known development-only braces advisory remains visible in npm audit; see [th
 ## M1.1 visual review
 
 See [the UI review record](docs/M1.1-UI-REVIEW.md) for tokens, font licensing, copy provenance, scope decisions and browser coverage.
+
+## M1.2–M1.3 interaction review
+
+See [the assessment review record](docs/M1.2-M1.3-REVIEW.md) for setup assumptions, mock-only scope, session retention and test coverage.

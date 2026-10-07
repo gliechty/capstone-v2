@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { LandingHeader } from "../components/landing-header";
 import { landingCopy } from "../content/landing";
 
 function ContextIllustration() {
@@ -24,7 +26,7 @@ export default function LandingPage() {
   return (
     <>
       <a href="#main-content" className="skip-link">{landingCopy.navigation.skip}</a>
-      <header className="page-container flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-6">
+      <LandingHeader>
         <a href="#main-content" className="flex min-h-12 items-center gap-3 font-semibold" aria-label={landingCopy.navigation.homeLabel}>
           <span className="text-accent" aria-hidden="true">↗</span>
           <span>{landingCopy.navigation.brand}<span className="ml-2 text-small font-normal text-muted">{landingCopy.navigation.tagline}</span></span>
@@ -34,7 +36,7 @@ export default function LandingPage() {
           <a className="nav-link" href="#approach">{landingCopy.navigation.approach}</a>
           <a className="nav-link" href="#research">{landingCopy.navigation.research}</a>
         </nav>
-      </header>
+      </LandingHeader>
 
       <main id="main-content" tabIndex={-1}>
         <section className="page-container grid items-center gap-8 pb-section pt-12 md:grid-cols-[1.35fr_1fr] md:pt-16" aria-labelledby="hero-heading">
@@ -43,8 +45,8 @@ export default function LandingPage() {
             <h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}<br />{landingCopy.hero.headingSecondLine}</h1>
             <p className="mt-6 max-w-copy text-muted">{landingCopy.hero.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-              <button className="button-primary" type="button" disabled aria-describedby="assessment-availability">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
-              </button>
+              <Link className="button-primary" href="/assessment" aria-describedby="assessment-availability">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
+              </Link>
               <a href="#approach" className="text-link">{landingCopy.hero.secondaryCta}<span className="ml-2" aria-hidden="true">↓</span></a>
             </div>
             <p id="assessment-availability" className="mt-3 text-small text-muted">{landingCopy.hero.availability}</p>

@@ -27,7 +27,7 @@ export const landingCopy = {
     "description": "What matters to your business, your market, and your buyers? A research-led approach to help small and medium enterprises make sense of sustainability expectations.",
     "primaryCta": "Take the Assessment",
     "secondaryCta": "Explore the approach",
-    "availability": "Assessment coming soon. This preview introduces the research.",
+    "availability": "Explore the setup and mock questionnaire. No score is generated.",
     "illustrationLeft": "Small businesses",
     "illustrationRight": "Buyer expectations"
   },
@@ -67,7 +67,7 @@ export const landingCopy = {
     "verificationHeading": "What has been verified?",
     "verificationBody": "Five historical assessment cases were captured from the original application as regression references. They do not establish the accuracy of this rebuild. The assessment engine and its parity checks are not implemented in this preview.",
     "limitationsHeading": "Limitations & interpretation",
-    "limitationsBody": "Relevance depends on the source base and commercial context. This research approach is not a universal sustainability rating or a guarantee of procurement eligibility. This preview does not collect business information or produce assessment results."
+    "limitationsBody": "Relevance depends on the source base and commercial context. This research approach is not a universal sustainability rating or a guarantee of procurement eligibility. This preview keeps example entries in your browser tab’s session and does not produce assessment results."
   },
   "footer": {
     "tagline": "· SME sustainability in context",
