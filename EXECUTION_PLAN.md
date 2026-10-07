@@ -206,7 +206,7 @@ Implemented and verified. Public-facing copy remains provisional pending researc
 
 ## M1.2 — Assessment setup + session state
 
-**Status:** CURRENT
+**Status:** COMPLETE
 
 
 
@@ -256,7 +256,7 @@ Calculator and upload paths may remain disabled/placeholders until their milesto
 
 ## M1.3 — Questionnaire shell + progress/navigation
 
-**Status:** PENDING
+**Status:** COMPLETE
 
 
 
@@ -316,7 +316,7 @@ Missing answers must never silently become zero.
 
 ## M1.4 — Results shell + Milestone 1 review
 
-**Status:** PENDING
+**Status:** COMPLETE
 
 
 

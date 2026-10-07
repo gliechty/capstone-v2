@@ -1,6 +1,6 @@
-# Capstone v2 application scaffold
+# Capstone v2 — Milestone 1 product shell
 
-This single package lives beside the immutable Build Pack. M1.1 provides the UI system and landing-page shell; M1.2–M1.3 add a mock assessment interaction preview.
+This single package lives beside the immutable Build Pack. M1.1 provides the UI system and landing-page shell; M1.2–M1.3 add a mock assessment interaction preview; M1.4 adds the clearly labeled /results shell.
 The root page introduces the research. The assessment CTA opens /assessment. The demo video remains a placeholder.
 
 ## Local setup
@@ -47,7 +47,8 @@ Dependency locking and the Node major are recorded. Security/dependency checks m
 ## Scope
 
 The assessment flow uses reducer/context and validated browser session storage. No canonical config importer, scoring,
-results page, recommendations, calculator, database or maintenance feature is implemented.
+authoritative results, generated recommendations, report generation, calculator, database or maintenance feature is implemented.
+The /results shell uses fixed representative data independent of assessment answers; its report-download action is disabled.
 Zod validates session snapshots. Radix remains an approved option only when an interaction needs it.
 
 ## Lint compatibility and dependency risk
@@ -62,3 +63,7 @@ See [the UI review record](docs/M1.1-UI-REVIEW.md) for tokens, font licensing, c
 ## M1.2–M1.3 interaction review
 
 See [the assessment review record](docs/M1.2-M1.3-REVIEW.md) for setup assumptions, mock-only scope, session retention and test coverage.
+
+## M1.4 results and Milestone 1 review
+
+See [the Milestone 1 review package](docs/M1.4-MILESTONE-1-REVIEW.md) for the integrated walkthrough, mock boundaries, results navigation, verification evidence and deferred concepts.
