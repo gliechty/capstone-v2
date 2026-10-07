@@ -1,0 +1,314 @@
+[
+  {
+    "answer_scale_id": "YN",
+    "answer_option": "Yes",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "YN",
+    "answer_option": "No",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PARTIAL_3",
+    "answer_option": "No",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PARTIAL_3",
+    "answer_option": "Some",
+    "raw_value": "1",
+    "normalized_score": "50",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PARTIAL_3",
+    "answer_option": "Yes",
+    "raw_value": "2",
+    "normalized_score": "100",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "NUMERIC_INPUT",
+    "answer_option": "Direct numeric input",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PROGRESS_5",
+    "answer_option": "None",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PROGRESS_5",
+    "answer_option": "Planned",
+    "raw_value": "0.25",
+    "normalized_score": "25",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PROGRESS_5",
+    "answer_option": "Partially implemented",
+    "raw_value": "0.5",
+    "normalized_score": "50",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PROGRESS_5",
+    "answer_option": "Implemented",
+    "raw_value": "0.75",
+    "normalized_score": "75",
+    "display_order": "4",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "PROGRESS_5",
+    "answer_option": "Sustained",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "5",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQUENCY_3",
+    "answer_option": "Never",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQUENCY_3",
+    "answer_option": "Sometimes",
+    "raw_value": "0.5",
+    "normalized_score": "50",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQUENCY_3",
+    "answer_option": "Always",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "MATURITY_4",
+    "answer_option": "None",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "MATURITY_4",
+    "answer_option": "Basic",
+    "raw_value": "0.33",
+    "normalized_score": "33",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "MATURITY_4",
+    "answer_option": "Formal",
+    "raw_value": "0.66",
+    "normalized_score": "66",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "MATURITY_4",
+    "answer_option": "Advanced",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "4",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "COVERAGE_4",
+    "answer_option": "Not covered",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "COVERAGE_4",
+    "answer_option": "Self only",
+    "raw_value": "0.33",
+    "normalized_score": "33",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "COVERAGE_4",
+    "answer_option": "Self + direct suppliers",
+    "raw_value": "0.66",
+    "normalized_score": "66",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "COVERAGE_4",
+    "answer_option": "Full value chain",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "4",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "ASSURANCE_4",
+    "answer_option": "None",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "ASSURANCE_4",
+    "answer_option": "Internal review only",
+    "raw_value": "0.33",
+    "normalized_score": "33",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "ASSURANCE_4",
+    "answer_option": "Limited external assurance",
+    "raw_value": "0.66",
+    "normalized_score": "66",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "ASSURANCE_4",
+    "answer_option": "Reasonable external assurance",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "4",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "POLICY_3",
+    "answer_option": "No policy",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "POLICY_3",
+    "answer_option": "Informal",
+    "raw_value": "0.5",
+    "normalized_score": "50",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "POLICY_3",
+    "answer_option": "Formal",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "SUPPLIER_ENGAGE_3",
+    "answer_option": "Don't engage",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "SUPPLIER_ENGAGE_3",
+    "answer_option": "Informal engagement",
+    "raw_value": "0.5",
+    "normalized_score": "50",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "SUPPLIER_ENGAGE_3",
+    "answer_option": "Structured program",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQ_DEFINED_3",
+    "answer_option": "Never",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQ_DEFINED_3",
+    "answer_option": "less than once a year",
+    "raw_value": "0.5",
+    "normalized_score": "50",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "FREQ_DEFINED_3",
+    "answer_option": "twice a year or more",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "TRACK_REPORT_4",
+    "answer_option": "Don't track",
+    "raw_value": "0",
+    "normalized_score": "0",
+    "display_order": "1",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "TRACK_REPORT_4",
+    "answer_option": "Track some",
+    "raw_value": "0.33",
+    "normalized_score": "33",
+    "display_order": "2",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "TRACK_REPORT_4",
+    "answer_option": "Track all (don't report)",
+    "raw_value": "0.66",
+    "normalized_score": "66",
+    "display_order": "3",
+    "active": "TRUE"
+  },
+  {
+    "answer_scale_id": "TRACK_REPORT_4",
+    "answer_option": "Track and report",
+    "raw_value": "1",
+    "normalized_score": "100",
+    "display_order": "4",
+    "active": "TRUE"
+  }
+]

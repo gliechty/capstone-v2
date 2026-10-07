@@ -368,7 +368,7 @@ Stop and review Milestone 1 before beginning Milestone 2.
 
 ## M2.1 — Canonical config schemas + loader
 
-**Status:** CURRENT
+**Status:** COMPLETE
 
 
 
@@ -432,7 +432,9 @@ Versioned repository files may serve as the initial runtime authority.
 
 ## M2.2 — Deterministic question selection + ordering
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implementation and verification completed for the explicitly authorized M2.1 + M2.2 package. See `app/docs/M2.1-M2.2-REVIEW.md` and `app/docs/CONFIG-MIGRATION.md`. Human review remains pending; this does not authorize M2.3 or complete Milestone 2.
 
 
 
@@ -2048,7 +2050,8 @@ The next proposed action without starting it.
 
 # Current position
 
-- M1.0 — COMPLETE
-- M1.1 — COMPLETE
-- M1.2 — CURRENT
-- all later steps are not yet authorized unless explicitly marked otherwise.
+- M1.0–M1.4 — COMPLETE (previously implemented and human-reviewed).
+- M2.1 — COMPLETE (verified; awaiting human review).
+- M2.2 — COMPLETE (verified; awaiting human review).
+- M2.3 — PENDING; not authorized.
+- All later steps remain subject to their existing status and explicit human authorization.

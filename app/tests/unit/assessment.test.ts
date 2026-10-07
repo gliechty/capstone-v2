@@ -1,10 +1,13 @@
 import { describe, expect, test } from "vitest";
-import { assessmentReducer, answerError, initialSession, profileErrors, progressLabel, sessionSchema, unanswered, type Session } from "../../src/features/assessment/model";
+import { createAssessmentModel, answerError, profileErrors, progressLabel, unanswered as missing, type Session } from "../../src/features/assessment/model";
 import { mockQuestions } from "../../src/features/assessment/mock-questions";
-import { createSessionAdapter, SESSION_KEY } from "../../src/adapters/assessment-session";
+import { createSessionAdapter as adapterFactory, SESSION_KEY } from "../../src/adapters/assessment-session";
 
+const createSessionAdapter = (get: Parameters<typeof adapterFactory>[0]) => adapterFactory(get, sessionSchema);
 const profile = { companyName: "Example", industry: "Example industry", subindustry: "", companySize: "12", location: "Example country", targetMarket: "Example market", targetBuyer: "Not yet identified", businessGoal: "Explore the preview" };
-const validState = (): Session => ({ ...initialSession(), profile, phase: "questions" });
+const { assessmentReducer, initialSession, sessionSchema } = createAssessmentModel("test-fixture", () => mockQuestions);
+const unanswered = (state: Session) => missing(state, mockQuestions);
+const validState = (): Session => ({ ...initialSession(), activeId: mockQuestions[0].id, profile, phase: "questions" });
 describe("setup and raw answer validation", () => {
   test("required fields reject blank and whitespace while subindustry is optional", () => {
     expect(Object.keys(profileErrors(initialSession().profile))).toHaveLength(7);
@@ -71,7 +74,7 @@ describe("validated session adapter", () => {
     expect(data.has(SESSION_KEY)).toBe(true);
     expect(adapter.load().state).toEqual(state);
   });
-  test.each(["{broken", "null", "[]", JSON.stringify({ ...validState(), version: 9 }), JSON.stringify({ ...validState(), fixtureVersion: "old" }), JSON.stringify({ ...validState(), activeId: "missing" }), JSON.stringify({ ...validState(), answers: { unknown: "value" } })])("rejects corrupt or incompatible data: %s", (raw) => {
+  test.each(["{broken", "null", "[]", JSON.stringify({ ...validState(), version: 9 }), JSON.stringify({ ...validState(), configVersion: "old" }), JSON.stringify({ ...validState(), activeId: "missing" }), JSON.stringify({ ...validState(), answers: { unknown: "value" } })])("rejects corrupt or incompatible data: %s", (raw) => {
     const adapter = createSessionAdapter(() => ({ getItem: () => raw, setItem: () => {} }));
     expect(adapter.load().state).toBeNull();
     expect(adapter.load().warning).toBeTruthy();
