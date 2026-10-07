@@ -232,8 +232,8 @@ function Boundary() {
   return <section className="assessment-setup">
     <span className="section-label">Non-production preview boundary</span>
     <StageHeading>Preview complete — no score generated.</StageHeading>
-    <p className="mt-6 text-muted">These demonstration questions only test the interaction flow. Scoring and results are not available, and your answers have not been submitted to a server.</p>
-    <button type="button" className="button-secondary mt-8" onClick={() => dispatch({ type: "review" })}>Return to answer review</button>
+    <p className="mt-6 text-muted">These demonstration questions only test the interaction flow. Scoring is not available, and your answers have not been submitted to a server. You can explore a separate results layout with fixed mock data; it does not use your answers.</p>
+    <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View mock results preview</Link></div>
   </section>;
 }
 

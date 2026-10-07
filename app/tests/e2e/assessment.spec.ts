@@ -83,7 +83,13 @@ test("answers survive navigation, skip, refresh, missing review and the no-score
   await expect(page).toHaveURL(/\/assessment$/);
   await page.reload();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
-  expect((await page.request.get("/results")).status()).toBe(404);
+  const saved = await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
+  await page.getByRole("link", { name: "View mock results preview" }).click();
+  await expect(page).toHaveURL(/\/results$/);
+  await expect(page.getByText("Mock results · Design preview", { exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "Return to assessment" }).first().click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
+  expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(saved);
 });
 test("setup drafts and edited context survive refresh", async ({ page }) => {
   await page.goto("/assessment");
