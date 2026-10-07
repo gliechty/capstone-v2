@@ -453,7 +453,7 @@ Only the human project owner may mark a milestone complete or authorize the next
 
 # Milestone status
 
-- [ ] Milestone 1 — Product shell and assessment entry
+- [X] Milestone 1 — Product shell and assessment entry
 - [ ] Milestone 2 — Deterministic assessment core and Golden parity
 - [ ] Milestone 3 — Recommendations, results, and durable report
 - [ ] Milestone 4 — Emissions calculator and quantitative input flow

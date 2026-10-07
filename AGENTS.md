@@ -27,6 +27,7 @@ Read these files in this order:
 7. `BUILD_PACK/07_GOLDEN_TESTS/`
 8. `BUILD_PACK/00_READ_ME_FIRST/COLUMBIA_IP_GUARDRAILS.md`
 9. `BUILD_PLAN.md`
+10. `EXECUTION_PLAN.md`
 
 Consult `CURRENT_ARCHITECTURE.md` only to understand v1 behavior/dependencies. Do not treat it as the target architecture.
 
