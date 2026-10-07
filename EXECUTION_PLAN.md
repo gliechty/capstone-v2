@@ -368,7 +368,7 @@ Stop and review Milestone 1 before beginning Milestone 2.
 
 ## M2.1 — Canonical config schemas + loader
 
-**Status:** PENDING
+**Status:** CURRENT
 
 
 
