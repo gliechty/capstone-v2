@@ -2,14 +2,17 @@
 
 import { createContext, useContext, useEffect, useMemo, useReducer, type Dispatch, type ReactNode } from "react";
 import { browserSession } from "../../adapters/assessment-session";
+import { marketValues } from "../../application/assessment-setup";
 import { selectedQuestions, type AssessmentCatalog, type Question } from "../../application/assessment-catalog";
 import { createAssessmentModel, profileErrors, type Action, type Session, type Profile } from "./model";
 
 export function catalogProfileErrors(catalog: AssessmentCatalog, profile: Profile) {
   const errors = profileErrors(profile);
-  if (profile.industry && !catalog.industries.includes(profile.industry)) errors.industry = "Choose a supported industry.";
-  if (profile.location && !catalog.regions.includes(profile.location)) errors.location = "Choose an operating region.";
-  if (profile.targetMarket && profile.targetMarket.split(/[;,]/).some(region => !catalog.regions.includes(region.trim()))) errors.targetMarket = "Choose supported target regions.";
+  for (const key of ["industry", "companySize", "location", "targetBuyer", "businessGoal"] as const) {
+    if (profile[key] && !catalog.setupOptions[key].some(option => option.value === profile[key])) errors[key] = "Choose one of the listed options.";
+  }
+  const markets = marketValues(profile.targetMarket);
+  if (markets.length > 2 || new Set(markets).size !== markets.length || markets.some(region => !catalog.setupOptions.targetMarket.some(option => option.value === region))) errors.targetMarket = "Choose one or two distinct target regions.";
   return errors;
 }
 type Envelope = { session: Session; ready: boolean; restoreWarning: string | null; saveWarning: string | null };

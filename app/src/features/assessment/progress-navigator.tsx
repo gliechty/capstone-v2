@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 "use client";
 
-import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type ComponentProps, type CSSProperties, type KeyboardEvent } from "react";
 
 export type ProgressItem = {
   id: string; number: number; title: string; category: string;
@@ -50,7 +50,7 @@ function DesktopTrack({ items, onSelect }: { items: readonly ProgressItem[]; onS
     <ol className="progress-markers" ref={listRef}>
       {items.map((item, index) => {
         const distance = active === null ? 3 : Math.abs(index - active);
-        return <li key={item.id} data-boundary={index > 0 && items[index - 1]?.category !== item.category}
+        return <li key={item.id}
           data-proximity={distance === 0 ? "active" : distance <= 2 ? "near" : "far"}>
           <button type="button" className="progress-dot" aria-label={label(item)} aria-current={item.current ? "step" : undefined}
             onPointerEnter={(event) => { if (event.pointerType !== "touch") { setHovered(index); setFocused(null); } }}
@@ -101,12 +101,12 @@ function MobileTrack({ items, onSelect }: { items: readonly ProgressItem[]; onSe
 export function ProgressNavigator({ items, onSelect }: { items: readonly ProgressItem[]; onSelect: (id: string) => void }) {
   const complete = items.filter((item) => item.status === "Answered").length;
   return <>
-    <aside className="desktop-progress hidden lg:block" aria-label="Assessment progress">
+    <aside className="desktop-progress" aria-label="Assessment progress">
       <nav className="progress-panel" aria-label="Question progress">
-        <p className="text-small font-semibold">{complete} of {items.length} answered</p>
+        <div className="progress-summary"><p className="text-small font-semibold">{complete} of {items.length} answered</p>
         <p className="progress-legend text-small">● Answered · ○ Unanswered · – Skipped<br />Double ring: current</p>
-        <p className="mb-3 text-small text-muted">Hover or use ↑ ↓ to explore.</p>
-        <DesktopTrack items={items} onSelect={onSelect} />
+        <p className="mb-3 text-small text-muted">Hover or focus to explore.</p>
+        </div><DesktopTrack items={items} onSelect={onSelect} />
       </nav>
     </aside>
     <details className="mobile-progress lg:hidden">
@@ -114,4 +114,83 @@ export function ProgressNavigator({ items, onSelect }: { items: readonly Progres
       <nav aria-label="Question progress"><MobileTrack items={items} onSelect={onSelect} /></nav>
     </details>
   </>;
+}
+
+// Native :active can be delayed on touch devices; feedback starts at contact,
+// independently of click navigation, and cancels when the gesture is abandoned.
+function TouchChoice(props: ComponentProps<"button">) {
+  const [pressed, setPressed] = useState(false);
+  return <button {...props} data-pressed={pressed}
+    onPointerDown={() => setPressed(true)}
+    onPointerUp={() => setPressed(false)}
+    onPointerCancel={() => setPressed(false)}
+    onPointerLeave={() => setPressed(false)}
+    onBlur={() => setPressed(false)} />;
+}
+
+// A broad touch surface locates a neighborhood; full-sized choices resolve the
+// precise question without pretending 64 tightly packed ticks are finger targets.
+export function MobileQuestionRail({ items, onSelect }: { items: readonly ProgressItem[]; onSelect: (id: string) => void }) {
+  const [inspected, setInspected] = useState(Math.max(0, items.findIndex(item => item.current)));
+  const [open, setOpen] = useState(false);
+  const [touching, setTouching] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const rail = useRef<HTMLElement>(null);
+  const panelId = useId();
+  const start = Math.max(0, Math.min(inspected - 2, items.length - 5));
+  useEffect(() => {
+    if (!open) return;
+    function dismissOutside(event: MouseEvent) {
+      if (event.target instanceof Node && !rail.current?.contains(event.target)) {
+        // Dismiss the popout without activating an answer underneath it.
+        event.preventDefault();
+        event.stopPropagation();
+        if (rail.current?.contains(document.activeElement)) trigger.current?.focus({ preventScroll: true });
+        setOpen(false);
+        setTouching(false);
+      }
+    }
+    document.addEventListener("click", dismissOutside, true);
+    return () => document.removeEventListener("click", dismissOutside, true);
+  }, [open]);
+  function inspectPosition(element: HTMLElement, clientY: number) {
+    const box = element.getBoundingClientRect();
+    setInspected(Math.max(0, Math.min(items.length - 1, Math.floor((clientY - box.top) / box.height * items.length))));
+  }
+  function close() { setTouching(false); setOpen(false); trigger.current?.focus({ preventScroll: true }); }
+  return <nav ref={rail} className="mobile-card-rail lg:hidden" aria-label="Active card question navigation">
+    <div className="mobile-rail-sticky" onKeyDownCapture={event => { if (event.key === "Escape") { event.preventDefault(); close(); } }}>
+      <button ref={trigger} type="button" className="mobile-rail-surface" aria-label="Explore question track"
+        aria-expanded={open} aria-controls={panelId} aria-describedby={panelId + "-hint"}
+        onPointerDown={event => { inspectPosition(event.currentTarget, event.clientY); setTouching(true); }}
+        onPointerUp={() => setTouching(false)}
+        onPointerCancel={() => setTouching(false)}
+        onClick={event => {
+          if (event.detail > 0) inspectPosition(event.currentTarget, event.clientY);
+          setOpen(true);
+        }}
+        onKeyDown={event => {
+          if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+          event.preventDefault();
+          setInspected(index => event.key === "Home" ? 0 : event.key === "End" ? items.length - 1 : Math.max(0, Math.min(items.length - 1, index + (event.key === "ArrowDown" ? 1 : -1))));
+          setOpen(true);
+        }}>
+        <span className="mobile-rail-markers" aria-hidden="true" style={{ "--question-count": items.length } as CSSProperties}>
+          {items.map((item, index) => <span key={item.id} className="mobile-rail-marker" data-current={item.current}
+            data-proximity={!(open || touching) ? "far" : index === inspected ? "active" : Math.abs(index - inspected) <= 2 ? "near" : "far"}>
+            <span className="progress-glyph" data-status={stateOf(item)} />
+          </span>)}
+        </span>
+      </button>
+      <span id={panelId + "-hint"} className="sr-only">Tap a position to explore nearby questions. Arrow keys, Home and End explore; Tab reaches the question choices; Escape closes them.</span>
+      {open && <div id={panelId} className="mobile-rail-choices" role="group" aria-label="Choose a nearby question">
+        <p className="sr-only" aria-live="polite">Questions {start + 1}–{Math.min(start + 5, items.length)} of {items.length}</p>
+        {items.slice(start, start + 5).map(item => <TouchChoice key={item.id} type="button" className="nearby-choice"
+          aria-label={"Go to " + label(item).toLowerCase()} aria-current={item.current ? "step" : undefined}
+          onClick={() => { close(); onSelect(item.id); }}>
+          <span aria-hidden="true">{symbol(item)}</span><span>{item.number}. {item.title}</span>
+        </TouchChoice>)}
+      </div>}
+    </div>
+  </nav>;
 }

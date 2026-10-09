@@ -6,11 +6,11 @@ export const profileFields = [
   { key: "companyName", label: "Company name", hint: "Use an example business for this preview.", required: true },
   { key: "industry", label: "Industry", hint: "Choose the industry used for this assessment.", required: true },
   { key: "subindustry", label: "Subindustry", hint: "Optional: add a more specific activity.", required: false },
-  { key: "companySize", label: "Company size", hint: "Number of employees, as a whole number greater than zero.", required: true },
-  { key: "location", label: "Location", hint: "Choose your operating region; no country-to-region inference is applied.", required: true },
-  { key: "targetMarket", label: "Target market", hint: "Select all target regions that apply (Ctrl/Cmd or Shift on desktop). The preserved EU/UK entry remains distinct from selecting EU and UK.", required: true },
-  { key: "targetBuyer", label: "Target buyer", hint: "A buyer or buyer type. You can enter “Not yet identified”.", required: true },
-  { key: "businessGoal", label: "Business goal", hint: "What would you like to understand or improve?", required: true },
+  { key: "companySize", label: "Company size", hint: "Choose the employee band that describes your company.", required: true },
+  { key: "location", label: "Location", hint: "Choose the region where your business operates.", required: true },
+  { key: "targetMarket", label: "Target market", hint: "Choose up to two regions. Your first choice is primary; your second is secondary.", required: true },
+  { key: "targetBuyer", label: "Target buyer", hint: "Choose the type of buyer you want to work with.", required: true },
+  { key: "businessGoal", label: "Business goal", hint: "Examples: attract new investors or prepare for procurement screening.", required: true },
 ] as const;
 const shortText = z.string().max(200);
 const profileSchema = z.object({
@@ -31,10 +31,6 @@ export function profileErrors(profile: Profile): Partial<Record<ProfileKey, stri
     if (field.required && !value) errors[field.key] = "Please enter " + field.label.toLowerCase() + ".";
     if (value.length > (field.key === "businessGoal" ? 1000 : 200)) errors[field.key] = "Please shorten this entry.";
   }
-  if (profile.companySize.trim() && (!/^\d+$/.test(profile.companySize.trim()) ||
-      !Number.isSafeInteger(Number(profile.companySize)) || Number(profile.companySize) < 1)) {
-    errors.companySize = "Enter a whole number of employees greater than zero.";
-  }
   return errors;
 }
 export function answerError(question: Question, raw = ""): string | undefined {
@@ -48,7 +44,7 @@ export function answerError(question: Question, raw = ""): string | undefined {
   return undefined;
 }
 export type Session = {
-  version: 2; configVersion: string;
+  version: 3; configVersion: string;
   phase: "setup" | "method" | "questions" | "review" | "boundary";
   profile: Profile; inputMethod: "manual"; activeId: string;
   answers: Record<string, string>; skipped: string[];
@@ -70,18 +66,19 @@ export function progressLabel(state: Session, question: Question) {
 export function createAssessmentModel(version: string, select: (profile: Profile) => readonly Question[], validateProfile: typeof profileErrors = profileErrors) {
   const questions = (state: Session) => select(state.profile);
   const sessionSchema = z.strictObject({
-    version: z.literal(2), configVersion: z.literal(version),
+    version: z.literal(3), configVersion: z.literal(version),
     phase: z.enum(["setup", "method", "questions", "review", "boundary"]), profile: profileSchema,
     inputMethod: z.literal("manual"), activeId: z.string(),
     answers: z.record(z.string(), z.string().max(2000)), skipped: z.array(z.string()),
   }).superRefine((state, ctx) => {
     const ids = new Set(select(state.profile).map(q => q.id));
-    if (state.phase !== "setup" && Object.keys(validateProfile(state.profile)).length) ctx.addIssue({ code: "custom", message: "Invalid setup" });
+    const errors = validateProfile(state.profile);
+    if (Object.keys(errors).some(key => state.phase !== "setup" || state.profile[key as ProfileKey].trim() !== "")) ctx.addIssue({ code: "custom", message: "Invalid setup" });
     if (["questions", "review", "boundary"].includes(state.phase) && (!ids.has(state.activeId) || Object.keys(state.answers).some(id => !ids.has(id)) || state.skipped.some(id => !ids.has(id)))) ctx.addIssue({ code: "custom", message: "Incompatible selected questions" });
     if (new Set(state.skipped).size !== state.skipped.length) ctx.addIssue({ code: "custom", message: "Duplicate skipped IDs" });
   });
   function initialSession(): Session {
-    return { version: 2, configVersion: version, phase: "setup", profile: { ...emptyProfile }, inputMethod: "manual", activeId: "", answers: {}, skipped: [] };
+    return { version: 3, configVersion: version, phase: "setup", profile: { ...emptyProfile }, inputMethod: "manual", activeId: "", answers: {}, skipped: [] };
   }
   function advance(state: Session): Session {
     const next = questions(state)[questions(state).findIndex((q) => q.id === state.activeId) + 1];

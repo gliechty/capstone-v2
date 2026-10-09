@@ -4,7 +4,7 @@ import { mockQuestions } from "../../src/features/assessment/mock-questions";
 import { createSessionAdapter as adapterFactory, SESSION_KEY } from "../../src/adapters/assessment-session";
 
 const createSessionAdapter = (get: Parameters<typeof adapterFactory>[0]) => adapterFactory(get, sessionSchema);
-const profile = { companyName: "Example", industry: "Example industry", subindustry: "", companySize: "12", location: "Example country", targetMarket: "Example market", targetBuyer: "Not yet identified", businessGoal: "Explore the preview" };
+const profile = { companyName: "Example", industry: "Example industry", subindustry: "", companySize: "11 - 50", location: "Example country", targetMarket: "Example market", targetBuyer: "Not yet identified", businessGoal: "Explore the preview" };
 const { assessmentReducer, initialSession, sessionSchema } = createAssessmentModel("test-fixture", () => mockQuestions);
 const unanswered = (state: Session) => missing(state, mockQuestions);
 const validState = (): Session => ({ ...initialSession(), activeId: mockQuestions[0].id, profile, phase: "questions" });
@@ -13,7 +13,7 @@ describe("setup and raw answer validation", () => {
     expect(Object.keys(profileErrors(initialSession().profile))).toHaveLength(7);
     expect(profileErrors(profile)).toEqual({});
     expect(profileErrors({ ...profile, companyName: "   " })).toHaveProperty("companyName");
-    for (const companySize of ["0", "-1", "1.5", "Infinity", "1e3"]) expect(profileErrors({ ...profile, companySize })).toHaveProperty("companySize");
+    expect(profileErrors({ ...profile, companySize: "" })).toHaveProperty("companySize");
   });
   test("setup cannot advance until valid", () => {
     expect(assessmentReducer(initialSession(), { type: "method" }).phase).toBe("setup");

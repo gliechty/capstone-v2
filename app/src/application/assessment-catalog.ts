@@ -1,3 +1,4 @@
+import { setupConfig, marketValues, type SetupOptions } from "./assessment-setup";
 import type { CanonicalConfig } from "../domain/config/types";
 import { selectQuestions, type SelectionQuestion } from "../domain/selection/select-questions";
 
@@ -8,22 +9,18 @@ export interface AssessmentCatalog {
   version: string;
   industries: readonly string[];
   regions: readonly string[];
+  setupOptions: SetupOptions;
   questions: readonly (Question & SelectionQuestion)[];
 }
 export interface SetupContext { industry: string; companySize: string; location: string; targetMarket: string }
-export function employeeBand(count: number): string {
-  return count <= 10 ? "1-10" : count <= 50 ? "11-50" : count <= 250 ? "51-250" : count <= 500 ? "251-500" : count <= 1000 ? "501-1000" : "1001+";
-}
 export function selectedQuestions(catalog: AssessmentCatalog, profile: SetupContext): readonly Question[] {
-  return selectQuestions(catalog.questions, { industry: profile.industry, employee_band: employeeBand(Number(profile.companySize)),
-    company_location: profile.location, target_market_region: profile.targetMarket.split(/[;,]/).map(v => v.trim()).filter(Boolean) });
+  return selectQuestions(catalog.questions, { industry: profile.industry, employee_band: profile.companySize,
+    company_location: profile.location, target_market_region: marketValues(profile.targetMarket) });
 }
 // Only selection and presentation data crosses to the browser. No benchmarks,
 // weights, document content, model configuration or scoring calculations.
 export function assessmentCatalog(config: CanonicalConfig): AssessmentCatalog {
-  // Region vocabulary comes from preserved validation metadata, not from the
-  // subset of regions which happens to have questions in this snapshot.
-  const regions = config.regions;
+  const regions = setupConfig.options.location.map(option => option.value);
   const questions = config.QuestionBank.filter(q => q.active === "TRUE").map((q): Question & SelectionQuestion => {
     const shared = { id: q.question_id, question_id: q.question_id, title: q.question_text, category: q.category,
       active: q.active, industry_trigger: q.industry_trigger, market_trigger: q.market_trigger, size_applicability: q.size_applicability, priority: q.priority,
@@ -37,5 +34,5 @@ export function assessmentCatalog(config: CanonicalConfig): AssessmentCatalog {
     if (units.length > 1) throw new Error("Conflicting metric units: " + q.question_id);
     return { ...shared, kind: q.response_type as "numeric" | "percent" | "text", unit: q.response_type === "percent" ? "%" : units[0] };
   });
-  return { version: config.version, industries: config.CategoryWeights.map(r => r.industry), regions, questions };
+  return { version: config.version + "/" + setupConfig.version, industries: setupConfig.options.industry.map(option => option.value), regions, setupOptions: setupConfig.options, questions };
 }

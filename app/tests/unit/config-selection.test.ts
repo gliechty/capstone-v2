@@ -75,7 +75,7 @@ test.each(["missing", "json", "checksum", "schema", "version"])("repository fail
   expect(() => repo.load()).toThrow(/Canonical config unavailable/);
 });
 
-import { assessmentCatalog, employeeBand, selectedQuestions } from "../../src/application/assessment-catalog";
+import { assessmentCatalog, selectedQuestions } from "../../src/application/assessment-catalog";
 import { createAssessmentModel, emptyProfile } from "../../src/features/assessment/model";
 import { catalogProfileErrors } from "../../src/features/assessment/assessment-context";
 import { createSessionAdapter } from "../../src/adapters/assessment-session";
@@ -88,17 +88,16 @@ test("presentation catalog exposes no scoring or document payload and keeps decl
   expect(catalog).not.toHaveProperty("DocumentChunks");
   expect(catalog.questions[0]).toMatchObject({ id: "U-001", options: ["Yes", "No"] });
 });
-test("setup adapts employee counts at every v1 boundary without inferring countries", () => {
-  expect([1,10,11,50,51,250,251,500,501,1000,1001].map(employeeBand)).toEqual(["1-10","1-10","11-50","11-50","51-250","51-250","251-500","251-500","501-1000","501-1000","1001+"]);
+test("setup consumes controlled bands and regions without inferring countries", () => {
   const catalog = assessmentCatalog(config);
-  const profile = { ...emptyProfile, companyName: "Example", industry: catalog.industries[0]!, companySize: "300", location: "APAC", targetMarket: "EU;UK", targetBuyer: "Example", businessGoal: "Example" };
+  const profile = { ...emptyProfile, companyName: "Example", industry: catalog.industries[0]!, companySize: "251 - 500", location: "APAC", targetMarket: "EU;UK", targetBuyer: "Enterprise", businessGoal: "Investor readiness" };
   expect(catalogProfileErrors(catalog, profile)).toEqual({});
   expect(catalogProfileErrors(catalog, { ...profile, industry: "made up", location: "Thailand", targetMarket: "Mars" })).toMatchObject({ industry: expect.any(String), location: expect.any(String), targetMarket: expect.any(String) });
 });
 test("canonical session restoration validates version and selection; context changes retain only applicable answers", () => {
   const catalog = assessmentCatalog(config);
   const model = createAssessmentModel(catalog.version, profile => selectedQuestions(catalog, profile), profile => catalogProfileErrors(catalog, profile));
-  let state = { ...model.initialSession(), profile: { ...emptyProfile, companyName: "Example", industry: catalog.industries[0]!, companySize: "300", location: "APAC", targetMarket: "EU", targetBuyer: "Example", businessGoal: "Example" } };
+  let state = { ...model.initialSession(), profile: { ...emptyProfile, companyName: "Example", industry: catalog.industries[0]!, companySize: "251 - 500", location: "APAC", targetMarket: "EU", targetBuyer: "Enterprise", businessGoal: "Investor readiness" } };
   state = model.assessmentReducer(state, { type: "start" });
   const selected = model.questions(state);
   expect(selected.length).toBeGreaterThan(30);
@@ -111,7 +110,7 @@ test("canonical session restoration validates version and selection; context cha
   expect(model.sessionSchema.safeParse({ ...state, version: 1 }).success).toBe(false);
   expect(model.assessmentReducer(state, { type: "jump", id: "demo-people-training" })).toEqual(state);
   expect(model.sessionSchema.safeParse({ ...state, activeId: "demo-people-training" }).success).toBe(false);
-  state = model.assessmentReducer(state, { type: "profile", field: "companySize", value: "1" });
+  state = model.assessmentReducer(state, { type: "profile", field: "companySize", value: "1 - 10" });
   // Editing setup is a valid draft, including answers from the prior context.
   expect(adapter.save(state)).toBeNull();
   state = model.assessmentReducer(state, { type: "start" });
@@ -129,4 +128,47 @@ test("manifest pins immutable source bytes and counts for all seven entities", (
     expect(createHash("sha256").update(readFileSync("../" + entry.source)).digest("hex")).toBe(entry.source_sha256);
     expect(config[name]).toHaveLength(entry.records);
   }
+});
+
+import { setupConfig, marketValues, toggleMarket } from "../../src/application/assessment-setup";
+test("controlled setup values match preserved widget metadata and bands reach selection directly", () => {
+  const raw = readFileSync("../" + setupConfig.provenance.source);
+  expect(createHash("sha256").update(raw).digest("hex")).toBe(setupConfig.provenance.sha256);
+  const widgetValues = new Map<string, string[]>();
+  function walk(value: unknown) {
+    if (!value || typeof value !== "object") return;
+    const v = value as Record<string, unknown>;
+    if (typeof v.widgetName === "string" && Object.values(setupConfig.provenance.widgets).includes(v.widgetName) && typeof v.sourceData === "string") {
+      const rows = JSON.parse(v.sourceData.trim().replace(/^\{\{\s*/, "").replace(/\s*\}\}$/, "")) as { value: string }[];
+      widgetValues.set(v.widgetName, rows.map(row => row.value));
+    }
+    Object.values(v).forEach(walk);
+  }
+  walk(JSON.parse(raw.toString()));
+  const catalog = assessmentCatalog(config);
+  const base = { ...emptyProfile, companyName: "Example", industry: catalog.industries[0]!, companySize: "251 - 500", location: "APAC", targetMarket: "EU;UK", targetBuyer: "Enterprise", businessGoal: "Investor readiness" };
+  for (const key of Object.keys(setupConfig.options) as (keyof typeof setupConfig.options)[]) {
+    expect(setupConfig.options[key].map(row => row.value)).toEqual(widgetValues.get(setupConfig.provenance.widgets[key]!));
+  }
+  for (const option of catalog.setupOptions.companySize) {
+    expect(catalogProfileErrors(catalog, { ...base, companySize: option.value })).toEqual({});
+    expect(selectedQuestions(catalog, { ...base, companySize: option.value }).map(q => q.id)).toEqual(selectQuestions(config.QuestionBank, { industry: base.industry, employee_band: option.value, company_location: base.location, target_market_region: ["EU", "UK"] }).map(q => q.question_id));
+  }
+  for (const companySize of ["300", "0", "-1", "1.5", "Infinity", "1e3"]) expect(catalogProfileErrors(catalog, { ...base, companySize })).toHaveProperty("companySize");
+  expect(catalogProfileErrors(catalog, { ...base, targetBuyer: "Not yet identified", businessGoal: "Free text" })).toMatchObject({ targetBuyer: expect.any(String), businessGoal: expect.any(String) });
+  for (const targetMarket of ["EU;UK;APAC", "EU;EU", "EU;", "EU/UK"]) expect(catalogProfileErrors(catalog, { ...base, targetMarket })).toHaveProperty("targetMarket");
+  const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
+  const state = { ...model.initialSession(), profile: base };
+  expect(model.sessionSchema.safeParse(state).success).toBe(true);
+  expect(model.sessionSchema.safeParse({ ...state, profile: { ...base, companySize: "300" } }).success).toBe(false);
+  expect(model.sessionSchema.safeParse({ ...state, version: 2 }).success).toBe(false);
+});
+test("market selection is bounded, ordered, and never changes selector methodology", () => {
+  let value = toggleMarket("", "UK");
+  value = toggleMarket(value, "EU");
+  expect(marketValues(value)).toEqual(["UK", "EU"]);
+  expect(toggleMarket(value, "APAC")).toBe(value);
+  value = toggleMarket(value, "UK");
+  expect(marketValues(value)).toEqual(["EU"]);
+  expect(marketValues(toggleMarket(value, "APAC"))).toEqual(["EU", "APAC"]);
 });

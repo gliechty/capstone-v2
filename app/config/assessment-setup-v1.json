@@ -1,0 +1,198 @@
+{
+  "version": "v1-controlled-setup-1",
+  "provenance": {
+    "source": "BUILD_PACK/02_LEGACY_APPSMITH/export/appsmith-sandboxes-v1-export-2026-10-02.json",
+    "sha256": "51c1d65a50cc2b84c41e3781bdd1d454d0bcd6cc3af2536f7417b176185b5018",
+    "widgets": {
+      "industry": "dd_industry",
+      "companySize": "dd_employee_band",
+      "location": "dd_company_location",
+      "targetMarket": "dd_target_market_1",
+      "targetBuyer": "dd_target_buyer",
+      "businessGoal": "dd_business_goal"
+    },
+    "secondary_market_widget": "dd_target_market_2"
+  },
+  "options": {
+    "industry": [
+      {
+        "label": "Manufacturing (Industrial / Components)",
+        "value": "Manufacturing (Industrial / Components)"
+      },
+      {
+        "label": "Food & Agro-processing",
+        "value": "Food & Agro-processing"
+      },
+      {
+        "label": "Consumer Goods (Apparel / FMCG)",
+        "value": "Consumer Goods (Apparel / FMCG)"
+      },
+      {
+        "label": "Construction / Materials",
+        "value": "Construction / Materials"
+      },
+      {
+        "label": "Business / Export Services",
+        "value": "Business / Export Services"
+      }
+    ],
+    "companySize": [
+      {
+        "label": "1–10",
+        "value": "1 - 10"
+      },
+      {
+        "label": "11–50",
+        "value": "11 - 50"
+      },
+      {
+        "label": "51–250",
+        "value": "51 - 250"
+      },
+      {
+        "label": "251–500",
+        "value": "251 - 500"
+      },
+      {
+        "label": "501–1000",
+        "value": "501 - 1000"
+      },
+      {
+        "label": "1001+",
+        "value": "1001+"
+      }
+    ],
+    "location": [
+      {
+        "label": "North America",
+        "value": "North America"
+      },
+      {
+        "label": "LATAM",
+        "value": "LATAM"
+      },
+      {
+        "label": "EU",
+        "value": "EU"
+      },
+      {
+        "label": "UK",
+        "value": "UK"
+      },
+      {
+        "label": "Eastern Europe",
+        "value": "Eastern Europe"
+      },
+      {
+        "label": "Middle East",
+        "value": "Middle East"
+      },
+      {
+        "label": "Africa",
+        "value": "Africa"
+      },
+      {
+        "label": "South Asia",
+        "value": "South Asia"
+      },
+      {
+        "label": "APAC",
+        "value": "APAC"
+      },
+      {
+        "label": "Oceania",
+        "value": "Oceania"
+      }
+    ],
+    "targetMarket": [
+      {
+        "label": "North America",
+        "value": "North America"
+      },
+      {
+        "label": "LATAM",
+        "value": "LATAM"
+      },
+      {
+        "label": "EU",
+        "value": "EU"
+      },
+      {
+        "label": "UK",
+        "value": "UK"
+      },
+      {
+        "label": "Eastern Europe",
+        "value": "Eastern Europe"
+      },
+      {
+        "label": "Middle East",
+        "value": "Middle East"
+      },
+      {
+        "label": "Africa",
+        "value": "Africa"
+      },
+      {
+        "label": "South Asia",
+        "value": "South Asia"
+      },
+      {
+        "label": "APAC",
+        "value": "APAC"
+      },
+      {
+        "label": "Oceania",
+        "value": "Oceania"
+      }
+    ],
+    "targetBuyer": [
+      {
+        "label": "Enterprise",
+        "value": "Enterprise"
+      },
+      {
+        "label": "Government",
+        "value": "Government"
+      },
+      {
+        "label": "SME",
+        "value": "SME"
+      },
+      {
+        "label": "Consumer Brands",
+        "value": "Consumer Brands"
+      },
+      {
+        "label": "Export Buyer",
+        "value": "Export Buyer"
+      }
+    ],
+    "businessGoal": [
+      {
+        "label": "Win enterprise customers",
+        "value": "Win enterprise customers"
+      },
+      {
+        "label": "Access new markets",
+        "value": "Access new markets"
+      },
+      {
+        "label": "Meet buyer sustainability requirements",
+        "value": "Meet buyer sustainability requirements"
+      },
+      {
+        "label": "Prepare for procurement questionnaires",
+        "value": "Prepare for procurement questionnaires"
+      },
+      {
+        "label": "Improve sustainability ratings",
+        "value": "Improve sustainability ratings"
+      },
+      {
+        "label": "Investor readiness",
+        "value": "Investor readiness"
+      }
+    ]
+  }
+}
