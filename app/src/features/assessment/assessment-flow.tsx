@@ -253,10 +253,10 @@ function Review() {
         {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
       </li>)}
     </ul>
-    <p className="mb-4 text-small text-muted">This preview cannot generate a score. The next action only opens an explanation of this boundary.</p>
+    <p className="mb-4 text-small text-muted">Scores use the answers you entered. Invalid entries must be corrected or cleared before calculation; missing answers remain missing. Recommendations and reports are not generated.</p>
     <div className="flex flex-wrap gap-4">
       {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}
-      <button type="button" className="button-primary" onClick={() => dispatch({ type: "boundary" })}>{missing.length > 0 ? "Generate score anyway" : "Continue to preview boundary"}</button>
+      <button type="button" className="button-primary" onClick={() => dispatch({ type: "boundary" })}>{missing.length > 0 ? "Generate score anyway" : "Generate score"}</button>
     </div>
   </section>;
 }
@@ -264,10 +264,10 @@ function Review() {
 function Boundary() {
   const { dispatch } = useAssessment();
   return <section className="assessment-setup">
-    <span className="section-label">Non-production preview boundary</span>
-    <StageHeading>Preview complete — no score generated.</StageHeading>
-    <p className="mt-6 text-muted">These questions come from the preserved canonical configuration. Scoring is not available, and your answers have not been submitted to a server. You can explore a separate results layout with fixed mock data; it does not use your answers.</p>
-    <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View mock results preview</Link></div>
+    <span className="section-label">Deterministic scoring / Research build</span>
+    <StageHeading>Your answers are ready for calculation.</StageHeading>
+    <p className="mt-6 text-muted">The results page submits your raw answers and selection context to this application’s server to calculate scores from the canonical configuration. Answers are not stored on the server. Narrative and recommendations remain fictional examples.</p>
+    <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View calculated results</Link></div>
   </section>;
 }
 
@@ -282,7 +282,7 @@ function Flow() {
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
       <div className="preview-notice mb-6">
         <p className="font-semibold">Assessment interaction preview</p>
-        <p className="text-small">Canonical questions · No score or recommendations. Use example data. Entries stay in this browser tab’s session; they are not sent to a server.</p>
+        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. Recommendations are not generated.</p>
       </div>
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}

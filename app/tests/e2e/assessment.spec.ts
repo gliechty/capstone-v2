@@ -65,7 +65,7 @@ for (const width of [1440, 390]) {
     expect(errors).toEqual([]);
   });
 }
-test("answers survive canonical navigation, skip, refresh, missing review and the no-score boundary", async ({ page }) => {
+test("answers survive canonical navigation, skip, refresh, missing review and the scoring handoff", async ({ page }) => {
   await start(page);
   await page.getByRole("radio", { name: "No", exact: true }).focus();
   await page.keyboard.press("Space");
@@ -94,14 +94,14 @@ test("answers survive canonical navigation, skip, refresh, missing review and th
   await page.getByRole("button", { name: "Review all answers" }).click();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.getByRole("button", { name: "Generate score anyway" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
   await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
   const saved = await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
-  await page.getByRole("link", { name: "View mock results preview" }).click();
-  await expect(page.getByText("Mock results · Design preview", { exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "View calculated results" }).click();
+  await expect(page.getByText("Calculated scores · Example narrative", { exact: true })).toBeVisible();
   await page.getByRole("link", { name: "Return to assessment" }).first().click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
   expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(saved);
 });
 
@@ -156,8 +156,8 @@ test("a fully answered canonical questionnaire still stops before scoring", asyn
   }
   await expect(page.getByText("0 unanswered questions.", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Review missing answers" })).toHaveCount(0);
-  await page.getByRole("button", { name: "Continue to preview boundary" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Preview complete — no score generated.");
+  await page.getByRole("button", { name: "Generate score" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
 });
 
 test("pointer choices advance once, while keyboard arrows and Space stay on the question", async ({ page }) => {

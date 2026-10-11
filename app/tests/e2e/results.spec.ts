@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 for (const width of [1440, 390, 320]) {
-  test("mock results are accessible and responsive at " + width + "px", async ({ page }, testInfo) => {
+  test("results without a session are accessible and responsive at " + width + "px", async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];
     const apiRequests: string[] = [];
@@ -10,10 +10,10 @@ for (const width of [1440, 390, 320]) {
     page.on("request", (request) => { if (request.method() === "POST" || request.url().includes("/api/")) apiRequests.push(request.url()); });
     const response = await page.goto("/results");
     expect(response?.status()).toBe(200);
-    await expect(page).toHaveTitle("Mock results preview | Capstone");
-    await expect(page.getByText("Mock results · Design preview", { exact: true })).toBeVisible();
+    await expect(page).toHaveTitle("Assessment results | Capstone");
+    await expect(page.getByText("Calculated scores · Example narrative", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Download full report" })).toBeDisabled();
-    await expect(page.getByRole("figure")).toContainText("People76");
+    await expect(page.getByRole("heading", { name: "Scores unavailable" })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -27,7 +27,7 @@ test("results support keyboard navigation and reduced motion without a session",
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/results");
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Skip to results preview" })).toBeFocused();
+  await expect(page.getByRole("link", { name: "Skip to results" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
@@ -49,7 +49,7 @@ test("results support keyboard navigation and reduced motion without a session",
 test("malformed session data cannot become plausible results", async ({ page }) => {
   await page.addInitScript(() => sessionStorage.setItem("capstone.assessment.ui-preview.v1", "{broken"));
   await page.goto("/results");
-  await expect(page.getByRole("complementary", { name: "Mock results notice" })).toContainText("fixed layout examples");
+  await expect(page.getByRole("main").getByRole("alert")).toContainText("could not be read");
   expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe("{broken");
   await page.getByRole("link", { name: "Return to assessment" }).first().click();
   await expect(page.getByRole("main").getByRole("alert")).toContainText("could not be read");
@@ -99,3 +99,49 @@ for (const width of [1440, 390, 320]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 }
+
+import { loadCanonicalConfig } from "../../src/adapters/config-repository";
+import { assessmentCatalog } from "../../src/application/assessment-catalog";
+import { goldenCases } from "../helpers/legacy-scoring";
+import { scoreAssessment } from "../../src/domain/scoring/score-assessment";
+const config = loadCanonicalConfig().config;
+const catalog = assessmentCatalog(config);
+for (const width of [1440, 390]) test("real Golden assessment results are accessible and responsive at " + width, async ({ page }, testInfo) => {
+  const fixture = goldenCases[1]!;
+  const p = fixture.profile;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
+  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0], answers, skipped: [],
+    profile: { companyName: "Example business", subindustry: "", industry: p.industry, companySize: p.employee_band.replace("-", " - "), location: p.company_location, targetMarket: p.target_market_region.join(";"), targetBuyer: p.target_buyer, businessGoal: p.business_goal } };
+  await page.setViewportSize({ width, height: 1000 });
+  await page.addInitScript(value => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(value)), session);
+  const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
+  await page.goto("/assessment");
+  await page.getByRole("button", { name: "Generate score", exact: true }).click();
+  await page.getByRole("link", { name: "View calculated results" }).click();
+  await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
+  const score = scoreAssessment(config, p, answers);
+  await expect(page.locator(".score-values")).toContainText(score.rawOverall!.toFixed(1));
+  await expect(page.locator(".score-values")).toContainText(score.weightedOverall!.toFixed(1));
+  await expect(page.getByRole("figure", { name: "Calculated category scores" })).toContainText("People100.0");
+  await expect(page.getByText(/Example narrative/).last()).toContainText("Not AI-generated");
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath("computed-results-" + width + ".png"), fullPage: true });
+  await page.reload(); await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+test("results reject invalid drafts, show missing categories, and do not replace storage with calculated values", async ({ page }) => {
+  const profile = { companyName: "Example", subindustry: "", industry: catalog.industries[0], companySize: "251 - 500", location: "APAC", targetMarket: "EU", targetBuyer: "Enterprise", businessGoal: "Investor readiness" };
+  const state = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
+  await page.goto("/results");
+  await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), state);
+  await page.reload(); await expect(page.getByRole("main").getByRole("alert")).toContainText("non-negative decimal");
+  await expect(page.locator(".score-number")).toHaveCount(0);
+  await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify({ ...s, answers: { "U-001": "Yes" } })), state);
+  await page.reload(); await expect(page.getByRole("figure")).toContainText("PeopleNot scored");
+  await expect(page.getByRole("figure")).toContainText("Governance100.0");
+  const saved = await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!));
+  expect(saved.answers).toEqual({ "U-001": "Yes" }); expect(saved).not.toHaveProperty("rawOverall");
+  await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify({ ...s, answers: {} })), state);
+  await page.reload(); await expect(page.locator(".score-values")).toHaveText(/Not scored.*Not scored/);
+});

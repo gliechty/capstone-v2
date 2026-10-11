@@ -5,7 +5,7 @@ import { assessmentCatalog } from "../../application/assessment-catalog";
 import { loadCanonicalConfig } from "../../adapters/config-repository";
 export const metadata: Metadata = {
   title: "Assessment preview | Capstone",
-  description: "Business setup and canonical questionnaire. No scoring.",
+  description: "Business setup, canonical questionnaire and deterministic assessment scoring.",
 };
 export default function AssessmentPage() {
   // Loading during build fails the deployment on malformed canonical config.

@@ -434,7 +434,7 @@ Versioned repository files may serve as the initial runtime authority.
 
 **Status:** COMPLETE
 
-Implementation and verification completed for the explicitly authorized M2.1 + M2.2 package. See `app/docs/M2.1-M2.2-REVIEW.md` and `app/docs/CONFIG-MIGRATION.md`. Human review remains pending; this does not authorize M2.3 or complete Milestone 2.
+Implementation and verification completed for the explicitly authorized M2.1 + M2.2 package. See `app/docs/M2.1-M2.2-REVIEW.md` and `app/docs/CONFIG-MIGRATION.md`. M2.1–M2.2 were accepted by human review and committed; this does not complete Milestone 2. M2.3–M2.5 were subsequently explicitly authorized as a separate work package.
 
 
 
@@ -484,7 +484,9 @@ Do not introduce buyer/goal-based question selection unless explicitly approved 
 
 ## M2.3 — Answer persistence + normalization/benchmarks
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -532,7 +534,9 @@ Missing values must never silently become zero.
 
 ## M2.4 — Base weights + contextual multipliers
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -574,7 +578,9 @@ Do not convert current config values or caps into permanent engine assumptions.
 
 ## M2.5 — Category weighting + score aggregation
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -2053,5 +2059,6 @@ The next proposed action without starting it.
 - M1.0–M1.4 — COMPLETE (previously implemented and human-reviewed).
 - M2.1 — COMPLETE (verified; awaiting human review).
 - M2.2 — COMPLETE (verified; awaiting human review).
-- M2.3 — PENDING; not authorized.
+- M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
+- M2.6–M2.7 — PENDING; not authorized by this work package.
 - All later steps remain subject to their existing status and explicit human authorization.
