@@ -26,9 +26,9 @@ export async function POST(request: Request) {
   } catch { return response({ error: "Assessment data is not valid JSON." }, 400); }
   try {
     const score = computeAssessment(loadCanonicalConfig().config, input);
-    // Internal question-level diagnostics remain server-side for this package.
-    const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall } = score;
-    return response({ configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall });
+    // The engine owns the versioned trace; the HTTP boundary only projects its output.
+    const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace } = score;
+    return response({ configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace });
   } catch (error) {
     if (error instanceof ZodError) return response({ error: "Assessment context or answers are invalid. Return to assessment to review them." }, 400);
     if (error instanceof ScoringError) return response({ error: error.message }, 422);

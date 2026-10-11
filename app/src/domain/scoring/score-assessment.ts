@@ -1,3 +1,4 @@
+import type { CalculationTrace } from "./calculation-trace";
 import type { CanonicalConfig, MetricBenchmarksRecord, QuestionBankRecord } from "../config/types";
 import { selectQuestions, type SelectionProfile } from "../selection/select-questions";
 
@@ -32,7 +33,9 @@ export function normalizeAnswer(config: CanonicalConfig, question: QuestionBankR
   if (["boolean", "categorical"].includes(question.response_type)) {
     const scale = config.AnswerScales.find(row => row.answer_scale_id.trim() === question.answer_scale_id.trim() && text(row.answer_option) === text(raw) && active(row.active));
     if (!scale) throw new ScoringError(question.question_id + ": invalid answer option");
-    return { value: decimal(scale.normalized_score, question.question_id), method: "answer_scale", benchmark: null, scale };
+    const value = decimal(scale.normalized_score, question.question_id);
+    const inputs: Record<string, string | number | boolean> = { answer_option: scale.answer_option, configured_score: value };
+    return { value, method: "answer_scale", benchmark: null, scale, inputs };
   }
   if (!["numeric", "percent"].includes(question.response_type)) throw new ScoringError(question.question_id + ": unsupported response type");
   if (!/^\d+(\.\d+)?$/.test(raw.trim())) throw new ScoringError(question.question_id + ": enter a non-negative decimal");
@@ -47,6 +50,7 @@ export function normalizeAnswer(config: CanonicalConfig, question: QuestionBankR
   const max = decimal(metric.max_value, "max_value");
   const safeMax = max !== 0 ? max : 100;
   const nonzero = (n: number) => { if (n === 0) throw new ScoringError(question.question_id + ": zero benchmark denominator"); return n; };
+  const inputs: Record<string, string | number | boolean> = { x, param_1: p1, param_2: p2, param_3: p3, max_value: max, effective_max: safeMax, unit: metric.unit };
   let value: number;
   switch (text(metric.normalization_method)) {
     case "identity_percent": value = clamp(x, 0, safeMax); break;
@@ -60,14 +64,20 @@ export function normalizeAnswer(config: CanonicalConfig, question: QuestionBankR
       const percent = question.response_type === "percent" || text(metric.unit).includes("percent");
       const adjusted = percent ? x / 100 : x;
       const threshold = p1 > 1 && percent ? p1 / 100 : p1;
-      value = clamp(adjusted <= threshold ? 1 : Math.exp(-(p2 || 10) * (adjusted - threshold)), 0, 1) * safeMax;
+      const rate = p2 || 10;
+      Object.assign(inputs, { percent_conversion: percent, adjusted_x: adjusted, threshold, decay_rate: rate });
+      value = clamp(adjusted <= threshold ? 1 : Math.exp(-rate * (adjusted - threshold)), 0, 1) * safeMax;
       break;
     }
-    case "inverse_linear_cap": value = clamp(1 - Math.min(x / nonzero(p2 || max || p1), 1), 0, 1) * safeMax; break;
+    case "inverse_linear_cap": {
+      const cap = nonzero(p2 || max || p1);
+      inputs.effective_cap = cap;
+      value = clamp(1 - Math.min(x / cap, 1), 0, 1) * safeMax; break;
+    }
     case "banded": value = x <= p1 ? 100 : x <= p2 ? 75 : x <= p3 ? 50 : 0; break;
     default: throw new ScoringError(question.question_id + ": unsupported normalization method");
   }
-  return { value: finite(value, question.question_id), method: metric.normalization_method, benchmark: metric, scale: null };
+  return { value: finite(value, question.question_id), method: metric.normalization_method, benchmark: metric, scale: null, inputs };
 }
 export function resolveMultiplier(config: CanonicalConfig, question: QuestionBankRecord, profile: ScoringProfile) {
   const tags = question.tags.split(/[;,]/).map(text).filter(Boolean);
@@ -94,7 +104,7 @@ export function scoreAssessment(config: CanonicalConfig, profile: ScoringProfile
   const questions = selected.map(question => {
     const rawAnswer = answers[question.question_id] ?? "";
     const normalization = normalizeAnswer(config, question, rawAnswer, profile.industry);
-    const base = { id: question.question_id, category: question.category, rawAnswer };
+    const base = { id: question.question_id, title: question.question_text, responseType: question.response_type, category: question.category, rawAnswer };
     if (!normalization) return { ...base, status: "missing" as const };
     if (!CATEGORIES.includes(question.category as Category)) throw new ScoringError(question.question_id + ": unsupported category");
     const baseWeight = decimal(question.base_weight, question.question_id);
@@ -117,7 +127,27 @@ export function scoreAssessment(config: CanonicalConfig, profile: ScoringProfile
   // Missing categories retain null percentages/contributions. As in v1, the
   // sum contains only observed categories; weights are never redistributed.
   const weightedOverall = possible > 0 ? finite(categories.reduce((sum, c) => sum + (c.contribution ?? 0), 0), "weighted overall") : null;
-  return { configVersion: config.version, methodVersion: METHOD_VERSION, questions, categories, answered, missing: selected.length - answered,
+  const trace: CalculationTrace[] = questions.map(q => {
+    const identity = { question_id: q.id, question_text: q.title, raw_answer: q.rawAnswer, response_type: q.responseType,
+      category: q.category, config_version: config.version, method_version: METHOD_VERSION };
+    if (q.status === "missing") return { ...identity, status: "missing" };
+    const category = categories.find(c => c.category === q.category)!;
+    const percentagePoints = category.possible > 0 ? q.earned / category.possible * 100 : null;
+    const metric = q.normalization.benchmark;
+    return { ...identity, status: "scored", normalization_method: q.normalization.method, normalization_inputs: q.normalization.inputs,
+      normalized_score: q.normalization.value,
+      benchmark: metric ? { id: JSON.stringify([metric.metric_id, metric.benchmark_group_type, metric.benchmark_group_value]), source: "MetricBenchmarks", record: metric } : null,
+      answer_scale: q.normalization.scale, base_weight: q.baseWeight,
+      matched_multiplier_rule_ids: q.multiplier.rules.map(rule => rule.rule_id), multiplier: q.multiplier.value,
+      multiplier_product: q.multiplier.product, multiplier_cap: q.multiplier.cap,
+      weighted_score: q.weighted, final_score: q.earned, total_possible: q.possible,
+      category_contribution: { earned_points: q.earned, possible_points: q.possible, category_possible: category.possible,
+        percentage_points: percentagePoints, category_weight: category.weight,
+        weighted_overall_points: percentagePoints === null ? null : percentagePoints * category.weight,
+        raw_overall_points: possible > 0 ? q.earned / possible * 100 : null } };
+  });
+  return { traceSchemaVersion: 1 as const, input: { profile: { ...profile, target_market_region: [...profile.target_market_region] }, answers: { ...answers } }, trace,
+    configVersion: config.version, methodVersion: METHOD_VERSION, questions, categories, answered, missing: selected.length - answered,
     earned, possible, rawOverall: possible > 0 ? earned / possible * 100 : null, weightedOverall };
 }
 export type AssessmentScore = ReturnType<typeof scoreAssessment>;

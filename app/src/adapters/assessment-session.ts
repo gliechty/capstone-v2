@@ -31,4 +31,32 @@ export function createSessionAdapter(getStorage: () => SessionStoragePort, sessi
   };
 }
 // All browser storage access stays here; never evaluated during server rendering.
-export const browserSession = (schema: ReturnType<typeof createAssessmentModel>["sessionSchema"]) => createSessionAdapter(() => window.sessionStorage, schema);
+export const SESSION_CHANGED = "capstone:assessment-session-changed";
+let unsavedChanges = false;
+export const browserSession = (schema: ReturnType<typeof createAssessmentModel>["sessionSchema"]) => {
+  const adapter = createSessionAdapter(() => window.sessionStorage, schema);
+  return {
+    load: () => unsavedChanges ? { state: null, warning: "Your latest changes could not be saved. Return to assessment and resolve session saving before calculating a score." } : adapter.load(),
+    save(state: Session) {
+      const warning = adapter.save(state);
+      unsavedChanges = warning !== null;
+      window.dispatchEvent(new Event(SESSION_CHANGED));
+      return warning;
+    },
+  };
+};
+export function watchAssessmentSession(onChange: () => void, onRestore: () => void, onHide: () => void) {
+  const storage = (event: StorageEvent) => { if (event.key === SESSION_KEY || event.key === null) onChange(); };
+  window.addEventListener(SESSION_CHANGED, onChange);
+  window.addEventListener("storage", storage);
+  window.addEventListener("focus", onChange);
+  window.addEventListener("pageshow", onRestore);
+  window.addEventListener("pagehide", onHide);
+  return () => {
+    window.removeEventListener(SESSION_CHANGED, onChange);
+    window.removeEventListener("storage", storage);
+    window.removeEventListener("focus", onChange);
+    window.removeEventListener("pageshow", onRestore);
+    window.removeEventListener("pagehide", onHide);
+  };
+}

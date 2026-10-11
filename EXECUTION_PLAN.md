@@ -622,7 +622,9 @@ Calculation precision must remain separate from presentation rounding.
 
 ## M2.6 — Calculation trace + numeric policy
 
-**Status:** PENDING
+**Status:** CURRENT
+
+Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; awaiting human review. See `app/docs/M2.6-REVIEW.md` and `app/docs/NUMERIC-POLICY.md`. M2.7 remains PENDING and unauthorized; Milestone 2 is not complete.
 
 
 
@@ -2060,5 +2062,6 @@ The next proposed action without starting it.
 - M2.1 — COMPLETE (verified; awaiting human review).
 - M2.2 — COMPLETE (verified; awaiting human review).
 - M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
-- M2.6–M2.7 — PENDING; not authorized by this work package.
+- M2.6 — CURRENT; implemented and verified on 2026-10-11; awaiting human review.
+- M2.7 — PENDING; not authorized. Milestone 2 is not complete.
 - All later steps remain subject to their existing status and explicit human authorization.

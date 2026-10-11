@@ -1,37 +1,31 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useReducer, type CSSProperties } from "react";
-import { browserSession } from "../../adapters/assessment-session";
+import { browserSession, watchAssessmentSession } from "../../adapters/assessment-session";
 import { selectedQuestions, type AssessmentCatalog } from "../../application/assessment-catalog";
 import { marketValues } from "../../application/assessment-setup";
 import { createAssessmentModel } from "../assessment/model";
 import { catalogProfileErrors } from "../assessment/assessment-context";
-import type { ScoreSummary } from "../../application/score-summary";
+import { createScoreRefresh, type ScoreView } from "../../application/score-refresh";
+import { ScoreExplanation } from "./score-explanation";
 import { requestAssessmentScore } from "../../adapters/assessment-scoring";
-type View = { status: "loading" } | { status: "unavailable"; message: string } | { status: "ready"; score: ScoreSummary };
 const display = (value: number | null) => value === null ? "Not scored" : value.toFixed(1);
 export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
-  const [view, dispatch] = useReducer((_state: View, next: View) => next, { status: "loading" });
+  const [view, dispatch] = useReducer((_state: ScoreView, next: ScoreView) => next, { status: "loading" });
   useEffect(() => {
-    const controller = new AbortController();
-    async function compute() {
-      const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
-      const restored = browserSession(model.sessionSchema).load();
-      if (!restored.state || !["review", "boundary", "questions"].includes(restored.state.phase)) {
-        dispatch({ status: "unavailable", message: restored.warning ?? "No completed assessment context is available in this tab. Return to assessment to enter or review your answers." });
-        return;
-      }
+    const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
+    const storage = browserSession(model.sessionSchema);
+    const refresh = createScoreRefresh(() => {
+      const restored = storage.load();
+      if (!restored.state || !["review", "boundary", "questions"].includes(restored.state.phase)) return { input: null,
+        message: restored.warning ?? "No completed assessment context is available in this tab. Return to assessment to enter or review your answers." };
       const { profile: p, answers, configVersion } = restored.state;
-      try {
-        const body = await requestAssessmentScore({ configVersion, context: { industry: p.industry, companySize: p.companySize, location: p.location,
-          targetMarkets: marketValues(p.targetMarket), targetBuyer: p.targetBuyer, businessGoal: p.businessGoal }, answers }, controller.signal);
-        if (!controller.signal.aborted) dispatch({ status: "ready", score: body });
-      } catch (error) {
-        if (!controller.signal.aborted) dispatch({ status: "unavailable", message: error instanceof Error ? error.message : "Scoring is unavailable. Please return to your answers and try again." });
-      }
-    }
-    void compute();
-    return () => controller.abort();
+      return { input: { configVersion, context: { industry: p.industry, companySize: p.companySize, location: p.location,
+        targetMarkets: marketValues(p.targetMarket), targetBuyer: p.targetBuyer, businessGoal: p.businessGoal }, answers }, message: "" };
+    }, requestAssessmentScore, dispatch);
+    const unsubscribe = watchAssessmentSession(() => refresh.refresh(), () => refresh.refresh(true), () => refresh.invalidate());
+    refresh.refresh();
+    return () => { unsubscribe(); refresh.dispose(); };
   }, [catalog]);
   if (view.status === "loading") return <p className="mt-8" role="status">Calculating from this tab’s assessment answers…</p>;
   if (view.status === "unavailable") return <div className="mt-8"><h2 className="text-subheading">Scores unavailable</h2><p role="alert" className="mt-4">{view.message}</p><Link href="/assessment" className="text-link mt-4">Review assessment answers</Link></div>;
@@ -54,6 +48,7 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
         </li>)}</ul>
       </figure>
     </div>
+    <ScoreExplanation score={s} />
     <p className="mt-4 text-small text-muted break-words">Calculated from canonical configuration {s.configVersion}. Method: {s.methodVersion}. Research build; no certification or readiness classification is implied.</p>
   </>;
 }

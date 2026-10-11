@@ -49,3 +49,26 @@
   .results-mobile-nav summary::marker { color: var(--accent); }
   .results-mobile-nav nav { position: absolute; top: 100%; left: 0; right: 0; padding: var(--space-2); max-height: 65vh; overflow-y: auto; background: var(--surface-raised); border: var(--border-width) solid var(--border); border-radius: var(--corner-control); box-shadow: var(--elevation-panel); }
 }
+
+/* Trace detail is progressive disclosure, subordinate to the normal results. */
+.score-explanation { margin-top: var(--space-6); border-block: var(--border-width) solid var(--border); }
+.score-explanation summary { cursor: pointer; min-height: var(--control-height); padding-block: var(--space-3); font-weight: var(--weight-semibold); }
+.score-explanation summary:hover { color: var(--accent); }
+.score-explanation summary:focus-visible { outline: var(--focus-width) solid var(--accent); outline-offset: var(--space-1); }
+.explanation-body { padding-block: var(--space-4); }
+.trace-questions { list-style: none; margin-top: var(--space-4); }
+.trace-question { border-top: var(--border-width) solid var(--border); }
+.trace-question > summary { padding-block: var(--space-4); }
+.trace-body { padding-bottom: var(--space-6); }
+.trace-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--space-4); margin-block: var(--space-4); }
+.trace-values dt { color: var(--text-muted); font-size: var(--font-size-small); }
+.trace-values dd { font-variant-numeric: tabular-nums; }
+.trace-technical { margin-top: var(--space-4); }
+.trace-technical textarea {
+  display: block;
+  width: 100%;
+  font-family: monospace;
+  margin-top: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--corner-control);
+  resize: vertical; white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space-4); background: var(--surface-muted); font-size: var(--font-size-small); max-height: 32rem; overflow-y: auto; }
