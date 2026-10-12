@@ -622,9 +622,9 @@ Calculation precision must remain separate from presentation rounding.
 
 ## M2.6 — Calculation trace + numeric policy
 
-**Status:** CURRENT
+**Status:** COMPLETE
 
-Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; awaiting human review. See `app/docs/M2.6-REVIEW.md` and `app/docs/NUMERIC-POLICY.md`. M2.7 was separately authorized on 2026-10-12. M2.6 acceptance is included in the final M2 gate; Milestone 2 is not complete.
+Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; accepted by the owner on 2026-10-12 as part of final Milestone 2 acceptance, including explanations, calculation trace and numeric policy. See `app/docs/M2.6-REVIEW.md`, `app/docs/NUMERIC-POLICY.md` and the acceptance record in `app/docs/M2.7-MILESTONE-2-REVIEW.md`.
 
 
 
@@ -698,9 +698,9 @@ Never widen tolerances merely to make Golden Tests pass.
 
 ## M2.7 — Golden parity + basic score visualizations
 
-**Status:** CURRENT
+**Status:** COMPLETE
 
-Implemented and verified on 2026-10-12 under explicit M2.7/closeout authorization. The final gate includes outstanding M2.6 review; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Ready for human acceptance; Milestone 2 remains open. No merge or M3 implementation is authorized.
+Implemented and verified on 2026-10-12; accepted by the owner on 2026-10-12 following the human walkthrough. The eight-question test matched expected scores, and the Q23 edit, recalculation and refresh worked. Final acceptance includes M2.6 and completes Milestone 2; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation issues are deferred to M3.4/M3.6. PR #3 remains unmerged; no merge or M3 implementation is authorized.
 
 
 
@@ -754,7 +754,7 @@ The deterministic core must be approved before recommendation logic becomes auth
 
 ## M3 implementation proposal — planning only, 2026-10-12
 
-M3 implementation is not authorized. After explicit M2 acceptance and merge approval, record that decision, merge into main without rewriting shared history, preserve the M2 branch, and create `milestone-3-recommendations` from updated main. Branch creation is not authorization to implement.
+M2 was explicitly accepted on 2026-10-12. M3 implementation remains unstarted and unauthorized; PR #3 remains unmerged. After separate explicit merge approval, merge into main without rewriting shared history, preserve the M2 branch, and create `milestone-3-recommendations` from updated main. Branch creation is not authorization to implement.
 
 ### First package: M3.1–M3.3
 
@@ -794,7 +794,7 @@ Names to add to `app/.env.example` when the package is authorized; no credential
 | `RECOMMENDATION_TIMEOUT_MS` | Validated bounded provider deadline |
 | `RECOMMENDATION_MAX_OUTPUT_TOKENS` | Validated cost/output bound |
 
-No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance, merge approval and first-package authorization remain the immediate gates.
+No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance was recorded on 2026-10-12; merge approval and first-package authorization remain the immediate gates.
 
 
 
@@ -2124,6 +2124,6 @@ The next proposed action without starting it.
 - M2.1 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
 - M2.2 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
 - M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
-- M2.6 — CURRENT; implemented and verified on 2026-10-11; awaiting human review.
-- M2.7 — CURRENT; implemented and verified 2026-10-12; acceptance package ready with M3 planning. Final M2 acceptance remains pending; see app/docs/M2.7-MILESTONE-2-REVIEW.md.
+- M2.6 — COMPLETE; implemented and verified on 2026-10-11; accepted by the owner in the final M2 walkthrough on 2026-10-12.
+- M2.7 — COMPLETE; implemented, verified and explicitly accepted on 2026-10-12. Milestone 2 is complete; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation follow-ups remain deferred to M3.4/M3.6. PR #3 is unmerged and M3 implementation is unstarted.
 - All later steps remain subject to their existing status and explicit human authorization.
