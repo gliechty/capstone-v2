@@ -767,6 +767,7 @@ M3 implementation is not authorized. After explicit M2 acceptance and merge appr
 
 ### Second package: M3.4–M3.6
 
+- Include the owner-requested questionnaire review/navigation polish recorded under M3.4; verify it at M3.6 without changing deterministic scoring or blank-answer semantics.
 - Replace fictional narrative only when validated generated output exists; retain current score/chart/explanation authority. Tie recommendation results to the same input/config/method identity and reject stale responses.
 - Integrate evidence links and unavailable/retry states in the existing vertical results layout. Provide deterministic priority gaps separately and label their origin.
 - Produce a print-ready durable report initially (browser Save as PDF), containing context, answers/skips, scores, versions, available recommendations and evidence. Omit unavailable AI content truthfully; report generation and all deterministic results remain usable during provider failure.
@@ -993,6 +994,18 @@ Default to a vertical narrative rather than tabs.
 
 The current deterministic score remains authoritative.
 
+### Deferred questionnaire review/navigation polish — human feedback 2026-10-12
+
+Owner-requested follow-up from the M2 walkthrough; schedule with M3.4 in the M3.4–M3.6 package. This is a future implementation item, not an M2 blocker or authorization to begin M3.
+
+- Make **Review Answers** available from every question, including the first, middle and last. Place the action consistently outside the question-card content (for example, below the active card), rather than making the last card the only discoverable route.
+- Remove the per-card blank-answer gate and the message "Enter an answer or choose Skip." A blank question may advance or open answer review without an explicit Skip action; the last question must behave consistently with the rest.
+- Use the existing answer-review screen to summarize unanswered/skipped questions and offer review of missing answers or explicit generation of a partial score.
+- Preserve current drafts when opening review. Keep Skip available as an optional action, maintain existing answer retention and stale-result protection, and retain validation of invalid nonblank values. Do not coerce blanks or invalid values to zero, alter scoring/denominator rules, or change canonical configuration.
+- Check that the action is discoverable and usable on desktop, narrow/mobile layouts and keyboard navigation. Keep its label distinct from the later score-generation confirmation.
+
+Acceptance at M3.6: verify entry to review from the first, a middle and the last question; blank final-question access without Skip; unchanged answers/drafts and missing counts; valid partial-score confirmation; and continued rejection of invalid nonblank scoring inputs.
+
 
 
 ---
@@ -1072,6 +1085,8 @@ Prove the recommendation layer is reliable and degrades gracefully.
 - deterministic fallback behavior
 
 - recommendation regression checks
+
+- questionnaire-to-answer-review navigation and blank-answer regression checks from M3.4
 
 - latency measurements
 
