@@ -1,19 +1,9 @@
 // Presentation fixture only. Never use as a scoring or recommendation fallback.
-// These independent example values are not calculated from assessment answers.
+// Narrative, gaps and actions only; computed scores never use this fixture.
 export const resultsPreview = {
   version: "results-layout-example-v1",
   title: "A clearer view of what comes next.",
-  notice: "Representative mock results only. These numbers and narratives are fixed layout examples, not calculated from your answers. They are not an assessment of your business.",
-  overall: [
-    { label: "Raw overall score", value: 58 },
-    { label: "Industry-weighted score", value: 54 },
-  ],
-  categories: [
-    { name: "People", value: 76, token: "people" },
-    { name: "Governance", value: 62, token: "governance" },
-    { name: "Community", value: 48, token: "community" },
-    { name: "Resources", value: 30, token: "resources" },
-  ],
+  notice: "Overall and category scores are calculated from your answers when a valid assessment is available. Executive Summary, Key Gaps, Recommended Actions and evidence remain fixed fictional examples, not findings or advice for your business. Reports are unavailable.",
   summary: "In this fictional example, people-related practices are more developed than environmental measurement. The sample narrative highlights gaps in records and accountability, then turns them into a short sequence of actions. It demonstrates the intended reading experience; it is not a finding about your company.",
   gaps: [
     { id: "example-gap-records", category: "Resources", title: "An incomplete operational picture", detail: "The fictional business has energy records in several places, with no consistent reporting period.", why: "A consistent record would make the information easier to interpret and review." },

@@ -1,0 +1,196 @@
+[
+  {
+    "legacy_title": "2025 CDP SME Questionnaire",
+    "legacy_doc_id": "2",
+    "evidence": "CDP issuer; chunks CDP-SME cite modules 14-21, governance 17.1/17.2, transition 18.2 and emissions/allocation 20.12, matching the indexed module-specific questionnaire.",
+    "public_source": "https://cdn.cdp.net/cdp-production/cms/guidance_docs/pdfs/000/005/713/original/2024_SME_Questionnaire_Modules_14-21.pdf",
+    "canonical_doc_id": "capstone-doc-002",
+    "canonical_title": "2025 CDP SME Questionnaire: Modules 14-21",
+    "index_source": "CDP",
+    "preserved_source_url": "https://drive.google.com/file/d/1hcZv7y3c0RuyR2nwO579GGKwraaMFfDY/view?usp=share_link",
+    "legacy_chunk_ids": [
+      "CDP-SME-001",
+      "CDP-SME-002",
+      "CDP-SME-003",
+      "CDP-SME-004",
+      "CDP-SME-005",
+      "CDP-SME-006",
+      "CDP-SME-007",
+      "CDP-SME-008",
+      "CDP-SME-009",
+      "CDP-SME-010"
+    ]
+  },
+  {
+    "legacy_title": "Corporate Value Chain (Scope 3) Standard",
+    "legacy_doc_id": "5",
+    "evidence": "WRI/WBCSD issuer; CVCARS chunks cover supplier-specific data, chapter 8 allocation (including supplier versus reporting-company perspectives) and chapter 11 reporting. These identify the indexed Scope 3 standard, not the separate calculation guidance.",
+    "public_source": "https://ghgprotocol.org/sites/default/files/standards/Corporate-Value-Chain-Accounting-Reporing-Standard_041613_2.pdf",
+    "canonical_doc_id": "capstone-doc-005",
+    "canonical_title": "Corporate Value Chain (Scope 3) Accounting and Reporting Standard",
+    "index_source": "WRI & WBCSD",
+    "preserved_source_url": "https://drive.google.com/file/d/1HyrycayDjDOa9bNL_bbIccyaSvjdYLJA/view?usp=share_link",
+    "legacy_chunk_ids": [
+      "CVCARS-001",
+      "CVCARS-002",
+      "CVCARS-003",
+      "CVCARS-004",
+      "CVCARS-005",
+      "CVCARS-006",
+      "CVCARS-007",
+      "CVCARS-008",
+      "CVCARS-009",
+      "CVCARS-010"
+    ]
+  },
+  {
+    "legacy_title": "EFRAG IG 2: Value Chain Implementation Guidance",
+    "legacy_doc_id": "20",
+    "evidence": "EFRAG issuer/EU scope; EFRAG-VC chunks reference IG2 summary points, section 2.5 value-chain coverage, section 2.1 leverage and Annex 2 business relationships. Index summary identifies the same upstream/downstream IRO guidance.",
+    "public_source": "https://www.efrag.org/sites/webpublishing/SiteAssets/EFRAG%20IG%202%20Value%20Chain_final.pdf",
+    "canonical_doc_id": "capstone-doc-020",
+    "canonical_title": "EFRAG IG 2: Value chain",
+    "index_source": "EFRAG",
+    "preserved_source_url": "https://drive.google.com/file/d/1MwSqZz0tzGCv5idRDELZ_lDWLMZAjJXu/view",
+    "legacy_chunk_ids": [
+      "EFRAG-VC-001",
+      "EFRAG-VC-002",
+      "EFRAG-VC-003",
+      "EFRAG-VC-004",
+      "EFRAG-VC-005",
+      "EFRAG-VC-006",
+      "EFRAG-VC-007",
+      "EFRAG-VC-008",
+      "EFRAG-VC-009",
+      "EFRAG-VC-010"
+    ]
+  },
+  {
+    "legacy_title": "EFRAG IG 1: Materiality Assessment Implementation Guidance",
+    "legacy_doc_id": "21",
+    "evidence": "EFRAG issuer/EU scope; MA-IG chunks concern double materiality, severity scale/scope/irremediability, likelihood, stakeholders, group consolidation and unconditional ESRS 2 disclosure. These distinguish IG1 from IG2 and match the indexed materiality guidance.",
+    "public_source": "https://www.efrag.org/sites/default/files/sites/webpublishing/SiteAssets/EFRAG%20IG%201%20Materiality%20Assessment%20May%202024.pdf",
+    "canonical_doc_id": "capstone-doc-021",
+    "canonical_title": "IG 1 Materiality Assessment_final",
+    "index_source": "EFRAG",
+    "preserved_source_url": "https://drive.google.com/file/d/1t_qYp9YNi4UiCxre1_IBWzKnnckO1cjc/view",
+    "legacy_chunk_ids": [
+      "MA-IG-001",
+      "MA-IG-002",
+      "MA-IG-003",
+      "MA-IG-004",
+      "MA-IG-005",
+      "MA-IG-006",
+      "MA-IG-007",
+      "MA-IG-008",
+      "MA-IG-009",
+      "MA-IG-010",
+      "MA-IG-011",
+      "MA-IG-012"
+    ]
+  },
+  {
+    "legacy_title": "Corporate Sustainability Reporting Directive (CSRD)",
+    "legacy_doc_id": "22",
+    "evidence": "European Parliament/Council issuer; CSRD chunks identify recital 47 double materiality, article 19a(3) value chains, article 29b(4) SME proportionality and article 40a third-country reporting. Index summary identifies the same directive despite its misspelled title.",
+    "public_source": "https://eur-lex.europa.eu/eli/dir/2022/2464/oj/eng",
+    "canonical_doc_id": "capstone-doc-022",
+    "canonical_title": "EU Corpurate Social Responsibility Directive (CSRD)",
+    "index_source": "European Parliament and Council",
+    "preserved_source_url": "https://drive.google.com/file/d/13PPEV1PNT6q5fmBkx90gFhoRzFrCZXA6/view",
+    "legacy_chunk_ids": [
+      "CSRD-001",
+      "CSRD-002",
+      "CSRD-003",
+      "CSRD-004",
+      "CSRD-005",
+      "CSRD-006",
+      "CSRD-007",
+      "CSRD-008",
+      "CSRD-009",
+      "CSRD-010",
+      "CSRD-011"
+    ]
+  },
+  {
+    "legacy_title": "Australian Sustainability Reporting Standard AASB S1 [voluntary]",
+    "legacy_doc_id": "24",
+    "evidence": "Index issuer is Australian Accounting Standards Board (Oceania), not IASB/ISSB. AASB-S1 chunks cite paragraphs 2-3, 32, Appendix A/B5, B11, 55/59 and 78-79; paragraph 32 business-model/value-chain content matches AASB S1. Its formal title matches the index.",
+    "public_source": "https://standards.aasb.gov.au/aasb-s1-sep-2024",
+    "canonical_doc_id": "capstone-doc-024",
+    "canonical_title": "General Requirements for Disclosure of Sustainability-related Financial Information",
+    "index_source": "Australian Accounting Standards Board (AASB)",
+    "preserved_source_url": "https://drive.google.com/file/d/1GGR8s9nG0iZ3nD_VhphsG1mW3Mxy-BWw/view",
+    "legacy_chunk_ids": [
+      "AASB-S1-001",
+      "AASB-S1-002",
+      "AASB-S1-003",
+      "AASB-S1-004",
+      "AASB-S1-005",
+      "AASB-S1-006",
+      "AASB-S1-007",
+      "AASB-S1-008"
+    ]
+  },
+  {
+    "legacy_title": "Sustainability Reporting Handbook For Vietnamese Companies",
+    "legacy_doc_id": "27",
+    "evidence": "IFC/State Securities Commission Vietnam attribution and local listed-company context match. VN-SRH chunks identify chapter 4 reporting process, section 5.1, Appendix 3 GRI G3 and section 3.4 IFC Performance Standards. The sole title difference is capitalization; no competing handbook in the index. IFC's disclosure toolkit bibliography independently lists this handbook.",
+    "public_source": "https://www.ifc.org/content/dam/ifc/doc/mgrt/beyond-the-balance-sheet-ifc-toolkit-for-disclosure-transparency.pdf",
+    "canonical_doc_id": "capstone-doc-027",
+    "canonical_title": "Sustainability Reporting Handbook for Vietnamese Companies",
+    "index_source": "IFC; State Securities Commission of Vietnam",
+    "preserved_source_url": "https://drive.google.com/file/d/1TsSV94C2twmClf9Z-CajZRIqeCGB5z7r/view",
+    "legacy_chunk_ids": [
+      "VN-SRH-001",
+      "VN-SRH-002",
+      "VN-SRH-003",
+      "VN-SRH-004",
+      "VN-SRH-005",
+      "VN-SRH-006",
+      "VN-SRH-007",
+      "VN-SRH-008",
+      "VN-SRH-009",
+      "VN-SRH-010",
+      "VN-SRH-011"
+    ]
+  },
+  {
+    "legacy_title": "Containers & Packaging Sustainability Accounting Standard",
+    "legacy_doc_id": "42",
+    "evidence": "IFRS Foundation/manufacturing metadata and index summary match the CP-SASB chunks. Exact industry metric identifiers RT-CP-110a.1 (Scope 1) and RT-CP-130a.1 (energy/renewables), plus water content, distinguish this from other industry standards. Official IFRS industry guidance corroborates these metric identities; it is not substituted for the preserved source edition.",
+    "public_source": "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards-issb/english/2023/issued/part-b/ifrs-s2-ibg-volume-48-containers-and-packaging-part-b.pdf",
+    "canonical_doc_id": "capstone-doc-042",
+    "canonical_title": "Sustainability Accounting Standard: Containers & Packaging",
+    "index_source": "IFRS Foundation",
+    "preserved_source_url": "https://drive.google.com/file/d/1ZjLX0kQvTjBjzDOk28DZSrNTFpwG-bTS/view?usp=share_link",
+    "legacy_chunk_ids": [
+      "CP-SASB-001",
+      "CP-SASB-002",
+      "CP-SASB-003",
+      "CP-SASB-004"
+    ]
+  },
+  {
+    "legacy_title": "UNOPS Sustainable Procurement Framework",
+    "legacy_doc_id": "43",
+    "evidence": "UNOPS attribution and buyer-procurement purpose match. UNOPS-SPF chunks cite sections 3.1/3.2 thresholds, 4.1 DRiVE/CAPA, 3.4/3.5 exclusions, 4.2 supplier diversity and 4.4 disability. Official cover identifies the framework as Annex 1 to the Procurement Manual.",
+    "public_source": "https://content.unops.org/service-Line-Documents/Procurement/UNOPS-Procurement-Manual-Annex-1-2021_EN.pdf",
+    "canonical_doc_id": "capstone-doc-043",
+    "canonical_title": "UNOPS Sustainable Procurement Framework (Annex 1 to the Procurement Manual)",
+    "index_source": "UNOPS",
+    "preserved_source_url": "https://drive.google.com/file/d/1hb5qb0tt4FKPspE1fzMMfHXDmDkzQ313/view?usp=share_link",
+    "legacy_chunk_ids": [
+      "UNOPS-SPF-001",
+      "UNOPS-SPF-002",
+      "UNOPS-SPF-003",
+      "UNOPS-SPF-004",
+      "UNOPS-SPF-005",
+      "UNOPS-SPF-006",
+      "UNOPS-SPF-007",
+      "UNOPS-SPF-008",
+      "UNOPS-SPF-009",
+      "UNOPS-SPF-010"
+    ]
+  }
+]

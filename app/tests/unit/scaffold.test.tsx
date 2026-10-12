@@ -20,7 +20,7 @@ test("assessment links to the preview and video remains unavailable", () => {
   render(<LandingPage />);
   const cta = screen.getByRole("link", { name: "Take the Assessment" });
   expect(cta).toHaveAttribute("href", "/assessment");
-  expect(cta).toHaveAccessibleDescription(/mock questionnaire/);
+  expect(cta).toHaveAccessibleDescription(/canonical questionnaire and deterministic scores/);
   expect(screen.getByText(/Video placeholder/)).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 });

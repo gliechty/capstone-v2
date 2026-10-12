@@ -17,6 +17,12 @@
     background: var(--surface-raised); color: var(--text);
   }
   .field-control[aria-invalid="true"] { border-color: var(--accent); }
+  .market-field { min-width: 0; }
+  .market-choices { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .market-choice { display: flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); padding: var(--space-2) var(--space-3); border: var(--border-width) solid var(--border-strong); border-radius: var(--corner-control); background: var(--surface-raised); cursor: pointer; }
+  .market-choice input { accent-color: var(--accent); }
+  .market-choice:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
+  .market-choice:has(input:disabled) { color: var(--text-muted); border-style: dashed; cursor: not-allowed; }
   .form-error { color: var(--accent); font-size: var(--font-size-small); }
   .choice-option {
     display: flex; align-items: center; gap: var(--space-4);
@@ -38,24 +44,20 @@
   .assessment-grid { display: grid; gap: var(--space-8); }
   .mobile-progress { padding: var(--space-4); border: var(--border-width) solid var(--border); border-radius: var(--corner-control); }
   .mobile-progress summary { cursor: pointer; font-weight: var(--weight-semibold); }
-  .desktop-progress { position: relative; align-self: start; }
+  .desktop-progress { display: none; position: relative; align-self: start; }
   .progress-panel { width: 100%; padding: var(--space-3); }
   .progress-legend { color: var(--text-muted); margin-block: var(--space-3); }
   .progress-track {
     position: relative; width: 100%;
-    height: clamp(9rem, calc(var(--question-count) * 1.5rem), 20rem);
+    flex: 1; min-height: 0;
     overflow: visible; padding-block: var(--space-2);
   }
   .progress-markers {
-    position: relative; display: grid; grid-template-rows: repeat(var(--question-count), minmax(0, 1fr));
-    height: 100%; width: 2.75rem; margin: 0;
+    position: absolute; inset-block: var(--space-2); display: grid; grid-template-rows: repeat(var(--question-count), minmax(0, 1fr));
+    width: 2.75rem; margin: 0;
   }
   .progress-markers::before { content: ""; position: absolute; top: 0; bottom: 0; left: 1rem; width: var(--border-width); background: var(--border); }
   .progress-markers > li { position: relative; min-height: 0; }
-  .progress-markers > li[data-boundary="true"]::before {
-    content: ""; position: absolute; left: 0.25rem; top: 0; width: 1.5rem;
-    border-top: var(--border-width) dashed var(--border-strong); pointer-events: none;
-  }
   .desktop-progress .progress-dot {
     position: relative; display: flex; align-items: center; width: 2.75rem; height: 100%;
     padding-left: 0.625rem; cursor: pointer; border-radius: var(--corner-control);
@@ -85,7 +87,11 @@
   }
   .nearby-choice > span:last-child { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
   .nearby-choice[data-inspected="true"] { background: var(--accent-soft); }
-  .nearby-choice[aria-current="step"] { box-shadow: inset 3px 0 var(--accent); }
+  .nearby-choice[aria-current="step"] { box-shadow: inset 3px 0 var(--accent); font-weight: var(--weight-semibold); }
+  .nearby-choice:hover:enabled, .nearby-choice:focus-visible { background: var(--accent-soft); text-decoration: underline; text-underline-offset: 0.2em; }
+  .nearby-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .nearby-choice:active:enabled, .nearby-choice[data-pressed="true"]:enabled { background: var(--accent); color: var(--on-accent); }
+  .nearby-choice[aria-current="step"]:active, .nearby-choice[aria-current="step"][data-pressed="true"] { box-shadow: inset 3px 0 var(--on-accent); }
   .mobile-progress nav { margin-top: var(--space-4); }
   .mobile-progress-list { max-height: 22rem; overflow-y: auto; overscroll-behavior: contain; padding: var(--space-2); }
   .mobile-progress-list .progress-dot {
@@ -94,10 +100,10 @@
   }
   .mobile-progress-list .progress-dot[aria-current="step"] { border-left: 3px double var(--accent); font-weight: var(--weight-semibold); }
   @media (prefers-reduced-motion: reduce) { .progress-symbol { transition: none; } }
+  .question-toolbar { margin-bottom: var(--space-4); }
   .question-stage {
     --category-color: var(--category-people);
-    display: grid; align-content: center; gap: var(--space-4);
-    min-height: calc(100svh - 16rem);
+    display: grid; align-content: start; gap: var(--space-4);
   }
   .question-stage[data-category="Governance"] { --category-color: var(--category-governance); }
   .question-stage[data-category="Community"] { --category-color: var(--category-community); }
@@ -109,6 +115,21 @@
     border-radius: var(--corner-panel); box-shadow: var(--elevation-panel);
 
   }
+  .active-question-region { position: relative; min-width: 0; }
+  .active-question-region > .question-card { height: 100%; }
+  .mobile-card-rail { position: absolute; inset-block: 0; right: -1rem; width: 2.75rem; z-index: 4; }
+  .mobile-rail-sticky { position: sticky; top: var(--space-4); height: min(60svh, 100%); }
+  .mobile-rail-surface { position: relative; width: 100%; height: 100%; min-height: 2.75rem; cursor: pointer; border-radius: var(--corner-control); }
+  .mobile-rail-markers { position: absolute; inset: var(--space-2) 0; display: grid; grid-template-rows: repeat(var(--question-count), minmax(0, 1fr)); }
+  .mobile-rail-markers::before { content: ""; position: absolute; inset-block: 0; left: calc(50% + var(--space-3)); border-left: 1px solid var(--border); }
+  .mobile-rail-marker { position: relative; display: grid; place-items: center; min-height: 0; }
+  .mobile-rail-marker .progress-glyph { transform: translateX(var(--space-3)); transition: transform var(--motion-duration) var(--motion-easing); }
+  .mobile-rail-marker[data-proximity="near"] .progress-glyph { transform: translateX(var(--space-3)) scale(1.25); }
+  .mobile-rail-marker[data-proximity="active"] .progress-glyph { transform: translateX(var(--space-3)) scale(1.6); }
+  .mobile-rail-marker[data-current="true"] .progress-glyph { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .mobile-rail-choices { position: absolute; top: 0; right: 100%; width: min(18rem, calc(100vw - 5rem)); padding: var(--space-2); background: var(--surface-raised); border: var(--border-width) solid var(--border); border-radius: var(--corner-control); box-shadow: var(--elevation-panel); max-height: calc(100svh - 2rem); overflow-y: auto; }
+
+  @media (max-width: 63.999rem) { .active-question-region > .question-card { margin-right: var(--space-2); padding-right: var(--space-6); } }
   .category-label { color: var(--category-color); font-size: var(--font-size-small); font-weight: var(--weight-semibold); }
   .question-stage { --roller-offset: var(--roller-distance); animation: roller-enter var(--motion-duration) var(--motion-easing) both; }
   .question-stage[data-direction="backward"] { --roller-offset: calc(-1 * var(--roller-distance)); }
@@ -118,7 +139,7 @@
     mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / var(--question-far-opacity)));
     border-radius: var(--corner-panel);
   }
-  .question-peek.previous { mask-image: linear-gradient(to top, #000, rgb(0 0 0 / var(--question-far-opacity))); }
+  .question-peek.previous { align-self: center; mask-image: linear-gradient(to top, #000, rgb(0 0 0 / var(--question-far-opacity))); }
   .question-peek:focus-within { mask-image: none; overflow: visible; }
   .adjacent-card {
     display: block; width: 100%; min-height: 11rem; text-align: left; cursor: pointer;
@@ -132,13 +153,28 @@
   .question-peek-boundary { min-height: var(--question-peek-height); display: grid; place-content: center; }
   .review-row { border-bottom: var(--border-width) solid var(--border); padding-bottom: var(--space-4); overflow-wrap: anywhere; }
   @media (min-width: 64rem) {
-    .assessment-grid { grid-template-columns: 14rem minmax(0, 1fr); gap: var(--space-12); }
+    /* Shared rows let the active card define the rail height, including wrapping,
+       validation messages and variable answer counts. No measured pixel height. */
+    .assessment-grid { grid-template-columns: 14rem minmax(0, 1fr); column-gap: var(--space-12); row-gap: var(--space-4); }
+    .question-region { display: grid; grid-column: 2; grid-row: 1 / span 4; grid-template-rows: subgrid; }
+    .question-toolbar { margin-bottom: 0; }
+    .question-stage { grid-row: 2 / span 3; grid-template-rows: subgrid; min-height: 0; align-content: normal; }
+    .desktop-progress { display: grid; grid-column: 1; grid-row: 2 / span 2; grid-template-rows: subgrid; align-self: stretch; min-height: 0; }
+    .progress-panel { display: grid; grid-row: 1 / span 2; grid-template-rows: subgrid; padding: 0; }
+    .progress-summary { align-self: center; }
+    .assessment-grid[data-first-question="true"] .question-region { grid-row: 1 / span 3; }
+    .assessment-grid[data-first-question="true"] .question-stage { grid-row: 2 / span 2; }
+    .assessment-grid[data-first-question="true"] .desktop-progress { grid-row: 1 / span 2; }
+    .assessment-grid[data-first-question="true"] .progress-summary { font-size: var(--font-size-small); }
+    .assessment-grid[data-first-question="true"] .progress-legend { margin-block: var(--space-1); }
+
   }
   @media (max-width: 40rem) {
     .question-card { padding: var(--space-6) var(--space-4); }
   }
   @media (prefers-reduced-motion: reduce) {
     .question-stage, .question-card { animation: none; }
+    .mobile-rail-marker .progress-glyph { transition: none; }
   }
 }
 

@@ -454,7 +454,7 @@ Only the human project owner may mark a milestone complete or authorize the next
 # Milestone status
 
 - [X] Milestone 1 — Product shell and assessment entry
-- [ ] Milestone 2 — Deterministic assessment core and Golden parity
+- [X] Milestone 2 — Deterministic assessment core and Golden parity
 - [ ] Milestone 3 — Recommendations, results, and durable report
 - [ ] Milestone 4 — Emissions calculator and quantitative input flow
 - [ ] Milestone 5 — Basic config and knowledge-base maintenance — CURRENT / REQUIRED
@@ -462,3 +462,7 @@ Only the human project owner may mark a milestone complete or authorize the next
 - [ ] Milestone 6 — Interactive levers — STRETCH
 - [ ] Milestone 7 — Quick vs Full assessment — STRETCH / METHODOLOGY REVIEW
 - [ ] Milestone 8 — Alan/Henry external benchmark layer — RESEARCH EXPERIMENT
+
+## Milestone 2 acceptance — 2026-10-12
+
+The owner explicitly accepted Milestone 2 on 2026-10-12 following the human walkthrough: the eight-question test matched expected scores, and the Q23 edit, recalculation and refresh worked. This acceptance includes the outstanding M2.6 explanations, calculation trace and numeric-policy review, and completes M2.1–M2.7. See app/docs/M2.7-MILESTONE-2-REVIEW.md for retained verification evidence, accepted numeric differences and evidence limitations. Questionnaire review/navigation issues remain deferred to M3.4/M3.6 as documented in EXECUTION_PLAN.md. PR #3 remains unmerged; merging and M3 implementation are not authorized.

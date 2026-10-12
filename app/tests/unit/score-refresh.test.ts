@@ -1,0 +1,63 @@
+import { expect, test, vi } from "vitest";
+import { createScoreRefresh, type ScoreSnapshot, type ScoreView } from "../../src/application/score-refresh";
+import type { ScoreSummary } from "../../src/application/score-summary";
+import { loadCanonicalConfig } from "../../src/adapters/config-repository";
+import { assessmentCatalog } from "../../src/application/assessment-catalog";
+import { computeAssessment } from "../../src/application/score-request";
+const { config } = loadCanonicalConfig();
+const input = { configVersion: assessmentCatalog(config).version, context: { industry: "Manufacturing (Industrial / Components)", companySize: "251 - 500", location: "APAC", targetMarkets: ["EU"], targetBuyer: "Enterprise", businessGoal: "Investor readiness" }, answers: { "U-001": "Yes" } };
+const result = computeAssessment(config, input);
+function pending() {
+  let resolve!: (score: ScoreSummary) => void;
+  let reject!: (error: Error) => void;
+  const promise = new Promise<ScoreSummary>((yes, no) => { resolve = yes; reject = no; });
+  return { promise, resolve, reject };
+}
+const flush = async () => { await Promise.resolve(); await Promise.resolve(); await Promise.resolve(); };
+test("answers/context invalidate immediately and stale responses cannot overwrite newer traces", async () => {
+  let snapshot: ScoreSnapshot = { input, message: "" };
+  const first = pending(), second = pending(), third = pending();
+  const request = vi.fn().mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise).mockReturnValueOnce(third.promise);
+  const publish = vi.fn<(view: ScoreView) => void>();
+  const refresh = createScoreRefresh(() => snapshot, request, publish);
+  refresh.refresh();
+  snapshot = { ...snapshot, input: { ...input, answers: { "U-001": "No" } } };
+  refresh.refresh();
+  expect(request.mock.calls[0]![1].aborted).toBe(true);
+  expect(publish).toHaveBeenLastCalledWith({ status: "loading" });
+  const changed = computeAssessment(config, snapshot.input);
+  second.resolve(changed); await flush();
+  first.resolve(result); await flush();
+  expect(publish).toHaveBeenLastCalledWith({ status: "ready", score: changed });
+  snapshot = { ...snapshot, input: { ...input, context: { ...input.context, targetBuyer: "Export" } } };
+  refresh.refresh();
+  expect(publish).toHaveBeenLastCalledWith({ status: "loading" });
+  refresh.dispose(); third.reject(new Error("old request failed")); await flush();
+  expect(publish).toHaveBeenLastCalledWith({ status: "loading" });
+});
+test("silent input changes are checked before publishing; invalid state clears scores", async () => {
+  let snapshot: ScoreSnapshot = { input, message: "" };
+  const first = pending(), second = pending();
+  const request = vi.fn().mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise);
+  const publish = vi.fn<(view: ScoreView) => void>();
+  const refresh = createScoreRefresh(() => snapshot, request, publish);
+  refresh.refresh(); snapshot = { ...snapshot, input: { ...input, answers: { "U-001": "No" } } };
+  first.resolve(result); await flush();
+  expect(request).toHaveBeenCalledTimes(2);
+  expect(publish).toHaveBeenLastCalledWith({ status: "loading" });
+  snapshot = { input: null, message: "Session unavailable" };
+  refresh.refresh(); second.resolve(result); await flush();
+  expect(publish).toHaveBeenLastCalledWith({ status: "unavailable", message: "Session unavailable" });
+});
+test("page restoration forces recalculation and hiding invalidates pending work", async () => {
+  const first = pending(), second = pending();
+  const request = vi.fn().mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise);
+  const publish = vi.fn<(view: ScoreView) => void>();
+  const refresh = createScoreRefresh(() => ({ input, message: "" }), request, publish);
+  refresh.refresh(); refresh.refresh(); expect(request).toHaveBeenCalledTimes(1);
+  refresh.invalidate(); first.resolve(result); await flush();
+  expect(publish).toHaveBeenLastCalledWith({ status: "loading" });
+  refresh.refresh(true); expect(request).toHaveBeenCalledTimes(2);
+  second.reject(new Error("Current configuration unavailable")); await flush();
+  expect(publish).toHaveBeenLastCalledWith({ status: "unavailable", message: "Current configuration unavailable" });
+});

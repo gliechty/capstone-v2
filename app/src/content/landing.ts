@@ -27,7 +27,7 @@ export const landingCopy = {
     "description": "What matters to your business, your market, and your buyers? A research-led approach to help small and medium enterprises make sense of sustainability expectations.",
     "primaryCta": "Take the Assessment",
     "secondaryCta": "Explore the approach",
-    "availability": "Explore the setup and mock questionnaire. No score is generated.",
+    "availability": "Explore the canonical questionnaire and deterministic scores. Recommendations remain examples.",
     "illustrationLeft": "Small businesses",
     "illustrationRight": "Buyer expectations"
   },

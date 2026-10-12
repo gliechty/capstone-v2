@@ -1,4 +1,4 @@
-import { sessionSchema, type Session } from "../features/assessment/model";
+import type { createAssessmentModel, Session } from "../features/assessment/model";
 
 export const SESSION_KEY = "capstone.assessment.ui-preview.v1";
 export interface SessionStoragePort {
@@ -6,13 +6,13 @@ export interface SessionStoragePort {
   setItem(key: string, value: string): void;
 }
 export type LoadResult = { state: Session | null; warning: string | null };
-export function createSessionAdapter(getStorage: () => SessionStoragePort) {
+export function createSessionAdapter(getStorage: () => SessionStoragePort, sessionSchema: ReturnType<typeof createAssessmentModel>["sessionSchema"]) {
   return {
     load(): LoadResult {
       try {
         const raw = getStorage().getItem(SESSION_KEY);
         if (raw === null) return { state: null, warning: null };
-        if (raw.length > 40000) throw new Error("Snapshot too large");
+        if (raw.length > 400000) throw new Error("Snapshot too large");
         const parsed = sessionSchema.safeParse(JSON.parse(raw));
         if (!parsed.success) return { state: null, warning: "Your saved preview could not be restored because its data or version is incompatible. A fresh preview has been opened." };
         return { state: parsed.data, warning: null };
@@ -31,4 +31,32 @@ export function createSessionAdapter(getStorage: () => SessionStoragePort) {
   };
 }
 // All browser storage access stays here; never evaluated during server rendering.
-export const browserSession = createSessionAdapter(() => window.sessionStorage);
+export const SESSION_CHANGED = "capstone:assessment-session-changed";
+let unsavedChanges = false;
+export const browserSession = (schema: ReturnType<typeof createAssessmentModel>["sessionSchema"]) => {
+  const adapter = createSessionAdapter(() => window.sessionStorage, schema);
+  return {
+    load: () => unsavedChanges ? { state: null, warning: "Your latest changes could not be saved. Return to assessment and resolve session saving before calculating a score." } : adapter.load(),
+    save(state: Session) {
+      const warning = adapter.save(state);
+      unsavedChanges = warning !== null;
+      window.dispatchEvent(new Event(SESSION_CHANGED));
+      return warning;
+    },
+  };
+};
+export function watchAssessmentSession(onChange: () => void, onRestore: () => void, onHide: () => void) {
+  const storage = (event: StorageEvent) => { if (event.key === SESSION_KEY || event.key === null) onChange(); };
+  window.addEventListener(SESSION_CHANGED, onChange);
+  window.addEventListener("storage", storage);
+  window.addEventListener("focus", onChange);
+  window.addEventListener("pageshow", onRestore);
+  window.addEventListener("pagehide", onHide);
+  return () => {
+    window.removeEventListener(SESSION_CHANGED, onChange);
+    window.removeEventListener("storage", storage);
+    window.removeEventListener("focus", onChange);
+    window.removeEventListener("pageshow", onRestore);
+    window.removeEventListener("pagehide", onHide);
+  };
+}

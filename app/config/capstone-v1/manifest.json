@@ -1,0 +1,72 @@
+{
+  "version": "capstone-v1-migrated-1",
+  "schema_version": 1,
+  "profile_options": {
+    "regions": [
+      "North America",
+      "LATAM",
+      "EU",
+      "UK",
+      "Eastern Europe",
+      "Middle East",
+      "Africa",
+      "South Asia",
+      "APAC",
+      "Oceania",
+      "EU/UK"
+    ],
+    "source": "BUILD_PACK/04_CONFIG/raw/QuestionBank_Config_Validation_Lists.csv",
+    "source_sha256": "8074d6ff5be01d1a152cb0d0cdac399474965af3b91212c58cf60ea102b7c451"
+  },
+  "files": {
+    "QuestionBank": {
+      "file": "QuestionBank.json",
+      "sha256": "5b837f5833ca6953c64804bda689a2d181c5c151f3209118baad4cd1643d1484",
+      "source": "BUILD_PACK/04_CONFIG/clean/QuestionBank.csv",
+      "source_sha256": "130a4a091a007a6e91b0ce018034846b5605c8e14490500f2bd9a1733e07bb5b",
+      "records": 161
+    },
+    "AnswerScales": {
+      "file": "AnswerScales.json",
+      "sha256": "bd29818fa84ee92e8b5a987248382fdff5f2f7b8b1b3c4e8770f490db84185f9",
+      "source": "BUILD_PACK/04_CONFIG/clean/AnswerScales.csv",
+      "source_sha256": "117c69a32ff367dfb5bc8c12fc1e473ddd955af2421ad8cf60d863315dfd9bed",
+      "records": 39
+    },
+    "MetricBenchmarks": {
+      "file": "MetricBenchmarks.json",
+      "sha256": "56099acc8caab058bfae8be80055069cabdf0e49a66c2075f09315edd84ed321",
+      "source": "BUILD_PACK/04_CONFIG/clean/MetricBenchmarks.csv",
+      "source_sha256": "ba26fa11e17a83fede74242cb9b6629194e2c33b4fac99cf95a3888f5295e787",
+      "records": 62
+    },
+    "MultiplierRules": {
+      "file": "MultiplierRules.json",
+      "sha256": "4d6a7ea252e37497c9479b2132b6f8dd86f17ac4783bb3e042f20c9a8f41ac79",
+      "source": "BUILD_PACK/04_CONFIG/clean/MultiplierRules.csv",
+      "source_sha256": "aeefb09b19c0f30485b19f2e55ee749d4936872a525304d336c65675d4a9147f",
+      "records": 42
+    },
+    "CategoryWeights": {
+      "file": "CategoryWeights.json",
+      "sha256": "cebfd3d81cea3d7c1a2a8732c8af560baf6c9f9f289033deecfca8c61ace2d83",
+      "source": "BUILD_PACK/04_CONFIG/clean/CategoryWeights.csv",
+      "source_sha256": "21ccee440f21141e793adc50ceca605af3bde0851aabbf5890ba0166e6e07511",
+      "records": 5
+    },
+    "DocumentIndex": {
+      "file": "DocumentIndex.json",
+      "sha256": "4d3ad3f481e391125dd4f9a28653a7194adba090bec1dabccdca4933552c5b02",
+      "source": "BUILD_PACK/04_CONFIG/clean/DocumentIndex.csv",
+      "source_sha256": "eeebfb7264fda9d05796cd16a85f8e56faa1d8b7eb2ccc62be94730c3521c235",
+      "records": 44
+    },
+    "DocumentChunks": {
+      "file": "DocumentChunks.json",
+      "sha256": "4570356d191d855a6a8d8302f291e91a13ab29c5a8f686adbbf09b21002b130f",
+      "source": "BUILD_PACK/04_CONFIG/clean/DocumentChunks.csv",
+      "source_sha256": "8f6c9112b35f715ad96293a14b1dd7e4b04a3d12faf61e47dcd318b0320f0f1d",
+      "records": 428
+    }
+  }
+}

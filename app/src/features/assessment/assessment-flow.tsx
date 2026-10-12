@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ProgressNavigator } from "./progress-navigator";
-import { AssessmentProvider, useAssessment } from "./assessment-context";
-import { answerError, profileErrors, profileFields, progressLabel, unanswered, type ProfileKey } from "./model";
-import { mockQuestions, type MockQuestion } from "./mock-questions";
+import { MobileQuestionRail, ProgressNavigator } from "./progress-navigator";
+import { AssessmentProvider, useAssessment, catalogProfileErrors } from "./assessment-context";
+import { answerError, profileFields, progressLabel, unanswered, type ProfileKey } from "./model";
+import { marketValues, toggleMarket } from "../../application/assessment-setup";
+import type { AssessmentCatalog, Question } from "../../application/assessment-catalog";
 
 function StageHeading({ children }: { children: string }) {
   const ref = useRef<HTMLHeadingElement>(null);
@@ -14,15 +15,16 @@ function StageHeading({ children }: { children: string }) {
 }
 
 function Setup() {
-  const { session, dispatch } = useAssessment();
+  const { session, dispatch, catalog } = useAssessment();
   const [submitted, setSubmitted] = useState(false);
-  const errors = profileErrors(session.profile);
+  const errors = catalogProfileErrors(catalog, session.profile);
+  const markets = marketValues(session.profile.targetMarket);
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitted(true);
     const first = profileFields.find((field) => errors[field.key]);
     if (first) {
-      const control = event.currentTarget.elements.namedItem(first.key);
+      const control = first.key === "targetMarket" ? event.currentTarget.querySelector<HTMLInputElement>('[name="targetMarket"]') : event.currentTarget.elements.namedItem(first.key);
       if (control instanceof HTMLElement) control.focus();
       return;
     }
@@ -39,16 +41,42 @@ function Setup() {
           {profileFields.map((field) => {
             const error = submitted ? errors[field.key] : undefined;
             const id = "profile-" + field.key;
-            return <div key={field.key} className={field.key === "businessGoal" ? "md:col-span-2" : ""}>
+            if (field.key === "targetMarket") return <fieldset key={field.key} className="market-field" aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")} aria-invalid={Boolean(error)}>
+              <legend className="field-label">Target markets <span className="text-small font-normal text-muted">(required)</span></legend>
+              <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
+              <div className="market-choices">
+                {catalog.setupOptions.targetMarket.map(option => <label key={option.value} className="market-choice">
+                  <input type="checkbox" name="targetMarket" value={option.value} checked={markets.includes(option.value)}
+                    disabled={markets.length === 2 && !markets.includes(option.value)}
+                    onChange={() => dispatch({ type: "profile", field: "targetMarket", value: toggleMarket(session.profile.targetMarket, option.value) })} />
+                  <span>{option.label}</span>
+                </label>)}
+              </div>
+              <div className="mt-3 text-small" role="status" aria-live="polite">
+                {markets.length === 0 ? <p>No target markets selected.</p> : <ol className="grid gap-2">
+                  {markets.map((market, index) => <li key={market} className="flex items-center justify-between gap-2">
+                    <span>{index === 0 ? "Primary" : "Secondary"}: {market}</span>
+                    <button type="button" className="text-link" aria-label={"Remove " + market} onClick={() => dispatch({ type: "profile", field: "targetMarket", value: toggleMarket(session.profile.targetMarket, market) })}>Remove</button>
+                  </li>)}
+                </ol>}
+                {markets.length === 2 && <p className="mt-2 text-muted">Two markets selected. Deselect one to choose another.</p>}
+              </div>
+              {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
+            </fieldset>;
+            return <div key={field.key}>
               <label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
               <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              <input id={id} name={field.key} className="field-control" type="text"
-                inputMode={field.key === "companySize" ? "numeric" : "text"}
-                autoComplete={field.key === "companyName" ? "organization" : "off"}
-                required={field.required} maxLength={field.key === "businessGoal" ? 1000 : 200}
+              {field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
+                required value={session.profile[field.key]} aria-invalid={Boolean(error)}
+                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                onChange={event => dispatch({ type: "profile", field: field.key, value: event.target.value })}>
+                <option value="">Choose one</option>
+                {catalog.setupOptions[field.key].map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select> : <input id={id} name={field.key} className="field-control" type="text"
+                autoComplete={field.key === "companyName" ? "organization" : "off"} required={field.required} maxLength={200}
                 value={session.profile[field.key]} aria-invalid={Boolean(error)}
                 aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
-                onChange={(event) => dispatch({ type: "profile", field: field.key as ProfileKey, value: event.target.value })} />
+                onChange={event => dispatch({ type: "profile", field: field.key as ProfileKey, value: event.target.value })} />}
               {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
             </div>;
           })}
@@ -60,7 +88,7 @@ function Setup() {
 }
 
 function InputMethod() {
-  const { dispatch } = useAssessment();
+  const { dispatch, questions } = useAssessment();
   return <section className="assessment-setup">
     <span className="section-label">02 / Quantitative data</span>
     <StageHeading>How would you like to enter your quantitative sustainability data?</StageHeading>
@@ -72,25 +100,27 @@ function InputMethod() {
     </fieldset>
     <div className="mt-8 flex flex-wrap gap-4">
       <button className="button-secondary" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Back to setup</button>
-      <button className="button-primary" type="button" onClick={() => dispatch({ type: "start" })}>Start questionnaire</button>
+      {questions.length === 0 && <p role="alert">No questions match this context. Review your setup; no fallback questionnaire has been substituted.</p>}
+      <button className="button-primary" type="button" disabled={questions.length === 0} onClick={() => dispatch({ type: "start" })}>Start questionnaire</button>
     </div>
   </section>;
 }
 
-function Progress() {
-  const { session, dispatch } = useAssessment();
-  const items = mockQuestions.map((question, index) => ({
+function Progress({ mobileCard = false }: { mobileCard?: boolean }) {
+  const { session, dispatch, questions } = useAssessment();
+  const items = questions.map((question, index) => ({
     id: question.id, number: index + 1, title: question.title, category: question.category,
     status: progressLabel(session, question), current: session.activeId === question.id,
   }));
-  return <ProgressNavigator items={items} onSelect={(id) => {
-    const question = mockQuestions.find((item) => item.id === id);
+  const Navigator = mobileCard ? MobileQuestionRail : ProgressNavigator;
+  return <Navigator items={items} onSelect={(id) => {
+    const question = questions.find((item) => item.id === id);
     if (question) dispatch({ type: "jump", id: question.id });
   }} />;
 }
 
-function AnswerForm({ question }: { question: MockQuestion }) {
-  const { session, dispatch } = useAssessment();
+function AnswerForm({ question }: { question: Question }) {
+  const { session, dispatch, questions } = useAssessment();
   const [attempted, setAttempted] = useState(false);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   function cancelAdvance() {
@@ -108,7 +138,7 @@ function AnswerForm({ question }: { question: MockQuestion }) {
   const raw = session.answers[question.id] ?? "";
   const error = attempted ? answerError(question, raw) : undefined;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
-  const index = mockQuestions.findIndex((q) => q.id === question.id);
+  const index = questions.findIndex((q) => q.id === question.id);
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     cancelAdvance();
@@ -137,7 +167,7 @@ function AnswerForm({ question }: { question: MockQuestion }) {
         </label>)}
       </div>
     </fieldset> : <div>
-      <label htmlFor="answer" className="field-label">Your answer{question.kind === "numeric" ? " (kWh)" : question.kind === "percent" ? " (%)" : ""}</label>
+      <label htmlFor="answer" className="field-label">Your answer{question.unit ? " (" + question.unit + ")" : ""}</label>
       {question.kind === "text" ? <textarea id="answer" className="field-control" rows={4} maxLength={2000} value={raw}
         ref={(node) => { inputRef.current = node; }} aria-invalid={Boolean(error)}
         aria-describedby={"question-hint" + (error ? " answer-error" : "")} onChange={(event) => change(event.target.value)} />
@@ -149,16 +179,17 @@ function AnswerForm({ question }: { question: MockQuestion }) {
     <p className="mt-4 text-small text-muted">{"options" in question ? "Click or tap an answer to continue automatically. With a keyboard, choose with arrows or Space, then press Enter or Continue." : "Enter an answer, then continue."} You can revisit any question.</p>
     <div className="mt-6 flex flex-wrap gap-3">
       <button type="button" className="button-secondary" disabled={index === 0} onClick={() => dispatch({ type: "back" })}>Previous</button>
-      <button type="submit" className="button-primary">{index === mockQuestions.length - 1 ? "Review answers" : "Continue"}</button>
+      <button type="submit" className="button-primary">{index === questions.length - 1 ? "Review answers" : "Continue"}</button>
       <button type="button" className="button-secondary" onClick={() => dispatch({ type: "skip" })}>Skip</button>
       {raw !== "" && <button type="button" className="text-link" onClick={() => change("")}>Clear answer</button>}
     </div>
   </form>;
 }
 
-function AdjacentCard({ question, position }: { question?: MockQuestion; position: "previous" | "next" }) {
+function AdjacentCard({ question, position }: { question?: Question; position: "previous" | "next" }) {
   const { dispatch } = useAssessment();
-  if (!question) return <div className="question-peek-boundary text-small text-muted">{position === "previous" ? "Your business context is ready." : "Next: review your unanswered questions."}</div>;
+  if (!question && position === "previous") return null;
+  if (!question) return <div className="question-peek-boundary text-small text-muted">Next: review your unanswered questions.</div>;
   return <div className={"question-peek " + position}>
     <button type="button" className="adjacent-card" aria-label={(position === "previous" ? "Previous" : "Next") + " question: " + question.title}
       onClick={() => dispatch({ type: "jump", id: question.id })}>
@@ -171,9 +202,9 @@ function AdjacentCard({ question, position }: { question?: MockQuestion; positio
 }
 
 function Questionnaire() {
-  const { session, dispatch } = useAssessment();
-  const question = mockQuestions.find((q) => q.id === session.activeId)!;
-  const index = mockQuestions.indexOf(question);
+  const { session, dispatch, questions } = useAssessment();
+  const question = questions.find((q) => q.id === session.activeId)!;
+  const index = questions.indexOf(question);
   const [motion, setMotion] = useState({ index, direction: "forward" });
   if (motion.index !== index) setMotion({ index, direction: index < motion.index ? "backward" : "forward" });
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -183,46 +214,49 @@ function Questionnaire() {
     const card = heading?.closest("article");
     card?.scrollIntoView({ block: card.clientHeight < window.innerHeight - 32 ? "center" : "start", behavior: "instant" });
   }, [question.id]);
-  return <div className="assessment-grid">
+  return <div className="assessment-grid" data-first-question={index === 0}>
     <Progress />
-    <section className="min-w-0" aria-label="Questionnaire">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 text-small">
-        <p>Question {index + 1} of {mockQuestions.length}</p>
+    <section className="question-region min-w-0" aria-label="Questionnaire">
+      <div className="question-toolbar flex flex-wrap items-center justify-between gap-3 text-small">
+        <p>Question {index + 1} of {questions.length}</p>
         <button type="button" className="text-link" onClick={() => dispatch({ type: "review" })}>Review all answers</button>
       </div>
       <div className="question-stage" key={question.id} data-category={question.category} data-direction={motion.direction}>
-        <AdjacentCard question={mockQuestions[index - 1]} position="previous" />
-        <article className="question-card" key={question.id}>
-          <p className="category-label">{question.category} <span className="font-normal">/ Demonstration question</span></p>
-          <h1 ref={headingRef} tabIndex={-1} className="mt-4 text-subheading">{question.title}</h1>
-          <p id="question-hint" className="mt-4 text-muted">{question.hint}</p>
-          <AnswerForm question={question} />
-        </article>
-        <AdjacentCard question={mockQuestions[index + 1]} position="next" />
+        <AdjacentCard question={questions[index - 1]} position="previous" />
+        <div className="active-question-region">
+          <article className="question-card" key={question.id}>
+            <p className="category-label">{question.category} <span className="font-normal">/ {question.id}</span></p>
+            <h1 ref={headingRef} tabIndex={-1} className="mt-4 text-subheading">{question.title}</h1>
+            <p id="question-hint" className="mt-4 text-muted">{question.hint}</p>
+            <AnswerForm question={question} />
+          </article>
+          <Progress mobileCard />
+        </div>
+        <AdjacentCard question={questions[index + 1]} position="next" />
       </div>
     </section>
   </div>;
 }
 
 function Review() {
-  const { session, dispatch } = useAssessment();
-  const missing = unanswered(session);
+  const { session, dispatch, questions } = useAssessment();
+  const missing = unanswered(session, questions);
   return <section className="assessment-setup">
-    <span className="section-label">Review / Demonstration answers</span>
+    <span className="section-label">Review / Your answers</span>
     <StageHeading>Review your answers.</StageHeading>
     <p className="mt-4">{missing.length} unanswered {missing.length === 1 ? "question" : "questions"}.</p>
     <p className="mt-2 text-muted">Blank or invalid entries stay unanswered. They are never treated as zero.</p>
     <ul className="my-8 grid gap-3">
-      {mockQuestions.map((question, i) => <li key={question.id} className="review-row">
+      {questions.map((question, i) => <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>
         <p className="text-small">{progressLabel(session, question)}</p>
         {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
       </li>)}
     </ul>
-    <p className="mb-4 text-small text-muted">This preview cannot generate a score. The next action only opens an explanation of this boundary.</p>
+    <p className="mb-4 text-small text-muted">Scores use the answers you entered. Invalid entries must be corrected or cleared before calculation; missing answers remain missing. Recommendations and reports are not generated.</p>
     <div className="flex flex-wrap gap-4">
       {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}
-      <button type="button" className="button-primary" onClick={() => dispatch({ type: "boundary" })}>{missing.length > 0 ? "Generate score anyway" : "Continue to preview boundary"}</button>
+      <button type="button" className="button-primary" onClick={() => dispatch({ type: "boundary" })}>{missing.length > 0 ? "Generate score anyway" : "Generate score"}</button>
     </div>
   </section>;
 }
@@ -230,10 +264,10 @@ function Review() {
 function Boundary() {
   const { dispatch } = useAssessment();
   return <section className="assessment-setup">
-    <span className="section-label">Non-production preview boundary</span>
-    <StageHeading>Preview complete — no score generated.</StageHeading>
-    <p className="mt-6 text-muted">These demonstration questions only test the interaction flow. Scoring is not available, and your answers have not been submitted to a server. You can explore a separate results layout with fixed mock data; it does not use your answers.</p>
-    <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View mock results preview</Link></div>
+    <span className="section-label">Deterministic scoring / Research build</span>
+    <StageHeading>Your answers are ready for calculation.</StageHeading>
+    <p className="mt-6 text-muted">The results page submits your raw answers and selection context to this application’s server to calculate scores from the canonical configuration. Answers are not stored on the server. Narrative and recommendations remain fictional examples.</p>
+    <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View calculated results</Link></div>
   </section>;
 }
 
@@ -248,7 +282,7 @@ function Flow() {
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
       <div className="preview-notice mb-6">
         <p className="font-semibold">Assessment interaction preview</p>
-        <p className="text-small">Mock questions only · No score or recommendations. Use example data. Entries stay in this browser tab’s session; they are not sent to a server.</p>
+        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. Recommendations are not generated.</p>
       </div>
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}
@@ -263,6 +297,6 @@ function Flow() {
     </main>
   </>;
 }
-export function AssessmentFlow() {
-  return <AssessmentProvider><Flow /></AssessmentProvider>;
+export function AssessmentFlow({ catalog }: { catalog: AssessmentCatalog }) {
+  return <AssessmentProvider catalog={catalog}><Flow /></AssessmentProvider>;
 }

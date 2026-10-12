@@ -60,7 +60,7 @@ The intended loop is:
 
 
 
-Only the human project owner may change a step to `COMPLETE` or authorize the next step.
+Agents may maintain routine status wording when explicitly authorized; acceptance must cite a documented human decision, never a commit alone. Only the human project owner may change a step to `COMPLETE` or authorize the next step.
 
 
 
@@ -368,7 +368,7 @@ Stop and review Milestone 1 before beginning Milestone 2.
 
 ## M2.1 — Canonical config schemas + loader
 
-**Status:** PENDING
+**Status:** COMPLETE
 
 
 
@@ -432,7 +432,9 @@ Versioned repository files may serve as the initial runtime authority.
 
 ## M2.2 — Deterministic question selection + ordering
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implementation and verification completed for the explicitly authorized M2.1 + M2.2 package. See `app/docs/M2.1-M2.2-REVIEW.md` and `app/docs/CONFIG-MIGRATION.md`. M2.1–M2.2 were accepted by human review and committed; this does not complete Milestone 2. M2.3–M2.5 were subsequently explicitly authorized as a separate work package.
 
 
 
@@ -482,7 +484,9 @@ Do not introduce buyer/goal-based question selection unless explicitly approved 
 
 ## M2.3 — Answer persistence + normalization/benchmarks
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -530,7 +534,9 @@ Missing values must never silently become zero.
 
 ## M2.4 — Base weights + contextual multipliers
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -572,7 +578,9 @@ Do not convert current config values or caps into permanent engine assumptions.
 
 ## M2.5 — Category weighting + score aggregation
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-10 as part of the explicitly authorized M2.3–M2.5 package; accepted by human review on 2026-10-11. See `app/docs/M2.3-M2.5-REVIEW.md`. This does not complete Milestone 2 or authorize M2.6/M2.7.
 
 
 
@@ -614,7 +622,9 @@ Calculation precision must remain separate from presentation rounding.
 
 ## M2.6 — Calculation trace + numeric policy
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; accepted by the owner on 2026-10-12 as part of final Milestone 2 acceptance, including explanations, calculation trace and numeric policy. See `app/docs/M2.6-REVIEW.md`, `app/docs/NUMERIC-POLICY.md` and the acceptance record in `app/docs/M2.7-MILESTONE-2-REVIEW.md`.
 
 
 
@@ -688,7 +698,9 @@ Never widen tolerances merely to make Golden Tests pass.
 
 ## M2.7 — Golden parity + basic score visualizations
 
-**Status:** PENDING
+**Status:** COMPLETE
+
+Implemented and verified on 2026-10-12; accepted by the owner on 2026-10-12 following the human walkthrough. The eight-question test matched expected scores, and the Q23 edit, recalculation and refresh worked. Final acceptance includes M2.6 and completes Milestone 2; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation issues are deferred to M3.4/M3.6. PR #3 remains unmerged; no merge or M3 implementation is authorized.
 
 
 
@@ -739,6 +751,52 @@ The deterministic core must be approved before recommendation logic becomes auth
 
 
 # Milestone 3 — Recommendations, results, and durable report
+
+## M3 implementation proposal — planning only, 2026-10-12
+
+M2 was explicitly accepted on 2026-10-12. M3 implementation remains unstarted and unauthorized; PR #3 remains unmerged. After separate explicit merge approval, merge into main without rewriting shared history, preserve the M2 branch, and create `milestone-3-recommendations` from updated main. Branch creation is not authorization to implement.
+
+### First package: M3.1–M3.3
+
+- Application recommendation service and provider-neutral request/result contract, with a server-only provider adapter. Recompute authoritative scores from trusted config and validated raw inputs; never accept client scores. Keep provider calls independent of the score endpoint.
+- Port deterministic metadata document/chunk ranking from the final n8n workflow. Retain the documented 8-document/18-chunk baseline as explicit retrieval configuration, stable source-order tie handling and version identity. Use migrated stable document IDs; regression-test the deliberate improvement over legacy title joins and its evidence-set effects.
+- Assemble the preserved runtime prompt with context, answered questions, deterministic outputs and retrieved evidence. Preserve semantic instructions; adapting interpolation and structured transport is implementation work, while material prompt changes require review.
+- Validate JSON shape, ranks/counts, category names, source membership, allowed citation URLs, page/section provenance, absence of internal IDs and score restatements. Treat SME text/source excerpts as untrusted data, never instructions. Do not let generated text create new citations or overwrite scores. Do not silently repair incorrect numbers into apparently validated prose.
+- Provider failures/timeouts/malformed responses return explicit recommendation-unavailable status. Bound request/output size and duration; avoid unbounded retries, sensitive logs, invented fallbacks or introducing a new SDK/service without evidence of need. Isolated HTTP via existing platform fetch is sufficient as the initial adapter proposal.
+- Unit/retrieval fixtures and adapter contract tests precede credentialed smoke/latency tests. Exact prose parity is not required. Live-call cost and data approval must be established before external calls.
+
+### Second package: M3.4–M3.6
+
+- Include the owner-requested questionnaire review/navigation polish recorded under M3.4; verify it at M3.6 without changing deterministic scoring or blank-answer semantics.
+- Replace fictional narrative only when validated generated output exists; retain current score/chart/explanation authority. Tie recommendation results to the same input/config/method identity and reject stale responses.
+- Integrate evidence links and unavailable/retry states in the existing vertical results layout. Provide deterministic priority gaps separately and label their origin.
+- Produce a print-ready durable report initially (browser Save as PDF), containing context, answers/skips, scores, versions, available recommendations and evidence. Omit unavailable AI content truthfully; report generation and all deterministic results remain usable during provider failure.
+- Complete browser, citation/score consistency, stale-response, failure/timeout and report regression checks. Measure retrieval/provider/end-to-end latency under stated conditions against the approximately 10-second target; optimize only from evidence.
+
+### Required evidence and limitations
+
+- Runtime prompt: `BUILD_PACK/06_AI_RAG/prompts/PROMPT_recommendation_runtime.md`; source node `Build Recommendation Prompt` in `BUILD_PACK/03_LEGACY_N8N/workflows/n8n-output-rag-final-2026-10-02.json`. Inspect the actual normalization/ranking/formatting nodes before porting, using `AI_PIPELINE_CURRENT.md` as a map, not target architecture.
+- `PROMPT_INDEX.md` distinguishes runtime from offline extraction/generation. DocumentIndex/DocumentChunks provenance prompts explain existing records; do not run source-to-config regeneration in M3.
+- Existing canonical 44 documents/428 chunks and `app/docs/CONFIG-MIGRATION.md` provide stable identity, not independently verified source content. Nine reconciled title pairs, duplicate legacy chunk IDs, edition ambiguity and inconsistent Scope 3 page references remain explicit. Preserved Drive binaries were not independently verified.
+- Validate citation membership and safe link structure deterministically; do not equate that with external accessibility, source edition or factual verification. Trim presentation URL whitespace without silently rewriting canonical records. Unsupported/ambiguous evidence must be excluded or surfaced; any material source correction needs a reviewed provenance-preserving update.
+- Golden outputs provide structural/grounding examples, not a prose oracle. Consumer Goods' historical prose says 70.3 while deterministic output is 70.4. M3 must use the accepted current canonical scores, including M2's documented differences.
+- Legacy prompt mentions notes/revenue_band, while current UI does not collect them. Omit unavailable fields explicitly; do not invent values. Adding new setup fields is a separate meaningful UX decision.
+
+### Proposed server environment names and decisions before implementation
+
+Names to add to `app/.env.example` when the package is authorized; no credentials are needed or requested for this M2 sprint:
+
+| Name | Purpose |
+| --- | --- |
+| `RECOMMENDATION_PROVIDER` | Explicit adapter selection |
+| `RECOMMENDATION_MODEL` | Reviewed model identifier; historical gpt-5.2 is provenance, not a pinned future choice |
+| `OPENAI_API_KEY` | Server-only secret if the OpenAI adapter is selected |
+| `RECOMMENDATION_TIMEOUT_MS` | Validated bounded provider deadline |
+| `RECOMMENDATION_MAX_OUTPUT_TOKENS` | Validated cost/output bound |
+
+No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance was recorded on 2026-10-12; merge approval and first-package authorization remain the immediate gates.
+
+
 
 
 
@@ -936,6 +994,18 @@ Default to a vertical narrative rather than tabs.
 
 The current deterministic score remains authoritative.
 
+### Deferred questionnaire review/navigation polish — human feedback 2026-10-12
+
+Owner-requested follow-up from the M2 walkthrough; schedule with M3.4 in the M3.4–M3.6 package. This is a future implementation item, not an M2 blocker or authorization to begin M3.
+
+- Make **Review Answers** available from every question, including the first, middle and last. Place the action consistently outside the question-card content (for example, below the active card), rather than making the last card the only discoverable route.
+- Remove the per-card blank-answer gate and the message "Enter an answer or choose Skip." A blank question may advance or open answer review without an explicit Skip action; the last question must behave consistently with the rest.
+- Use the existing answer-review screen to summarize unanswered/skipped questions and offer review of missing answers or explicit generation of a partial score.
+- Preserve current drafts when opening review. Keep Skip available as an optional action, maintain existing answer retention and stale-result protection, and retain validation of invalid nonblank values. Do not coerce blanks or invalid values to zero, alter scoring/denominator rules, or change canonical configuration.
+- Check that the action is discoverable and usable on desktop, narrow/mobile layouts and keyboard navigation. Keep its label distinct from the later score-generation confirmation.
+
+Acceptance at M3.6: verify entry to review from the first, a middle and the last question; blank final-question access without Skip; unchanged answers/drafts and missing counts; valid partial-score confirmation; and continued rejection of invalid nonblank scoring inputs.
+
 
 
 ---
@@ -1015,6 +1085,8 @@ Prove the recommendation layer is reliable and degrades gracefully.
 - deterministic fallback behavior
 
 - recommendation regression checks
+
+- questionnaire-to-answer-review navigation and blank-answer regression checks from M3.4
 
 - latency measurements
 
@@ -2048,7 +2120,10 @@ The next proposed action without starting it.
 
 # Current position
 
-- M1.0 — COMPLETE
-- M1.1 — COMPLETE
-- M1.2 — CURRENT
-- all later steps are not yet authorized unless explicitly marked otherwise.
+- M1.0–M1.4 — COMPLETE (previously implemented and human-reviewed).
+- M2.1 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
+- M2.2 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
+- M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
+- M2.6 — COMPLETE; implemented and verified on 2026-10-11; accepted by the owner in the final M2 walkthrough on 2026-10-12.
+- M2.7 — COMPLETE; implemented, verified and explicitly accepted on 2026-10-12. Milestone 2 is complete; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation follow-ups remain deferred to M3.4/M3.6. PR #3 is unmerged and M3 implementation is unstarted.
+- All later steps remain subject to their existing status and explicit human authorization.

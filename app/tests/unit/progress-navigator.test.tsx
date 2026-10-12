@@ -2,7 +2,7 @@
 import { afterEach, expect, test, vi } from "vitest";
 import { cleanup, fireEvent, render, within } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
+import { MobileQuestionRail, ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
 
 afterEach(cleanup);
 const items: ProgressItem[] = Array.from({ length: 50 }, (_, i) => ({
@@ -11,13 +11,14 @@ const items: ProgressItem[] = Array.from({ length: 50 }, (_, i) => ({
   status: i % 3 === 0 ? "Answered" : i % 3 === 1 ? "Unanswered" : "Unanswered · skipped",
   current: i === 24,
 }));
-test("50 positions retain individual callbacks, shape states, and secondary boundaries", () => {
+test("50 positions retain individual callbacks, shape states, and category labels", () => {
   const onSelect = vi.fn();
   const { container } = render(<ProgressNavigator items={items} onSelect={onSelect} />);
   const rail = within(container.querySelector("aside")!);
   expect(rail.getAllByRole("button", { name: /^Question / })).toHaveLength(50);
   expect(rail.getAllByRole("list")).toHaveLength(1);
-  expect(container.querySelectorAll("aside [data-boundary=true]")).toHaveLength(3);
+  expect(rail.getByText("Hover or focus to explore.")).toBeInTheDocument();
+  expect(rail.getByRole("button", { name: /^Question 1:/ })).toHaveAccessibleName(/People/);
   expect(container.querySelector(".progress-context")).toBeNull();
   expect(rail.getByRole("button", { name: /^Question 25:/ })).toHaveAttribute("aria-current", "step");
   expect(rail.getByRole("button", { name: /^Question 3:/ })).toHaveAccessibleName(/skipped/);
@@ -98,4 +99,92 @@ test("switching from keyboard to a magnified pointer target clears detail on lea
   expect(onSelect).toHaveBeenCalledWith("fixture-25");
   fireEvent.pointerLeave(container.querySelector(".progress-track")!);
   expect(rail.queryByRole("group")).toBeNull();
+});
+
+test("mobile card rail exposes every state and keyboard neighborhoods without navigating until chosen", () => {
+  const onSelect = vi.fn();
+  const { container, getByRole } = render(<MobileQuestionRail items={items} onSelect={onSelect} />);
+  expect(container.querySelectorAll(".mobile-rail-marker")).toHaveLength(50);
+  expect(container.querySelectorAll('[data-current="true"]')).toHaveLength(1);
+  const trigger = getByRole("button", { name: "Explore question track" });
+  fireEvent.keyDown(trigger, { key: "End" });
+  expect(trigger).toHaveAttribute("aria-expanded", "true");
+  expect(onSelect).not.toHaveBeenCalled();
+  fireEvent.click(getByRole("button", { name: /^Go to question 50:/ }));
+  expect(onSelect).toHaveBeenCalledExactlyOnceWith("fixture-49");
+  expect(trigger).toHaveFocus();
+  fireEvent.keyDown(trigger, { key: "Home" });
+  fireEvent.keyDown(trigger, { key: "ArrowDown" });
+  expect(getByRole("button", { name: /^Go to question 2:/ })).toBeInTheDocument();
+  fireEvent.keyDown(trigger, { key: "Escape" });
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+  expect(trigger).toHaveFocus();
+});
+test("tap position opens five choices and tapping the rail updates the contextual window", () => {
+  const onSelect = vi.fn();
+  const { getByRole } = render(<MobileQuestionRail items={items} onSelect={onSelect} />);
+  const trigger = getByRole("button", { name: "Explore question track" });
+  vi.spyOn(trigger, "getBoundingClientRect").mockReturnValue({ top: 100, height: 500 } as DOMRect);
+  fireEvent.click(trigger, { detail: 1, clientY: 345 });
+  expect(getByRole("button", { name: /^Go to question 25:/ })).toBeInTheDocument();
+  expect(within(getByRole("group", { name: "Choose a nearby question" })).getAllByRole("button")).toHaveLength(5);
+  fireEvent.click(trigger, { detail: 1, clientY: 395 });
+  fireEvent.click(getByRole("button", { name: /^Go to question 30:/ }));
+  expect(onSelect).toHaveBeenCalledExactlyOnceWith("fixture-29");
+});
+
+test("mobile marker magnification follows tap and keyboard exploration and clears on close", () => {
+  const { container, getByRole } = render(<MobileQuestionRail items={items} onSelect={vi.fn()} />);
+  const trigger = getByRole("button", { name: "Explore question track" });
+  vi.spyOn(trigger, "getBoundingClientRect").mockReturnValue({ top: 100, height: 500 } as DOMRect);
+  fireEvent.click(trigger, { detail: 1, clientY: 345 });
+  const markers = container.querySelectorAll(".mobile-rail-marker");
+  expect(markers[24]).toHaveAttribute("data-proximity", "active");
+  expect(markers[24]).toHaveAttribute("data-current", "true");
+  expect(container.querySelectorAll('[data-proximity="near"]')).toHaveLength(4);
+  fireEvent.keyDown(trigger, { key: "End" });
+  expect(markers[49]).toHaveAttribute("data-proximity", "active");
+  expect(markers[24]).toHaveAttribute("data-current", "true");
+  fireEvent.keyDown(trigger, { key: "Escape" });
+  expect(container.querySelector('[data-proximity="active"]')).toBeNull();
+});
+
+test("mobile choice contact feedback cancels without navigation and releases before click", () => {
+  const onSelect = vi.fn();
+  const { getByRole } = render(<MobileQuestionRail items={items} onSelect={onSelect} />);
+  fireEvent.click(getByRole("button", { name: "Explore question track" }));
+  const choice = getByRole("button", { name: /^Go to question 25:/ });
+  fireEvent.pointerDown(choice);
+  expect(choice).toHaveAttribute("data-pressed", "true");
+  expect(onSelect).not.toHaveBeenCalled();
+  fireEvent.pointerCancel(choice);
+  expect(choice).toHaveAttribute("data-pressed", "false");
+  fireEvent.pointerDown(choice);
+  fireEvent.pointerLeave(choice);
+  expect(choice).toHaveAttribute("data-pressed", "false");
+  fireEvent.pointerDown(choice);
+  fireEvent.pointerUp(choice);
+  expect(choice).toHaveAttribute("data-pressed", "false");
+  fireEvent.click(choice);
+  expect(onSelect).toHaveBeenCalledExactlyOnceWith("fixture-24");
+});
+
+test("outside tap dismisses without click-through; Escape restores focus and rail reopens", () => {
+  const onSelect = vi.fn();
+  const outsideAction = vi.fn();
+  const { getByRole, queryByRole } = render(<><MobileQuestionRail items={items} onSelect={onSelect} /><button onClick={outsideAction}>Outside control</button></>);
+  const trigger = getByRole("button", { name: "Explore question track" });
+  fireEvent.click(trigger);
+  const choice = getByRole("button", { name: /^Go to question 25:/ });
+  choice.focus();
+  fireEvent.click(getByRole("button", { name: "Outside control" }));
+  expect(outsideAction).not.toHaveBeenCalled();
+  expect(queryByRole("group")).toBeNull();
+  expect(trigger).toHaveFocus();
+  expect(onSelect).not.toHaveBeenCalled();
+  fireEvent.click(trigger);
+  fireEvent.keyDown(getByRole("button", { name: /^Go to question 25:/ }), { key: "Escape" });
+  expect(queryByRole("group")).toBeNull();
+  expect(trigger).toHaveFocus();
+  expect(onSelect).not.toHaveBeenCalled();
 });
