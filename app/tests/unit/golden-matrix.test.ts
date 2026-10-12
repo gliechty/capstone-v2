@@ -3,13 +3,13 @@ import { afterAll, expect, test } from "vitest";
 import { loadCanonicalConfig } from "../../src/adapters/config-repository";
 import { scoreAssessment } from "../../src/domain/scoring/score-assessment";
 import { goldenCases } from "../helpers/legacy-scoring";
-import { compareGolden, diagnostic, firstDivergence, goldenAnswers, matrixRow, stages, type Stage } from "../helpers/golden-comparison";
+import { compareGolden, diagnostic, firstDivergence, goldenAnswers, stages, type Stage } from "../helpers/golden-comparison";
+import { recordGoldenCase, type GoldenMatrixRow } from "../helpers/golden-matrix-report";
 const { config } = loadCanonicalConfig();
-const matrix: ReturnType<typeof matrixRow>[] = [];
+const matrix: GoldenMatrixRow[] = [];
 afterAll(() => { mkdirSync("test-results", { recursive: true }); writeFileSync("test-results/golden-matrix.json", JSON.stringify({ config: config.version, rows: matrix }, null, 2)); });
 for (const fixture of goldenCases) test(fixture.case_id + " stage-by-stage Golden matrix", () => {
-  const comparison = compareGolden(config, fixture);
-  matrix.push(matrixRow(comparison));
+  const comparison = recordGoldenCase(matrix, { case: fixture.case_id, config: config.version }, () => compareGolden(config, fixture));
   const mismatch = firstDivergence(comparison);
   if (mismatch) throw new Error(diagnostic(comparison, mismatch));
   for (const stage of stages) expect(comparison.observations.some(o => o.stage === stage), stage).toBe(true);
