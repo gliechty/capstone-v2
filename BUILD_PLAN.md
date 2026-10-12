@@ -462,3 +462,7 @@ Only the human project owner may mark a milestone complete or authorize the next
 - [ ] Milestone 6 — Interactive levers — STRETCH
 - [ ] Milestone 7 — Quick vs Full assessment — STRETCH / METHODOLOGY REVIEW
 - [ ] Milestone 8 — Alan/Henry external benchmark layer — RESEARCH EXPERIMENT
+
+## Active acceptance package — 2026-10-12
+
+The owner authorized M2.7 implementation, Milestone 2 closeout preparation, M3 planning, and scoped verified commit/push/PR preparation. See app/docs/M2.7-MILESTONE-2-REVIEW.md and the two-package M3 proposal in EXECUTION_PLAN.md. Outstanding M2.6 review is included in the final M2 gate. Milestone 2 remains unchecked pending explicit human acceptance; merge and M3 implementation are not yet authorized.

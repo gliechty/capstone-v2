@@ -30,3 +30,7 @@ The audit intentionally remains visible and separate from functional verificatio
 References:
 - https://github.com/advisories/GHSA-vfj7-8cjw-p6xm
 - Installed Next plugin: dist/utils/get-root-dirs.js
+
+## M2 closeout recheck — 2026-10-12
+
+Production audit returned zero vulnerabilities. The full audit still returns four high entries for this same development-only chain; its nonzero result is recorded in M2.7-MILESTONE-2-REVIEW.md. No dependency or lockfile change, forced fix, suppression or deployment-security approval was made.

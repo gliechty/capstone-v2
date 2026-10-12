@@ -60,7 +60,7 @@ The intended loop is:
 
 
 
-Only the human project owner may change a step to `COMPLETE` or authorize the next step.
+Agents may maintain routine status wording when explicitly authorized; acceptance must cite a documented human decision, never a commit alone. Only the human project owner may change a step to `COMPLETE` or authorize the next step.
 
 
 
@@ -624,7 +624,7 @@ Calculation precision must remain separate from presentation rounding.
 
 **Status:** CURRENT
 
-Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; awaiting human review. See `app/docs/M2.6-REVIEW.md` and `app/docs/NUMERIC-POLICY.md`. M2.7 remains PENDING and unauthorized; Milestone 2 is not complete.
+Implemented and verified on 2026-10-11 under separate explicit M2.6 authorization; awaiting human review. See `app/docs/M2.6-REVIEW.md` and `app/docs/NUMERIC-POLICY.md`. M2.7 was separately authorized on 2026-10-12. M2.6 acceptance is included in the final M2 gate; Milestone 2 is not complete.
 
 
 
@@ -698,7 +698,9 @@ Never widen tolerances merely to make Golden Tests pass.
 
 ## M2.7 — Golden parity + basic score visualizations
 
-**Status:** PENDING
+**Status:** CURRENT
+
+Implemented and verified on 2026-10-12 under explicit M2.7/closeout authorization. The final gate includes outstanding M2.6 review; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Ready for human acceptance; Milestone 2 remains open. No merge or M3 implementation is authorized.
 
 
 
@@ -749,6 +751,51 @@ The deterministic core must be approved before recommendation logic becomes auth
 
 
 # Milestone 3 — Recommendations, results, and durable report
+
+## M3 implementation proposal — planning only, 2026-10-12
+
+M3 implementation is not authorized. After explicit M2 acceptance and merge approval, record that decision, merge into main without rewriting shared history, preserve the M2 branch, and create `milestone-3-recommendations` from updated main. Branch creation is not authorization to implement.
+
+### First package: M3.1–M3.3
+
+- Application recommendation service and provider-neutral request/result contract, with a server-only provider adapter. Recompute authoritative scores from trusted config and validated raw inputs; never accept client scores. Keep provider calls independent of the score endpoint.
+- Port deterministic metadata document/chunk ranking from the final n8n workflow. Retain the documented 8-document/18-chunk baseline as explicit retrieval configuration, stable source-order tie handling and version identity. Use migrated stable document IDs; regression-test the deliberate improvement over legacy title joins and its evidence-set effects.
+- Assemble the preserved runtime prompt with context, answered questions, deterministic outputs and retrieved evidence. Preserve semantic instructions; adapting interpolation and structured transport is implementation work, while material prompt changes require review.
+- Validate JSON shape, ranks/counts, category names, source membership, allowed citation URLs, page/section provenance, absence of internal IDs and score restatements. Treat SME text/source excerpts as untrusted data, never instructions. Do not let generated text create new citations or overwrite scores. Do not silently repair incorrect numbers into apparently validated prose.
+- Provider failures/timeouts/malformed responses return explicit recommendation-unavailable status. Bound request/output size and duration; avoid unbounded retries, sensitive logs, invented fallbacks or introducing a new SDK/service without evidence of need. Isolated HTTP via existing platform fetch is sufficient as the initial adapter proposal.
+- Unit/retrieval fixtures and adapter contract tests precede credentialed smoke/latency tests. Exact prose parity is not required. Live-call cost and data approval must be established before external calls.
+
+### Second package: M3.4–M3.6
+
+- Replace fictional narrative only when validated generated output exists; retain current score/chart/explanation authority. Tie recommendation results to the same input/config/method identity and reject stale responses.
+- Integrate evidence links and unavailable/retry states in the existing vertical results layout. Provide deterministic priority gaps separately and label their origin.
+- Produce a print-ready durable report initially (browser Save as PDF), containing context, answers/skips, scores, versions, available recommendations and evidence. Omit unavailable AI content truthfully; report generation and all deterministic results remain usable during provider failure.
+- Complete browser, citation/score consistency, stale-response, failure/timeout and report regression checks. Measure retrieval/provider/end-to-end latency under stated conditions against the approximately 10-second target; optimize only from evidence.
+
+### Required evidence and limitations
+
+- Runtime prompt: `BUILD_PACK/06_AI_RAG/prompts/PROMPT_recommendation_runtime.md`; source node `Build Recommendation Prompt` in `BUILD_PACK/03_LEGACY_N8N/workflows/n8n-output-rag-final-2026-10-02.json`. Inspect the actual normalization/ranking/formatting nodes before porting, using `AI_PIPELINE_CURRENT.md` as a map, not target architecture.
+- `PROMPT_INDEX.md` distinguishes runtime from offline extraction/generation. DocumentIndex/DocumentChunks provenance prompts explain existing records; do not run source-to-config regeneration in M3.
+- Existing canonical 44 documents/428 chunks and `app/docs/CONFIG-MIGRATION.md` provide stable identity, not independently verified source content. Nine reconciled title pairs, duplicate legacy chunk IDs, edition ambiguity and inconsistent Scope 3 page references remain explicit. Preserved Drive binaries were not independently verified.
+- Validate citation membership and safe link structure deterministically; do not equate that with external accessibility, source edition or factual verification. Trim presentation URL whitespace without silently rewriting canonical records. Unsupported/ambiguous evidence must be excluded or surfaced; any material source correction needs a reviewed provenance-preserving update.
+- Golden outputs provide structural/grounding examples, not a prose oracle. Consumer Goods' historical prose says 70.3 while deterministic output is 70.4. M3 must use the accepted current canonical scores, including M2's documented differences.
+- Legacy prompt mentions notes/revenue_band, while current UI does not collect them. Omit unavailable fields explicitly; do not invent values. Adding new setup fields is a separate meaningful UX decision.
+
+### Proposed server environment names and decisions before implementation
+
+Names to add to `app/.env.example` when the package is authorized; no credentials are needed or requested for this M2 sprint:
+
+| Name | Purpose |
+| --- | --- |
+| `RECOMMENDATION_PROVIDER` | Explicit adapter selection |
+| `RECOMMENDATION_MODEL` | Reviewed model identifier; historical gpt-5.2 is provenance, not a pinned future choice |
+| `OPENAI_API_KEY` | Server-only secret if the OpenAI adapter is selected |
+| `RECOMMENDATION_TIMEOUT_MS` | Validated bounded provider deadline |
+| `RECOMMENDATION_MAX_OUTPUT_TOKENS` | Validated cost/output bound |
+
+No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance, merge approval and first-package authorization remain the immediate gates.
+
+
 
 
 
@@ -2059,9 +2106,9 @@ The next proposed action without starting it.
 # Current position
 
 - M1.0–M1.4 — COMPLETE (previously implemented and human-reviewed).
-- M2.1 — COMPLETE (verified; awaiting human review).
-- M2.2 — COMPLETE (verified; awaiting human review).
+- M2.1 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
+- M2.2 — COMPLETE (accepted by human review; see the M2.2 package acceptance record above).
 - M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
 - M2.6 — CURRENT; implemented and verified on 2026-10-11; awaiting human review.
-- M2.7 — PENDING; not authorized. Milestone 2 is not complete.
+- M2.7 — CURRENT; implemented and verified 2026-10-12; acceptance package ready with M3 planning. Final M2 acceptance remains pending; see app/docs/M2.7-MILESTONE-2-REVIEW.md.
 - All later steps remain subject to their existing status and explicit human authorization.

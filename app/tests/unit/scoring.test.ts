@@ -1,67 +1,14 @@
 import { expect, test } from "vitest";
 import { loadCanonicalConfig } from "../../src/adapters/config-repository";
 import { normalizeAnswer, resolveBenchmark, resolveMultiplier, scoreAssessment } from "../../src/domain/scoring/score-assessment";
-import { goldenCases, goldenExpected, legacyScorer } from "../helpers/legacy-scoring";
+import { goldenCases } from "../helpers/legacy-scoring";
 const { config } = loadCanonicalConfig();
 const profile = goldenCases[0]!.profile;
-const answers = (fixture: typeof goldenCases[number]) => Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
 // Floating-point operation-order comparison only: 32 ULP-scaled epsilons,
 // not a tolerance for historical decimal rounding or weight differences.
 function sameNumber(actual: number, expected: number) {
   expect(Math.abs(actual - expected)).toBeLessThanOrEqual(32 * Number.EPSILON * Math.max(1, Math.abs(expected)));
 }
-for (const fixture of goldenCases) test(fixture.case_id + " question and aggregate regression with explicit precision provenance", () => {
-  const expected = goldenExpected(fixture).scoring;
-  const historical = legacyScorer(config, fixture);
-  const precise = legacyScorer(config, fixture, true);
-  const actual = scoreAssessment(config, fixture.profile, answers(fixture));
-  const rows = historical.getAllAnsweredQuestionDebug();
-  const preciseRows = precise.getAllAnsweredQuestionDebug();
-  for (const capture of expected.question_level) {
-    const row = rows.find((r: { question_id: string }) => r.question_id === capture.question_id);
-    if (!row) { expect(answers(fixture)[capture.question_id] ?? "").toBe(""); continue; }
-    for (const [captureKey, key] of [["normalized_score", "normalized_score"], ["base_weight", "base_weight"], ["multiplier", "multiplier"], ["weighted_score", "weighted_score"], ["final_score", "final_score"], ["final_score_possible", "total_possible"]]) {
-      if (typeof capture[captureKey!] === "number") expect(row[key!]).toBe(capture[captureKey!]);
-    }
-    expect(row.normalization_method).toBe(capture.normalization_method);
-    expect(row.matched_rules.map((r: { rule_id: string; multiplier: number }) => r.rule_id + " (" + r.multiplier + "x)")).toEqual(capture.matched_multiplier_rules);
-  }
-  for (const q of actual.questions) {
-    if (q.status === "missing") { expect(q).not.toHaveProperty("earned"); continue; }
-    const ref = preciseRows.find((r: { question_id: string }) => r.question_id === q.id);
-    sameNumber(q.normalization.value, ref.normalized_score);
-    expect(q.baseWeight).toBe(ref.base_weight);
-    sameNumber(q.multiplier.value, ref.multiplier);
-    expect(q.multiplier.rules.map(r => r.rule_id)).toEqual(ref.matched_rules.map((r: { rule_id: string }) => r.rule_id));
-    sameNumber(q.earned, ref.final_score); sameNumber(q.possible, ref.total_possible);
-    const question = config.QuestionBank.find(r => r.question_id === q.id)!;
-    expect(q.normalization.benchmark).toEqual(q.normalization.method === "answer_scale" ? null : historical.getMetric(question));
-  }
-  for (const cat of actual.categories) {
-    const ref = precise.getCategoryScores().find((r: { category: string }) => r.category === cat.category);
-    sameNumber(cat.earned, ref.points_earned); sameNumber(cat.possible, ref.total_possible); sameNumber(cat.percent!, ref.category_percent);
-    const capture = expected.category_scores.find((r: { category: string }) => r.category === cat.category);
-    const old = historical.getCategoryScores().find((r: { category: string }) => r.category === cat.category);
-    // Manufacturing's aggregate capture is whole-point display precision.
-    const digits = fixture.case_id === "GOLDEN_01_MANUFACTURING" ? 0 : 2;
-    expect(Number(old.points_earned.toFixed(digits))).toBe(capture.points_earned);
-    expect(Number(old.total_possible.toFixed(digits))).toBe(capture.total_possible);
-    expect(old.category_percent).toBe(capture.category_percent);
-  }
-  sameNumber(actual.rawOverall!, precise.getOverallScore().overall_percent);
-  sameNumber(actual.weightedOverall!, precise.getWeightedOverallScore().weighted_score);
-  expect(historical.getOverallScore().overall_percent).toBe(expected.raw_overall.overall_percent);
-  // Captured historical weights are compared as a separate oracle. The runtime
-  // above must always use the unmodified full-precision canonical weights.
-  if (expected.weighted_overall.breakdown) {
-    const weights = config.CategoryWeights.map(w => w.industry !== fixture.profile.industry ? w : { ...w,
-      ...Object.fromEntries(expected.weighted_overall.breakdown.map((r: { category: string; weight: number }) => [r.category.toLowerCase() + "_weight", String(r.weight)])) });
-    const capturedWeightsReplay = legacyScorer({ ...config, CategoryWeights: weights }, fixture);
-    expect(capturedWeightsReplay.getWeightedOverallScore().weighted_score).toBe(expected.weighted_overall.weighted_score);
-    expect(capturedWeightsReplay.getWeightedCategoryBreakdown()).toEqual(expected.weighted_category_breakdown);
-  }
-});
-
 test("missing is distinct from zero, invalid answers fail, unknown IDs fail, and no weights are redistributed", () => {
   const empty = scoreAssessment(config, profile, {});
   expect(empty.rawOverall).toBeNull(); expect(empty.weightedOverall).toBeNull(); expect(empty.categories.every(c => c.percent === null)).toBe(true);
