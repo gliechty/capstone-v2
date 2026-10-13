@@ -4,7 +4,7 @@ import { mockQuestions } from "../../src/features/assessment/mock-questions";
 import { createSessionAdapter as adapterFactory, SESSION_KEY } from "../../src/adapters/assessment-session";
 
 const createSessionAdapter = (get: Parameters<typeof adapterFactory>[0]) => adapterFactory(get, sessionSchema);
-const profile = { companyName: "Example", industry: "Example industry", subindustry: "", companySize: "11 - 50", location: "Example country", targetMarket: "Example market", targetBuyer: "Not yet identified", businessGoal: "Explore the preview" };
+const profile = { notes: "", companyName: "Example", industry: "Example industry", subindustry: "", companySize: "11 - 50", location: "Example country", targetMarket: "Example market", targetBuyer: "Not yet identified", businessGoal: "Explore the preview" };
 const { assessmentReducer, initialSession, sessionSchema } = createAssessmentModel("test-fixture", () => mockQuestions);
 const unanswered = (state: Session) => missing(state, mockQuestions);
 const validState = (): Session => ({ ...initialSession(), activeId: mockQuestions[0].id, profile, phase: "questions" });

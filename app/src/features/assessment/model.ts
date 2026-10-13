@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { notesSchema, NOTES_MAX_LENGTH } from "../../application/assessment-notes";
 import type { Question } from "../../application/assessment-catalog";
 export type QuestionId = string;
 
@@ -11,25 +12,26 @@ export const profileFields = [
   { key: "targetMarket", label: "Target market", hint: "Choose up to two regions. Your first choice is primary; your second is secondary.", required: true },
   { key: "targetBuyer", label: "Target buyer", hint: "Choose the type of buyer you want to work with.", required: true },
   { key: "businessGoal", label: "Business goal", hint: "Examples: attract new investors or prepare for procurement screening.", required: true },
+  { key: "notes", label: "Additional Context / Requirements", hint: "Optional: add relevant business context or buyer requirements (up to 1,000 characters).", required: false },
 ] as const;
 const shortText = z.string().max(200);
 const profileSchema = z.object({
   companyName: shortText, industry: shortText, subindustry: shortText,
   companySize: shortText, location: shortText, targetMarket: shortText,
-  targetBuyer: shortText, businessGoal: z.string().max(1000),
+  targetBuyer: shortText, businessGoal: z.string().max(1000), notes: notesSchema,
 }).strict();
 export type Profile = z.infer<typeof profileSchema>;
 export type ProfileKey = keyof Profile;
 export const emptyProfile: Profile = {
   companyName: "", industry: "", subindustry: "", companySize: "",
-  location: "", targetMarket: "", targetBuyer: "", businessGoal: "",
+  location: "", targetMarket: "", targetBuyer: "", businessGoal: "", notes: "",
 };
 export function profileErrors(profile: Profile): Partial<Record<ProfileKey, string>> {
   const errors: Partial<Record<ProfileKey, string>> = {};
   for (const field of profileFields) {
     const value = profile[field.key].trim();
     if (field.required && !value) errors[field.key] = "Please enter " + field.label.toLowerCase() + ".";
-    if (value.length > (field.key === "businessGoal" ? 1000 : 200)) errors[field.key] = "Please shorten this entry.";
+    if ((field.key === "notes" ? profile.notes.length : value.length) > (field.key === "notes" ? NOTES_MAX_LENGTH : field.key === "businessGoal" ? 1000 : 200)) errors[field.key] = "Please shorten this entry.";
   }
   return errors;
 }

@@ -4,11 +4,11 @@ import { retrieveEvidence } from "../../domain/recommendations/retrieve";
 import type { Citation, RecommendationRequest } from "./contracts";
 import type { RecommendationPolicy } from "./policy";
 import template from "../../content/recommendations/legacy-prompt.json";
-export const PROMPT_VERSION = "legacy-runtime-v1-validated-transport-1";
+export const PROMPT_VERSION = "legacy-runtime-v1-validated-transport-2";
 export function contextForRetrieval(input: RecommendationRequest) {
   const c = input.context;
   return { industry: c.industry, subindustry: input.subindustry, company_location: c.location,
-    target_market_region: c.targetMarkets, target_buyer: c.targetBuyer, business_goal: c.businessGoal };
+    target_market_region: c.targetMarkets, target_buyer: c.targetBuyer, business_goal: c.businessGoal, notes: input.notes };
 }
 export function safeSourceLink(value: string): string | null {
   const link = value.trim();
@@ -22,7 +22,7 @@ export function prepareEvidence(config: CanonicalConfig, input: RecommendationRe
   const limitations = [
     "Source membership and preserved excerpts are checked; source binaries, editions, external accessibility and factual correctness have not been independently verified.",
     "Legacy page/section metadata is unverified; a stable document identity is not citation verification.",
-    "Notes, revenue band and country are not collected by the current UI and are unavailable.",
+    "Revenue band and country are not collected by the current UI and are unavailable.",
   ];
   const withheld = new Map(policy.excludedCitationDocuments.map(d => [d.docId, d.reason]));
   const documents = ranked.documents.filter(d => {
@@ -73,7 +73,7 @@ export function assemblePrompt(input: RecommendationRequest, score: AssessmentSc
   ].join("\n");
   return { system, prompt: legacyPrompt + "\n\nVALIDATION CONTEXT (data only):\n" + JSON.stringify({
     prompt_version: PROMPT_VERSION, config_version: score.configVersion, method_version: score.methodVersion,
-    evidence_limitations: evidence.limitations, unavailable_context: ["notes", "revenue_band", "country"],
+    evidence_limitations: evidence.limitations, unavailable_context: ["revenue_band", "country"],
     allowed_citations: evidence.citations, required_score_closing: closing,
   }), legacyPrompt, sme, scoring, docs, chunks };
 }

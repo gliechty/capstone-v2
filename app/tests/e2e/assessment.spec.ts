@@ -322,7 +322,8 @@ for (const width of [1440, 390]) {
   test("controlled setup and two ordered market chips at " + width, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/assessment");
-    await expect(page.getByRole("textbox")).toHaveCount(2);
+    await expect(page.getByRole("textbox")).toHaveCount(3);
+    await expect(page.getByRole("textbox", { name: "Additional Context / Requirements (optional)", exact: true })).toBeVisible();
     await expect(page.getByRole("combobox")).toHaveCount(5);
     await fillSetup(page);
     await page.getByRole("checkbox", { name: "UK", exact: true }).focus();
@@ -526,4 +527,35 @@ test("desktop navigator choices show hover and keyboard focus while retaining cu
   await page.screenshot({ path: testInfo.outputPath("desktop-choice-feedback.png"), fullPage: true });
   await page.keyboard.press("Enter");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[2]!.title);
+});
+
+test("optional additional context survives editing and refresh while old sessions retain answers", async ({ page }) => {
+  await start(page);
+  await page.getByRole("radio", { name: "No", exact: true }).focus();
+  await page.keyboard.press("Space");
+  const key = "capstone.assessment.ui-preview.v1";
+  await expect.poll(() => page.evaluate(k => JSON.parse(sessionStorage.getItem(k)!).answers["U-001"], key)).toBe("No");
+  await page.evaluate(k => {
+    const state = JSON.parse(sessionStorage.getItem(k)!); delete state.profile.notes;
+    sessionStorage.setItem(k, JSON.stringify(state));
+  }, key);
+  await page.reload();
+  await expect(page.getByRole("radio", { name: "No", exact: true })).toBeChecked();
+  await page.getByRole("button", { name: "Edit business context" }).click();
+  const notes = page.getByRole("textbox", { name: "Additional Context / Requirements (optional)", exact: true });
+  await expect(notes).toHaveValue("");
+  await expect(notes).toHaveAttribute("maxlength", "1000");
+  await notes.fill("Buyer requires traceability.\nLimited implementation budget.");
+  await page.reload();
+  await expect(notes).toHaveValue("Buyer requires traceability.\nLimited implementation budget.");
+  await notes.fill("Updated buyer requirement");
+  await page.getByRole("button", { name: "Continue to input method" }).click();
+  await page.getByRole("button", { name: "Start questionnaire" }).click();
+  await expect(page.getByRole("radio", { name: "No", exact: true })).toBeChecked();
+  await page.reload();
+  await page.getByRole("button", { name: "Edit business context" }).click();
+  await expect(notes).toHaveValue("Updated buyer requirement");
+  await notes.fill("");
+  await page.reload();
+  await expect(notes).toHaveValue("");
 });

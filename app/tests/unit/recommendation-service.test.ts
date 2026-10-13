@@ -25,7 +25,7 @@ test("recomputes trusted scores, binds versions/input identity, and clearly tags
 });
 test("strict requests reject supplied scores/config/provider and invalid raw answers without invoking a provider", async () => {
   const generate = vi.fn(async () => ""); const service = make(generate);
-  for (const patch of [{ score: 100 }, { provider: "live" }, { config: {} }, { trace: [] }, { configVersion: "stale" }, { answers: { unknown: "Yes" } }, { answers: { "U-001": "maybe" } }, { notes: "not collected" }, { companyName: "" }]) {
+  for (const patch of [{ score: 100 }, { provider: "live" }, { config: {} }, { trace: [] }, { configVersion: "stale" }, { answers: { unknown: "Yes" } }, { answers: { "U-001": "maybe" } }, { notes: null }, { notes: "x".repeat(1001) }, { country: "not collected" }, { revenue_band: "not collected" }, { companyName: "" }]) {
     await expect(service({ ...input, ...patch })).rejects.toThrow();
   }
   expect(generate).not.toHaveBeenCalled();

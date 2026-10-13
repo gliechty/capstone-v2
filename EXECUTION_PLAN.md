@@ -756,6 +756,10 @@ The deterministic core must be approved before recommendation logic becomes auth
 
 M2 was explicitly accepted on 2026-10-12. With separate owner merge authorization, PR #3 merged into main on 2026-10-12 using merge commit `4929f9f2969fa946da1066ea3825921349ecf641` (parents: previous main `8cae855` and acceptance commit `c9cb2b8`). Local main was synchronized, then `milestone-3-recommendations` was created from that merged main. `milestone-2-deterministic-core` remains preserved locally and remotely at `c9cb2b8`; shared history was not rewritten. The current branch is `milestone-3-recommendations`; the branch handoff itself did not authorize implementation. On 2026-10-13 the owner authorized M3.1–M3.3 using controlled local provider test doubles. See app/docs/M3.1-M3.3-REVIEW.md. No live calls are authorized; M3.4–M3.6 remain PENDING.
 
+### Targeted metadata restoration — authorized 2026-10-13
+
+The owner authorized restoring only Additional Context / Requirements (`notes`) through setup, compatible session persistence and the local recommendation foundation. See [metadata mapping and correction review](app/docs/M3-METADATA-RESTORATION-REVIEW.md). This does not authorize the remainder of M3.4, live calls, retrieval experiments, deployment or acceptance. Foundation checkpoint: `7480686`; remote documentation `e162192` integrated without rewriting history.
+
 ### First package: M3.1–M3.3
 
 - Application recommendation service and provider-neutral request/result contract, with a server-only provider adapter. Recompute authoritative scores from trusted config and validated raw inputs; never accept client scores. Keep provider calls independent of the score endpoint.
@@ -1118,6 +1122,8 @@ Aim for approximately 10 seconds or less under normal test conditions where prac
 Scores, charts, deterministic gaps, and report generation must still work when AI fails.
 
 ### Planned LlamaIndex / LangChain experiment — owner request 2026-10-13
+
+Detailed future protocol: [M3.6 retrieval accuracy, performance and efficiency evaluation](app/docs/M3.6-RETRIEVAL-EVALUATION-PLAN.md), integrated from `e162192`. This is planning only; experiments remain PENDING.
 
 **Purpose:** Build demonstrable hands-on experience with both frameworks and test whether they help deliver assessment recommendations in **under 10 seconds**. This is planned work within M3.6, after the native baseline exists; this M3.6 experiment remains PENDING. Framework use alone does not establish a speed improvement.
 

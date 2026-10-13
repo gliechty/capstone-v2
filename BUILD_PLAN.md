@@ -470,3 +470,7 @@ The owner explicitly accepted Milestone 2 on 2026-10-12 following the human walk
 ## Active package — M3.1–M3.3, authorized 2026-10-13
 
 The owner authorized the recommendation foundation: provider-neutral service, native metadata retrieval, preserved prompt assembly and validated outputs, using controlled local provider test doubles. Live external calls remain gated on provider/model, budget and SME data approval; no credentials are requested. Implementation is recorded in app/docs/M3.1-M3.3-REVIEW.md and EXECUTION_PLAN.md. The package is not human-accepted and Milestone 3 remains incomplete. M3.4–M3.6, including questionnaire polish and the LlamaIndex/LangChain experiment, remain pending. No deployment or merge is authorized.
+
+## Targeted metadata restoration — authorized 2026-10-13
+
+The owner authorized restoration of Appsmith Additional Context / Requirements (`notes`) only, preserving valid sessions/answers and deterministic behavior. See app/docs/M3-METADATA-RESTORATION-REVIEW.md for the complete legacy setup mapping, country/revenue omissions and verification. M3.1–M3.3 remain pending human acceptance; this correction does not authorize the rest of M3.4, retrieval experiments or live calls. The verified foundation was checkpointed as `7480686` before integrating remote documentation `e162192` through a merge.

@@ -6,7 +6,7 @@ import { prepareEvidence, scoreClosing } from "../../src/application/recommendat
 import type { RecommendationContent, RecommendationRequest, RecommendationProvider } from "../../src/application/recommendations/contracts";
 export const { config } = loadCanonicalConfig();
 export const input: RecommendationRequest = {
-  configVersion: assessmentCatalog(config).version, companyName: "Local test SME", subindustry: "Industrial components",
+  configVersion: assessmentCatalog(config).version, companyName: "Local test SME", notes: "", subindustry: "Industrial components",
   context: { industry: "Manufacturing (Industrial / Components)", companySize: "251 - 500", location: "APAC", targetMarkets: ["EU"], targetBuyer: "Enterprise", businessGoal: "Investor readiness" },
   answers: { "U-001": "No", "U-002": "Yes" },
 };

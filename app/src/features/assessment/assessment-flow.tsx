@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NOTES_MAX_LENGTH } from "../../application/assessment-notes";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { MobileQuestionRail, ProgressNavigator } from "./progress-navigator";
 import { AssessmentProvider, useAssessment, catalogProfileErrors } from "./assessment-context";
@@ -34,7 +35,7 @@ function Setup() {
     <section className="assessment-setup">
       <span className="section-label">01 / Business context</span>
       <StageHeading>Tell us about your business.</StageHeading>
-      <p className="mt-4 text-muted">Use example information to explore the flow. Fields marked required must be completed; subindustry is optional.</p>
+      <p className="mt-4 text-muted">Use example information to explore the flow. Fields marked required must be completed; subindustry and additional context are optional.</p>
       <form className="mt-8" noValidate onSubmit={submit}>
         {submitted && Object.keys(errors).length > 0 && <p role="alert" className="form-error mb-6">Please check the highlighted fields before continuing.</p>}
         <div className="grid gap-6 md:grid-cols-2">
@@ -66,7 +67,11 @@ function Setup() {
             return <div key={field.key}>
               <label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
               <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              {field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
+              {field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4}
+                maxLength={NOTES_MAX_LENGTH} value={session.profile.notes} aria-invalid={Boolean(error)}
+                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                onChange={event => dispatch({ type: "profile", field: "notes", value: event.target.value })} />
+                : field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
                 required value={session.profile[field.key]} aria-invalid={Boolean(error)}
                 aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
                 onChange={event => dispatch({ type: "profile", field: field.key, value: event.target.value })}>
