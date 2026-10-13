@@ -771,7 +771,8 @@ M2 was explicitly accepted on 2026-10-12. With separate owner merge authorizatio
 - Replace fictional narrative only when validated generated output exists; retain current score/chart/explanation authority. Tie recommendation results to the same input/config/method identity and reject stale responses.
 - Integrate evidence links and unavailable/retry states in the existing vertical results layout. Provide deterministic priority gaps separately and label their origin.
 - Produce a print-ready durable report initially (browser Save as PDF), containing context, answers/skips, scores, versions, available recommendations and evidence. Omit unavailable AI content truthfully; report generation and all deterministic results remain usable during provider failure.
-- Complete browser, citation/score consistency, stale-response, failure/timeout and report regression checks. Measure retrieval/provider/end-to-end latency under stated conditions against the approximately 10-second target; optimize only from evidence.
+- Complete browser, citation/score consistency, stale-response, failure/timeout and report regression checks. Measure retrieval/provider/end-to-end latency under stated conditions; optimize only from evidence.
+- Run the owner-requested LlamaIndex/LangChain experiment defined in M3.6 after establishing the native TypeScript baseline. Evaluate both frameworks separately, targeting complete validated recommendations in under 10 seconds; report quality, cost and latency before proposing production adoption.
 
 ### Required evidence and limitations
 
@@ -1090,6 +1091,8 @@ Prove the recommendation layer is reliable and degrades gracefully.
 
 - latency measurements
 
+- runnable LlamaIndex and LangChain prototypes, comparative benchmark results and an adoption recommendation
+
 - Milestone 3 review package
 
 
@@ -1107,6 +1110,29 @@ Aim for approximately 10 seconds or less under normal test conditions where prac
 
 
 Scores, charts, deterministic gaps, and report generation must still work when AI fails.
+
+### Planned LlamaIndex / LangChain experiment — owner request 2026-10-13
+
+**Purpose:** Build demonstrable hands-on experience with both frameworks and test whether they help deliver assessment recommendations in **under 10 seconds**. This is planned work within M3.6, after the native baseline exists; M3 implementation remains PENDING. Framework use alone does not establish a speed improvement.
+
+**Scope**
+
+- Build small, runnable TypeScript prototypes behind the same retrieval/provider contracts: native TypeScript as the control, LlamaIndex for evidence retrieval/assembly, and LangChain for recommendation orchestration and structured output. Exercise actual framework capabilities; installing packages alone is not a completed experiment. Test each separately before considering a combined stack.
+- Keep experimental adapters isolated from the default runtime. Record package versions and dependency implications. A vector database, embeddings, a new managed service or a replacement of the application architecture is not required by this experiment.
+- Preserve canonical config, deterministic scoring, accepted numeric policy and BUILD_PACK. Keep framework code outside the deterministic domain. Use the existing source identities, evidence validation and explicit failure behavior.
+
+**Comparison and timing**
+
+- Use the same five SME test contexts, versioned corpus, approved provider/model and generation settings, prompt instructions and comparable evidence/output budgets. Use fixed evidence for an overhead comparison; evaluate retrieval differences separately. Record any changed ranking, prompt, model or concurrency so benefits are not incorrectly attributed to a framework.
+- Measure from the user's recommendation request until complete, validated recommendations are visible. Break out retrieval/evidence assembly, provider generation, parsing/validation and total elapsed time. Report sample counts, median, p95, failures/timeouts and token usage/cost; distinguish cold starts, warm uncached runs and cached results. First-token time or a progress indicator does not satisfy the completion target.
+- Target **under 10 seconds under documented normal test conditions**. Profile bottlenecks and test bounded optimizations without reducing required output or validation quality. Report misses honestly; this is a measured target, not a promised service guarantee. Existing provider/model, live-call budget and data-transmission approvals apply.
+
+**Quality and review evidence**
+
+- Apply the same checks to each variant: structured validity, authoritative score consistency, citation/source membership, relevance to SME context and priority gaps, plus stale-response and provider-failure behavior. Compare grounded quality as well as speed; exact prose parity is not required.
+- Include runnable commands, pinned versions, test conditions, measurements and a brief architecture/tradeoff note in the M3 review package. Recommend retaining native TypeScript, adopting a useful framework component, or deferring adoption based on the evidence.
+- Preserve enough implementation and evaluation evidence to support an accurate CV description such as "implemented and evaluated LlamaIndex and LangChain recommendation prototypes." Distinguish prototype experience from production deployment; production adoption is a separate outcome of review.
+
 
 
 
