@@ -47,7 +47,7 @@ Dependency locking and the Node major are recorded. Security/dependency checks m
 ## Scope
 
 The assessment flow uses reducer/context and validated browser session storage. Versioned canonical files supply config and deterministic question selection. The results page submits raw answers and selection context to the application server for deterministic scoring without server persistence.
-The /results shell shows calculated overall/category values; narrative, gaps, actions and evidence remain fictional examples. Report generation, recommendations, calculator, database and maintenance features are not implemented.
+The /results shell shows calculated overall/category values; narrative, gaps, actions and evidence remain fictional examples. The recommendation foundation is locally implemented behind a disabled server provider boundary; it is not integrated into results. Report generation, live recommendations, calculator, database and maintenance features remain unimplemented.
 Zod validates session snapshots. Radix remains an approved option only when an interaction needs it.
 
 ## Lint compatibility and dependency risk
@@ -69,4 +69,8 @@ See [the Milestone 1 review package](docs/M1.4-MILESTONE-1-REVIEW.md) for the in
 
 ## Milestone 2 implementation reviews
 
-See [config and selection](docs/M2.1-M2.2-REVIEW.md) and [normalization, multipliers and aggregation](docs/M2.3-M2.5-REVIEW.md) for provenance, precision differences, scope boundaries and verification. Milestone 2 acceptance and M2.6–M2.7 are not complete.
+See [config and selection](docs/M2.1-M2.2-REVIEW.md) and [normalization, multipliers and aggregation](docs/M2.3-M2.5-REVIEW.md) for provenance, precision differences, scope boundaries and verification. Milestone 2, including M2.6–M2.7, was accepted on 2026-10-12 and merged as `4929f9f`; see [the acceptance record](docs/M2.7-MILESTONE-2-REVIEW.md).
+
+## M3.1–M3.3 recommendation foundation
+
+See [the package review](docs/M3.1-M3.3-REVIEW.md) for contracts, evidence limitations, local test commands and outstanding live-provider decisions. POST `/api/assessment-recommendations` accepts validated raw assessment input plus companyName/subindustry and currently returns explicit `provider_not_configured` with authoritative deterministic scores. Environment variables cannot enable network calls in this package. Controlled provider responses exist only in tests and are tagged `test_only`; the HTTP boundary will not publish them as recommendations. No results UI integration is included.

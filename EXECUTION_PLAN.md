@@ -700,7 +700,7 @@ Never widen tolerances merely to make Golden Tests pass.
 
 **Status:** COMPLETE
 
-Implemented and verified on 2026-10-12; accepted by the owner on 2026-10-12 following the human walkthrough. The eight-question test matched expected scores, and the Q23 edit, recalculation and refresh worked. Final acceptance includes M2.6 and completes Milestone 2; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation issues are deferred to M3.4/M3.6. PR #3 merged into main on 2026-10-12 with separate owner authorization; see the merge/branch record below. M3 implementation remains unstarted and unauthorized.
+Implemented and verified on 2026-10-12; accepted by the owner on 2026-10-12 following the human walkthrough. The eight-question test matched expected scores, and the Q23 edit, recalculation and refresh worked. Final acceptance includes M2.6 and completes Milestone 2; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation issues are deferred to M3.4/M3.6. PR #3 merged into main on 2026-10-12 with separate owner authorization; see the merge/branch record below. M3.1–M3.3 were subsequently authorized for local implementation on 2026-10-13; live provider integration and M3.4–M3.6 remain gated.
 
 
 
@@ -752,9 +752,9 @@ The deterministic core must be approved before recommendation logic becomes auth
 
 # Milestone 3 — Recommendations, results, and durable report
 
-## M3 implementation proposal — planning only, 2026-10-12
+## M3 implementation packages — proposed 2026-10-12; first package authorized 2026-10-13
 
-M2 was explicitly accepted on 2026-10-12. With separate owner merge authorization, PR #3 merged into main on 2026-10-12 using merge commit `4929f9f2969fa946da1066ea3825921349ecf641` (parents: previous main `8cae855` and acceptance commit `c9cb2b8`). Local main was synchronized, then `milestone-3-recommendations` was created from that merged main. `milestone-2-deterministic-core` remains preserved locally and remotely at `c9cb2b8`; shared history was not rewritten. The current branch is `milestone-3-recommendations`; this documentation handoff does not begin or authorize M3 implementation. All M3 execution steps remain PENDING.
+M2 was explicitly accepted on 2026-10-12. With separate owner merge authorization, PR #3 merged into main on 2026-10-12 using merge commit `4929f9f2969fa946da1066ea3825921349ecf641` (parents: previous main `8cae855` and acceptance commit `c9cb2b8`). Local main was synchronized, then `milestone-3-recommendations` was created from that merged main. `milestone-2-deterministic-core` remains preserved locally and remotely at `c9cb2b8`; shared history was not rewritten. The current branch is `milestone-3-recommendations`; the branch handoff itself did not authorize implementation. On 2026-10-13 the owner authorized M3.1–M3.3 using controlled local provider test doubles. See app/docs/M3.1-M3.3-REVIEW.md. No live calls are authorized; M3.4–M3.6 remain PENDING.
 
 ### First package: M3.1–M3.3
 
@@ -785,7 +785,7 @@ M2 was explicitly accepted on 2026-10-12. With separate owner merge authorizatio
 
 ### Proposed server environment names and decisions before implementation
 
-Names to add to `app/.env.example` when the package is authorized; no credentials are needed or requested for this M2 sprint:
+Reserved server names are documented in `app/.env.example`. They do not activate a provider in the local foundation; no credentials are needed or requested:
 
 | Name | Purpose |
 | --- | --- |
@@ -795,7 +795,7 @@ Names to add to `app/.env.example` when the package is authorized; no credential
 | `RECOMMENDATION_TIMEOUT_MS` | Validated bounded provider deadline |
 | `RECOMMENDATION_MAX_OUTPUT_TOKENS` | Validated cost/output bound |
 
-No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance and the authorized PR #3 merge were completed on 2026-10-12; first-package authorization remains the immediate implementation gate.
+No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budget, credential provisioning and allowed SME data transmission need owner direction before live integration. Before public exposure, decide deployment-level abuse/cost controls for a paid anonymous endpoint; do not expose an unbounded billable proxy. Citation/edition ambiguities must be resolved or explicitly excluded before affected generated advice is treated as grounded. M2 acceptance and the authorized PR #3 merge were completed on 2026-10-12; M3.1–M3.3 local implementation was authorized on 2026-10-13; provider/model, live-call budget and data-transmission approval remain required before live integration.
 
 
 
@@ -803,7 +803,9 @@ No `NEXT_PUBLIC_` secret or client-controlled provider URL. Provider/model, budg
 
 ## M3.1 — Recommendation service + provider boundary
 
-**Status:** PENDING
+**Status:** CURRENT
+
+Authorized 2026-10-13 and implemented as one local M3.1–M3.3 foundation package. See `app/docs/M3.1-M3.3-REVIEW.md` for verification and limitations. Provider-specific live integration remains gated; this package is not human-accepted.
 
 
 
@@ -853,7 +855,9 @@ Deterministic scoring must remain available if the model provider is unavailable
 
 ## M3.2 — RAG source/chunk retrieval
 
-**Status:** PENDING
+**Status:** CURRENT
+
+Authorized 2026-10-13 and implemented as one local M3.1–M3.3 foundation package. See `app/docs/M3.1-M3.3-REVIEW.md` for verification and limitations. Provider-specific live integration remains gated; this package is not human-accepted.
 
 
 
@@ -897,7 +901,9 @@ Vector/embedding retrieval is not required unless separately justified.
 
 ## M3.3 — Structured recommendation generation
 
-**Status:** PENDING
+**Status:** CURRENT
+
+Authorized 2026-10-13 and implemented as one local M3.1–M3.3 foundation package. See `app/docs/M3.1-M3.3-REVIEW.md` for verification and limitations. Provider-specific live integration remains gated; this package is not human-accepted.
 
 
 
@@ -1113,7 +1119,7 @@ Scores, charts, deterministic gaps, and report generation must still work when A
 
 ### Planned LlamaIndex / LangChain experiment — owner request 2026-10-13
 
-**Purpose:** Build demonstrable hands-on experience with both frameworks and test whether they help deliver assessment recommendations in **under 10 seconds**. This is planned work within M3.6, after the native baseline exists; M3 implementation remains PENDING. Framework use alone does not establish a speed improvement.
+**Purpose:** Build demonstrable hands-on experience with both frameworks and test whether they help deliver assessment recommendations in **under 10 seconds**. This is planned work within M3.6, after the native baseline exists; this M3.6 experiment remains PENDING. Framework use alone does not establish a speed improvement.
 
 **Scope**
 
@@ -2152,5 +2158,5 @@ The next proposed action without starting it.
 - M2.3–M2.5 — COMPLETE; implemented, verified, and accepted by human review on 2026-10-11.
 - M2.6 — COMPLETE; implemented and verified on 2026-10-11; accepted by the owner in the final M2 walkthrough on 2026-10-12.
 - M2.7 — COMPLETE; implemented, verified and explicitly accepted on 2026-10-12. Milestone 2 is complete; see app/docs/M2.7-MILESTONE-2-REVIEW.md. Questionnaire review/navigation follow-ups remain deferred to M3.4/M3.6. PR #3 merged into main as `4929f9f2969fa946da1066ea3825921349ecf641` on 2026-10-12.
-- Current branch — `milestone-3-recommendations`, created from synchronized main at `4929f9f2969fa946da1066ea3825921349ecf641`; the M2 branch/history remain preserved. M3 implementation is unstarted; M3.1–M3.6 remain PENDING.
+- Current branch — `milestone-3-recommendations`, created from synchronized main at `4929f9f2969fa946da1066ea3825921349ecf641`; the M2 branch/history remain preserved. M3.1–M3.3 are CURRENT: locally implemented, pending package review and live-integration decisions. M3.4–M3.6 remain PENDING, including deferred questionnaire navigation and the framework experiment.
 - All later steps remain subject to their existing status and explicit human authorization.
