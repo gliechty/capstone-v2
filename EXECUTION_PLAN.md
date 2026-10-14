@@ -1019,7 +1019,7 @@ Acceptance at M3.6: verify entry to review from the first, a middle and the last
 
 ### Additional review/results UX — human feedback 2026-10-14
 
-During the rebuilt `72f9eb3` walkthrough, the owner confirmed answers persist after refresh and found **How this score was calculated** useful. These observations do not record notes-only score invariance or package/milestone acceptance.
+During the rebuilt `72f9eb3` walkthrough, the owner confirmed answers and Additional Context / Requirements persist after refresh and found **How this score was calculated** useful. The owner then edited only the additional context and recalculated; before/after screenshots show the same displayed raw score (58.3) and industry-weighted score (13.8), with four answered questions. This completes the reported manual notes/persistence check; it is not a new numeric oracle or formal package/milestone acceptance.
 
 - Put the primary **Generate score / Generate score anyway** action near the top of Review Answers, alongside the answered/unanswered summary, so users need not scroll through the entire questionnaire. Retain a matching bottom action if useful; both must perform the same operation.
 - Make score generation lead directly to the results page and its calculation/loading/error states. Remove the intervening **Your answers are ready for calculation / View calculated results** screen from the normal flow; move any necessary calculation/data-handling notice inline. This navigation change does not authorize live AI calls or change server validation, answer retention, missing-data semantics or deterministic scoring.
@@ -1027,6 +1027,22 @@ During the rebuilt `72f9eb3` walkthrough, the owner confirmed answers persist af
 - The owner questioned the user-facing purpose of raw technical JSON. Presentation recommendation for M3.4 review: label it clearly as advanced audit/debug detail, keep it collapsed and outside the primary reading flow, and avoid raw JSON blocks in the default printable report. Preserve full-precision structured traces and their config/method/rule provenance; this is a presentation decision, not removal of the audit capability.
 
 Extend M3.6 acceptance checks to cover the top-of-review generation action on desktop/mobile and keyboard, direct results navigation without the extra confirmation screen, calculation loading/failure states, preserved answers on return, and continued access to readable calculations and optional technical audit detail. These items are planned with M3.4/M3.5; this record does not begin implementation.
+
+### Proposed five-stage navigation — owner discussion 2026-10-14
+
+The owner proposes a horizontal connected step indicator at the top of the assessment and results pages: **Set Up > Data Input > Questions > Review > Results**, with completed stages green and inaccessible stages gray. The purpose is to revisit business context, the chosen input method or answers directly, then return to updated results. Record this as a design proposal for M3.4; implementation and final interaction details remain pending.
+
+Recommended interaction rules to resolve with the package:
+- Keep the navigation consistently visible, with a compact accessible treatment on narrow screens that does not cover content. Preserve the existing vertical results narrative; these are process stages, not tabs for result sections.
+- Separate completion from availability: distinguish the current stage, completed stages, accessible incomplete stages and locked stages with text/icons as well as color. Explain why a stage is locked. Set Up must always be accessible for correction, and previously accessible stages must remain reachable when their prerequisites remain valid.
+- Require valid business setup and an available input method to proceed into questions. Incomplete questionnaires remain valid for review and partial scoring; do not require every answer or explicit Skip before enabling Review. Invalid nonblank answers must remain visible and correctable, and must not be silently scored or discarded.
+- Initially generate a score from Review with clear answered/unanswered counts, then allow revisiting Results directly while current prerequisites remain valid. Treat returning to Results after scoring-input edits as a request to recompute authoritative scores. Show loading or unavailable/validation states; never present an old score as current.
+- Preserve answers, notes and navigation position when moving between stages. Re-evaluate the selected questionnaire after context changes using existing deterministic selection rules; only currently applicable valid answers contribute. Disclose any newly unanswered questions without silently resetting the assessment.
+- Notes-only edits leave deterministic scores unchanged but make any previous recommendations outdated. Recommendation responses and reports must match current input/config/method/policy/prompt identity; do not trigger paid AI generation merely by navigating between stages. An explicit regenerate action may request new advice once live calls are approved.
+- This navigation proposal does not implement utility-bill upload or the emissions calculator. Those input methods remain visibly unavailable until their own authorized milestones.
+
+Extend M3.6 browser checks to cover forward/backward stage navigation, keyboard/mobile access, partial questionnaires, invalid setup/answers, context edits that change selected questions, refresh persistence, and stale or out-of-order score/recommendation responses after edits.
+
 
 
 
