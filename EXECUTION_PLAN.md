@@ -1017,6 +1017,18 @@ Owner-requested follow-up from the M2 walkthrough; schedule with M3.4 in the M3.
 
 Acceptance at M3.6: verify entry to review from the first, a middle and the last question; blank final-question access without Skip; unchanged answers/drafts and missing counts; valid partial-score confirmation; and continued rejection of invalid nonblank scoring inputs.
 
+### Additional review/results UX — human feedback 2026-10-14
+
+During the rebuilt `72f9eb3` walkthrough, the owner confirmed answers persist after refresh and found **How this score was calculated** useful. These observations do not record notes-only score invariance or package/milestone acceptance.
+
+- Put the primary **Generate score / Generate score anyway** action near the top of Review Answers, alongside the answered/unanswered summary, so users need not scroll through the entire questionnaire. Retain a matching bottom action if useful; both must perform the same operation.
+- Make score generation lead directly to the results page and its calculation/loading/error states. Remove the intervening **Your answers are ready for calculation / View calculated results** screen from the normal flow; move any necessary calculation/data-handling notice inline. This navigation change does not authorize live AI calls or change server validation, answer retention, missing-data semantics or deterministic scoring.
+- Retain the readable calculation explanations and per-question breakdowns.
+- The owner questioned the user-facing purpose of raw technical JSON. Presentation recommendation for M3.4 review: label it clearly as advanced audit/debug detail, keep it collapsed and outside the primary reading flow, and avoid raw JSON blocks in the default printable report. Preserve full-precision structured traces and their config/method/rule provenance; this is a presentation decision, not removal of the audit capability.
+
+Extend M3.6 acceptance checks to cover the top-of-review generation action on desktop/mobile and keyboard, direct results navigation without the extra confirmation screen, calculation loading/failure states, preserved answers on return, and continued access to readable calculations and optional technical audit detail. These items are planned with M3.4/M3.5; this record does not begin implementation.
+
+
 
 
 ---
