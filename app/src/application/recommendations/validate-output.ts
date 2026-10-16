@@ -2,7 +2,7 @@ import type { CanonicalConfig } from "../../domain/config/types";
 import type { AssessmentScore } from "../../domain/scoring/score-assessment";
 import { recommendationContentSchema, type RecommendationContent, type RecommendationRequest } from "./contracts";
 import { scoreClosing, type PreparedEvidence } from "./prepare";
-export interface OutputIssue { code: string; path: string }
+export interface OutputIssue { code: string; path: string; categories?: RecommendationContent["key_gaps"][number]["category"][] }
 export function validateRecommendationOutput(raw: unknown, input: RecommendationRequest, score: AssessmentScore, evidence: PreparedEvidence, config: CanonicalConfig, maxBytes: number):
   { ok: true; content: RecommendationContent } | { ok: false; issues: OutputIssue[] } {
   const fail = (code: string) => ({ ok: false as const, issues: [{ code, path: "output" }] });
@@ -14,13 +14,10 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
   if (!parsed.success) return { ok: false, issues: parsed.error.issues.slice(0, 20).map(i => ({ code: "schema", path: i.path.join(".") })) };
   const content = parsed.data;
   const issues: OutputIssue[] = [];
-  const add = (code: string, path: string) => { if (issues.length < 20) issues.push({ code, path }); };
+  const add = (code: string, path: string, detail: Pick<OutputIssue, "categories"> = {}) => { if (issues.length < 20) issues.push({ code, path, ...detail }); };
   const closing = scoreClosing(score);
   if (!content.executive_summary.endsWith(closing)) add("score_mismatch", "executive_summary");
   const summary = content.executive_summary.endsWith(closing) ? content.executive_summary.slice(0, -closing.length) : content.executive_summary;
-  for (const value of [input.context.industry, input.context.companySize, input.context.businessGoal]) {
-    if (!summary.toLowerCase().includes(value.toLowerCase())) add("sme_context_missing", "executive_summary");
-  }
   const observed = score.categories.filter(c => c.percent !== null).sort((a, b) => a.percent! - b.percent!);
   const categories = new Set(observed.map(c => c.category));
   const lowest = observed[0]?.percent;
@@ -34,13 +31,14 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
     if (r.priority_rank !== i + 1) add("rank_order", path);
     if (titles.has(r.title.toLowerCase())) add("duplicate_recommendation", path);
     titles.add(r.title.toLowerCase());
-    if (r.related_categories.some(c => !categories.has(c))) add("unanswered_category", path);
+    const unanswered = r.related_categories.filter(c => !categories.has(c));
+    if (unanswered.length) add("unanswered_category", path, { categories: unanswered });
     if (r.recommended_action.split(/\s+/).length > 120) add("action_length", path);
     if (r.evidence.length === 0 && !/a practical next step would be|this suggests/i.test(r.why_it_matters + " " + r.recommended_action)) add("unlabeled_inference", path);
     for (const field of ["title", "why_it_matters", "recommended_action"] as const) narratives.push({ text: r[field], path: `${path}.${field}` });
   });
   for (const [i, gap] of content.key_gaps.entries()) {
-    if (!categories.has(gap.category)) add("unanswered_category", `key_gaps.${i}`);
+    if (!categories.has(gap.category)) add("unanswered_category", `key_gaps.${i}`, { categories: [gap.category] });
     narratives.push({ text: gap.gap, path: `key_gaps.${i}.gap` });
   }
   for (const [name, rows] of [["priority_recommendations", content.priority_recommendations], ["key_gaps", content.key_gaps]] as const) {
@@ -61,7 +59,7 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
     if (internalIds.some(id => row.text.includes(id))) add("internal_id", row.path);
     // Closed score-restatement surface. Reject other numeric score claims,
     // including reversed phrasing and percentages, instead of repairing them.
-    // Required, validated context labels can contain numbers and "ratings".
+    // Supplied context labels can contain numbers and "ratings".
     // Mask only those literal labels in the summary, not generated claims.
     let scoreClaims = row.text;
     if (row.path === "executive_summary") {

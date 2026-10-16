@@ -1,9 +1,17 @@
-import { generateRecommendations } from "../../../adapters/recommendations/server";
+import { isLocalRequest, createLocalAdmission } from "../../../adapters/recommendations/local-boundary";
+import { generateRecommendations, providerStatus } from "../../../adapters/recommendations/server";
 import { RecommendationInputError } from "../../../application/recommendations/contracts";
 import { recommendationPolicy } from "../../../application/recommendations/policy";
 export const runtime = "nodejs";
 const response = (body: unknown, status: number) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
+const admit = createLocalAdmission();
+export async function GET(request: Request) {
+  if (!isLocalRequest(request, false)) return response({ status: "unavailable", code: "local_only" }, 403);
+  try { return response(providerStatus(), 200); }
+  catch { return response({ status: "unavailable", code: "configuration_unavailable" }, 503); }
+}
 export async function POST(request: Request) {
+  if (!isLocalRequest(request, true)) return response({ status: "unavailable", code: "local_only" }, 403);
   if (request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase() !== "application/json") return response({ status: "unavailable", code: "unsupported_media_type" }, 415);
   const reader = request.body?.getReader();
   if (!reader) return response({ status: "unavailable", code: "invalid_request" }, 400);
@@ -30,10 +38,17 @@ export async function POST(request: Request) {
   } catch (error) { return response({ status: "unavailable", code: error === timeoutError ? "request_timeout" : "invalid_request" }, error === timeoutError ? 408 : 400); }
   finally { if (timeout !== undefined) clearTimeout(timeout); }
   try {
-    const result = await generateRecommendations(input, request.signal);
+    const configuration = providerStatus();
+    const expected = request.headers.get("x-recommendation-configuration");
+    if (expected && expected !== configuration.fingerprint) return response({ status: "unavailable", code: "configuration_changed" }, 409);
+    const slot = configuration.ready ? admit() : null;
+    if (slot && !slot.ok) return response({ status: "unavailable", code: slot.code }, 429);
+    let result;
+    try { result = await generateRecommendations(input, request.signal); }
+    finally { if (slot?.ok) slot.release(); }
     // A test double cannot be selected by this endpoint or exposed as live output.
     if (result.status === "test_only") return response({ status: "unavailable", code: "provider_not_configured" }, 503);
-    return response(result, result.status === "available" ? 200 : 503);
+    return response({ ...result, configuration }, result.status === "available" ? 200 : 503);
   } catch (error) {
     return response({ status: "unavailable", code: error instanceof RecommendationInputError ? "invalid_assessment" : "configuration_unavailable" }, error instanceof RecommendationInputError ? 422 : 503);
   }

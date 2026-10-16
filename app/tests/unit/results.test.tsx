@@ -7,15 +7,15 @@ import ResultsPage from "../../src/app/results/page";
 vi.mock("../../src/features/results/computed-scores", () => ({ ComputedScores: () => <h2>Calculated overall scores</h2> }));
 afterEach(cleanup);
 
-test("results preserve the narrative hierarchy and clearly identify mock content", () => {
+test("results preserve the narrative hierarchy and show truthful not-generated states", () => {
   render(<ResultsPage />);
   expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   expect(screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent)).toEqual([
-    "Calculated overall scores", "Executive summary", "Key gaps", "Recommended actions", "Evidence & sources",
+    "Calculated overall scores", "Executive summary", "Key gaps (0)", "Recommended actions (0)", "Evidence & sources",
   ]);
-  expect(screen.getByRole("complementary", { name: "Results limitations" })).toHaveTextContent("fixed fictional examples");
-  expect(screen.getByText("Example narrative · Not AI-generated")).toHaveTextContent("Not AI-generated");
-  expect(screen.getByText(/No source evidence has been retrieved/)).toBeVisible();
+  expect(screen.getByRole("complementary", { name: "Results limitations" })).toHaveTextContent("require explicit generation");
+  expect(screen.getByRole("button", { name: "Generate recommendations" })).toBeDisabled();
+  expect(screen.getByText(/No AI recommendation evidence/)).not.toBeVisible();
 });
 
 test("report cannot trigger generation and links retain their destinations", () => {

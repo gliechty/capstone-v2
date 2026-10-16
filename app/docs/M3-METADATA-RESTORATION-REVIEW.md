@@ -1,6 +1,9 @@
 # M3 metadata restoration — mapping and correction review
 
-Status: locally implemented under owner authorization, 2026-10-13; **not human-accepted**. Branch: `milestone-3-recommendations`. Foundation checkpoint `7480686` preserves the verified M3.1–M3.3 work. Remote documentation `e162192` was integrated by merge commit `49f9cbe` without rebasing or rewriting history. This correction is committed separately. No live calls, dependencies, deployment, M3.4 results integration or M3.6 experiments.
+Current disposition (2026-10-14): the owner accepted this LOCAL foundation/metadata work after the refresh and notes-only score walkthrough (raw 58.3 / weighted 13.8 unchanged). The original implementation and verification record below is historical. The new live-provider/limited Results package is reviewed separately in [M3-LIVE-AI-REVIEW.md](M3-LIVE-AI-REVIEW.md); it and Milestone 3 are not accepted. Earlier statements below about no live adapter/UI or pending local acceptance describe the original checkpoint.
+
+
+Original checkpoint status: locally implemented under owner authorization, 2026-10-13; acceptance was pending at that checkpoint and was granted for local behavior on 2026-10-14. Branch: `milestone-3-recommendations`. Foundation checkpoint `7480686` preserves the verified M3.1–M3.3 work. Remote documentation `e162192` was integrated by merge commit `49f9cbe` without rebasing or rewriting history. This correction is committed separately. No live calls, dependencies, deployment, M3.4 results integration or M3.6 experiments.
 
 ## Source and complete setup mapping
 

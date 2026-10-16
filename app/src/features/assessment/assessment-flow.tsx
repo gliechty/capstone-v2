@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { authorizeResultsGeneration } from "../../application/recommendations/generation-intent";
+import { recommendationRequestFromSession } from "../../application/recommendations/request";
 import { NOTES_MAX_LENGTH } from "../../application/assessment-notes";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { MobileQuestionRail, ProgressNavigator } from "./progress-navigator";
@@ -138,7 +141,7 @@ function AnswerForm({ question }: { question: Question }) {
   function pointerChoice(value: string) {
     cancelAdvance();
     dispatch({ type: "answer", id: question.id, raw: value });
-    advanceTimer.current = setTimeout(() => dispatch({ type: "next" }), 280);
+    advanceTimer.current = setTimeout(() => dispatch({ type: "next" }), 800);
   }
   const raw = session.answers[question.id] ?? "";
   const error = attempted ? answerError(question, raw) : undefined;
@@ -180,6 +183,7 @@ function AnswerForm({ question }: { question: Question }) {
           ref={(node) => { inputRef.current = node; }} aria-invalid={Boolean(error)}
           aria-describedby={"question-hint" + (error ? " answer-error" : "")} onChange={(event) => change(event.target.value)} />}
     </div>}
+    {"options" in question && raw && <p className="selection-confirmation mt-3" role="status">Selected: {raw}</p>}
     {error && <p id="answer-error" role="alert" className="form-error mt-3">{error}</p>}
     <p className="mt-4 text-small text-muted">{"options" in question ? "Click or tap an answer to continue automatically. With a keyboard, choose with arrows or Space, then press Enter or Continue." : "Enter an answer, then continue."} You can revisit any question.</p>
     <div className="mt-6 flex flex-wrap gap-3">
@@ -244,13 +248,37 @@ function Questionnaire() {
 }
 
 function Review() {
-  const { session, dispatch, questions } = useAssessment();
+  const { session, dispatch, questions, saveWarning } = useAssessment();
+  const router = useRouter();
+  const sending = useRef(false);
+  const [confirmPartial, setConfirmPartial] = useState(false);
+  const confirmButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => { if (confirmPartial) confirmButton.current?.focus(); }, [confirmPartial]);
+  const [message, setMessage] = useState("");
   const missing = unanswered(session, questions);
+  const invalid = questions.some(q => session.answers[q.id]?.trim() && answerError(q, session.answers[q.id]));
+  function generate() {
+    if (sending.current || invalid || saveWarning) return;
+    if (missing.length && !confirmPartial) { setConfirmPartial(true); return; }
+    try {
+      const input = recommendationRequestFromSession(session);
+      sending.current = true;
+      authorizeResultsGeneration(input);
+      router.push("/results");
+    } catch { setMessage("Review your assessment before generating results."); }
+  }
   return <section className="assessment-setup">
     <span className="section-label">Review / Your answers</span>
     <StageHeading>Review your answers.</StageHeading>
-    <p className="mt-4">{missing.length} unanswered {missing.length === 1 ? "question" : "questions"}.</p>
-    <p className="mt-2 text-muted">Blank or invalid entries stay unanswered. They are never treated as zero.</p>
+    <p className="mt-4">{questions.length - missing.length} answered · {missing.length} unanswered questions.</p>
+    <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence and require human review.</p>
+    <p className="mt-3 text-small">This action calculates scores and requests AI recommendations from the configured provider. Your business context, answers and source excerpts are sent for generation.</p>
+    {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
+    {message && <p role="alert">{message}</p>}
+    {confirmPartial ? <div className="preview-notice mt-6" role="group" aria-label="Confirm partial assessment">
+      <p role="status">{missing.length} questions are unanswered. Scores and recommendations will be based only on the available answers.</p>
+      <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations anyway</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
+    </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations</button>}
     <ul className="my-8 grid gap-3">
       {questions.map((question, i) => <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>
@@ -258,11 +286,7 @@ function Review() {
         {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
       </li>)}
     </ul>
-    <p className="mb-4 text-small text-muted">Scores use the answers you entered. Invalid entries must be corrected or cleared before calculation; missing answers remain missing. Recommendations and reports are not generated.</p>
-    <div className="flex flex-wrap gap-4">
-      {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}
-      <button type="button" className="button-primary" onClick={() => dispatch({ type: "boundary" })}>{missing.length > 0 ? "Generate score anyway" : "Generate score"}</button>
-    </div>
+    {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}
   </section>;
 }
 
@@ -271,7 +295,7 @@ function Boundary() {
   return <section className="assessment-setup">
     <span className="section-label">Deterministic scoring / Research build</span>
     <StageHeading>Your answers are ready for calculation.</StageHeading>
-    <p className="mt-6 text-muted">The results page submits your raw answers and selection context to this application’s server to calculate scores from the canonical configuration. Answers are not stored on the server. Narrative and recommendations remain fictional examples.</p>
+    <p className="mt-6 text-muted">The results page submits your raw answers and selection context to this application’s server to calculate scores from the canonical configuration. Answers are not stored on the server. AI recommendations require an explicit generation request and must pass validation.</p>
     <div className="flex flex-wrap gap-4 mt-8"><button type="button" className="button-secondary" onClick={() => dispatch({ type: "review" })}>Return to answer review</button><Link href="/results" className="button-primary">View calculated results</Link></div>
   </section>;
 }
@@ -287,7 +311,7 @@ function Flow() {
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
       <div className="preview-notice mb-6">
         <p className="font-semibold">Assessment interaction preview</p>
-        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. Recommendations are not generated.</p>
+        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. AI recommendations require an explicit generation request.</p>
       </div>
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}

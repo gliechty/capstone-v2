@@ -37,3 +37,24 @@ test("withholds known ambiguous page references and unsafe links, preserving can
   expect(safeSourceLink(" https://example.org/a ")).toBe("https://example.org/a");
   for (const link of ["http://example.org", "https://user:pass@example.org", "file:///secret", "invalid"]) expect(safeSourceLink(link)).toBeNull();
 });
+
+test("revised contract supplies business context and assessed categories without changing legacy text or scores", () => {
+  const result = assemblePrompt(input, score, evidence);
+  const context = JSON.parse(result.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
+  expect(context.prompt_version).toBe("legacy-runtime-v1-validated-transport-4");
+  expect(context).not.toHaveProperty("required_summary_labels");
+  expect(result.sme).toMatchObject({ industry: input.context.industry, employee_band: input.context.companySize, business_goal: input.context.businessGoal });
+  expect(context.allowed_assessed_categories).toEqual(["Governance"]);
+  expect(context.unassessed_categories).toEqual(["People", "Community", "Resources"]);
+  expect(result.system).toContain("verbatim repetition in executive_summary is not required");
+  expect(result.system).toContain("BOTH priority_recommendations.related_categories and key_gaps.category");
+  expect(result.system).toContain("Null category scores mean unassessed, not zero");
+  expect(result.system).toContain("in grounding_notes, not in structured recommendations or key gaps");
+  expect(result.system).toContain("maxima, not quotas");
+  expect(result.scoring.category_scores.map(c => c.category_percent)).toEqual(score.categories.map(c => c.percent));
+  const changedScore = { ...score, categories: score.categories.map(c => c.category === "Resources" ? { ...c, percent: 0, answered: 1 } : c) };
+  const changed = assemblePrompt(input, changedScore, evidence);
+  const changedContext = JSON.parse(changed.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
+  expect(changedContext.allowed_assessed_categories).toEqual(["Governance", "Resources"]);
+  expect(changedContext.unassessed_categories).toEqual(["People", "Community"]);
+});

@@ -4,7 +4,7 @@ const display = (value: number | null) => value === null ? "Not scored" : value.
 export function ScoreExplanation({ score }: { score: ScoreSummary }) {
   return <details className="score-explanation">
     <summary>How this score was calculated</summary>
-    <div className="explanation-body">
+    <div className="explanation-body"><p className="text-small break-words">Configuration: {score.configVersion}. Method: {score.methodVersion}. Display values are rounded; calculations retain full precision. Lowest assessed categories compare answered questions only and are not a readiness classification.</p>
       <p>Each answered question is converted to a normalized score using its configured answer scale or metric benchmark. That score is multiplied by the question’s base weight and any matching context multiplier to produce earned points.</p>
       <p className="mt-4">Raw overall compares {display(score.earned)} earned points with {display(score.possible)} possible points. Category scores compare points within each category; the industry-weighted score combines those category scores using the configured industry weights.</p>
       <p className="mt-4 text-small text-muted">Missing answers contribute no earned or possible points. Missing categories remain unscored and their weights are not redistributed. Values below are rounded for reading only; technical detail and JSON retain calculation precision.</p>

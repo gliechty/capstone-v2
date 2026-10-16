@@ -22,11 +22,19 @@ export const recommendationContentSchema = z.strictObject({
 });
 export type RecommendationContent = z.infer<typeof recommendationContentSchema>;
 export type Citation = z.infer<typeof citationSchema>;
+export type ProviderDiagnostic =
+  | { stage: "awaiting_headers"; requestBytes: number }
+  | { stage: "reading_body"; headersMs: number; httpStatus: number }
+  | { stage: "body_complete"; bodyMs: number; responseBytes: number };
 export interface RecommendationProvider {
   readonly id: string;
   readonly model: string;
   readonly kind: "live" | "test-double" | "disabled";
-  generate(request: { system: string; prompt: string; maxOutputTokens: number; signal: AbortSignal }): Promise<unknown>;
+  readonly settings?: { reasoning: string; timeoutMs: number; maxOutputTokens: number };
+  generate(request: { system: string; prompt: string; maxOutputTokens: number; signal: AbortSignal; onDiagnostic?: (event: ProviderDiagnostic) => void }): Promise<unknown>;
 }
-export type UnavailableCode = "provider_not_configured" | "no_answers" | "insufficient_evidence" | "prompt_too_large" | "timeout" | "cancelled" | "provider_failure" | "invalid_output";
+export type UnavailableCode = "provider_not_configured" | "no_answers" | "insufficient_evidence" | "prompt_too_large" | "timeout" | "cancelled" | "provider_failure" | "invalid_output" | "authentication_failed" | "quota_exceeded" | "rate_limited" | "refused" | "incomplete_output" | "invalid_response";
 export class RecommendationInputError extends Error {}
+
+export type TokenUsage = { inputTokens: number; outputTokens: number };
+export class ProviderFailure extends Error { constructor(readonly code: UnavailableCode, readonly usage?: TokenUsage) { super(code); } }

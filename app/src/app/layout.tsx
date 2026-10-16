@@ -1,3 +1,4 @@
+import { previewEnabled } from "../adapters/preview-mode";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
@@ -11,6 +12,7 @@ const manrope = localFont({
   weight: "200 800",
 });
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: landingCopy.metadata.title,
   description: landingCopy.metadata.description,
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body>{children}</body>
+      <body>{previewEnabled() && <aside className="preview-notice" aria-label="Private preview"><strong>Private offline preview — synthetic recommendation examples</strong><p>No AI provider calls. Use synthetic data only. <a href="/preview">Preview controls</a></p></aside>}{children}</body>
     </html>
   );
 }

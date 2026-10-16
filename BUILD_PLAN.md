@@ -469,8 +469,56 @@ The owner explicitly accepted Milestone 2 on 2026-10-12 following the human walk
 
 ## Active package — M3.1–M3.3, authorized 2026-10-13
 
-The owner authorized the recommendation foundation: provider-neutral service, native metadata retrieval, preserved prompt assembly and validated outputs, using controlled local provider test doubles. Live external calls remain gated on provider/model, budget and SME data approval; no credentials are requested. Implementation is recorded in app/docs/M3.1-M3.3-REVIEW.md and EXECUTION_PLAN.md. The package is not human-accepted and Milestone 3 remains incomplete. M3.4–M3.6, including questionnaire polish and the LlamaIndex/LangChain experiment, remain pending. No deployment or merge is authorized.
+The owner authorized the recommendation foundation: provider-neutral service, native metadata retrieval, preserved prompt assembly and validated outputs, using controlled local provider test doubles. Live external calls remain gated on provider/model, budget and SME data approval; no credentials are requested. Implementation is recorded in app/docs/M3.1-M3.3-REVIEW.md and EXECUTION_PLAN.md. The local foundation was accepted on 2026-10-14; live-provider work is governed by the subsequent limited authorization below. Milestone 3 remains incomplete; deferred questionnaire polish, reports and framework experiments remain pending. No deployment or merge is authorized.
 
 ## Targeted metadata restoration — authorized 2026-10-13
 
-The owner authorized restoration of Appsmith Additional Context / Requirements (`notes`) only, preserving valid sessions/answers and deterministic behavior. See app/docs/M3-METADATA-RESTORATION-REVIEW.md for the complete legacy setup mapping, country/revenue omissions and verification. M3.1–M3.3 remain pending human acceptance; this correction does not authorize the rest of M3.4, retrieval experiments or live calls. The verified foundation was checkpointed as `7480686` before integrating remote documentation `e162192` through a merge.
+The owner authorized restoration of Appsmith Additional Context / Requirements (`notes`) only, preserving valid sessions/answers and deterministic behavior. See app/docs/M3-METADATA-RESTORATION-REVIEW.md for the complete legacy setup mapping, country/revenue omissions and verification. The local foundation and this correction were accepted on 2026-10-14. That acceptance does not accept live integration or authorize deferred M3.4 navigation, reports or retrieval experiments. The verified foundation was checkpointed as `7480686` before integrating remote documentation `e162192` through a merge.
+
+## Current limited live-AI package — authorized 2026-10-14
+
+The owner accepts the LOCAL M3.1–M3.3 foundation and notes restoration. Human walkthrough: answers/notes survive refresh; notes-only edits left raw 58.3 and industry-weighted 13.8 unchanged. This is not acceptance of live generation or Milestone 3.
+
+Authorized now: actual server-only OpenAI Responses adapter (gpt-5.4-mini, low reasoning baseline), runtime configuration, existing prompt/application validation, and only M3.4 explicit generation controls, validated narrative/evidence, loading/failure/cancel/retry and stale-result protection in the existing Results layout. M3.2 retrieval remains unchanged. See app/docs/M3-LIVE-AI-REVIEW.md and app/docs/AI-PROVIDER-SETUP.md.
+
+After explicit local provider/model/key configuration, at most five automated synthetic-profile generation attempts are authorized within an estimated US$2 total, counting failures/timeouts. No archived/confidential SME transmission. No credentials are present at the recorded check; live verification remains pending. Ordinary verification remains offline. No deployment/main merge or deferred M3.4 navigation/Skip/technical-JSON work, M3.5 report or M3.6 experiments are authorized. Whole M3.4 and Milestone 3 remain open.
+
+The full offline package gate passed on 2026-10-14: typecheck, lint, 227 unit tests, production build and 55 browser tests. Live verification and acceptance of the new package remain pending.
+
+Operating correction: leave this package uncommitted; the owner handles staging, commits and pushes manually. Routine scoped work and documentation remain authorized; respect platform controls and stop only for genuinely unresolved material decisions.
+## Current M3.1/M3.3 correction — authorized 2026-10-15, offline only
+
+The original five-attempt live allowance and the separately authorized sixth diagnostic are exhausted. The sixth request returned HTTP 200 after about 15 seconds but failed unchanged application validation. No further provider request is authorized; earlier allowance/configuration statements above describe the prior checkpoint. Both ignored ledgers are preserved.
+
+The owner authorized prompt-contract clarification and coordinated operational deadlines: exact summary labels; assessed/unassessed category lists; assessed-only recommendations and key gaps; missing-data disclosures in grounding_notes; counts as maxima. Prompt version is legacy-runtime-v1-validated-transport-3, preserving the archived legacy template, scoring, retrieval and validation safeguards. Provider default/maximum is 30 seconds and generation-client caps 45 seconds; cancellation and the separate under-ten-second performance target remain. The explicit existing app/.env.local value 10000 is preserved and still takes precedence until the owner replaces that single line with RECOMMENDATION_TIMEOUT_MS=30000 and restarts the updated server. No secret or environment file was printed or overwritten.
+
+See app/docs/M3-LIVE-AI-REVIEW.md and EXECUTION_PLAN.md for verification and configuration precedence. This correction does not accept the live package or Milestone 3 and does not authorize new calls, deferred milestones, deployment, staging, commits or pushes.
+
+
+### Latest live evidence — 2026-10-15
+
+After the prompt/deadline correction, the owner authorized exactly one additional synthetic request under a separate $0.35 budget. Readiness verified 30000 ms / prompt version 3; reserved $0.324144 and dispatched once. HTTP 200 in about 8.94 seconds service total, but application validation rejected a missing exact industry label. Synthetic response retained only as local diagnostic evidence. No validated live acceptance. All allowances are now exhausted; see EXECUTION_PLAN.md and app/docs/M3-LIVE-AI-REVIEW.md. Existing ledgers and environment preserved; changes remain unstaged/uncommitted.
+
+
+### Current migration-baseline scope correction — 2026-10-15
+
+The owner removed literal summary context labels as an acceptance requirement and authorized minimal separate setup-context display in Results. Contract version 4 preserves numeric/structure/citation/category/freshness safeguards. Retained synthetic output passes the revised validator offline; no new live success or Appsmith parity is claimed. Broader prose, claim grounding, model selection and latency evaluation belong to M3.6, not additional migration blockers. See app/docs/M3-MIGRATION-BASELINE-REVIEW.md and EXECUTION_PLAN.md. No live calls, configured-model/.env.local change, deferred milestones, deployment or Git publication authorized; M3 remains unaccepted.
+
+Owner decision 2026-10-15: offline v4 context-contract correction accepted, not all M3. One separately authorized synthetic browser generation passed and the notes-only followup preserved scores; evidence is in app/docs/M3-LIVE-AI-REVIEW.md. GPT-5.2 comparison/harness deferred to M3.6. Design-planning checkpoints retained in EXECUTION_PLAN.md without implementation authorization. The single additional allowance is consumed; no further paid calls authorized.
+
+## Focused Results interaction/UI package — authorized 2026-10-16
+
+Owner authorizes combined Generate score and recommendations action (including partial confirmation), immediate independent scores, one explicitly requested recommendation attempt, failure/retry/cancel and duplicate/stale protection; balanced responsive Results layout; expanded executive summary and collapsed counted gaps/actions with evidence/technical disclosure. Use installed UI/accessibility guidance and existing design primitives. No paid calls, new AI components, scoring/retrieval/config/validation/provider changes, commits or pushes. Newer uncommitted work and ledgers must be preserved. This supersedes the earlier restriction on this specific Results transition/layout work, not the rest of deferred navigation, M3.5 reports or M3.6 experiments. M3 is not accepted. Implementation/verification record: app/docs/M3-RESULTS-INTERACTION-REVIEW.md.
+
+## Results visual correction — owner authorized 2026-10-16
+
+Correct presentation omissions from manual review: compact stored context and accurate score-driver explanation; progressive technical information; top action category/difficulty badges; per-insight accessible source dialogs; reordered/grouped evidence; separate missing-information notice and existing unanswered-item navigation. Use ui-ux-pro-max and ui-styling. No scoring/retrieval/prompt/config/provider changes, paid calls, reports, anticipated ROI, commits or pushes. M3 acceptance is unchanged. Review and per-requirement evidence: app/docs/M3-RESULTS-VISUAL-CORRECTION-REVIEW.md.
+
+
+## Owner acceptance: focused Results UI corrections — 2026-10-16
+
+Owner explicitly accepted the requested Results UI corrections, loading feedback and slower card transitions. This includes the compact context/hierarchy, source dialogs, evidence ordering, reduced clutter, spinner/two-second rotating wording, visible selection confirmation and slower motion. Retained gate: 248 unit tests and 69 browser tests, typecheck/lint/build passed. This is scoped UI acceptance only: not whole M3, recommendation quality, reports, retrieval experiments or deployment acceptance. GROUNDING-001 (unsupported whistleblower citation) and SCORE-COMPARISON-001 (55.6/13.2 versus 58.3/13.8 without matching input maps/traces) remain OPEN.
+
+Next authorized package: read-only Hetzner inspection and local isolated protected non-billable preview preparation using actual UI/deterministic scoring with labeled synthetic narrative scenarios. No server mutation, DNS changes, paid requests, staging, commits or pushes. Deployment approval follows review of concrete files and remaining prerequisites.
+
+Private staging preparation locally verified: actual UI/authoritative scoring with separately gated synthetic scenarios, concrete isolated deployment files and rollback plan. Review: app/docs/PRIVATE-PREVIEW-REVIEW.md. Deployment remains unapproved and blocked on SSH inventory and exact-container/Caddy checks. UI acceptance does not accept M3 or close grounding/score-comparison issues.

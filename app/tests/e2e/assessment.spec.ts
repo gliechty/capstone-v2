@@ -86,22 +86,27 @@ test("answers survive canonical navigation, skip, refresh, missing review and th
   await expect(page.getByRole("main").getByRole("alert")).toContainText("0 to 100");
   await page.getByRole("button", { name: "Skip", exact: true }).click();
   await page.getByRole("button", { name: "Review all answers" }).click();
-  await expect(page.getByText((questions.length - 2) + " unanswered questions.", { exact: true })).toBeVisible();
+  await expect(page.getByText(new RegExp((questions.length - 2) + " unanswered questions"))).toBeVisible();
   await page.getByRole("button", { name: "Review missing answers" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
   await jump(page, numericIndex);
   await expect(page.getByLabel(numericLabel, { exact: true })).toHaveValue("0");
   await page.getByRole("button", { name: "Review all answers" }).click();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await page.getByRole("button", { name: "Generate score anyway" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
+  await expect(page.getByRole("button", { name: "Generate score and recommendations", exact: true })).toBeDisabled();
+  await page.getByRole("button", { name: "Review missing answers" }).click();
+  await jump(page, percentIndex);
+  await page.getByLabel("Your answer (%)", { exact: true }).fill("");
+  await page.getByRole("button", { name: "Review all answers" }).click();
+  await page.getByRole("button", { name: "Generate score and recommendations", exact: true }).click();
+  await page.getByRole("button", { name: "Generate score and recommendations anyway", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your assessment results");
   await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your assessment results");
   const saved = await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
-  await page.getByRole("link", { name: "View calculated results" }).click();
-  await expect(page.getByText("Calculated scores · Example narrative", { exact: true })).toBeVisible();
+  await expect(page.getByText("Calculated scores · Optional AI recommendations", { exact: true })).toBeVisible();
   await page.getByRole("link", { name: "Return to assessment" }).first().click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Review your answers.");
   expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(saved);
 });
 
@@ -143,7 +148,7 @@ test("corrupt saved data and blocked writes show truthful warnings", async ({ pa
   await expect(page.locator('[name="companyName"]')).toHaveValue("Still editable");
 });
 
-test("a fully answered canonical questionnaire still stops before scoring", async ({ page }) => {
+test("a fully answered canonical questionnaire starts combined results", async ({ page }) => {
   test.setTimeout(120000);
   await start(page);
   for (const question of questions) {
@@ -154,10 +159,10 @@ test("a fully answered canonical questionnaire still stops before scoring", asyn
     } else await page.locator("#answer").fill("0");
     await page.getByRole("button", { name: /^(Continue|Review answers)$/ }).click();
   }
-  await expect(page.getByText("0 unanswered questions.", { exact: true })).toBeVisible();
+  await expect(page.getByText(/answered · 0 unanswered questions/ )).toBeVisible();
   await expect(page.getByRole("button", { name: "Review missing answers" })).toHaveCount(0);
-  await page.getByRole("button", { name: "Generate score" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your answers are ready for calculation.");
+  await page.getByRole("button", { name: "Generate score and recommendations" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your assessment results");
 });
 
 test("pointer choices advance once, while keyboard arrows and Space stay on the question", async ({ page }) => {
@@ -169,7 +174,7 @@ test("pointer choices advance once, while keyboard arrows and Space stay on the 
   await page.getByRole("radio", { name: "Yes", exact: true }).focus();
   await page.keyboard.press("Space");
   await page.keyboard.press("ArrowRight");
-  await page.waitForTimeout(400); // Longer than the 280ms auto-advance delay.
+  await page.waitForTimeout(1000); // Longer than the 800ms confirmation pause.
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[2]!.title);
   await expect(page.getByRole("radio", { name: "No", exact: true })).toBeChecked();
   await page.keyboard.press("Enter");
@@ -185,11 +190,11 @@ test("pending pointer advance cancels on keyboard input or leaving the question"
   await page.clock.install();
   await page.getByRole("radio", { name: "Yes", exact: true }).click();
   await page.keyboard.press("ArrowRight");
-  await page.clock.fastForward(500);
+  await page.clock.fastForward(1000);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[0]!.title);
   await page.getByRole("radio", { name: "Yes", exact: true }).click();
   await page.getByRole("button", { name: "Review all answers" }).click();
-  await page.clock.fastForward(500);
+  await page.clock.fastForward(1000);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Review your answers.");
   await page.getByRole("button", { name: /^1\. / }).click();
   await expect(page.getByRole("radio", { name: "Yes", exact: true })).toBeChecked();
@@ -217,7 +222,7 @@ test("roller navigation uses brief directional motion and local progress stays c
   await page.getByRole("button", { name: /^Next question:/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "forward");
-  expect(await page.locator(".question-stage").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.22s");
+  expect(await page.locator(".question-stage").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.42s");
   expect(await page.locator(".question-peek").first().evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThan(100);
   await page.getByRole("button", { name: /^Previous question:/ }).click();
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "backward");
@@ -558,4 +563,10 @@ test("optional additional context survives editing and refresh while old session
   await notes.fill("");
   await page.reload();
   await expect(notes).toHaveValue("");
+});
+
+for(const reducedMotion of ["reduce","no-preference"] as const)test("selection stays confirmed before slower advance: "+reducedMotion,async({page})=>{
+ await page.emulateMedia({reducedMotion});await start(page);await page.clock.install();await page.getByRole("radio",{name:"Yes",exact:true}).click();
+ await expect(page.getByText("Selected: Yes",{exact:true})).toBeVisible();await expect(page.getByRole("radio",{name:"Yes",exact:true})).toBeChecked();await page.clock.fastForward(600);await expect(page.getByRole("heading",{level:1})).toHaveText(questions[0]!.title);
+ await page.clock.fastForward(250);await expect(page.getByRole("heading",{level:1})).toHaveText(questions[1]!.title);expect(await page.locator(".question-stage").evaluate(el=>getComputedStyle(el).animationName)).toBe(reducedMotion==="reduce"?"none":"roller-enter");
 });

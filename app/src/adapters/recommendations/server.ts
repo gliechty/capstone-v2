@@ -1,13 +1,15 @@
 import "server-only";
 import { loadCanonicalConfig } from "../config-repository";
-import type { RecommendationProvider } from "../../application/recommendations/contracts";
+import { assessmentCatalog } from "../../application/assessment-catalog";
 import { createRecommendationService } from "../../application/recommendations/service";
-// This is the only runtime composition. It deliberately has no network client,
-// credentials or environment-driven activation. Live integration awaits approval.
-const disabledProvider: RecommendationProvider = {
-  id: "unconfigured", model: "unconfigured", kind: "disabled",
-  async generate() { throw new Error("Recommendation provider is not configured"); },
-};
-export const generateRecommendations = createRecommendationService({
-  loadConfig: () => loadCanonicalConfig().config, provider: disabledProvider,
-});
+import { recommendationPolicy } from "../../application/recommendations/policy";
+import { readProviderConfiguration } from "./configuration";
+import { openAIProvider } from "./openai";
+export function providerStatus() { return { ...readProviderConfiguration().status, configVersion: loadCanonicalConfig().config.version, sessionVersion: assessmentCatalog(loadCanonicalConfig().config).version }; }
+export async function generateRecommendations(input: unknown, signal?: AbortSignal) {
+  const { status, apiKey } = readProviderConfiguration();
+  const provider = status.ready && status.settings && apiKey ? openAIProvider(status.settings, apiKey)
+    : { id: "disabled", model: "none", kind: "disabled" as const, generate: async () => { throw new Error("disabled"); } };
+  const policy = status.settings ? { ...recommendationPolicy, timeoutMs: status.settings.timeoutMs, maxOutputTokens: status.settings.maxOutputTokens } : recommendationPolicy;
+  return createRecommendationService({ loadConfig: () => loadCanonicalConfig().config, provider, policy })(input, signal);
+}

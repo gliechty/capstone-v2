@@ -60,7 +60,7 @@ test("session changes and page restoration replace explanations, never retaining
     sessionStorage.setItem(key, JSON.stringify(s));
     window.dispatchEvent(new Event("capstone:assessment-session-changed"));
   });
-  await expect(page.getByRole("status")).toContainText("Calculating");
+  await expect(page.getByRole("region", { name: "Deterministic assessment results" }).getByRole("status")).toContainText("Calculating");
   await expect(page.locator(".score-explanation")).toHaveCount(0);
   release(); await expect(page.locator(".score-explanation")).toBeVisible();
   await expect(page.locator(".score-values")).toContainText("0.0");
@@ -95,7 +95,9 @@ for (const failure of ["service", "network"]) test("current " + failure + " fail
   await expect(page.getByRole("heading", { name: "Scores unavailable" })).toBeVisible();
   await expect(page.getByRole("main").getByRole("alert")).not.toBeEmpty();
   await expect(page.locator(".score-values, .category-bars, .score-explanation")).toHaveCount(0);
-  await expect(page.getByText("Example narrative · Not AI-generated", { exact: true })).toBeVisible();
+  await page.locator("#actions summary").click();
+  await expect(page.getByText("No generated recommendations are available for this assessment.", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Generate recommendations" })).toBeDisabled();
   await page.unroute("**/api/assessment-score");
   await page.reload(); await expect(page.locator(".score-explanation")).toBeVisible();
 });
@@ -117,9 +119,8 @@ test("editing a scored answer through the questionnaire updates scores, bars and
   await page.reload();
   await expect(page.getByRole("radio", { name: "No", exact: true })).toBeChecked();
   await page.getByRole("button", { name: "Review all answers" }).click();
-  await page.getByRole("button", { name: "Generate score", exact: true }).click();
   const response = page.waitForResponse(r => r.url().includes("/api/assessment-score") && r.status() === 200);
-  await page.getByRole("link", { name: "View calculated results" }).click();
+  await page.getByRole("button", { name: "Generate score and recommendations", exact: true }).click();
   const score = await (await response).json();
   expect(score.input.answers["U-001"]).toBe("No");
   expect(score.trace.find((r: { question_id: string }) => r.question_id === "U-001")).toMatchObject({ raw_answer: "No", normalized_score: 0, final_score: 0 });

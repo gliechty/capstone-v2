@@ -70,10 +70,10 @@ test("provider errors are safe and leave the deterministic endpoint available", 
   const result = await make(async () => { throw new Error("secret provider response and SME text"); })(input);
   expect(result).toMatchObject({ status: "unavailable", code: "provider_failure" });
   expect(JSON.stringify(result)).not.toContain("secret provider response");
-  const response = await scorePost(new Request("http://localhost/api/assessment-score", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ configVersion: input.configVersion, context: input.context, answers: input.answers }) }));
+  const response = await scorePost(new Request("http://localhost/api/assessment-score", { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": "application/json" }, body: JSON.stringify({ configVersion: input.configVersion, context: input.context, answers: input.answers }) }));
   expect(response.status).toBe(200); expect((await response.json()).rawOverall).toBe(score.rawOverall);
 });
-const request = (body: string, type = "application/json") => new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Content-Type": type }, body });
+const request = (body: string, type = "application/json") => new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": type }, body });
 test("runtime endpoint stays disabled without network calls, even if credentials or provider variables exist", async () => {
   const fetch = vi.fn(() => { throw new Error("No network permitted"); }); vi.stubGlobal("fetch", fetch);
   vi.stubEnv("RECOMMENDATION_PROVIDER", "test-double"); vi.stubEnv("OPENAI_API_KEY", "placeholder-only");
@@ -91,7 +91,7 @@ test.each([["{bad", 400, "application/json"], ["{}", 422, "application/json"], [
 test("body reader has a deadline for incomplete streams", async () => {
   vi.useFakeTimers();
   const cancel = vi.fn();
-  const req = new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Content-Type": "application/json" }, body: new ReadableStream({ cancel }), duplex: "half" } as RequestInit);
+  const req = new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": "application/json" }, body: new ReadableStream({ cancel }), duplex: "half" } as RequestInit);
   const pending = POST(req); await vi.advanceTimersByTimeAsync(recommendationPolicy.timeoutMs);
   expect((await pending).status).toBe(408); expect(cancel).toHaveBeenCalledOnce(); expect(vi.getTimerCount()).toBe(0);
 });
@@ -115,9 +115,9 @@ test("oversized validated requests and invalid policy fail before generation", a
   expect(generate).not.toHaveBeenCalled();
 });
 test("HTTP rejects invalid UTF-8 and a missing body", async () => {
-  const req = new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Content-Type": "application/json" }, body: new Uint8Array([255]) });
+  const req = new Request("http://localhost/api/assessment-recommendations", { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": "application/json" }, body: new Uint8Array([255]) });
   expect((await POST(req)).status).toBe(400);
-  expect((await POST(new Request(req.url, { method: "POST", headers: { "Content-Type": "application/json" } }))).status).toBe(400);
+  expect((await POST(new Request(req.url, { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": "application/json" } }))).status).toBe(400);
 });
 
 for (const fixture of goldenCases) test(`${fixture.case_id}: controlled output passes the same context/evidence/score contract`, async () => {

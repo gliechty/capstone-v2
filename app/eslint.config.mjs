@@ -9,7 +9,7 @@ import globals from "globals";
 import { domainBoundary } from "./tools/eslint/domain-boundary.mjs";
 
 export default defineConfig([
-  globalIgnores([".next/**", "out/**", "coverage/**", "playwright-report/**", "test-results/**", "next-env.d.ts"]),
+  globalIgnores([".local/**", ".next/**", ".next-preview/**", "out/**", "coverage/**", "playwright-report/**", "test-results/**", "next-env.d.ts"]),
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

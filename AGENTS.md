@@ -276,6 +276,10 @@ When required, emit the exact `IP REVIEW REQUIRED` structure from the guardrail 
 
 # 9. Git and change discipline
 
+## Current owner operating instruction — 2026-10-14
+
+Leave changes uncommitted. The owner handles staging, commits and pushes manually; this supersedes earlier commit/push authorization until explicitly changed. Routine repository reads, scoped edits, tests and review-document updates within the current authorized package are already authorized; proceed without repeated conversational permission requests. Respect platform permission controls and explain actual blockers. Preserve methodology, architecture, scope, data-transmission and spending limits; stop for genuinely unresolved material decisions. Let running verification finish and do not restart completed work solely because of this operating correction.
+
 - Keep commits coherent and reviewable.
 - Do not rewrite shared history or perform destructive Git operations unless explicitly instructed.
 - Do not make unrelated large refactors inside a feature task.
