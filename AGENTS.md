@@ -1,5 +1,19 @@
 # AGENTS.md
 
+## Owner workflow correction — 2026-10-19 (current)
+This section supersedes conflicting historical workflow/authorization wording below.
+- Deliver the authorized working application. No synthetic substitute, preview deployment, login gate, extra framework or future feature without owner instruction.
+- Ask before creating or using synthetic fixtures for UI demonstrations/visual reviews. Existing approved automated unit/Golden/provider-double tests remain usable as recorded tests; they do not authorize a synthetic product or new fixture project. If new fixtures or tests are needed, ask first.
+- Only execute verification recorded in the approved test register in `codex.prompting.memory.md` or explicitly authorized by the owner and recorded there before execution. Do not add tests, assertions, harnesses, fixture sets, scans or benchmarks on discretion.
+- A request for an extra test must state in plain English: the concrete failure it would catch, why existing tests cannot catch it, the user impact, expected time/token/API cost, and the proposed command/file. Await approval. Do not weaken existing tests to avoid asking.
+- Existing commands may run on affected saved test files. Run the full saved gate once for a final code candidate; rerun only invalidated checks or a failed check after a concrete fix. No full gate for Markdown-only edits. Never restart a running gate because a PM message arrived.
+- At task start report expected active time and token range with assumptions/confidence. At finish report measured elapsed time, active time only if observed, and measured coding-agent tokens only if telemetry exists. Unknown is `unavailable`, never zero or inferred from prose length. Separate coding-agent tokens from application OpenAI usage.
+- Use the KPI/current-state section of EXECUTION_PLAN.md, the existing Build Checklist and codex.prompting.memory.md. No new milestone-specific review documents. Preserve historical evidence.
+- Current M3 is authorized through normal public deployment on the clean server with real recommendations and durable report. Use the existing local MOSAIC key securely (owner confirms it was never on the old host). Production AI allowance is $1/day; deployment verification is separately limited to two requests/$1. Never expose keys. Existing same-origin, scoring, validation and duplicate-request controls remain.
+- Routine scoped implementation proceeds without repeated approval; human milestone acceptance and new scope remain owner decisions. Codex's application commits/pushes remain manual unless separately authorized.
+- Read instructions once per work package and re-read changed sections only. Concise updates; investigate concrete failures, not hypothetical redesigns. Do not start M4 before M3 acceptance.
+
+
 ## Project
 
 Capstone v2 — Columbia Climate School / SEE Foundation SME sustainability assessment.
@@ -28,6 +42,7 @@ Read these files in this order:
 8. `BUILD_PACK/00_READ_ME_FIRST/COLUMBIA_IP_GUARDRAILS.md`
 9. `BUILD_PLAN.md`
 10. `EXECUTION_PLAN.md`
+11. `codex.prompting.memory.md` (approved test register and effort reporting)
 
 Consult `CURRENT_ARCHITECTURE.md` only to understand v1 behavior/dependencies. Do not treat it as the target architecture.
 

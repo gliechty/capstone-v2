@@ -1,5 +1,12 @@
 # BUILD_PLAN.md
 
+## Current delivery direction — 2026-10-19
+
+Complete M3 as the normal publicly accessible assessment on the existing clean host: real scoring, real OpenAI recommendations, required durable report, no synthetic substitute or unrequested login. Synthetic UI demonstrations require explicit approval. M3 acceptance remains human-owned. Framework/model/retrieval research is deferred from this closeout; retain it as backlog, not a release blocker. Follow the saved test register and effort-reporting policy in `codex.prompting.memory.md`. Historical narrower authorizations below are superseded only where this current owner direction conflicts.
+
+Before M4.1, complete M4.0: evaluate deterministic quality tools, record a baseline, refactor only if justified, and repeat identical measurements with functionality preserved. M4.0 is planned, not permission to interrupt M3.
+
+
 ## Purpose
 
 This document defines the major build milestones and human review gates for Capstone v2.

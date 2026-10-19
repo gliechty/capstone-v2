@@ -1,5 +1,26 @@
 # EXECUTION_PLAN.md
 
+## Current state and effort ledger — 2026-10-19
+This section supersedes conflicting historical status/authorization text below; historical evidence remains preserved.
+- Active outcome: finish M3's real publicly hosted application, required report, navigation and defect corrections; verify and present for owner acceptance.
+- Local implementation is in progress per owner's Codex report; not independently verified here. Published baseline is 026fb85. Do not overwrite the local working tree with this documentation branch.
+- Current authorization: normal public deployment on 2.28.206.236; no login/synthetic product. Existing local MOSAIC key may be transferred securely. $1/day application budget, midnight Asia/Bangkok; two deployed verification calls/$1 separately. No automatic retry or budget reset to evade allowance.
+- Open closeout items: real hosted provider path; GROUNDING-001; reproducible current score comparison (historical inputs may be unrecoverable); navigation/report; final saved gate and deployed verification. Do not claim broader fact-checking or historical diagnosis from limited checks.
+- Deferred: model/framework/retrieval research, icon lexicon, M4.0 and subsequent milestones. No new milestone-specific documents.
+- Verification authority: saved test register in codex.prompting.memory.md. New tests require plain-English justification and owner approval before implementation/execution.
+- Status visibility: update this section locally at start, blocked, verification and completion. Timestamp in Asia/Bangkok; record task, source revision/dirty state, last result and next action. A shared snapshot is only as current as its publication timestamp.
+
+| Milestone | Expected active time (accepted baseline) | Expected coding tokens | Recorded elapsed | Actual coding tokens | Acceptance |
+|---|---|---|---|---|---|
+| M1 | Not recorded retrospectively | Not recorded | Oct 6 14:19–Oct 7 14:59, ~24h40m commit window | Unavailable | Accepted |
+| M2 | Not recorded retrospectively | Not recorded | Oct 7 15:07–Oct 12 13:55, ~4d23h | Unavailable | Accepted Oct 12 |
+| M3 | Not recorded; estimate remaining work at next checkpoint | Unavailable until telemetry/estimate supplied | Authorized Oct 13; open Oct 19 | Unavailable | Pending |
+| M4.0 | Provisional PM estimate 3–8 active hours; owner has not accepted estimate | Uncalibrated; estimate at start, never fabricate actuals | Not started | Not started | Pending |
+
+For each work item, add/update one row here with estimate, actual, measurement source, variance and owner acceptance. Do not create another KPI document. Time spent waiting/building must be distinguishable from active work if available. An estimate is not a spending approval.
+Completion message: **Send effort report to PM: Milestone [#] / item [ID] consumed [elapsed hrs/days]; active [measured or unavailable]; coding tokens [measured or unavailable, source]; expected [time/token range]; variance [reason]; acceptance [pending/owner date].**
+
+
 
 
 ## Purpose
@@ -1241,6 +1262,16 @@ Detailed future protocol: [M3.6 retrieval accuracy, performance and efficiency e
 
 # Milestone 4 — Emissions calculator and quantitative input flow
 
+
+
+## M4.0 — Deterministic quality-tool evaluation + refactor if needed
+
+**Status:** PENDING — after M3 acceptance, before M4.1.
+Evaluate jscpd, ESLint/Oxlint, Prettier, Knip, dependency-cruiser, Archlint (verify exact identity), and sirknigget/antislop (verify license/code). Select the smallest useful long-term set based on coverage, overlap, maintainability and false positives. Extend codex.prompting.memory.md with the Markdown adopt/pilot/defer/reject summary; do not create a milestone document.
+
+Record production/test LOC separately excluding generated files/dependencies; production build/client JavaScript/container sizes in MB with definitions; build duration and approximate assessment/scoring/Results speed on the same environment and fixtures. Repeat timing samples with median/range and separate cold/warm conditions. No paid provider speed tests.
+
+Present and obtain approval for exact new analysis/benchmark commands before running them under the test policy. Refactor only evidence-backed dead code, duplication, complexity or architecture defects. Preserve scoring, config, sessions, APIs, recommendation safeguards and accessibility. Run the same before/after measurements and approved regression gate. Fix/revert regressions, document benefit/limitations, and retain no-op outcome if a refactor is not warranted.
 
 
 ## M4.1 — Reconcile calculator methodology + fixtures
