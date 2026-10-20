@@ -1,5 +1,16 @@
 # AGENTS.md
 
+## One-step delivery and effort audit — owner direction, 2026-10-20
+This standing protocol supersedes conflicting historical workflow wording. M3 is accepted; merge and M4 still require separate approval.
+- Work on one milestone step at a time; do not silently bundle adjacent steps.
+- Before starting each step, explicitly confirm that this protocol has been loaded. Before the first implementation command, record the step ID, scope, expected time range, expected coding-token range and start timestamp (including timezone) in the existing step record. State assumptions/confidence. Check whether actual coding-token telemetry is available; if not, record **unavailable immediately**. An unsupported token forecast must also be unavailable, not invented.
+- Track time and accessible coding-token telemetry while working. At completion, record the end timestamp and elapsed time **once** in that same step record. Distinguish waiting and active time only where measurable; otherwise record **not measured**. Never invent active time or token counts, reconstruct historical timing, infer tokens from prose, or substitute application API usage for coding-agent tokens.
+- Measure effort to improve delivery efficiency, reduce owner intervention and prevent repeated scope/test churn.
+- At each step's closeout, compare expected versus actual effort, identify the main avoidable delay or rework, and propose at most one concrete workflow correction in the existing step record. If evidence is unavailable, say so; do not invent variance or causes. PM records the decision in the existing Build Checklist; the next applicable step checks whether the adopted correction helped and records the evidence or its absence. Do not implement additional tooling merely to measure effort. Proposed architecture/tooling/test changes remain subject to existing scope and approval rules.
+- Include the commit SHA and publication state in the handoff: branch, whether changes are uncommitted/staged/committed, whether pushed (or not verified), and PR/merge status when known. Distinguish the base commit from any uncommitted work; never imply a local change is published. Git staging/commits/pushes remain owner-controlled.
+- PM reconciles the existing Build Checklist whenever commit/completion evidence is received. Supply the step record and evidence in the handoff; do not claim PM synchronization until confirmed or create another tracking document.
+- At closeout, check that all required fields are present: protocol-loaded confirmation, step ID, scope, expected time/token ranges or justified unavailable, telemetry availability, start/end timestamps, elapsed time, measurable active/waiting time or not measured, actual tokens or unavailable, expected-versus-actual explanation, proposed correction (or none), commit SHA and publication state. Missing measurements remain explicit; they are never filled by guessing.
+
 ## Owner workflow correction — 2026-10-19 (current)
 This section supersedes conflicting historical workflow/authorization wording below.
 - Deliver the authorized working application. No synthetic substitute, preview deployment, login gate, extra framework or future feature without owner instruction.
