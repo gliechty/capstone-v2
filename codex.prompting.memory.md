@@ -1,4 +1,14 @@
 # codex.prompting.memory.md
+
+## Current authority and synchronization — owner direction, 2026-10-20
+Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
+
+Before EVERY milestone step, read the live F1 note and the relevant checklist row values INCLUDING cell notes at https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921 . Then reconcile supporting AGENTS.md, BUILD_PLAN.md, EXECUTION_PLAN.md and codex.prompting.memory.md before implementation, preserving newer unrelated work. BUILD_PLAN describes product scope/criteria; EXECUTION_PLAN records technical steps/evidence. Neither independently overrides current checklist decisions. Do not reopen accepted work based on historical text. If live checklist access fails, report the blocker; do not treat an old copy as current.
+
+PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
+
+Current disposition: M3 accepted; M4.0 evaluation COMPLETE by owner decision (v2.0 row20); M4.1 NEXT (row21), unstarted during this documentation task. Quality tooling/refactoring is deferred to optional, time-allowing final pre-shipping QA on a separate branch. Latest owner optionality supersedes row20's older 'must include' wording; PM should reconcile that note. No packages installed or refactoring performed. Broader milestone restructuring is only a proposal. This section supersedes conflicting historical authority, status and tooling instructions below.
+
 Updated: 2026-10-19. Owner-approved workflow correction; no runtime changes.
 
 ## Purpose and lessons
@@ -136,3 +146,31 @@ Standing protocol; supersedes conflicting historical effort instructions. No new
 - Include the commit SHA and publication state in the handoff: branch, whether changes are uncommitted/staged/committed, whether pushed (or not verified), and PR/merge status when known. Distinguish the base commit from any uncommitted work; never imply a local change is published. Git staging/commits/pushes remain owner-controlled.
 - PM reconciles the existing Build Checklist whenever commit/completion evidence is received. Supply the step record and evidence in the handoff; do not claim PM synchronization until confirmed or create another tracking document.
 - At closeout, check that all required fields are present: protocol-loaded confirmation, step ID, scope, expected time/token ranges or justified unavailable, telemetry availability, start/end timestamps, elapsed time, measurable active/waiting time or not measured, actual tokens or unavailable, expected-versus-actual explanation, proposed correction (or none), commit SHA and publication state. Missing measurements remain explicit; they are never filled by guessing.
+
+
+## M4.0 historical audit proposal — superseded, 2026-10-20
+The owner narrowed M4.0 to tool evaluation. The baseline harness and broad measurement batch below are withdrawn, not pending execution.
+No commands in this section are approved by their presence here. No new tool, test, scan or benchmark has run. Existing saved checks remain available; do not rerun passing checks for this documentation checkpoint.
+
+Preliminary decisions: retain existing ESLint/TypeScript/domain-boundary controls. Evaluate jscpd and Knip for distinct duplication/unused-code evidence; Prettier for policy suitability without a bulk formatting rewrite; Oxlint only for demonstrated coverage/performance benefit; dependency-cruiser against existing boundary coverage. Archlint candidate identity is `archlinter/archlint`, npm `@archlinter/cli`, pending compatibility/source review. `sirknigget/antislop` source/license remain unverified; do not substitute another similarly named project. These are audit dispositions, not final adoption or permission to install.
+
+Proposed first approval batch (from app/):
+1. Registry metadata only, no install or package execution:
+   `@('jscpd','oxlint','prettier','knip','dependency-cruiser','@archlinter/cli') | ForEach-Object { npm view $_ version license engines peerDependencies repository.url dist.integrity --json }`
+   Purpose: identify exact versions/provenance/Node24 compatibility before proposing executable pilots. Existing correctness checks cannot establish third-party compatibility or license suitability. Only public package names go to npm; no application source or secrets uploaded.
+2. Create and run `node scripts/quality-baseline.mjs --label before` using Node built-ins only, after approval. Scope: physical/nonblank source lines separately for production src/ and tests/, supported code/CSS extensions; exclude generated files, dependencies and assets; record build bytes excluding .next/cache and client chunk bytes separately, in decimal MB. Record environment and Git revision/dirty status, never environment-variable values. Write ignored `.local/m4-quality/before.json`. Missing/stale build outputs must be labelled, not treated as a current production baseline. No builds, provider requests, browser navigation, Docker/remote access or timing benchmarks in this command.
+   Purpose: establish repeatable size/LOC definitions before refactoring; saved functional tests cannot reveal duplication/size change or establish these baseline quantities. This is product-baseline measurement, not extra tooling to measure coding-agent effort.
+Estimated additional active effort for this batch20–35min; expected/actual coding tokens unavailable; application API cost $0. Exact pinned executable pilots and any new repeated build/browser/container measurements will be presented after this metadata review, avoiding speculative installs. No tool is added to the permanent gate without a justified decision. Whole-step effort and closing mini-audit live in EXECUTION_PLAN.md.
+
+
+## M4.0 historical tool evaluation — complete, adoption deferred, 2026-10-20
+Owner adopted the maintainability/delivery-efficiency directive in AGENTS.md. Evaluation only; no packages installed, analyzers run, source formatting/refactoring, new tests or benchmarks. Actual scan findings, speed gains and token savings are unverified.
+
+| Priority / tool | Evaluation and recommendation | Limits / adoption condition |
+|---|---|---|
+| 1. Knip | Recommend a future bounded pilot. Adds project-wide unused-file/export/dependency detection beyond current ESLint unused-variable and domain rules. Official Next plugin recognizes App Router entry points. | Review scripts, dynamic entries and framework exports before treating findings as dead code; no auto-delete. Useful if it produces actionable findings without extensive ignore maintenance. |
+| 2. Prettier | Recommend for future formatting standardization, separate from correctness linting. Current ESLint configuration focuses on correctness and provides no equivalent whole-project formatter. | It does not catch scoring/session bugs. Agree a small configuration and ignores; avoid mixing bulk formatting with functional changes. No formatter setup or rewrite authorized now. |
+| 3. dependency-cruiser | Defer adoption, but record real incremental capability: whole-project circular dependency detection and cross-layer rules outside src/domain. Existing custom ESLint rule restricts domain imports; it does not compute graph cycles, including cycles within domain. | No actual cycles or cross-layer defect established. Do not replace the domain nondeterminism guards: dependency graph rules do not replace those. Reconsider when a concrete graph/boundary need justifies configuration cost. |
+
+Preserve existing TypeScript/ESLint. Other previously listed analyzers are deferred from this focused pass. Prefer a small useful set over redundant gates; no automatic test reruns for this documentation-only evaluation.
+Sources inspected: app/package.json; app/eslint.config.mjs; app/tools/eslint/domain-boundary.mjs. Official references: https://knip.dev/reference/plugins/next ; https://knip.dev/overview/getting-started ; https://prettier.io/docs/comparison ; https://github.com/sverweij/dependency-cruiser . Package-version compatibility, exact licensing for a selected release and runtime results remain to be checked before installation; this evaluation is not installation approval.

@@ -1,7 +1,17 @@
 # AGENTS.md
 
+## Current authority and synchronization — owner direction, 2026-10-20
+Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
+
+Before EVERY milestone step, read the live F1 note and the relevant checklist row values INCLUDING cell notes at https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921 . Then reconcile supporting AGENTS.md, BUILD_PLAN.md, EXECUTION_PLAN.md and codex.prompting.memory.md before implementation, preserving newer unrelated work. BUILD_PLAN describes product scope/criteria; EXECUTION_PLAN records technical steps/evidence. Neither independently overrides current checklist decisions. Do not reopen accepted work based on historical text. If live checklist access fails, report the blocker; do not treat an old copy as current.
+
+PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
+
+Current disposition: M3 accepted; M4.0 evaluation COMPLETE by owner decision (v2.0 row20); M4.1 NEXT (row21), unstarted during this documentation task. Quality tooling/refactoring is deferred to optional, time-allowing final pre-shipping QA on a separate branch. Latest owner optionality supersedes row20's older 'must include' wording; PM should reconcile that note. No packages installed or refactoring performed. Broader milestone restructuring is only a proposal. This section supersedes conflicting historical authority, status and tooling instructions below.
+
+
 ## One-step delivery and effort audit — owner direction, 2026-10-20
-This standing protocol supersedes conflicting historical workflow wording. M3 is accepted; merge and M4 still require separate approval.
+This standing protocol supersedes conflicting historical workflow wording. M3 is accepted; M4.0 evaluation is complete; M4.1 is next. Follow the live authority protocol above before starting it; no merge is authorized.
 - Work on one milestone step at a time; do not silently bundle adjacent steps.
 - Before starting each step, explicitly confirm that this protocol has been loaded. Before the first implementation command, record the step ID, scope, expected time range, expected coding-token range and start timestamp (including timezone) in the existing step record. State assumptions/confidence. Check whether actual coding-token telemetry is available; if not, record **unavailable immediately**. An unsupported token forecast must also be unavailable, not invented.
 - Track time and accessible coding-token telemetry while working. At completion, record the end timestamp and elapsed time **once** in that same step record. Distinguish waiting and active time only where measurable; otherwise record **not measured**. Never invent active time or token counts, reconstruct historical timing, infer tokens from prose, or substitute application API usage for coding-agent tokens.
@@ -10,6 +20,11 @@ This standing protocol supersedes conflicting historical workflow wording. M3 is
 - Include the commit SHA and publication state in the handoff: branch, whether changes are uncommitted/staged/committed, whether pushed (or not verified), and PR/merge status when known. Distinguish the base commit from any uncommitted work; never imply a local change is published. Git staging/commits/pushes remain owner-controlled.
 - PM reconciles the existing Build Checklist whenever commit/completion evidence is received. Supply the step record and evidence in the handoff; do not claim PM synchronization until confirmed or create another tracking document.
 - At closeout, check that all required fields are present: protocol-loaded confirmation, step ID, scope, expected time/token ranges or justified unavailable, telemetry availability, start/end timestamps, elapsed time, measurable active/waiting time or not measured, actual tokens or unavailable, expected-versus-actual explanation, proposed correction (or none), commit SHA and publication state. Missing measurements remain explicit; they are never filled by guessing.
+
+## Maintainability and delivery efficiency — owner direction, 2026-10-20
+Maintain a codebase that independent developers and future AI agents can understand, verify and safely extend. Prefer clear contracts, consistent conventions, explicit dependencies and behavior-preserving tests. Use the smallest effective set of automated checks. Refactor when it materially improves correctness or changeability, not merely to satisfy stylistic metrics. Minimize owner intervention, redundant verification and unnecessary tooling.
+
+This directive does not independently authorize refactoring, new tests or tool installation. M4.0 is closed as an evaluation. Quality tools and justified refactoring are deferred to optional, time-allowing final pre-shipping QA on a separate branch; they are not prerequisites for M4.1. Preserve the recorded audit as evidence, not current execution authorization.
 
 ## Owner workflow correction — 2026-10-19 (current)
 This section supersedes conflicting historical workflow/authorization wording below.

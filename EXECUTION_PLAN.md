@@ -1,14 +1,39 @@
 # EXECUTION_PLAN.md
 
+## Current authority and synchronization — owner direction, 2026-10-20
+Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
+
+Before EVERY milestone step, read the live F1 note and the relevant checklist row values INCLUDING cell notes at https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921 . Then reconcile supporting AGENTS.md, BUILD_PLAN.md, EXECUTION_PLAN.md and codex.prompting.memory.md before implementation, preserving newer unrelated work. BUILD_PLAN describes product scope/criteria; EXECUTION_PLAN records technical steps/evidence. Neither independently overrides current checklist decisions. Do not reopen accepted work based on historical text. If live checklist access fails, report the blocker; do not treat an old copy as current.
+
+PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
+
+Current disposition: M3 accepted; M4.0 evaluation COMPLETE by owner decision (v2.0 row20); M4.1 NEXT (row21), unstarted during this documentation task. Quality tooling/refactoring is deferred to optional, time-allowing final pre-shipping QA on a separate branch. Latest owner optionality supersedes row20's older 'must include' wording; PM should reconcile that note. No packages installed or refactoring performed. Broader milestone restructuring is only a proposal. This section supersedes conflicting historical authority, status and tooling instructions below.
+
+### Documentation synchronization checkpoint — 2026-10-20
+Protocol loaded from live F1 and rows20–21 before edits. Scope: reconcile four existing Markdown files and publish only those files; no tests, installs, automation, runtime changes, merge or M4.1 implementation. Expected active5–10min, medium confidence; expected coding tokens unavailable (uncalibrated); actual telemetry unavailable. Measured start2026-10-20T21:24:59+07:00 before edits; earlier reads excluded. Base316c82582c9863fdfc756a7154c21fc9fc687efb, branch milestone-3-recommendations; index initially empty, unrelated local files preserved. Owner authorizes this scoped documentation commit/push only. Final SHA/publication outcome supplied in handoff; PM reconciles rows20–21. M4.0 total effort not measured; do not convert superseded forecasts or intermittent timestamps into actual step effort.
+Documentation review end2026-10-20T21:26:16+07:00; measured interval1m17s, excluding initial reads and subsequent Git publication. Active/waiting split not measured; coding tokens unavailable. Expected active5–10min cannot be directly compared with partial elapsed. No new avoidable rework evidenced in this checkpoint; proposed workflow correction: use the live F1/row reconciliation before each step to prevent stale status from reopening accepted work. PM records the decision; next step checks effectiveness. Required fields reviewed; final publication SHA/status follows in handoff.
+
+
 ## Current state and effort ledger — 2026-10-20
 This section supersedes conflicting historical status/authorization text below; historical evidence remains preserved.
 - Active outcome: **M3 COMPLETE — owner accepted 2026-10-20**, including disclosed v7 offline-only verification and deferred issues. Acceptance supersedes earlier failed/pending milestone status; historical findings and evidence remain preserved. Merge and M4 require separate owner approval. No tests or paid generation performed for this documentation-only acceptance.
 - Source state: milestone-3-recommendations at implementation checkpoint `fe20fa6`; acceptance documentation remains unstaged/uncommitted. Deployed content revision mosaic-a547751983d355dacd22, image sha256:dcd53f8201fbfaae285be1b8aeb3783772045ebc4eb61a9e53faed2dc18554cd, prompt contract v7. Public URL https://preview.flowagentai.website. Existing unrelated local files preserved; no staging/commit/push/merge by this acceptance task.
 - Current authorization: normal public deployment on 2.28.206.236; no login/synthetic product. Existing local MOSAIC key may be transferred securely. $1/day application budget, midnight Asia/Bangkok; two deployed verification calls/$1 separately. No automatic retry or budget reset to evade allowance.
 - Historical pre-acceptance-test result: v6 real hosted request accepted; report download, source dialogs, notes invalidation and unchanged51.0/12.1 scores passed. Shared public ledger0 attempts at the earlier automated checkpoint (superseded by the manual-attempt diagnosis below); separate deployment ledger2 attempts/$0.648288 reserved, exhausted by count. No further agent paid tests authorized. Current disposition: owner accepted delivered M3 on2026-10-20 with disclosed limitations; no further correction cycle is authorized. Historical score inputs remain unavailable; general claim entailment is not guaranteed. Egress firewall reboot persistence remains an operational follow-up, not a verified property.
-- Deferred: model/framework/retrieval research, icon lexicon, M4.0 and subsequent milestones. No new milestone-specific documents.
+- Current sequence: M3 accepted; M4.0 evaluation complete; M4.1 next. Tool installation/refactoring deferred to optional final pre-shipping QA on a separate branch. This task only publishes documentation; no merge or M4.1 implementation. Model/framework/retrieval research and icon lexicon remain deferred.
 - Verification authority: saved test register in codex.prompting.memory.md. New tests require plain-English justification and owner approval before implementation/execution.
 - Status visibility: update this section locally at start, blocked, verification and completion. Timestamp in Asia/Bangkok; record task, source revision/dirty state, last result and next action. A shared snapshot is only as current as its publication timestamp.
+
+### M4.0 historical step record — closed by current owner decision — 2026-10-20
+- **Current scope correction:** focused tool-selection evaluation only, in order Knip, Prettier, then incremental value of dependency-cruiser. No installation, analyzer execution, refactoring, custom baseline harness or performance study. This supersedes the broader historical scope/estimates/proposed commands below and in the original checklist; PM should reconcile that scope from this handoff. M4.0 is not marked human-accepted.
+- Current continuation: protocol loaded; expected active5–10min, medium confidence, using existing audit and official docs. Coding-token estimate/actual telemetry unavailable. Measured continuation starts2026-10-20T20:47:10+07:00 before documentation edits (initial read excluded); original step start below is preserved. Whole-step active/waiting time not measured; old3–8h forecast is superseded, not a forecast for this narrower task. No implementation/test execution.
+- Continuation documentation/evaluation end2026-10-20T20:48:22+07:00; measured interval1m12s, excluding initial read and final saved-diff verification. Active/waiting split not measured; tokens unavailable. Whole-step elapsed/active totals cannot be reconstructed from intermittent work. Expected active5–10min cannot be directly compared with this partial elapsed interval. Main avoidable rework: the earlier interpretation expanded a tool check into baseline/benchmark planning. One proposed workflow correction: define the decision the owner needs before introducing measurement work. PM records the decision and the next applicable step checks whether it helped. Base SHA316c82582c9863fdfc756a7154c21fc9fc687efb; branch milestone-3-recommendations; documentation unstaged/uncommitted, no push/merge. Required effort fields checked with unavailable measurements explicit; owner acceptance remains pending.
+- Protocol loaded before work; scope: deterministic quality-tool evaluation, reproducible baseline, and only evidence-justified refactoring. Current checkpoint is read-only audit plus this documentation; no runtime changes, tests, installations, new scans or benchmarks executed.
+- Start:2026-10-20T20:09:57+07:00. Expected audit/proposal active time10–15min, medium confidence. Whole-step provisional forecast3–8 active hours matches Checklist G20, low confidence until tool/baseline approval and findings. Assumes existing architecture, saved checks and no major refactor. Expected coding-token range **unavailable** (no calibrated baseline); actual coding-token telemetry checked at start: **unavailable**. Active/waiting split **not measured**. End/elapsed and variance are pending step completion, not reconstructed at this interim checkpoint.
+- Baseline: branch `milestone-3-recommendations`, HEAD `316c82582c9863fdfc756a7154c21fc9fc687efb`; locally recorded origin matches, no fresh fetch. Existing BUILD_PLAN.md, staging/incident documents and untracked .agents/ preserved. Current documentation remains unstaged/uncommitted, unpublished; no commit/push/merge authorized. PM reconciles the Checklist from handoff evidence.
+- Checklist audit: read v2.0 A20:H22 including notes. M4.0 completion is false; M3 accepted; M4.1/M4.2 remain pending. No Sheet edits. The preceding protocol correction is being applied through this single-step record; evidence of delivery-efficiency improvement is not yet available.
+- Existing coverage: ESLint10/Next/React/hooks/accessibility rules plus domain-boundary rule/tests; strict TypeScript and separate domain compilation; unit/Golden/browser checks. Retain these. Existing `npm run measure:scoring` measures warm engine and score-endpoint timings across five Golden cases; it does not measure browser render latency or cold startup. No new timing run yet.
+- Next: review the focused tool decisions in codex.prompting.memory.md. Earlier baseline-script proposal withdrawn under the narrowed scope. Adoption/execution remains a later decision; no M4.1 work.
 
 ### Effort reconciliation and future step protocol — 2026-10-20
 Owner requests one milestone step at a time, a pre-work effort audit, ongoing time/token tracking, and a closing variance mini-audit with development-system/architecture recommendations when justified. See AGENTS.md current One-step delivery section. M3 remains accepted; no M4 or merge authorization follows.
@@ -185,8 +210,8 @@ Source: [Build Checklist, v2.0 F14:F19 and full F19 note](https://docs.google.co
 |---|---|---|---|---|---|
 | M1 | Not recorded retrospectively | Not recorded | Oct 6 14:19–Oct 7 14:59, ~24h40m commit window | Unavailable | Accepted |
 | M2 | Not recorded retrospectively | Not recorded | Oct 7 15:07–Oct 12 13:55, ~4d23h | Unavailable | Accepted Oct 12 |
-| M3 | Initial estimate not recorded; final documentation checkpoint forecast5–10 active minutes | Unavailable / uncalibrated | Authorized Oct13; hosted v6 verified Oct19; manual acceptance subsequently failed | Unavailable: no coding-token telemetry | Failed / pending correction |
-| M4.0 | Provisional PM estimate 3–8 active hours; owner has not accepted estimate | Uncalibrated; estimate at start, never fabricate actuals | Not started | Not started | Pending |
+| M3 | Historical estimates retained above | Unavailable / uncalibrated | Whole-step effort not measured; partial evidence preserved | Unavailable | Accepted2026-10-20 |
+| M4.0 | N/A — evaluation/decision, not a build step; superseded forecasts preserved in history | N/A; no calibrated forecast | Not measured; no retrospective reconstruction | Unavailable | Complete by owner decision2026-10-20; checklist row20 |
 
 For each work item, add/update one row here with estimate, actual, measurement source, variance and owner acceptance. Do not create another KPI document. Time spent waiting/building must be distinguishable from active work if available. An estimate is not a spending approval.
 Completion message: **Send effort report to PM: Milestone [#] / item [ID] consumed [elapsed hrs/days]; active [measured or unavailable]; coding tokens [measured or unavailable, source]; expected [time/token range]; variance [reason]; acceptance [pending/owner date].**
@@ -217,7 +242,7 @@ It sits below `BUILD_PLAN.md`:
 
 
 
-If this file and the Google Sheet ever diverge, this repository file is the authoritative build-execution plan.
+If this file and the Google Sheet diverge, apply the current F1 authority protocol: latest explicit owner instructions first, live checklist for project-management decisions, repository evidence for implemented behavior. Reconcile supporting Markdown before implementation; do not independently override checklist decisions.
 
 
 
@@ -1440,7 +1465,7 @@ Detailed future protocol: [M3.6 retrieval accuracy, performance and efficiency e
 
 ## M4.0 — Deterministic quality-tool evaluation + refactor if needed
 
-**Status:** PENDING — after M3 acceptance, before M4.1.
+**Status:** COMPLETE — owner closed evaluation on2026-10-20; checklist row20. No tools installed. Tooling/refactoring deferred to optional, time-allowing final pre-shipping QA on a separate branch. M4.1 next; original broader scope below is historical, not an execution prerequisite.
 Evaluate jscpd, ESLint/Oxlint, Prettier, Knip, dependency-cruiser, Archlint (verify exact identity), and sirknigget/antislop (verify license/code). Select the smallest useful long-term set based on coverage, overlap, maintainability and false positives. Extend codex.prompting.memory.md with the Markdown adopt/pilot/defer/reject summary; do not create a milestone document.
 
 Record production/test LOC separately excluding generated files/dependencies; production build/client JavaScript/container sizes in MB with definitions; build duration and approximate assessment/scoring/Results speed on the same environment and fixtures. Repeat timing samples with median/range and separate cold/warm conditions. No paid provider speed tests.
@@ -1450,7 +1475,7 @@ Present and obtain approval for exact new analysis/benchmark commands before run
 
 ## M4.1 — Reconcile calculator methodology + fixtures
 
-**Status:** PENDING
+**Status:** NEXT — checklist row21; not started by this documentation closeout.
 
 
 

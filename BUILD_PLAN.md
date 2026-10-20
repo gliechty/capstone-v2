@@ -1,8 +1,23 @@
 # BUILD_PLAN.md
 
+## Current authority and synchronization — owner direction, 2026-10-20
+Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
+
+Before EVERY milestone step, read the live F1 note and the relevant checklist row values INCLUDING cell notes at https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921 . Then reconcile supporting AGENTS.md, BUILD_PLAN.md, EXECUTION_PLAN.md and codex.prompting.memory.md before implementation, preserving newer unrelated work. BUILD_PLAN describes product scope/criteria; EXECUTION_PLAN records technical steps/evidence. Neither independently overrides current checklist decisions. Do not reopen accepted work based on historical text. If live checklist access fails, report the blocker; do not treat an old copy as current.
+
+PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
+
+Current disposition: M3 accepted; M4.0 evaluation COMPLETE by owner decision (v2.0 row20); M4.1 NEXT (row21), unstarted during this documentation task. Quality tooling/refactoring is deferred to optional, time-allowing final pre-shipping QA on a separate branch. Latest owner optionality supersedes row20's older 'must include' wording; PM should reconcile that note. No packages installed or refactoring performed. Broader milestone restructuring is only a proposal. This section supersedes conflicting historical authority, status and tooling instructions below.
+
+## Historical delivery direction — superseded by current authority above
+
 ## Current delivery direction — 2026-10-19
 
-Latest checkpoint (2026-10-20 Asia/Bangkok): normal application deployed at https://preview.flowagentai.website, revision `mosaic-a547751983d355dacd22`, prompt contract v7. Owner accepted findings1/2/13 and sticky behavior in11 for the later Oct19 walkthrough; M3 overall remains OPEN. Remaining4/5/11 visual corrections,9 unknown/ROI handling and report display polish are implemented with recorded offline verification and a non-generating hosted check. New visual/advice acceptance remains pending. No new live generation occurred; separate agent verification allowance remains exhausted, public$1/day Bangkok unchanged. See EXECUTION_PLAN.md current-state table for exact results and limitations. Changes remain uncommitted; M4 and experiments deferred.
+Latest owner scope correction (2026-10-20): M4.0 is a focused tool check: Knip and Prettier first, then dependency-cruiser incremental value. No installs or refactoring; custom baseline/performance work is withdrawn. This supersedes broader M4.0 descriptions below. Maintainability and delivery-efficiency directive is recorded in AGENTS.md.
+
+Current authorization update (2026-10-20): owner authorized **M4.0 only**, starting with repository/checklist audit and effort estimate; exact new tool/measurement commands require approval before execution. M3 remains accepted. Merge, M4.1 onward and deployment are not authorized by this step. Preserve existing changes; leave new work uncommitted. This supersedes older text describing all of M4 as unapproved.
+
+Latest checkpoint (2026-10-20 Asia/Bangkok): **Milestone 3 COMPLETE — explicitly accepted by the owner on 2026-10-20**, as delivered at https://preview.flowagentai.website, revision `mosaic-a547751983d355dacd22`, prompt contract v7. Acceptance includes the disclosed v7 offline-only verification and deferred issues; it does not establish a new v7 live-generation result or resolve broader grounding, historical score-comparison or operational evidence limitations. Implementation checkpoint `fe20fa6` is on `milestone-3-recommendations`. This acceptance record remains uncommitted. Merge and M4 require separate owner approval; no additional implementation, provider call or deployment is authorized by acceptance. Public $1/day Bangkok budget and exhausted separate agent verification allowance remain unchanged. See EXECUTION_PLAN.md current state for the acceptance record and preserved evidence.
 
 Complete M3 as the normal publicly accessible assessment on the existing clean host: real scoring, real OpenAI recommendations, required durable report, no synthetic substitute or unrequested login. Synthetic UI demonstrations require explicit approval. M3 acceptance remains human-owned. Framework/model/retrieval research is deferred from this closeout; retain it as backlog, not a release blocker. Follow the saved test register and effort-reporting policy in `codex.prompting.memory.md`. Historical narrower authorizations below are superseded only where this current owner direction conflicts.
 
@@ -465,7 +480,7 @@ Only the human project owner may mark a milestone complete or authorize the next
 
 - [X] Milestone 1 — Product shell and assessment entry
 - [X] Milestone 2 — Deterministic assessment core and Golden parity
-- [ ] Milestone 3 — Recommendations, results, and durable report
+- [X] Milestone 3 — Recommendations, results, and durable report — owner accepted 2026-10-20
 - [ ] Milestone 4 — Emissions calculator and quantitative input flow
 - [ ] Milestone 5 — Basic config and knowledge-base maintenance — CURRENT / REQUIRED
 - [ ] Milestone 5A — Automated source-document to config regeneration — NEEDS APPROVAL
