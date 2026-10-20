@@ -1,3 +1,5 @@
+import { computeAssessment } from "../../src/application/score-request";
+import { scoreClosing } from "../../src/application/recommendations/prepare";
 import { expect, test } from "vitest";
 import { validateRecommendationOutput } from "../../src/application/recommendations/validate-output";
 import type { RecommendationContent } from "../../src/application/recommendations/contracts";
@@ -5,6 +7,7 @@ import { config, input, score, evidence, validTestContent } from "../helpers/rec
 const validate = (raw: unknown, max = 40000) => validateRecommendationOutput(raw, input, score, evidence, config, max);
 test("valid content round-trips without correcting generated values", () => {
   const content = structuredClone(validTestContent());
+  content.grounding_notes = "Only Governance was assessed. Collect answers before drawing conclusions about other categories.";
   expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 test.each([
@@ -28,7 +31,6 @@ const mutations: [string, (c: RecommendationContent) => void][] = [
   ["internal_id", c => { c.priority_recommendations[0]!.title = "Fix U-001"; }],
   ["unstructured_score_claim", c => { c.priority_recommendations[0]!.why_it_matters = "Your score is 12.3."; }],
   ["unstructured_score_claim", c => { c.key_gaps[0]!.gap = "You received 80 out of 100."; }],
-  ["evidence_limitation_missing", c => { c.grounding_notes = "All sources fully verified."; }],
   ["schema", c => { Object.assign(c, { raw_overall: 100 }); }],
 ];
 test.each(mutations)("rejects %s without rewriting output", (code, mutate) => {
@@ -100,4 +102,34 @@ test.each(["score", "citation", "unanswered"])("omitted labels do not excuse %s 
   if (kind === "unanswered") content.key_gaps[0]!.category = "Resources";
   const expected = { score: "score_mismatch", citation: "unknown_citation", unanswered: "unanswered_category" }[kind];
   expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: expect.arrayContaining([expect.objectContaining({ code: expected })]) });
+});
+
+test.each(["No operational emissions baseline or energy tracking", "The company does not track total energy consumption."])("rejects unknown energy tracking as confirmed absence: %s", text => {
+  const content = structuredClone(validTestContent());
+  content.key_gaps[0]!.gap = text;
+  expect(validate(JSON.stringify(content))).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unknown_answer_as_absence"})])});
+});
+test.each(["No evidence of energy tracking was supplied; the practice remains unconfirmed.", "Energy tracking is unknown; confirm whether consumption is monitored before drawing conclusions.", "If the company does not track energy, a practical next step would be to establish a baseline.", "Evaluate ROI using project costs and potential benefits before choosing an investment.", "Return on investment has not been calculated; this is a qualitative priority."])("permits qualified advice without exact wording: %s", text => {
+  const content = structuredClone(validTestContent()); content.grounding_notes = text;
+  expect(validate(JSON.stringify(content)).ok).toBe(true);
+});
+test.each(["This is the highest-ROI next step.", "This project delivers the best return on investment.", "The calculated ROI is 12 months."])("rejects unsupported measured or ranked ROI: %s", text => {
+  const content = structuredClone(validTestContent()); content.executive_summary = text + " " + content.executive_summary;
+  expect(validate(JSON.stringify(content))).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unsupported_roi_claim"})])});
+});
+
+test("an assessed Resources category does not turn its missing energy answer into No", () => {
+  const resource = score.questions.find(q => q.category === "Resources" && q.responseType === "boolean" && !/energy/i.test(q.title))!;
+  const answeredInput = {...input, answers:{...input.answers,[resource.id]:"No"}};
+  const partial = computeAssessment(config, {configVersion:answeredInput.configVersion,context:answeredInput.context,answers:answeredInput.answers});
+  expect(partial.categories.find(c=>c.category==="Resources")!.percent).not.toBeNull();
+  const content = structuredClone(validTestContent());
+  content.executive_summary = "An observed practice can improve. " + scoreClosing(partial);
+  content.priority_recommendations[0]!.related_categories = ["Resources"];
+  content.key_gaps[0] = {category:"Resources",gap:"No operational emissions baseline or energy tracking",evidence:[]};
+  const result = validateRecommendationOutput(JSON.stringify(content),answeredInput,partial,evidence,config,40000);
+  expect(result).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unknown_answer_as_absence"})])});
+  content.key_gaps[0]!.gap = "An answered resource practice needs improvement.";
+  content.grounding_notes = "Energy tracking remains unknown even though other resource answers were supplied.";
+  expect(validateRecommendationOutput(JSON.stringify(content),answeredInput,partial,evidence,config,40000).ok).toBe(true);
 });

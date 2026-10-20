@@ -18,7 +18,7 @@ const recommendationPolicy = { version: "controlled-browser-policy" };
 const PROMPT_VERSION = "controlled-browser-prompt";
 const settings = { provider: "openai", model: "gpt-5.4-mini", reasoning: "low", timeoutMs: 10000, maxOutputTokens: 4000 };
 const configuration = { ready: true, code: "ready", settings, fingerprint: "controlled-browser-test", configVersion: config.version, sessionVersion: input.configVersion, methodVersion: score.methodVersion, policyVersion: recommendationPolicy.version, promptVersion: PROMPT_VERSION };
-const session = { version: 3, configVersion: input.configVersion, phase: "review", inputMethod: "manual", activeId: "U-001", skipped: [], answers: input.answers,
+const session = { version: 3, progress: 4, configVersion: input.configVersion, phase: "review", inputMethod: "manual", activeId: "U-001", skipped: [], answers: input.answers,
   profile: { industry: input.context.industry, companySize: input.context.companySize, location: input.context.location, targetBuyer: input.context.targetBuyer, businessGoal: input.context.businessGoal, companyName: input.companyName, subindustry: input.subindustry, notes: "", targetMarket: "EU" } };
 // HTTP interception is confined to tests. The normal build has no fixture route; the private preview is separately build/runtime gated.
 const result = (raw: typeof input) => ({ status: "available", configuration, content: validTestContent(), evidence: { limitations: ["Controlled browser test evidence only."] },
@@ -185,4 +185,24 @@ for(const reducedMotion of ["reduce","no-preference"] as const)test("delayed off
  if(reducedMotion==="reduce"){await expect(page.locator(".loading-reduced")).toBeVisible();await expect(page.locator(".loading-words")).not.toBeVisible();await page.clock.fastForward(4500);await expect(page.locator(".loading-reduced")).toHaveText("Generating recommendations…");}
  else{await expect(page.locator(".loading-words")).toHaveText("Preparing tailored recommendations…");await page.clock.fastForward(2000);await expect(page.locator(".loading-words")).toHaveText("Waiting for generated advice…");await page.clock.fastForward(2000);await expect(page.locator(".loading-words")).toHaveText("Keeping your scores available…");}
  await page.locator("#summary").screenshot({path:testInfo.outputPath("loading.png")});expect(posts).toBe(1);release();await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toBeVisible();await expect(page.locator(".generation-spinner")).toHaveCount(0);
+});
+
+
+test("daily budget modal preserves existing results, keyboard access and scores",async({page})=>{
+ let posts=0;
+ await page.addInitScript(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ await page.route("**/api/assessment-recommendations",async route=>{
+  if(route.request().method()==="GET")return route.fulfill({json:configuration});
+  posts++;return posts===1 ? route.fulfill({json:result(route.request().postDataJSON())}) : route.fulfill({status:429,json:{status:"unavailable",code:"budget_exhausted",configuration}});
+ });
+ await page.goto("/results");await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();
+ const regenerate=page.getByRole("button",{name:"Regenerate recommendations"});await expect(regenerate).toBeVisible();
+ const scores=await page.locator(".score-values").textContent();await regenerate.click();
+ const modal=page.getByRole("dialog",{name:"Daily AI budget reached"});await expect(modal).toBeVisible();
+ await expect(modal).toContainText("Today’s AI recommendation budget has been reached. Your scores remain available. Please try again tomorrow or contact Guy / the Climate School to arrange additional access.");
+ await expect(modal.getByRole("button",{name:"Close",exact:true})).toBeFocused();
+ expect((await new AxeBuilder({page}).include('dialog[open]').analyze()).violations).toEqual([]);
+ await page.keyboard.press('Escape');await expect(modal).not.toBeVisible();await expect(regenerate).toBeFocused();
+ await expect(page.locator('.score-values')).toHaveText(scores!);
+ await expect(page.getByText(validTestContent().executive_summary,{exact:true})).toBeVisible();expect(posts).toBe(2);
 });

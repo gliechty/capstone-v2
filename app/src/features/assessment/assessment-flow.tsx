@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { browserSession } from "../../adapters/assessment-session";
+import { createAssessmentModel } from "./model";
+import { selectedQuestions } from "../../application/assessment-catalog";
+import { StageNavigation } from "./stage-navigation";
 import { useRouter } from "next/navigation";
 import { authorizeResultsGeneration } from "../../application/recommendations/generation-intent";
 import { recommendationRequestFromSession } from "../../application/recommendations/request";
 import { NOTES_MAX_LENGTH } from "../../application/assessment-notes";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { MobileQuestionRail, ProgressNavigator } from "./progress-navigator";
 import { AssessmentProvider, useAssessment, catalogProfileErrors } from "./assessment-context";
 import { answerError, profileFields, progressLabel, unanswered, type ProfileKey } from "./model";
@@ -15,7 +19,7 @@ import type { AssessmentCatalog, Question } from "../../application/assessment-c
 function StageHeading({ children }: { children: string }) {
   const ref = useRef<HTMLHeadingElement>(null);
   useEffect(() => { ref.current?.focus(); }, []);
-  return <h1 ref={ref} tabIndex={-1} className="text-heading">{children}</h1>;
+  return <h1 ref={ref} tabIndex={-1} className="stage-heading text-heading">{children}</h1>;
 }
 
 function Setup() {
@@ -38,7 +42,7 @@ function Setup() {
     <section className="assessment-setup">
       <span className="section-label">01 / Business context</span>
       <StageHeading>Tell us about your business.</StageHeading>
-      <p className="mt-4 text-muted">Use example information to explore the flow. Fields marked required must be completed; subindustry and additional context are optional.</p>
+      <p className="mt-4 text-muted">Enter your business context. Fields marked required must be completed; subindustry and additional context are optional.</p>
       <form className="mt-8" noValidate onSubmit={submit}>
         {submitted && Object.keys(errors).length > 0 && <p role="alert" className="form-error mb-6">Please check the highlighted fields before continuing.</p>}
         <div className="grid gap-6 md:grid-cols-2">
@@ -140,18 +144,22 @@ function AnswerForm({ question }: { question: Question }) {
   }, []);
   function pointerChoice(value: string) {
     cancelAdvance();
+    if (session.answers[question.id] === value) {
+      dispatch({ type: "answer", id: question.id, raw: "" });
+      return;
+    }
     dispatch({ type: "answer", id: question.id, raw: value });
     advanceTimer.current = setTimeout(() => dispatch({ type: "next" }), 800);
   }
   const raw = session.answers[question.id] ?? "";
-  const error = attempted ? answerError(question, raw) : undefined;
+  const error = attempted && raw.trim() ? answerError(question, raw) : undefined;
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
   const index = questions.findIndex((q) => q.id === question.id);
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     cancelAdvance();
     setAttempted(true);
-    if (answerError(question, raw)) { inputRef.current?.focus(); return; }
+    if (raw.trim() && answerError(question, raw)) { inputRef.current?.focus(); return; }
     dispatch({ type: "next" });
   }
   function change(value: string) { cancelAdvance(); dispatch({ type: "answer", id: question.id, raw: value }); }
@@ -162,9 +170,10 @@ function AnswerForm({ question }: { question: Question }) {
         {question.options.map((option, i) => <label key={option} className="choice-option">
           <input type="radio" name="answer" value={option} checked={raw === option}
             ref={i === 0 ? (node) => { inputRef.current = node; } : undefined}
-            onChange={() => dispatch({ type: "answer", id: question.id, raw: option })}
+            onChange={(event) => { if (!(event.nativeEvent instanceof MouseEvent) || event.nativeEvent.detail === 0) change(option); }}
             onClick={(event) => { if (event.detail > 0) pointerChoice(option); }}
             onKeyDown={(event) => {
+              if (event.key === " " && raw === option) { event.preventDefault(); change(""); return; }
               if (event.key === "Enter") {
                 event.preventDefault();
                 change(option);
@@ -185,13 +194,14 @@ function AnswerForm({ question }: { question: Question }) {
     </div>}
     {"options" in question && raw && <p className="selection-confirmation mt-3" role="status">Selected: {raw}</p>}
     {error && <p id="answer-error" role="alert" className="form-error mt-3">{error}</p>}
-    <p className="mt-4 text-small text-muted">{"options" in question ? "Click or tap an answer to continue automatically. With a keyboard, choose with arrows or Space, then press Enter or Continue." : "Enter an answer, then continue."} You can revisit any question.</p>
-    <div className="mt-6 flex flex-wrap gap-3">
+
+    <div className="answer-actions mt-3 flex flex-wrap gap-3">
       <button type="button" className="button-secondary" disabled={index === 0} onClick={() => dispatch({ type: "back" })}>Previous</button>
       <button type="submit" className="button-primary">{index === questions.length - 1 ? "Review answers" : "Continue"}</button>
       <button type="button" className="button-secondary" onClick={() => dispatch({ type: "skip" })}>Skip</button>
       {raw !== "" && <button type="button" className="text-link" onClick={() => change("")}>Clear answer</button>}
     </div>
+    <details className="answer-help"><summary>Answer and keyboard help</summary><p>{"options" in question ? "Click or tap an answer to continue automatically. Click it again to clear it. With a keyboard, choose with arrows or Space; Space clears the selected answer. Press Enter or Continue to advance." : "Enter an answer, then continue."} You can revisit any question.</p></details>
   </form>;
 }
 
@@ -210,18 +220,32 @@ function AdjacentCard({ question, position }: { question?: Question; position: "
   </div>;
 }
 
+// Inert outgoing surface retains the same visible controls while it rolls away.
+// It cannot edit answers or receive focus; the active form remains authoritative.
+function DepartingQuestion({question,raw}:{question:Question;raw:string}) {
+  return <article className="departing-surface" inert>
+    <p className="departing-category">{question.category} <span className="font-normal">/ {question.id}</span></p>
+    <h2 className="question-heading mt-3">{question.title}</h2><p className="mt-4 text-muted">{question.hint}</p>
+    <div className="mt-3"><p className="field-label">Your answer</p>
+      {"options" in question ? <div className="grid gap-3">{question.options.map(option=><label className="choice-option" key={option}><input type="radio" checked={raw===option} readOnly tabIndex={-1}/><span>{option}</span></label>)}</div> : <div className="field-control">{raw}</div>}
+      {raw && <p className="selection-confirmation mt-3">Selected: {raw}</p>}
+      <div className="answer-help">Answer and keyboard help</div>
+      <div className="answer-actions mt-3 flex flex-wrap gap-3"><span className="button-secondary">Previous</span><span className="button-primary">Continue</span><span className="button-secondary">Skip</span></div>
+    </div>
+  </article>;
+}
+
 function Questionnaire() {
   const { session, dispatch, questions } = useAssessment();
   const question = questions.find((q) => q.id === session.activeId)!;
   const index = questions.indexOf(question);
-  const [motion, setMotion] = useState({ index, direction: "forward" });
-  if (motion.index !== index) setMotion({ index, direction: index < motion.index ? "backward" : "forward" });
+  const [motion, setMotion] = useState<{index:number;direction:string;previous:number|null}>({ index, direction: "forward", previous: null });
+  if (motion.index !== index) setMotion({ index, direction: index < motion.index ? "backward" : "forward", previous: motion.index });
   const headingRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const heading = headingRef.current;
     heading?.focus({ preventScroll: true });
-    const card = heading?.closest("article");
-    card?.scrollIntoView({ block: card.clientHeight < window.innerHeight - 32 ? "center" : "start", behavior: "instant" });
+    heading?.closest(".question-region")?.scrollIntoView({ block: "start", behavior: "instant" });
   }, [question.id]);
   return <div className="assessment-grid" data-first-question={index === 0}>
     <Progress />
@@ -230,12 +254,15 @@ function Questionnaire() {
         <p>Question {index + 1} of {questions.length}</p>
         <button type="button" className="text-link" onClick={() => dispatch({ type: "review" })}>Review all answers</button>
       </div>
-      <div className="question-stage" key={question.id} data-category={question.category} data-direction={motion.direction}>
+      <div className="question-stage" key={question.id} data-category={question.category} data-direction={motion.direction} data-moving={motion.previous !== null}>
         <AdjacentCard question={questions[index - 1]} position="previous" />
         <div className="active-question-region">
+          {motion.previous !== null && questions[motion.previous] && <div className="departing-card" aria-hidden="true" onAnimationEnd={() => setMotion(current => ({...current, previous: null}))}>
+            <DepartingQuestion question={questions[motion.previous]!} raw={session.answers[questions[motion.previous]!.id] ?? ""}/>
+          </div>}
           <article className="question-card" key={question.id}>
             <p className="category-label">{question.category} <span className="font-normal">/ {question.id}</span></p>
-            <h1 ref={headingRef} tabIndex={-1} className="mt-4 text-subheading">{question.title}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className="question-heading mt-3">{question.title}</h1>
             <p id="question-hint" className="mt-4 text-muted">{question.hint}</p>
             <AnswerForm question={question} />
           </article>
@@ -248,7 +275,7 @@ function Questionnaire() {
 }
 
 function Review() {
-  const { session, dispatch, questions, saveWarning } = useAssessment();
+  const { session, dispatch, questions, saveWarning, catalog } = useAssessment();
   const router = useRouter();
   const sending = useRef(false);
   const [confirmPartial, setConfirmPartial] = useState(false);
@@ -256,13 +283,19 @@ function Review() {
   useEffect(() => { if (confirmPartial) confirmButton.current?.focus(); }, [confirmPartial]);
   const [message, setMessage] = useState("");
   const missing = unanswered(session, questions);
-  const invalid = questions.some(q => session.answers[q.id]?.trim() && answerError(q, session.answers[q.id]));
+  const legacySkipped = questions.filter(q => session.skipped.includes(q.id) && session.answers[q.id]?.trim());
+  const invalid = legacySkipped.length > 0 || questions.some(q => session.answers[q.id]?.trim() && answerError(q, session.answers[q.id]));
   function generate() {
     if (sending.current || invalid || saveWarning) return;
     if (missing.length && !confirmPartial) { setConfirmPartial(true); return; }
     try {
       const input = recommendationRequestFromSession(session);
+      const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
+      const next = model.assessmentReducer(session, { type: "generate" });
+      const warning = browserSession(model.sessionSchema).save(next);
+      if (next.progress !== 4 || warning) { setMessage(warning ?? "Review your assessment before generating results."); return; }
       sending.current = true;
+      dispatch({ type: "generate" });
       authorizeResultsGeneration(input);
       router.push("/results");
     } catch { setMessage("Review your assessment before generating results."); }
@@ -274,6 +307,7 @@ function Review() {
     <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence and require human review.</p>
     <p className="mt-3 text-small">This action calculates scores and requests AI recommendations from the configured provider. Your business context, answers and source excerpts are sent for generation.</p>
     {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
+    {legacySkipped.length > 0 && <div className="storage-warning mt-4"><p>These previously skipped questions still contain saved answers from the older Skip behavior. Revisit each one and choose Skip to clear it, or confirm your answer. Original saved values have been preserved for your review.</p><ul>{legacySkipped.map(q => <li key={q.id}><button className="text-link" onClick={() => dispatch({type:"jump",id:q.id})}>{q.id}: {q.title}</button></li>)}</ul></div>}
     {message && <p role="alert">{message}</p>}
     {confirmPartial ? <div className="preview-notice mt-6" role="group" aria-label="Confirm partial assessment">
       <p role="status">{missing.length} questions are unanswered. Scores and recommendations will be based only on the available answers.</p>
@@ -301,7 +335,8 @@ function Boundary() {
 }
 
 function Flow() {
-  const { ready, session, dispatch, restoreWarning, saveWarning } = useAssessment();
+  const router = useRouter();
+  const { ready, session, dispatch, catalog, restoreWarning, saveWarning } = useAssessment();
   return <>
     <a href="#assessment-main" className="skip-link">Skip to assessment</a>
     <header className="page-container flex flex-wrap items-center justify-between gap-4 py-6">
@@ -310,9 +345,10 @@ function Flow() {
     </header>
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
       <div className="preview-notice mb-6">
-        <p className="font-semibold">Assessment interaction preview</p>
+        <p className="font-semibold">Business assessment</p>
         <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. AI recommendations require an explicit generation request.</p>
       </div>
+      {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push("/results");}else dispatch(action);}}/>}
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}
       {!ready ? <p role="status">Restoring this tab’s assessment…</p> : <>

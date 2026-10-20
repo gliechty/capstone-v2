@@ -1,3 +1,4 @@
+import { unsupportedClaimCitations, unsupportedAssessmentClaims } from "./claim-support";
 import type { CanonicalConfig } from "../../domain/config/types";
 import type { AssessmentScore } from "../../domain/scoring/score-assessment";
 import { recommendationContentSchema, type RecommendationContent, type RecommendationRequest } from "./contracts";
@@ -42,6 +43,10 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
     narratives.push({ text: gap.gap, path: `key_gaps.${i}.gap` });
   }
   for (const [name, rows] of [["priority_recommendations", content.priority_recommendations], ["key_gaps", content.key_gaps]] as const) {
+    rows.forEach((r, i) => {
+      const text = "recommended_action" in r ? [r.title,r.why_it_matters,r.recommended_action].join(" ") : r.gap;
+      for (const j of unsupportedClaimCitations(text,r.evidence,evidence)) add("unsupported_claim_citation",`${name}.${i}.evidence.${j}`);
+    });
     rows.forEach((r, i) => r.evidence.forEach((c, j) => {
       if (!citations.has(JSON.stringify([c.doc_title, c.source, c.pages_or_section, c.link]))) add("unknown_citation", `${name}.${i}.evidence.${j}`);
     }));
@@ -55,6 +60,7 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
     for (const match of chunk.record.chunk_text.matchAll(percentagePattern)) supportedPercentages.add(Number(match[1]));
   }
   for (const row of narratives) {
+    for (const code of unsupportedAssessmentClaims(row.text, score.questions.filter(q => q.status === "missing"))) add(code, row.path);
     if (/https?:\/\/|www\.|\]\(/i.test(row.text)) add("narrative_url", row.path);
     if (internalIds.some(id => row.text.includes(id))) add("internal_id", row.path);
     // Closed score-restatement surface. Reject other numeric score claims,
@@ -74,6 +80,5 @@ export function validateRecommendationOutput(raw: unknown, input: Recommendation
       if (!supportedPercentages.has(Number(match[1]))) add("unsupported_percentage", row.path);
     }
   }
-  if (!/unverified|not independently verified/i.test(content.grounding_notes)) add("evidence_limitation_missing", "grounding_notes");
   return issues.length ? { ok: false, issues } : { ok: true, content };
 }

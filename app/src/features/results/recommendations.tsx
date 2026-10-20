@@ -1,4 +1,5 @@
 "use client";
+import { ReportDownload } from "./report-download";
 import { useEffect, useReducer, useRef, type ReactNode } from "react";
 import { RecommendationPresentation } from "./recommendation-presentation";
 import { recommendationAttempt } from "../../adapters/recommendation-attempt";
@@ -35,10 +36,11 @@ export function Recommendations({ catalog, children }: { catalog: AssessmentCata
     const stop = watchAssessmentSession(() => void controller.refresh(), () => void controller.refresh(true), () => controller.cancel());
     const timer = setInterval(() => void controller.refresh(), 30000);
     let active = true;
-    const handoff = setTimeout(() => { void controller.refresh().then(async () => {
-      if (!active) return;
+    const handoff = setTimeout(() => {
       const input = read();
       if (consumeResultsGeneration(input)) { void controller.generate(); return; }
+      void controller.refresh().then(async () => {
+      if (!active) return;
       if (input) {
         const id = await browserInputHash(inputIdentityText(input));
         const current = read();
@@ -47,5 +49,5 @@ export function Recommendations({ catalog, children }: { catalog: AssessmentCata
     }); }, 0);
     return () => { active = false; clearTimeout(handoff); stop(); clearInterval(timer); controller.dispose(); control.current = null; };
   }, [catalog]);
-  return <RecommendationPresentation view={view} generate={() => void control.current?.generate()} cancel={() => control.current?.cancel()}>{children}</RecommendationPresentation>;
+  return <RecommendationPresentation view={view} generate={() => void control.current?.generate()} cancel={() => control.current?.cancel()}>{children}<ReportDownload catalog={catalog} view={view}/></RecommendationPresentation>;
 }

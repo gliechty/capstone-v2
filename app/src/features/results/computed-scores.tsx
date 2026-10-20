@@ -52,12 +52,14 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
           <dt className="text-small text-muted">{score.label}</dt><dd className="score-number">{display(score.value)}{score.value !== null && <span className="text-subheading"> / 100</span>}</dd>
         </div>)}</dl>
         <p className="coverage-count">{s.answered} answered · {s.missing} unanswered</p>
+        {s.missing > 0 && <p className="mt-3 text-small">Partial assessment: these scores describe supplied answers, not whole-company readiness. Unanswered items contribute neither earned nor possible points; unscored category weights are not redistributed.</p>}
       </div>
       <figure className="category-comparison" aria-labelledby="category-caption">
         <figcaption id="category-caption" className="text-subheading">Calculated category scores</figcaption>
 
         <ul className="category-bars">{s.categories.map(c => <li key={c.category} style={{ "--bar-color": "var(--category-" + c.category.toLowerCase() + ")", "--bar-value": (c.percent ?? 0) + "%" } as CSSProperties}>
           <div className="flex justify-between gap-4"><span>{c.category}</span><span className="font-semibold">{display(c.percent)}{c.percent !== null && <span className="sr-only"> out of 100</span>}</span></div>
+          <p className="text-small text-muted">{s.trace.filter(q => q.category === c.category && q.status === "scored").length} answered · {s.trace.filter(q => q.category === c.category && q.status === "missing").length} unanswered</p>
           {c.percent !== null && <div className="category-bar-track" aria-hidden="true"><span /></div>}
         </li>)}</ul>
       </figure>

@@ -1,3 +1,4 @@
+import { RECOMMENDATION_ATTEMPT_KEY } from "./recommendation-attempt";
 import type { createAssessmentModel, Session } from "../features/assessment/model";
 
 export const SESSION_KEY = "capstone.assessment.ui-preview.v1";
@@ -15,7 +16,11 @@ export function createSessionAdapter(getStorage: () => SessionStoragePort, sessi
         if (raw.length > 400000) throw new Error("Snapshot too large");
         const parsed = sessionSchema.safeParse(JSON.parse(raw));
         if (!parsed.success) return { state: null, warning: "Your saved preview could not be restored because its data or version is incompatible. A fresh preview has been opened." };
-        return { state: parsed.data, warning: null };
+        // An old receipt proves this tab previously made an explicit generation
+        // attempt. Preserve its Results revisit, but never arm a generation intent.
+        const receipt = getStorage().getItem(RECOMMENDATION_ATTEMPT_KEY);
+        const priorResults = receipt === "" || (receipt !== null && /^[a-f0-9]{64}$/.test(receipt));
+        return { state: parsed.data.progress === undefined && priorResults ? { ...parsed.data, progress: 4 } : parsed.data, warning: null };
       } catch {
         return { state: null, warning: "Your saved preview could not be read. This may be damaged data or unavailable browser storage. A fresh preview has been opened." };
       }

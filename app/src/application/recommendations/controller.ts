@@ -3,7 +3,8 @@ import type { RecommendationRequest } from "./contracts";
 import type { RecommendationResult } from "./service";
 import { inputIdentityText } from "./identity";
 export type RecommendationView = { phase: "idle" | "loading" | "available" | "unavailable"; code: string; configuration: ProviderStatus | null;
-  result?: Extract<RecommendationResult, { status: "available" | "test_only" }> };
+  result?: Extract<RecommendationResult, { status: "available" | "test_only" }>;
+  diagnostics?: { totalMs: number; providerMs: number; timeoutStage?: string; headersMs?: number; bodyMs?: number; issues: string[] }; };
 export function createRecommendationController(ports: {
   read: () => RecommendationRequest | null;
   status: (signal: AbortSignal) => Promise<ProviderStatus>;
@@ -39,10 +40,11 @@ export function createRecommendationController(ports: {
   async function generate() {
     if (disposed || busy) return;
     const input = read(); if (!input) { invalidate("no_assessment"); return; }
+    const previousResult = current === inputIdentityText(input) ? view.result : undefined;
     current = inputIdentityText(input); busy = true;
     const version = ++revision; controller = new AbortController(); const signal = controller.signal;
     const fresh = () => !disposed && !signal.aborted && version === revision && current === key();
-    publish({ phase: "loading", code: "generating", configuration: config });
+    publish({ phase: "loading", code: "generating", configuration: config, result: previousResult });
     try {
       const status = await ports.status(signal); if (!fresh()) return;
       config = status;
@@ -54,7 +56,7 @@ export function createRecommendationController(ports: {
       if (JSON.stringify(after) !== JSON.stringify(status) || (result.status === "available" && JSON.stringify(result.configuration) !== JSON.stringify(status))) {
         publish({ phase: "unavailable", code: "configuration_changed", configuration: after }); return;
       }
-      if (result.status !== "available") { publish({ phase: "unavailable", code: result.status === "unavailable" ? result.code : "invalid_output", configuration: status }); return; }
+      if (result.status !== "available") { publish({ phase: "unavailable", code: result.status === "unavailable" ? result.code : "invalid_output", configuration: status, result: previousResult, diagnostics: result.status === "unavailable" && result.metrics ? { totalMs: result.metrics.totalMs, providerMs: result.metrics.providerMs, timeoutStage: result.metrics.timeoutStage, headersMs: result.metrics.providerDiagnostic?.headersMs, bodyMs: result.metrics.providerDiagnostic?.bodyMs, issues: result.issues?.map(issue => issue.code) ?? [] } : undefined }); return; }
       const id = result.identity;
       if (id.inputId !== expectedId || id.configVersion !== status.configVersion || id.methodVersion !== status.methodVersion || id.promptVersion !== status.promptVersion || id.policyVersion !== status.policyVersion ||
         id.provider.id !== status.settings?.provider || id.provider.model !== status.settings.model ||
@@ -62,7 +64,7 @@ export function createRecommendationController(ports: {
         publish({ phase: "unavailable", code: "stale_response", configuration: status }); return;
       }
       publish({ phase: "available", code: "available", result, configuration: status });
-    } catch { if (fresh()) publish({ phase: "unavailable", code: "provider_failure", configuration: config }); }
+    } catch (error) { if (fresh()) publish({ phase: "unavailable", code: error instanceof Error && error.message === "generation_client_timeout" ? "client_timeout" : "provider_failure", configuration: config }); }
     finally { if (version === revision) { busy = false; if (!fresh()) invalidate("not_generated"); } }
   }
   return { refresh, generate, recoverInterrupted: () => { if (!busy && !disposed) publish({ phase: "unavailable", code: "interrupted", configuration: config }); }, cancel: () => invalidate("cancelled"), dispose: () => { disposed = true; invalidate(); } };

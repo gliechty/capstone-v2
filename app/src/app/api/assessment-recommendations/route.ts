@@ -1,4 +1,6 @@
-import { isLocalRequest, createLocalAdmission } from "../../../adapters/recommendations/local-boundary";
+import { isRecommendationRequest } from "../../../adapters/recommendations/hosted-boundary";
+import { reserveHostedAttempt, reconcileHostedAttempt, type BudgetReceipt } from "../../../adapters/recommendations/hosted-budget";
+import { createLocalAdmission } from "../../../adapters/recommendations/local-boundary";
 import { generateRecommendations, providerStatus } from "../../../adapters/recommendations/server";
 import { RecommendationInputError } from "../../../application/recommendations/contracts";
 import { recommendationPolicy } from "../../../application/recommendations/policy";
@@ -6,12 +8,12 @@ export const runtime = "nodejs";
 const response = (body: unknown, status: number) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 const admit = createLocalAdmission();
 export async function GET(request: Request) {
-  if (!isLocalRequest(request, false)) return response({ status: "unavailable", code: "local_only" }, 403);
+  if (!isRecommendationRequest(request, false)) return response({ status: "unavailable", code: "local_only" }, 403);
   try { return response(providerStatus(), 200); }
   catch { return response({ status: "unavailable", code: "configuration_unavailable" }, 503); }
 }
 export async function POST(request: Request) {
-  if (!isLocalRequest(request, true)) return response({ status: "unavailable", code: "local_only" }, 403);
+  if (!isRecommendationRequest(request, true)) return response({ status: "unavailable", code: "local_only" }, 403);
   if (request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase() !== "application/json") return response({ status: "unavailable", code: "unsupported_media_type" }, 415);
   const reader = request.body?.getReader();
   if (!reader) return response({ status: "unavailable", code: "invalid_request" }, 400);
@@ -44,7 +46,16 @@ export async function POST(request: Request) {
     const slot = configuration.ready ? admit() : null;
     if (slot && !slot.ok) return response({ status: "unavailable", code: slot.code }, 429);
     let result;
-    try { result = await generateRecommendations(input, request.signal); }
+    let receipt: BudgetReceipt | undefined;
+    try {
+      if (configuration.ready) {
+        const reservation = reserveHostedAttempt(process.env,request.headers.get("x-mosaic-verification"));
+        if (!reservation.ok) return response({status:"unavailable",code:reservation.code},429);
+        receipt = reservation.receipt;
+      }
+      result = await generateRecommendations(input, request.signal);
+      reconcileHostedAttempt(receipt, "metrics" in result ? result.metrics?.usage : undefined);
+    }
     finally { if (slot?.ok) slot.release(); }
     // A test double cannot be selected by this endpoint or exposed as live output.
     if (result.status === "test_only") return response({ status: "unavailable", code: "provider_not_configured" }, 503);

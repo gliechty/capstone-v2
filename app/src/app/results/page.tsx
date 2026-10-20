@@ -7,6 +7,7 @@ import { assessmentCatalog } from "../../application/assessment-catalog";
 import { loadCanonicalConfig } from "../../adapters/config-repository";
 import { Recommendations } from "../../features/results/recommendations";
 import "../../styles/results.css";
+import { ResultsStages, ResultsGate } from "../../features/assessment/stage-navigation";
 import { ResultsNavigation } from "../../components/results-navigation";
 
 export const metadata: Metadata = {
@@ -29,17 +30,14 @@ export default function ResultsPage() {
         <p className="font-semibold">Calculated scores · Optional AI recommendations</p>
         <p className="text-small">Research assessment, not certification. Scores are calculated separately; AI recommendations require explicit generation and human review.</p>
       </aside>
-      <ResultsNavigation />
+      <ResultsGate catalog={catalog}><ResultsStages catalog={catalog}/><ResultsNavigation />
       <section aria-labelledby="results-title" className="results-section">
         <div className="results-heading">
           <div><span className="section-label">Results / Research assessment</span><h1 id="results-title" className="text-display">Your assessment results</h1></div>
-          <div className="report-placeholder">
-            <button type="button" className="text-link text-small" disabled aria-describedby="report-availability">Download full report <span aria-hidden="true">↓</span></button>
-            <p id="report-availability" className="mt-3 text-small text-muted">Report generation is not implemented.</p>
-          </div>
+
         </div>
       </section>
-      <Recommendations catalog={catalog}><section className="results-section calculated-section" aria-label="Deterministic assessment results"><ComputedScores catalog={catalog} /></section></Recommendations>
+      <Recommendations catalog={catalog}><section className="results-section calculated-section" aria-label="Deterministic assessment results"><ComputedScores catalog={catalog} /></section></Recommendations></ResultsGate>
     </main>
   </>;
 }

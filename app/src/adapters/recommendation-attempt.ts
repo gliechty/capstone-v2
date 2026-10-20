@@ -1,5 +1,6 @@
 import type { SessionStoragePort } from "./assessment-session";
-const key = "capstone.recommendation.pending.v1";
+export const RECOMMENDATION_ATTEMPT_KEY = "capstone.recommendation.pending.v1";
+const key = RECOMMENDATION_ATTEMPT_KEY;
 // Receipt only: no prompt, answer, output, credentials or automatic retry consent.
 export function recommendationAttempt(storage: SessionStoragePort) {
   return {

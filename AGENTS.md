@@ -1,5 +1,20 @@
 # AGENTS.md
 
+## Owner workflow correction — 2026-10-19 (current)
+This section supersedes conflicting historical workflow/authorization wording below.
+- Deliver the authorized working application. No synthetic substitute, preview deployment, login gate, extra framework or future feature without owner instruction.
+- Ask before creating or using synthetic fixtures for UI demonstrations/visual reviews. Existing approved automated unit/Golden/provider-double tests remain usable as recorded tests; they do not authorize a synthetic product or new fixture project. If new fixtures or tests are needed, ask first.
+- Only execute verification recorded in the approved test register in `codex.prompting.memory.md` or explicitly authorized by the owner and recorded there before execution. Do not add tests, assertions, harnesses, fixture sets, scans or benchmarks on discretion.
+- A request for an extra test must state in plain English: the concrete failure it would catch, why existing tests cannot catch it, the user impact, expected time/token/API cost, and the proposed command/file. Await approval. Do not weaken existing tests to avoid asking.
+- Existing commands may run on affected saved test files. Run the full saved gate once for a final code candidate; rerun only invalidated checks or a failed check after a concrete fix. No full gate for Markdown-only edits. Never restart a running gate because a PM message arrived.
+- At task start report expected active time and token range with assumptions/confidence. At finish record effort once per completed checklist item. Report elapsed/active timing only if measured; otherwise write `not measured`. Do not reconstruct retrospective time or allocate shared-package time by guessing. Report measured coding-agent tokens only if telemetry exists; otherwise `unavailable`, never zero or inferred from prose length. Separate coding-agent tokens from application OpenAI usage.
+- Use the KPI/current-state section of EXECUTION_PLAN.md, the existing Build Checklist and codex.prompting.memory.md. No new milestone-specific review documents. Preserve historical evidence.
+- Current M3 is authorized through normal public deployment on the clean server with real recommendations and durable report. Use the existing local MOSAIC key securely (owner confirms it was never on the old host). Production AI allowance is $1/day; deployment verification is separately limited to two requests/$1. Never expose keys. Existing same-origin, scoring, validation and duplicate-request controls remain.
+- Routine scoped implementation proceeds without repeated approval; human milestone acceptance and new scope remain owner decisions. Codex's application commits/pushes remain manual unless separately authorized.
+- Read instructions once per work package and re-read changed sections only. Concise updates; investigate concrete failures, not hypothetical redesigns. Do not start M4 before M3 acceptance.
+
+
+
 ## Project
 
 Capstone v2 — Columbia Climate School / SEE Foundation SME sustainability assessment.
@@ -28,6 +43,7 @@ Read these files in this order:
 8. `BUILD_PACK/00_READ_ME_FIRST/COLUMBIA_IP_GUARDRAILS.md`
 9. `BUILD_PLAN.md`
 10. `EXECUTION_PLAN.md`
+11. `codex.prompting.memory.md` (approved test register and effort reporting)
 
 Consult `CURRENT_ARCHITECTURE.md` only to understand v1 behavior/dependencies. Do not treat it as the target architecture.
 
@@ -332,3 +348,9 @@ Anything the human owner should review.
 
 ### Next
 The next proposed action, without starting a new milestone unless authorized.
+
+## Deployment fidelity and work discipline — owner correction, 2026-10-19
+
+A request to host the working app means preserve its existing landing, assessment, Results and AI workflow. Do not substitute a simulation/test harness, redirect users into diagnostic controls, or introduce login/onboarding requirements without explaining the concrete user-facing difference and obtaining applicable authorization. Explicit synthetic-only authorization remains binding until changed; clearly call out its incompatibility with live-AI parity rather than presenting it as equivalent. Latest owner direction is the normal hosted app, no private/offline banner or login, and the existing AI integration; the owner has now authorized secure reuse of the local key and a shared $1/day Asia/Bangkok operating budget, separate from the deployment verification allowance.
+
+Use the smallest deployment changes needed. Reuse accepted implementation and verification evidence; do not restart research, redesign UI, or add dependencies/experiments for deployment. Verify the actual landing-to-results journey and required live capability before claiming the app is ready. A health check or synthetic test alone is not evidence of live AI availability. Report exact missing credentials, budget or security decisions early, continue independent work, and avoid repeated permission requests for already authorized routine work. Do not silently weaken validation or create unbounded public billable access. Keep changes uncommitted under the owner's existing Git instruction.

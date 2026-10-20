@@ -93,11 +93,7 @@ test("answers survive canonical navigation, skip, refresh, missing review and th
   await expect(page.getByLabel(numericLabel, { exact: true })).toHaveValue("0");
   await page.getByRole("button", { name: "Review all answers" }).click();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await expect(page.getByRole("button", { name: "Generate score and recommendations", exact: true })).toBeDisabled();
-  await page.getByRole("button", { name: "Review missing answers" }).click();
-  await jump(page, percentIndex);
-  await page.getByLabel("Your answer (%)", { exact: true }).fill("");
-  await page.getByRole("button", { name: "Review all answers" }).click();
+  await expect(page.getByRole("button", { name: "Generate score and recommendations", exact: true })).toBeEnabled();
   await page.getByRole("button", { name: "Generate score and recommendations", exact: true }).click();
   await page.getByRole("button", { name: "Generate score and recommendations anyway", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your assessment results");
@@ -196,7 +192,7 @@ test("pending pointer advance cancels on keyboard input or leaving the question"
   await page.getByRole("button", { name: "Review all answers" }).click();
   await page.clock.fastForward(1000);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Review your answers.");
-  await page.getByRole("button", { name: /^1\. / }).click();
+  await page.getByRole("button", { name: "1. " + questions[0]!.title, exact: true }).click();
   await expect(page.getByRole("radio", { name: "Yes", exact: true })).toBeChecked();
 });
 
@@ -216,14 +212,38 @@ test("touch selection advances and mobile compact navigation opens on tap", asyn
   await context.close();
 });
 
-test("roller navigation uses brief directional motion and local progress stays compact", async ({ page }, testInfo) => {
-  await page.setViewportSize({ width: 1440, height: 1000 });
+test("roller navigation uses visible directional motion and local progress stays compact", async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 768 });
   await start(page);
   await page.getByRole("button", { name: /^Next question:/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "forward");
-  expect(await page.locator(".question-stage").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.42s");
-  expect(await page.locator(".question-peek").first().evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThan(100);
+  expect(await page.locator(".active-question-region > .question-card").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.65s");
+  expect(await page.locator(".question-peek").first().evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(50);
+  // Owner requested motion-over-time and 100%-zoom viewport verification.
+  await page.locator(".question-stage").evaluate(el => el.getAnimations({subtree:true}).forEach(a => a.pause()));
+  const motionFrames = [];
+  for (const time of [0, 325, 649]) {
+    await page.locator(".question-stage").evaluate((el,time) => el.getAnimations({subtree:true}).forEach(a => {a.currentTime=time;}),time);
+    motionFrames.push(await page.locator(".active-question-region > .question-card").evaluate(el => ({y:el.getBoundingClientRect().y,opacity:getComputedStyle(el).opacity})));
+    await page.screenshot({path:testInfo.outputPath(`wheel-frame-${time}.png`),fullPage:false});
+  }
+  await page.locator(".question-stage").evaluate(el => el.getAnimations({subtree:true}).forEach(a => a.finish()));
+  expect(motionFrames[0]!.y).toBeGreaterThan(motionFrames[1]!.y);
+  expect(motionFrames[1]!.y).toBeGreaterThan(motionFrames[2]!.y);
+  expect(motionFrames.every(frame => frame.opacity === "1")).toBe(true);
+  await page.locator(".departing-card").waitFor({state:"detached"});
+  const viewport = await page.locator(".question-region").evaluate(el => {
+    const region=el.getBoundingClientRect(), nav=document.querySelector(".stage-navigation")!.getBoundingClientRect();
+    return {top:region.top,bottom:region.bottom,navBottom:nav.bottom,navHeight:nav.height,height:innerHeight,zoom:devicePixelRatio};
+  });
+  expect(viewport.top).toBeGreaterThanOrEqual(viewport.navBottom);
+  expect(viewport.bottom).toBeLessThanOrEqual(viewport.height);
+  expect(viewport.navHeight).toBeLessThanOrEqual(64);
+  const controls=(await page.locator(".answer-actions").boundingBox())!;
+  expect(controls.y+controls.height).toBeLessThanOrEqual(viewport.height);
+  await expect(page.locator(".question-toolbar")).toContainText("Question 2 of");
+  await page.screenshot({ path:testInfo.outputPath("wheel-100-percent.png"),fullPage:false });
   await page.getByRole("button", { name: /^Previous question:/ }).click();
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "backward");
   await page.getByRole("button", { name: /^Question 4:/ }).focus();
@@ -397,9 +417,9 @@ test("real 64-question rail tracks active card height without scrolling", async 
     return card.height;
   }
   const first = await checkGeometry();
-  await jump(page, 1); // Different option count changes the natural card height.
+  await jump(page, 1); // Different option counts retain the requested bounded card height.
   const second = await checkGeometry();
-  expect(second).not.toBe(first);
+  expect(second).toBe(first);
   await page.screenshot({ path: testInfo.outputPath("canonical-rail.png"), fullPage: true });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.setViewportSize({ width: 390, height: 844 });
@@ -466,7 +486,7 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   await touch.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: box.x + box.width / 2, y: box.y + box.height / 2 }] });
   const magnified = page.locator('.mobile-rail-marker[data-proximity="active"]');
   await expect(magnified).toHaveCount(1);
-  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transform", "matrix(1.6, 0, 0, 1.6, 12, 0)");
+  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transform", "matrix(5, 0, 0, 5, 12, 0)");
   await expect(magnified.locator(".progress-glyph")).toHaveCSS("transition-duration", "0s");
   await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   const popout = page.getByRole("group", { name: "Choose a nearby question" });
@@ -490,7 +510,8 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   await expect(choice).toHaveAttribute("data-pressed", "true");
   expect(await choice.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe(unpressed);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[0]!.title);
-  await page.screenshot({ path: testInfo.outputPath("mobile-pressed-choice.png"), fullPage: true });
+  // Keep the viewport fixed during an active touch; full-page capture can retarget release.
+  await page.screenshot({ path: testInfo.outputPath("mobile-pressed-choice.png"), fullPage: false });
   await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[28]!.title);
   await expect(page.getByRole("group", { name: "Choose a nearby question" })).toHaveCount(0);
@@ -568,5 +589,20 @@ test("optional additional context survives editing and refresh while old session
 for(const reducedMotion of ["reduce","no-preference"] as const)test("selection stays confirmed before slower advance: "+reducedMotion,async({page})=>{
  await page.emulateMedia({reducedMotion});await start(page);await page.clock.install();await page.getByRole("radio",{name:"Yes",exact:true}).click();
  await expect(page.getByText("Selected: Yes",{exact:true})).toBeVisible();await expect(page.getByRole("radio",{name:"Yes",exact:true})).toBeChecked();await page.clock.fastForward(600);await expect(page.getByRole("heading",{level:1})).toHaveText(questions[0]!.title);
- await page.clock.fastForward(250);await expect(page.getByRole("heading",{level:1})).toHaveText(questions[1]!.title);expect(await page.locator(".question-stage").evaluate(el=>getComputedStyle(el).animationName)).toBe(reducedMotion==="reduce"?"none":"roller-enter");
+ await page.clock.fastForward(250);await expect(page.getByRole("heading",{level:1})).toHaveText(questions[1]!.title);expect(await page.locator(".active-question-region > .question-card").evaluate(el=>getComputedStyle(el).animationName)).toBe(reducedMotion==="reduce"?"none":"wheel-arrive");
+});
+
+
+test("selected answers can be cleared and Skip deletes stored answers across refresh", async ({page}) => {
+ await start(page);
+ const no=page.getByRole("radio",{name:"No",exact:true});
+ await no.focus();await page.keyboard.press("Space");await expect(no).toBeChecked();
+ await no.click();await expect(no).not.toBeChecked();
+ await page.reload();await expect(no).not.toBeChecked();
+ await no.focus();await page.keyboard.press("Space");await expect(no).toBeChecked();
+ await page.getByRole("button",{name:"Skip",exact:true}).click();
+ await jump(page,0);await expect(no).not.toBeChecked();
+ await page.reload();await expect(no).not.toBeChecked();
+ const state=await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!));
+ expect(state.answers).not.toHaveProperty(questions[0]!.id);expect(state.skipped).toContain(questions[0]!.id);
 });

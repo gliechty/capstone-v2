@@ -12,7 +12,7 @@ for (const width of [1440, 390, 320]) {
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle("Assessment results | Capstone");
     await expect(page.getByText("Calculated scores · Optional AI recommendations", { exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Download full report" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Download assessment report" })).toBeDisabled();
     await expect(page.getByRole("heading", { name: "Scores unavailable" })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.evaluate(() => document.fonts.ready);
@@ -110,7 +110,7 @@ for (const width of [1440, 390]) test("real Golden assessment results are access
   const fixture = goldenCases[1]!;
   const p = fixture.profile;
   const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
-  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0], answers, skipped: [],
+  const session = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0], answers, skipped: [],
     profile: { companyName: "Example business", subindustry: "", industry: p.industry, companySize: p.employee_band.replace("-", " - "), location: p.company_location, targetMarket: p.target_market_region.join(";"), targetBuyer: p.target_buyer, businessGoal: p.business_goal } };
   await page.setViewportSize({ width, height: 1000 });
   await page.addInitScript(value => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(value)), session);
@@ -135,7 +135,7 @@ for (const width of [1440, 390]) test("real Golden assessment results are access
 });
 test("results reject invalid drafts, show missing categories, and do not replace storage with calculated values", async ({ page }) => {
   const profile = { companyName: "Example", subindustry: "", industry: catalog.industries[0], companySize: "251 - 500", location: "APAC", targetMarket: "EU", targetBuyer: "Enterprise", businessGoal: "Investor readiness" };
-  const state = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
+  const state = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
   await page.goto("/results");
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), state);
   await page.reload(); await expect(page.getByRole("main").getByRole("alert")).toContainText("non-negative decimal");

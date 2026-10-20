@@ -58,3 +58,10 @@ test("old prompt/validation contract cannot be displayed under the current contr
   displayed.configure({ ...configuration, promptVersion: "next-contract", fingerprint: "changed-contract" });
   await displayed.controller.refresh(); expect(displayed.views.at(-1)?.result).toBeUndefined(); displayed.controller.dispose();
 });
+
+test("budget denial preserves existing matching recommendations",async()=>{
+ const t=await setup();await t.controller.generate();const previous=t.views.at(-1)?.result;expect(previous).toBeDefined();
+ t.generate.mockResolvedValue({...t.result,status:"unavailable",code:"budget_exhausted",configuration} as unknown as Awaited<ReturnType<typeof t.generate>>);
+ await t.controller.generate();expect(t.views.at(-1)?.code).toBe("budget_exhausted");expect(t.views.at(-1)?.result).toBe(previous);
+ t.edit();await t.controller.refresh();expect(t.views.at(-1)?.result).toBeUndefined();t.controller.dispose();
+});

@@ -1,0 +1,2 @@
+// Fixed application information, displayed independently of generated prose.
+export const EVIDENCE_DISCLOSURE = "Source references identify material from MOSAIC’s configured library; citation membership does not prove that an excerpt supports every associated claim. Source binaries, editions, page/section metadata, external accessibility and factual accuracy have not been independently verified.";

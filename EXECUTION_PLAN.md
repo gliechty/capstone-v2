@@ -1,5 +1,166 @@
 # EXECUTION_PLAN.md
 
+## Current state and effort ledger — 2026-10-20
+This section supersedes conflicting historical status/authorization text below; historical evidence remains preserved.
+- Active outcome: M3 OPEN; prior manual acceptance failed, followed by partial owner acceptance of findings1/2/13 and sticky behavior in11 on Oct19. Remaining authorized corrections are deployed2026-10-20; new visual/advice acceptance remains pending. Do not start M4. No paid generation performed during this package.
+- Source state: milestone-3-recommendations at committed baseline026fb85 plus preserved uncommitted changes. Deployed content revision mosaic-a547751983d355dacd22, image sha256:dcd53f8201fbfaae285be1b8aeb3783772045ebc4eb61a9e53faed2dc18554cd, prompt contract v7. Public URL https://preview.flowagentai.website. Local changes remain unstaged/uncommitted; no commit/push/merge.
+- Current authorization: normal public deployment on 2.28.206.236; no login/synthetic product. Existing local MOSAIC key may be transferred securely. $1/day application budget, midnight Asia/Bangkok; two deployed verification calls/$1 separately. No automatic retry or budget reset to evade allowance.
+- Historical pre-acceptance-test result: v6 real hosted request accepted; report download, source dialogs, notes invalidation and unchanged51.0/12.1 scores passed. Shared public ledger0 attempts at the earlier automated checkpoint (superseded by the manual-attempt diagnosis below); separate deployment ledger2 attempts/$0.648288 reserved, exhausted by count. No further agent paid tests authorized. Next: correct failed manual-acceptance findings before another owner acceptance review. Historical score inputs remain unavailable; general claim entailment is not guaranteed. Egress firewall reboot persistence remains an operational follow-up, not a verified property.
+- Deferred: model/framework/retrieval research, icon lexicon, M4.0 and subsequent milestones. No new milestone-specific documents.
+- Verification authority: saved test register in codex.prompting.memory.md. New tests require plain-English justification and owner approval before implementation/execution.
+- Status visibility: update this section locally at start, blocked, verification and completion. Timestamp in Asia/Bangkok; record task, source revision/dirty state, last result and next action. A shared snapshot is only as current as its publication timestamp.
+
+### M3 scope freeze and acceptance handoff — 2026-10-20
+Owner requests closeout now, using existing implementation and verification evidence. Functional scope is frozen at deployed revision `mosaic-a547751983d355dacd22` (prompt v7); no runtime edits, deployments, provider calls or test reruns in this closeout. Cosmetic refinements, findings6–8/10, broader methodology, grounding/model/framework/retrieval research and M4 remain deferred. This checkpoint is ready for human acceptance, not an agent declaration of acceptance. It supersedes older instructions to correct already-deployed items or repeat a live walkthrough as a mandatory gate.
+
+| Requirement | Existing implementation and evidence | Closeout disposition |
+|---|---|---|
+| M3.1 provider service | Server-only provider boundary; authoritative score recomputation, bounded execution, explicit failures; exact public origin; shared persistent $1/day Bangkok reservation/settlement and separate test ledger. Saved concurrency/failure checks and v6 live success. | Implemented and verified within recorded conditions. 30s provider /45s client unchanged. |
+| M3.2 retrieval | Native metadata ranking, stable joins/order, preserved8-document/18-chunk baseline; saved retrieval/legacy comparisons. | Satisfied baseline; country/revenue omissions and source limitations remain explicit. |
+| M3.3 generation | Structured prompt/output, numeric/citation/category checks, fixed deterministic disclosure, bounded grounding guards; v7 question-level unknown/ROI correction48 focused passes. | Offline verified v7. No new v7 live generation; not automatically a new paid-test requirement. General claim entailment/quality is not guaranteed. |
+| M3.4 assessment/Results | Review-gated combined generation; immediate scores, loading, retry/cancel, one-use handoff, interruption/freshness protection; Skip/deselect, sticky stages, bounded cards; context, sources and disclosures. | Saved browser checks and affected reruns pass; owner already accepted1/2/13 and sticky behavior. Latest4/5/11 presentation awaits final acceptance, not further polish. |
+| M3.5 durable report | Downloadable self-contained HTML: context, answers, question/category/overall scores, gaps/actions, sources, config/method and limitations; usable without AI. | Saved report checks, prior live download and owner/PM content audit satisfy equivalent-report baseline. Dedicated print/PDF visual audit not performed. |
+| M3.6 release regression | Single saved gate plus concrete fixes and passing affected reruns; Golden coverage retained, hosted non-generating check passed; v6 service7.70s/browser9.92s live evidence. | Required baseline regression recorded. No claim of a fresh all-green monolithic run or measured v7 live latency/p95. Experiments explicitly deferred. |
+
+No concrete unresolved functional blocker is established by current evidence. Remaining acceptance caveats: GROUNDING-001 is mitigated by a targeted guard but broader source support remains open; SCORE-COMPARISON-001 lacks original matching inputs (later50.5/48.8 arithmetic reconciles, five matched Golden full traces agree); egress firewall persistence across host reboot is unverified. These are not silently closed or permission to expand this package. M3 remains OPEN solely pending the owner's decision on the delivered scope and disclosed limitations.
+
+#### Existing verification process and lean policy recommendation
+Recorded durations below come only from saved logs; no new timing runs. All commands run from app/ unless specified.
+
+| Command | Purpose | Recorded duration | Necessary when | Overlap |
+|---|---|---|---|---|
+| `npm run verify` | Sequential typecheck, lint, all units, production build, browser suite | End-to-end duration not measured; Oct20 invocation stopped at4 unit failures, subsequently fixed | Once per final release candidate | Includes all five commands below; do not repeat them first by default |
+| `npm run typecheck`; `npm run lint` | Type/contracts and static rules | Separate totals unavailable | Affected code/config changes; included in release gate | Build also checks Next TypeScript; domain-only check/lint retain distinct coverage |
+| `npm run test` | Unit, provider-double, scoring/Golden regressions |105.83s in Oct20 gate;271/275 then affected navigator11/11 in10.32s | Release gate; focused files during development | `test:golden` is a subset, not an additional default release step |
+| `npm run build` | Production compilation/routes | Total unavailable; saved rebuild2 phases2.8s compile,12.3s TypeScript,479ms static generation | Release candidate or source changes before browser checks | Deployment Docker build also compiles the actual image; preserve that necessary fidelity check |
+| `npm run test:e2e` | Offline browser journeys, failures, accessibility and viewports |7.2min (71/74); affected assessment rerun25/25 in3.1min after fixes | Once at release; affected files after concrete fixes | Repeating whole suite after focused fixes duplicates unchanged coverage |
+| `npx vitest run tests/unit/recommendation-prompt.test.ts tests/unit/recommendation-validation.test.ts --maxWorkers=1` | Approved unknown/ROI regression |3.21s,48 passed | Prompt/validator development | Included in full unit suite |
+| `npx playwright test --config .local/budget-deploy.config.ts --grep 'hosted readiness'` | Existing non-generating HTTPS/readiness, budget modal, scores/report smoke |12.7s,1 passed | After deployment | Complements local suite; does not prove new live AI generation |
+
+Sources: existing `app/.local/m3-oct20-*-*.log` evidence listed in the completed checkpoint above, plus `m3-oct20-rebuild2.log`. The roughly20-minute experience is not a measured default-gate total: the serial browser phase alone took7.2min, affected rerun3.1min, and units105.83s. Unit log attributes60% to environments and21% imports across33 isolated workers. Browser checks include real800ms answer confirmation across a full questionnaire (~51s), multiple viewport/accessibility journeys, server startup and failure artifacts. Repeated compilation/static checks and corrective reruns add time; no exact20-minute sum or new benchmark is claimed.
+
+Recommended policy (no scripts/coverage changed): focused saved checks during development; one `npm run verify` release gate; after concrete fixes rerun only failed/invalidated checks and rebuild when browser/image source changed, carrying forward unaffected passes. Include applicable saved dependency/security review at release, reusing evidence when dependency/config scope is unchanged. Use the small existing non-generating hosted smoke after deployment. Paid live checks require separate authorization/budget and a concrete integration need; v7 offline-only status is disclosed, not an automatic demand for another call. No full gate for documentation-only edits. Do not disable isolation, remove assertions or introduce tools to chase duration in this closeout.
+
+#### Git checkpoint and effort
+Reviewed tracked diff and intended new application/deployment/test files. Proposed single coherent hosted-M3 checkpoint includes root controls/test register, app/src, app/tests, app/deploy/app, app/scripts/deploy.mjs and app/docs/M3-LIVE-AI-REVIEW.md. Shared state/contracts make splitting budget/report/Results corrections less useful. Exclude and preserve `.agents/`, the two `app/docs/HETZNER-*` incident documents and the modified historical `app/docs/PRIVATE-HETZNER-STAGING-PLAN.md`; historical control-document references to these local records remain preserved. Private `.local/` responses/ledgers, environment credentials, generated outputs and dependencies are excluded. Credential-pattern review and exact local credential comparison found no real secret in proposed files; one existing example.org user:pass rejection fixture is intentional. Deployment deploy.sh is LF-only. BUILD_PACK, domain/scoring, canonical config, archived content and dependency manifests have no diff. Index remains untouched; owner performs staging/commit/push/PR. No merge authorization inferred.
+
+Effort item M3-CLOSEOUT: scope/evidence/Git handoff completed; expected active15–25min, elapsed **not measured**, active **not measured**, coding-agent tokens **unavailable**, application-provider calls0/cost$0. No retrospective timing reconstruction. Remaining work: owner acceptance and manual Git publication; no agent test or deployment command running from this closeout.
+
+### Current correction package — 2026-10-20
+Latest owner walkthrough / PM artifact audit from Build Checklist v2.0 F19 note (2026-10-19 15:32 Bangkok) supersedes older pending dispositions below. Findings 1, 2 and 13 are owner-accepted for that walkthrough; 11 sticky behavior is accepted but desktop size rejected. Findings 4/5 remain rejected: jolty wheel motion, inconsistent moving surfaces, oversized card and hidden adjacent previews at 100% zoom. Current work: 4/5/11 visual corrections, 9 item-level unknown-as-negative and unsupported measured-ROI advice correction; machine-owned verification of 3/12 and old Skip conflicts. Findings 6–8/10 remain deferred.
+- The later owner live run SUCCEEDED. Do not require paid repetitions solely to resolve historic timeout uncertainty; deadlines remain unchanged. No paid calls authorized for this package.
+- PM inspected the report generated 2026-10-19T08:22:52.656Z: 44 scored / 12 unanswered; question totals8579.93/17004.50 give50.4568203% (50.5 displayed), weighted48.7511813 (48.8 displayed). This is PM-reported internal arithmetic reconciliation, not independent benchmark validation. Original49.3/47.3 evidence is historical, not the latest report.
+- Reported water tracking No and hazardous-waste8 are stored answers: preserve them; do not infer intent. Advice incorrectly states no energy tracking where that item is unanswered; all categories having some answers does not imply all items answered. Highest-ROI wording lacks cost/benefit evidence.
+- Owner explicitly requested Playwright verification at100% and motion over time using the existing UI. Reuse saved assessment fixtures/checks; no synthetic product or new fixture set. Owner subsequently approved the focused finding9 checks in the two named files;48 checks passed. No broader test expansion.
+- Effort rule (owner2026-10-20): record effort once per completed checklist item. Unavailable elapsed/active timing is **not measured**. No retrospective time reconstruction or allocation of shared-package time. Coding tokens unavailable without telemetry. Package forecast1–3 active hours, low confidence; no per-item actual recorded before completion.
+
+### Completed correction checkpoint and effort — 2026-10-20
+Implementation/verification checkpoint only; this does not mark M3 or new visual/advice behavior human-accepted.
+
+| Item | Completed outcome | Elapsed | Active | Coding-agent tokens | Acceptance |
+|---|---|---|---|---|---|
+| 3 | Existing focus/reduced-motion checks passed; radio-to-Continue order preserved | not measured | not measured | unavailable | Machine check complete |
+| 4 | Opaque directional wheel with matching outgoing controls; intermediate frames inspected | not measured | not measured | unavailable | Owner review pending |
+| 5 | Normal-zoom viewport bounds, persistent position, visible adjacent previews and stable mobile/desktop sizing | not measured | not measured | unavailable | Owner review pending |
+| 9 | v7 item-level unknown context and bounded unsupported-absence/ROI safeguards;48 approved focused checks | not measured | not measured | unavailable | Offline verified; no v7 live generation |
+| 11 | Compact sticky stage bar with existing state/accessibility | not measured | not measured | unavailable | Compact sizing review pending |
+| 12 | Existing first-Results/legitimate-revisit checks passed | not measured | not measured | unavailable | Machine check complete |
+| M3.5 display polish | Reused setup labels; point totals formatted to2 decimals in report only, no calculation rounding | not measured | not measured | unavailable | Existing report regression passed; print/PDF visual audit not performed |
+
+One effort entry per completed current item; no retrospective allocation or reconstruction. Initial package forecast1–3 active hours with low confidence, token estimate unavailable. Application-provider spend$0; no live calls. Items1/2/13 retain prior owner acceptance without inventing new effort entries.
+- Verification: the single full saved gate passed typecheck/lint then recorded271/275 unit passes, with4 navigator failures caused by the help disclosure's group semantics. Fixed the implementation without weakening assertions; affected navigator file passed11/11. Latest typecheck/lint/build passed. Completed saved browser gate71/74; fixed Tab order, help-control footprint and rail endpoint overflow, then affected assessment file passed25/25. All initial failures are covered by passing affected reruns; do not describe this as a single clean275/74 run. The48 finding9 focused checks include the initially malformed test score-request corrected to the existing strict schema.
+- Saved logs: app/.local/m3-oct20-final-verify.log, m3-oct20-navigator-final.log, m3-oct20-browser-gate.log, m3-oct20-assessment-final.log and m3-oct20-advice-check.log. Visual evidence is from the existing approved assessment journey, including motion frames; no new fixture set/product or separate review document.
+- Deployment: existing scripts/deploy.mjs workflow completed for mosaic-a547751983d355dacd22. Saved non-generating hosted readiness/budget/report check passed1/1 with v7, gpt-5.4-mini/low/4000, provider30000ms; client45000ms unchanged. All generation POSTs in that check were intercepted; no claim of a new live AI success. Prior owner live success remains separate evidence.
+- Ledgers unchanged across this deployment/check: public SHA256006539c6e20583fb4e11df29209f13e414d574ec8f8095edac621c583027c3be; separate deployment-test SHA256c16b4850bc90177352e433d6dec09d58f353d007b97d2f88de6e98c6934d8806. The fresh public hash includes owner activity after the previous checkpoint; it was not reset. $1/day Bangkok and exhausted agent test allowance remain distinct.
+- Limits: bounded language guards do not prove general entailment or catch every paraphrase. Existing substantive score/citation/category protections remain. Missing-item disclosures are requested semantically, not enforced through literal boilerplate. Unknown remains unknown; saved water/hazardous-waste answers and existing downloaded reports were not rewritten. Generic whistleblower/source-support concerns remain open. Source membership is not proof of claim support. No new model, retrieval or methodology work.
+- Next: owner reviews current4/5/11 visuals and decides M3 acceptance. New-v7 live prose/latency is not claimed verified; no extra paid call is authorized or required solely to reconstruct historical failures. Findings6–8/10 and research experiments stay deferred. All local changes remain unstaged/uncommitted; deployment does not imply acceptance.
+
+### Failed manual acceptance — owner direction and bounded diagnosis, 2026-10-19
+- Original findings recovered from Build Checklist, v2.0 F14:F19 and full F19 note, 2026-10-19. Numbers 1–5, 9, 11–14 are current; 6–8 and 10 remain deferred. The source below preserves the owner wording and historical OPEN dispositions.
+
+### Original numbered findings
+
+1. There is no way to 'deselect' an option in the questionnaire. I.e. if I read 'skip if unknown' after typing 'no' to whether we count emissions, I'm unable to change the answer: skip maintains the 'no' entry and simply skips. Hitting 'Skip' should remove any stored answer for the question and advance the card. Clicking an already-checked answer should toggle (from yes-no).
+2. The navigation is still a bit awkward, not fluid. I see that the active 'bubble' is increased in size most, with the adjacent two in each direction increased in size a bit more. It would be much better to have the selected bubble increase by 5x, then by 4x for the question immediately before and after, then 3x for the questions before and after those, then 2x. These should pop out, but not in 'steppes.'
+3. Sometimes when advancing between pages or generally clicking 'Enter', the following page/question arrived with a red selection box around a piece of text. This serves no purpose. Clicking away removes it, but it should not have been there to begin with. Purpose unclear.
+4. Card animations need to be more fluid. There is no discernible 'roll' of the card wheel. Once a question is answered, the animation waits for a few ms, then immediately presents the next card. The animation should make it evident that the partial cards above and below the current are cards in a 'wheel'; clicking an answer 'turns' the wheel one card.
+5. Card size varies widely between questions - due to question length, available answers, etc. Within some bounds, of course, the card height should remain constant, and the text size/spacing adjusted to fit...rather than allowing the card to balloon in height to accommodate.
+6. This for later: there are still question-answer match errors. A construction company (cement) gets a question about wood fibers. This needs to become a separate QA test we set up in a later step/Milestone.
+7. Some of the questions are still complicated for SMEs. Perhaps we implement an icon ('(?)' or 'what's this?' link) with genAI-generated layman's explanations. For example: "Has your company carried out a climate-change risk-exposure analysis for your operations or project pipeline?" is largely technical/industry jargonspeak. The button/icon would explain this in SME-friendly terms, with potential examples.
+8. I'm not sure about the whole No/Skip methodology here. We could also add a field like 'Other answer:' consistently, in a later iteration. This would allow an SME to specify in greater detail, at least for the agent's consideration. For example, "Does your company report its order backlog from renewable-energy or green-building projects?" could take a response like "we have sold cement to renewable energy or green-building projects, but don't report customer information. This is protected."
+9. I skipped ALL energy/$, waste and water questions. This is crucial information. Verify that the agent output accurately took this into account, and whether the received score adequately reflects the SME's performance.
+10. Another audit type we could require later: questions like "Does your company assess the adequacy of existing public infrastructure (electricity, water, wastewater) when selecting sites?" have obvious problems. What does 'adequacy' mean? How is this a sustainability question? This was an AI-generated question, from some indicator. What is the indicator? Where is the provenance in this whole question phase/step?
+11. The phase-navigation (Set up, Data Input, questions, review, results) is not synched appropriately. I'm only on the question phase - have not yet reviewed or generated results, i.e., have not navigated to those pages. Yet they still all show up in the same way on the page. Further, this menu is not sticky.
+12. I was able to navigate straight to the Results page from the questionnaire. This should not be possible without visiting the 'review' page, and clicking 'generate score and recommendations' or whatever.
+13. The agent failed to run from Review > Generate score and recs button. I had to click 'Regenerate' on the Results page.
+14. Regarding 13) above...the agent is the issue, timeout maybe. This failed on Results > 'Regenerate' a second time.
+
+### Current correction status by original finding — 2026-10-19
+Source: [Build Checklist, v2.0 F14:F19 and full F19 note](https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921#gid=406102921). Spreadsheet read only; original findings above are unchanged. All visual changes await owner review; M3 acceptance remains failed/pending correction.
+
+| Finding | Local work / actual files | Verification / remaining issue |
+|---|---|---|
+| 1 | Existing Skip/deselect clearing retained. | Owner ACCEPTED Oct19 walkthrough. Saved clearing/refresh checks passed again; source review confirms legacy skipped+nonblank conflicts are preserved and block generation in Review/model/ResultsGate. No guessed answer corrections or new legacy-conflict fixture. |
+| 2 | Accepted5/4/3/2 emphasis retained; desktop endpoint spread bounded to avoid overflowing the shorter rail. | Owner accepted appearance Oct19. Navigator unit and desktop/mobile checks passed; no new bubble design. |
+| 3 | Existing noninteractive-heading outline rule retained; restored radio-to-Continue Tab order after moving supplementary help after actions. | Saved keyboard/reduced-motion and accessibility cases passed. Machine verification complete; no separate owner repetition requested. |
+| 4 | assessment-flow.tsx/assessment.css: opaque outgoing/incoming card surfaces with matching controls,650ms directional movement,800ms selected confirmation and reduced-motion support. | Intermediate0/325/649ms frames and settled UI inspected; monotonic movement/opacity check passed. New owner visual acceptance pending. |
+| 5 | Viewport-relative bounded active card, compact readable adjacent previews, persistent question position, sticky active controls and compact optional navigation help. | Saved1440x768 normal-zoom viewport/controls bounds and stable sizing checks pass; mobile320/390 and64-question rail pass. New owner visual acceptance pending. |
+| 6 | Deferred applicability QA (cement / wood fibre). | No canonical selection or question-bank changes. |
+| 7 | Deferred plain-language explanations. | No explanation-generation feature or new calls. |
+| 8 | Deferred unknown/No/not-applicable methodology and optional narrative answers. | No scoring or answer-model semantics beyond explicitly authorized clearing. |
+| 9 | prepare.ts v7 supplies authoritative unanswered-question identities/titles/categories as unknown, including within assessed categories. Instructions distinguish unknown from No, require item-level grounding notes and qualitative priorities instead of uncalculated ROI. claim-support.ts/validate-output.ts add bounded guards for reported false tracking-absence and unsupported ROI claims; no prose rewriting. |48 approved focused checks passed, including qualified advice/paraphrases, assessed-category missing energy, scores/citations and unassessed-category protections. Later PM report arithmetic50.5/48.8 reconciles; original49.3/47.3 remains historical evidence. No new live call; broad semantic correctness is not proven. |
+| 10 | Deferred question-to-indicator/source provenance audit. | No retrieval/config changes. |
+| 11 | Compact inline sticky desktop stage bar; distinct state and keyboard access retained. | Sticky behavior previously owner-accepted. New compact footprint <=64px and accessible desktop/mobile checks passed; visual acceptance pending. |
+| 12 | Existing Review + Generate first-Results gate and legitimate revisit behavior retained. | Saved M3-completion tests pass at1440/390, including direct URL denial and non-generating refresh. Machine verification complete. |
+| 13 | Existing one-use combined-generation handoff retained. | Owner ACCEPTED later Oct19 live walkthrough; combined/duplicate/interruption regression checks pass. No additional paid calls. |
+| 14 | Provider30s/client45s and safe diagnostics retained. | Later owner run SUCCEEDED; no new timeout reported. Historical causation/p95 remain unproven, not a demand for repeated paid tests. No deadline change. |
+
+### Owner-supplied assessment evidence
+
+- Industry Construction / Materials (cement); size 251–500; target buyer Government; markets EU and Eastern Europe; goal Meet buyer sustainability requirements.
+- Raw score 49.3/100; industry-weighted 47.3/100; 45 answered and 11 unanswered. Category scores: People 100.0, Governance 43.8, Community 67.5, Resources 28.4.
+- Displayed earned/possible points: 8582.43 / 17404.50. Their ratio supports the rounded raw total only; it does not independently verify every input, category or weighted total.
+- UI states missing answers contribute neither earned nor possible points; unscored category weights are not redistributed. These are partial-assessment scores, not proof of whole-company readiness.
+- User reported skipping all energy/revenue, waste and water questions. Yet the pasted calculation list marked water tracking and hazardous-waste percentage as scored. Investigate retained answers and Skip behavior; do not assume the user's intention was captured.
+- Listed unanswered items include energy tracking, renewable percentage, waste tracking/diversion, wood-fibre percentage, climate risk-exposure analysis, emissions/revenue, energy/revenue, water/revenue, waste/revenue and infrastructure adequacy.
+- No accepted recommendation prose was supplied for this failed run. It is therefore impossible to confirm that generated advice handled missing information correctly from this record alone. A zero gap/action count after generation failure is not evidence of no gaps.
+- Reported timeout text: "Generation deadline was exceeded. No recommendations were accepted. You can retry explicitly."
+- Screenshots were supplied in the PM conversation but are not repository files. The descriptions and pasted score evidence above are available to Codex without requiring the owner to re-paste the findings.
+
+
+### Local diagnosis and correction progress
+
+- Current corrections (owner grouping, not replacement numbering): answer deselection/Skip clearing; navigation bubble magnification, focus styling, wheel animation and stable card sizing; sticky/current/completed stage navigation; Review-before-Results gating; combined-generation behavior; live timeout; incomplete-data presentation.
+- Later backlog: question applicability, plain-language explanations, optional narrative answers and question-to-indicator/source provenance. No scoring-methodology change.
+- Existing hosted records read without generation: public ledger has entries at 13:02:48, 13:04:47 and 13:05:34 Asia/Bangkok. First two settled usage costs are $0.0232815 and $0.024924, proving provider interaction/usage, not successful validation or delivery. Third retains $0.324144 with unknown usage. Current accounted public total is $0.3723495. Separate deployment ledger remains two attempts/$0.648288 reserved; no allowance reset or extra call.
+- Exact failure/deadline per ledger entry is NOT established: public ledger stores reservation/usage, not response code, validation issues or timing; reservation precedes provider dispatch. First two attempts returned usage; third dispatch/completion is unknown. Bounded container log inspection found no timeout or recommendation-metric records; two Server Reference ID format errors (received "x") cannot be attributed to these attempts. Retained local v5/v6 evidence is from prior agent verification, not these manual attempts. No manual response reconstructed. Subsequently recovered F19 note quotes the generation-deadline message; that message maps to the server service deadline, rather than the45 s client transport deadline. It supports at least one reported server timeout, but does not correlate each ledger entry to a failure stage. Two settled-usage entries are not evidence that both timed out.
+- Timeout implementation: 30-second provider race/abort; 45-second generation-client cap; 15-second readiness fetch; separate request-body deadline. Client transport exceptions are mapped generically to provider_failure. Without the original response/network evidence, do not select a deadline or increase a cap by assumption.
+- Skip defect confirmed in pre-correction source: reducer explicitly preserves answers while adding the active ID to skipped; progressLabel prioritizes a valid answer over skipped. Scoring requests use raw answers, so a retained valid answer remains assessed. Native radio handlers select again rather than deselect. Saved sessions persist both answers and skipped unchanged. The owner's exact question IDs/values are unverified: answers live in browser-tab sessionStorage, not server storage, and browser policy blocked observation of the existing hosted tab. Do not circumvent that control or claim code inspection is a recovered session.
+- Review/generation defect confirmed in pre-correction source: stage Results is enabled after any answer; its handler navigates directly without the explicit combined-generation intent. Review's Generate action does create that intent. Stage navigation exposes current state but lacks sticky/completed treatment. The pre-correction incomplete notice/counts did not establish acceptance; the current correction adds explicit category coverage and avoids zero gap/action claims on AI failure.
+- Smallest correction order: (a) clear/deselect answers and persist the corrected state without changing calculation formulas; (b) gate initial Results through Review and preserve one-use combined-generation, refresh/cancellation protections; (c) finish scoped navigation/focus/motion/card sizing; (d) clearly present incomplete coverage; (e) resolve live failure from retained diagnostics before altering timeouts. No provider calls or code/test changes during the initial diagnosis; subsequent authorized local implementation is recorded in the numbered table above.
+- Reuse approved assessment/session, progress-navigator, generation-intent/attempt/controller/client/service/provider, results/disclosure and existing assessment/recommendations/M3-completion browser checks; use the saved full gate only on the final correction candidate. Existing assessment.test.ts explicitly expects Skip to preserve a draft and therefore required a changed assertion for the new clearing contract. Owner subsequently explicitly approved that update plus offline clearing/refresh and Review-gate coverage in assessment.test.ts, assessment.spec.ts and m3-completion.spec.ts. No new synthetic demonstration or paid test is authorized.
+- Verification for this correction: full saved `npm run verify` completed typecheck/lint,263 unit tests (including Golden), production build and74 browser cases:68 passed /6 failed. Concrete motion/geometry failures were corrected; affected27-case browser rerun passed25 with2 touch cases remaining. Final rebuilt6-case restoration/Review/mobile subset passed5 with1 touch case remaining; changing only the existing active-touch screenshot from full-page to viewport capture retained every touch assertion and both320/390 touch cases then passed. Latest typecheck/lint/build passed.20 existing session/attempt unit checks passed after legacy revisit compatibility. No new full-gate claim: initial failures plus their explicit passing reruns are preserved in app/.local/m3-*-check/verify logs. Visual inspection used screenshots generated by these saved tests, not a new synthetic demonstration.
+- Deployment completion14:49 Bangkok: existing `node scripts/deploy.mjs --key=<existing new-host SSH key>` deployed mosaic-8a7cb174fb04e58349cb. Existing saved `npx playwright test --config .local/budget-deploy.config.ts --grep 'hosted readiness'` passed1/1: trusted HTTPS, ready v6, gpt-5.4-mini/low/4000 tokens/30000 ms, mocked budget-denial modal, authoritative scores and report download. All generation POSTs in that check were intercepted locally; no provider generation occurred. The fixture's existing Results revisit now includes progress4; no new synthetic demonstration/harness was introduced.
+- Both server ledgers are byte-for-byte unchanged across deployment and non-generating verification: public SHA256 `6c86efb9794ae2545af11d7d2de1044b3cadd1c89d01999a4e7d5d096a8a7f9a`; deployment-test SHA256 `c16b4850bc90177352e433d6dec09d58f353d007b97d2f88de6e98c6934d8806`. Public daily allowance remains$1/Bangkok; separate agent verification allowance remains exhausted. Existing rollback release files retain the preceding image; no old-host work or DNS change.
+- Manual acceptance next: refresh the hosted app; review any flagged old Skip/answer conflicts, check numbered UI corrections1–5/11–12, confirm partial-coverage presentation9 and use the normal explicit combined action13 only when the owner elects to spend public allowance. If generation fails, the new Last generation failure details expose safe stage/timing/issue codes. Historical response-specific validation failures and the larger-assessment timeout remain unproven/resolved only by future authorized evidence; do not mark14 or all M3 accepted. Unsupported whistleblower grounding remains open.
+- Effort record: expected3–5 active hours for corrections; total elapsed and active time were not fully instrumented and are unavailable. The recorded verification/work interval14:16:08–14:49 Bangkok covers at least33 minutes and excludes earlier checklist reconciliation/implementation; it is not total task labor. Coding-agent tokens unavailable (no telemetry); application-provider spend$0. Remaining work is owner visual/manual acceptance, historical score/input reconciliation and live reliability evidence; no new paid call authorized.
+- Scope preservation: no edits to BUILD_PACK, deterministic domain, canonical app/config or app/src/content; prompt/retrieval/model/deadlines and ledgers unchanged. Index remains empty; all implementation/docs remain uncommitted. No dependencies added. Findings6–8/10 deferred; exact historical score/input reconciliation, unsupported whistleblower grounding and broader recommendation reliability remain open.
+- Forecast: diagnosis/status 15–25 active minutes; subsequent correction and existing offline verification provisionally 3–5 active hours, with all14 findings now recovered; exact manual response bodies and raw saved answers remain unavailable. Coding-token estimate/actual unavailable (no telemetry/calibrated baseline). No application API spend authorized or incurred for diagnosis. Changes remain unstaged/uncommitted; no new review document.
+
+| Milestone | Expected active time (accepted baseline) | Expected coding tokens | Recorded elapsed | Actual coding tokens | Acceptance |
+|---|---|---|---|---|---|
+| M1 | Not recorded retrospectively | Not recorded | Oct 6 14:19–Oct 7 14:59, ~24h40m commit window | Unavailable | Accepted |
+| M2 | Not recorded retrospectively | Not recorded | Oct 7 15:07–Oct 12 13:55, ~4d23h | Unavailable | Accepted Oct 12 |
+| M3 | Initial estimate not recorded; final documentation checkpoint forecast5–10 active minutes | Unavailable / uncalibrated | Authorized Oct13; hosted v6 verified Oct19; manual acceptance subsequently failed | Unavailable: no coding-token telemetry | Failed / pending correction |
+| M4.0 | Provisional PM estimate 3–8 active hours; owner has not accepted estimate | Uncalibrated; estimate at start, never fabricate actuals | Not started | Not started | Pending |
+
+For each work item, add/update one row here with estimate, actual, measurement source, variance and owner acceptance. Do not create another KPI document. Time spent waiting/building must be distinguishable from active work if available. An estimate is not a spending approval.
+Completion message: **Send effort report to PM: Milestone [#] / item [ID] consumed [elapsed hrs/days]; active [measured or unavailable]; coding tokens [measured or unavailable, source]; expected [time/token range]; variance [reason]; acceptance [pending/owner date].**
+
+
+
+
+
 
 
 ## Purpose
@@ -860,9 +1021,9 @@ No `NEXT_PUBLIC_` secret or client-controlled provider URL. The 2026-10-14 autho
 
 ## M3.1 — Recommendation service + provider boundary
 
-**Status:** CURRENT
+**Status:** IMPLEMENTED / VERIFIED — human milestone acceptance pending
 
-The local M3.1–M3.3 foundation was accepted on 2026-10-14. The current live-provider extension is implemented and offline-verified (227 unit / 55 browser tests; full gate passed 2026-10-14); live verification and acceptance remain pending. See `app/docs/M3-LIVE-AI-REVIEW.md`; retain the original foundation review as historical verification evidence.
+Historical package record (superseded by the current-state checkpoint above): the local M3.1–M3.3 foundation was accepted on 2026-10-14. The then-current live-provider extension is implemented and offline-verified (227 unit / 55 browser tests; full gate passed 2026-10-14); live verification and acceptance remain pending. See `app/docs/M3-LIVE-AI-REVIEW.md`; retain the original foundation review as historical verification evidence.
 
 
 
@@ -958,9 +1119,9 @@ Vector/embedding retrieval is not required unless separately justified.
 
 ## M3.3 — Structured recommendation generation
 
-**Status:** CURRENT
+**Status:** IMPLEMENTED / VERIFIED — v6 hosted live path; human milestone acceptance pending
 
-The local M3.1–M3.3 foundation was accepted on 2026-10-14. The current live-provider extension is implemented and offline-verified (227 unit / 55 browser tests; full gate passed 2026-10-14); live verification and acceptance remain pending. See `app/docs/M3-LIVE-AI-REVIEW.md`; retain the original foundation review as historical verification evidence.
+Historical package record (superseded by the current-state checkpoint above): the local M3.1–M3.3 foundation was accepted on 2026-10-14. The then-current live-provider extension is implemented and offline-verified (227 unit / 55 browser tests; full gate passed 2026-10-14); live verification and acceptance remain pending. See `app/docs/M3-LIVE-AI-REVIEW.md`; retain the original foundation review as historical verification evidence.
 
 
 
@@ -1016,9 +1177,9 @@ Exact prose parity is not required.
 
 ## M3.4 — Results, gaps, recommendations + evidence UI
 
-**Status:** CURRENT — limited Results integration only; remainder PENDING
+**Status:** IMPLEMENTED / VERIFIED — authorized Results/navigation closeout; human milestone acceptance pending
 
-Authorized 2026-10-14: explicit generation/regeneration, validated recommendations/evidence, loading/error/cancel/retry and freshness checks in the existing Results layout. This subset passed the full offline gate on 2026-10-14 (227 unit / 55 browser tests) and is not yet human-accepted. Navigation, questionnaire controls/Skip behavior and technical-JSON presentation below remain deferred; M3.4 as a whole is not complete.
+Historical limited-package record (superseded by the current-state checkpoint above): authorized 2026-10-14: explicit generation/regeneration, validated recommendations/evidence, loading/error/cancel/retry and freshness checks in the existing Results layout. This subset passed the full offline gate on 2026-10-14 (227 unit / 55 browser tests) and is not yet human-accepted. Navigation, questionnaire controls/Skip behavior and technical-JSON presentation below remain deferred; M3.4 as a whole is not complete.
 
 
 
@@ -1108,7 +1269,7 @@ Extend M3.6 browser checks to cover forward/backward stage navigation, keyboard/
 
 ## M3.5 — Durable report / PDF
 
-**Status:** PENDING
+**Status:** IMPLEMENTED / VERIFIED — downloadable print-ready HTML; human milestone acceptance pending
 
 
 
@@ -1160,7 +1321,7 @@ Print-ready HTML is acceptable initially if it satisfies the durable-report requ
 
 ## M3.6 — Failure, latency + recommendation regression review
 
-**Status:** PENDING
+**Status:** REQUIRED REGRESSION VERIFIED — research experiments deferred by current owner direction; human milestone acceptance pending
 
 
 
@@ -1241,6 +1402,16 @@ Detailed future protocol: [M3.6 retrieval accuracy, performance and efficiency e
 
 # Milestone 4 — Emissions calculator and quantitative input flow
 
+
+
+## M4.0 — Deterministic quality-tool evaluation + refactor if needed
+
+**Status:** PENDING — after M3 acceptance, before M4.1.
+Evaluate jscpd, ESLint/Oxlint, Prettier, Knip, dependency-cruiser, Archlint (verify exact identity), and sirknigget/antislop (verify license/code). Select the smallest useful long-term set based on coverage, overlap, maintainability and false positives. Extend codex.prompting.memory.md with the Markdown adopt/pilot/defer/reject summary; do not create a milestone document.
+
+Record production/test LOC separately excluding generated files/dependencies; production build/client JavaScript/container sizes in MB with definitions; build duration and approximate assessment/scoring/Results speed on the same environment and fixtures. Repeat timing samples with median/range and separate cold/warm conditions. No paid provider speed tests.
+
+Present and obtain approval for exact new analysis/benchmark commands before running them under the test policy. Refactor only evidence-backed dead code, duplication, complexity or architecture defects. Preserve scoring, config, sessions, APIs, recommendation safeguards and accessibility. Run the same before/after measurements and approved regression gate. Fix/revert regressions, document benefit/limitations, and retain no-op outcome if a refactor is not warranted.
 
 
 ## M4.1 — Reconcile calculator methodology + fixtures
@@ -2328,3 +2499,82 @@ Local preview: http://127.0.0.1:3001/preview, PID 33428, source release preview-
 Prepared concrete deployment files in app/deploy/preview; runbook app/docs/PRIVATE-HETZNER-STAGING-PLAN.md; implementation review app/docs/PRIVATE-PREVIEW-REVIEW.md; checklist reconciliation app/docs/BUILD-CHECKLIST-RECONCILIATION.md. Proposed new service 127.0.0.1:3201, isolated network, 1 CPU/768MB, protected HTTPS preview.flowagentai.website, image/health identity and preview-only rollback. Fresh SSH inventory blocked (no matching configured key/agent; default guyli denied), Docker Linux daemon absent and Caddy not installed locally. Compose and Node script syntax validated; exact-container/egress/Caddy auth/TLS checks remain required before deployment approval. Existing Appsmith/n8n/Postgres/NocoDB services were not changed.
 
 Owner UI acceptance is recorded, not whole M3 acceptance. GROUNDING-001 and SCORE-COMPARISON-001 remain open; synthetic fixtures do not resolve recommendation quality or manual score provenance.
+
+
+## SSH access and current host inspection — 2026-10-16
+
+Root password SSH access confirmed using owner-entered local password; no credential contents stored or SSH configuration changed. Read-only confirmation completed with exit0. See app/docs/HETZNER-READONLY-INSPECTION.md (relative from repository root) for the fresh inventory and conditional deployment/rollback proposal based on checkpoint026fb85. This supersedes the earlier authentication blocker; unattended key access is still not configured.
+
+NEW DEPLOYMENT BLOCKER: only 768–821 MiB memory available, no swap, approximately four-core load; Postgres container repeatedly373–395% CPU with an unexplained dropdbfindmnt process around390% CPU/30% host memory. Purpose/provenance not verified; no diagnosis claimed. Preserve services and defer adding preview load until bounded investigation/capacity review. Compose v2 availability and exact-container/egress/Caddy auth/TLS verification remain outstanding. No server mutation, DNS changes, provider calls or Git publication. M3 remains open.
+
+### Process investigation supersedes unidentified-process status — 2026-10-16
+
+Authorized read-only investigation identifies suspected Postgres-container compromise: /tmp/.perf.c/dropdbfindmnt (PID1158558, UID999, parent postgres) is explicitly an added writable-layer file, absent from the image baseline. Approximately390% CPU; hidden added artifacts; captured connection only to container loopback. Initial access, malware identity, exfiltration and host compromise are not established. See app/docs/HETZNER-READONLY-INSPECTION.md for hash, image identity, timestamps, socket evidence and limitations. Recommend evidence preservation followed by separately authorized containment with legacy-service impact review. No server mutations or preview deployment; M3 open. Changes remain unstaged/uncommitted.
+
+## Containment preparation — 2026-10-18
+
+Bounded read-only SSH check completed at08:00:44UTC. No effective container network isolation observed: same Postgres container attached to shared bridge, published5432 on IPv4/IPv6, empty DOCKER-USER chains, UFW inactive, established external sockets. Previous process name absent; rbashenv now approximately390%CPU, identity/hash not yet equated with prior binary. Host compromise remains unconfirmed. Proposed temporary full Postgres veth quarantine plus IPv4/IPv6 host5432 DROP rules, with database-dependent outage, console recovery, verification and exact rollback in app/docs/HETZNER-CONTAINMENT-PROPOSAL.md. Preparation only: requires owner approval; no firewall/interface/server changes, paid snapshots, deployment, commits or pushes. Preview paused; M3 open.
+
+Local evidence SHA256: hetzner-process-inspection.txt =3134FEE7059A4E4F101545C1F3BF5202C0E0D2618D4C3A98CB87A299D074CBC1; hetzner-containment-20261018.txt =F5B665F84EC8C2B6A048F3E8E09AD25C214B9EAFE3EC07C06CFB0C8E43077D45. Missing bridge sysctls and nft backend warnings retained as limitations; no claim of all checks returning zero.
+
+## Quarantine applied and incident handoff — 2026-10-18
+
+Owner confirmed browser recovery shell access. Authorized script completed at approximately08:25UTC (15:25Bangkok); evidence app/.local/hetzner-quarantine-reconnect-20261018.txt. Fresh enumeration found only loopback and eth0@if8; verified reciprocal exclusive host peer vethb10db41, no other running Docker container sharing the network namespace. Current container ID/image/PID/start remained unchanged.
+
+Applied only tagged capstone-incident-20261018 IPv4/IPv6 INPUT DROP rules for TCP5432 and host vethb10db41 DOWN. Postgres stayed running; no restart, deletion, cleanup, broad firewall flush or restoration. Link administratively DOWN, bridge port disabled, container NO-CARRIER. Host-to-DB and NocoDB-namespace-to-DB probes failed; DB-to-host and DB-to-NocoDB failed. RX/TX counters identical before/after verification; prior external sockets retained ESTABLISHED labels but accumulated unsent queues, not proof of connectivity. Existing SSH command completed after changes; port22 listens on both families and fresh external IPv4 TCP22 connects. External IPv4 TCP5432 times out. External IPv6 probes fail for lack of client route, so external IPv6 reachability unverified; server IPv6 rule and link isolation verified. Appsmith/n8n HTTPS roots200; DB-dependent operations unavailable as expected, no application writes tested.
+
+Temporary runtime quarantine only: Docker restart/recreation may recreate/enable peer links; host reboot loses unsaved firewall/interface controls. No host-trust/eradication claim. Incident investigation stopped per owner; no automatic rollback. Owner/admin recovery should preserve isolation and assess clean recovery separately. Do not deploy on this host or copy its containers, files or secrets. New preview uses clean host and checkpoint026fb85. No commits/pushes.
+
+## Clean private preview deployed — 2026-10-18
+
+Checkpoint 026fb85 deployed to new Hetzner CX23 mosaic-preview (171012360), 2.28.206.236. Owner-created DNS preview.flowagentai.website TTL900; trusted HTTPS and reviewer authentication verified. Exact-image six-browser-test gate passed through SSH forwarding; paid provider blocked and synthetic health confirmed. Detailed immutable image/base identities, private-network Caddy upstream adaptation, DNS-cache limitation and rollback: app/docs/PRIVATE-HETZNER-STAGING-PLAN.md, Clean preview deployment. Old host remains isolated; no investigation/cleanup/restoration. No paid AI calls or Git publication. M3 and grounding/score-comparison issues remain open.
+
+Authenticated public HTTPS browser gate: four additional tests passed across desktop/tablet/mobile and delayed recovery; local DNS-cache resolver mapping only, certificate validation retained.
+
+## Owner removes preview login — 2026-10-18
+
+Owner explicitly requested removal of preview login, superseding protected-preview access requirements for this deployment. Removed only Caddy basic_auth block on new mosaic-preview server; configuration validated and reloaded. Unauthenticated HTTPS /preview returns200, health confirms checkpoint026fb85 synthetic/billable=false, recommendation endpoint remains unavailable/local_only. HTTPS, headers, network isolation and paid-provider disablement retained. Preview is now public to anyone with URL; noindex is not access control. Server-side prior Caddy configuration retained for rollback. Local normal DNS still reports NXDOMAIN although independent public DNS and mobile access work; no fixed local-resolution ETA established. No app/scoring changes, commits or pushes; M3 remains open.
+
+## Deployment fidelity and work discipline — owner correction, 2026-10-19
+
+A request to host the working app means preserve its existing landing, assessment, Results and AI workflow. Do not substitute a simulation/test harness, redirect users into diagnostic controls, or introduce login/onboarding requirements without explaining the concrete user-facing difference and obtaining applicable authorization. Explicit synthetic-only authorization remains binding until changed; clearly call out its incompatibility with live-AI parity rather than presenting it as equivalent. Latest owner direction is the normal hosted app, no private/offline banner or login, and the existing AI integration; key transfer and hosted spending controls remain unresolved.
+
+Use the smallest deployment changes needed. Reuse accepted implementation and verification evidence; do not restart research, redesign UI, or add dependencies/experiments for deployment. Verify the actual landing-to-results journey and required live capability before claiming the app is ready. A health check or synthetic test alone is not evidence of live AI availability. Report exact missing credentials, budget or security decisions early, continue independent work, and avoid repeated permission requests for already authorized routine work. Do not silently weaken validation or create unbounded public billable access. Keep changes uncommitted under the owner's existing Git instruction.
+
+## Normal hosted workflow restoration — 2026-10-19
+
+Normal checkpoint026fb85 image built and deployed to mosaic-preview. Removed synthetic mode from deployed app by using normal build; existing runtime/scoring/retrieval unchanged. Public root and /results200, /preview redirects to root; offline banner and testing controls absent. No login. Details and immutable image: app/deploy/app/README.md. AI is NOT claimed operational: existing local-only boundary, key transfer permission and total spending cap remain unresolved. No provider calls or secret transfer. AGENTS.md now requires deployment fidelity and accurate capability verification. M3 remains open; edits uncommitted.
+
+Verification: normal production build and container health passed. Two focused authenticated-free HTTPS browser checks passed (17.4s) at1440/390: homepage CTA, setup entry, normal Results with synthetic raw-answer fixture and authoritative51.0/12.1 scores, refresh, no offline banner or simulation controls, no horizontal overflow. Initial fixture used incomplete config version and was correctly rejected; corrected to canonical catalog/setup identity without application changes. Tests made no provider calls; no live-AI success claimed.
+
+
+### Owner operating budget — 2026-10-19
+Shared public live-generation allowance: US$1 per Asia/Bangkok calendar day (midnight UTC+07:00), until changed by owner authorization. Persist the history of reservations/settlements on the host across app restarts; serialize reservation and settlement with an exclusive cross-process lock and atomic file replacement. Reserve the estimated maximum before dispatch; reconcile reported input/output usage at configured model standard prices, retaining the full reservation when usage is unknown or settlement fails. Block requests that cannot fit. Deployment verification retains its separate lifetime two-request/$1 reservation ledger and cannot spend/reset public usage. Budget denial must show the owner's accessible modal while scores and existing matching results remain available; never request visitor API keys. Implementation and verification in progress; M3 acceptance remains pending.
+
+
+Budget package checkpoint: deployed release `mosaic-cb95e176f427805cb4d0`; shared public US$1/day Asia/Bangkok, persistent host ledger, separate verification ledger. Offline263 unit tests passed;68 browser passes plus5 corrected focused passes; hosted budget UI and five-case full-trace parity passed. One authorized live deployment test returned `invalid_output` / `evidence_limitation_missing`; no retry. Public allowance untouched, deployment reservation$0.324144; one of two test requests remains. Detailed timings, exact limitations and failure evidence: app/docs/M3-LIVE-AI-REVIEW.md. M3 remains open and unaccepted; no successful hosted live recommendation is claimed.
+
+
+### M3 hosted closeout requirement reconciliation — 2026-10-19 12:09 Asia/Bangkok
+| Requirement | Implementation / evidence | Remaining |
+|---|---|---|
+| M3.1 provider boundary | Normal public same-origin endpoint, server credentials,30s provider/45s client deadlines, persistent shared Bangkok-day budget; v6 liveHTTP200 accepted | Human acceptance; no more agent calls under exhausted allowance |
+| M3.2 native retrieval | Preserved8-document/18-chunk baseline, stable joins and saved five-SME legacy replay | No implementation change; country/revenue omissions and source metadata limitations retained |
+| M3.3 structured recommendations | Trusted raw-answer scoring, score/citation/category/schema guards, response-specific grounding; fixed verification disclosure moved to shared deterministic UI/report text | Broad factual/claim support and prose quality need human review; no universal entailment claim |
+| M3.4 Results/navigation | Combined explicit action, immediate scores, loading/cancel/retry/one-use handoff, source dialogs, context, collapsible sections, blank review and direct five-stage navigation | Proposed connected/green-completed-stage visual treatment remains a design proposal; current functional navigation is available for acceptance |
+| M3.5 durable report | Saved HTML contains context, answers/skips, question/category/overall scores, gaps/actions/citations, versions, fixed disclosure and response-specific notes; print-to-PDF supported | Owner review of the downloaded report; native PDF generation not required by plan |
+| M3.6 required regression | Prior full saved gate plus concrete fixes; current46 focused checks,typecheck/lint,production build,hosted checks and one accepted live walkthrough; latency7.70s service/9.92s browser | Research/model/framework/retrieval experiments explicitly deferred; no new suites/benchmarks |
+| GROUNDING-001 | Actual preserved Chemicals safety excerpt fails the targeted whistleblower/grievance support regression; prompt disallows unrelated safety citations for that advice; accepted live result does not repeat it | Ordinary citations support disclosure topics, not proof that suggested governance processes are mandated. Human judgment remains necessary |
+| SCORE-COMPARISON-001 | All five matched Golden inputs yield exactly equal local/deployed full traces and API fields,381–464ms prior endpoint round trips | Historical55.6/13.2 versus58.3/13.8 inputs unavailable; historical cause cannot be reconstructed |
+
+Current v6 correction uses one shared application disclosure in Results and reports. Only the literal `unverified` / `not independently verified` model-boilerplate gate was removed. No score, source identity, assessed-category, structured output, bounded-inference or targeted claim-support check was removed. Archived prompt, canonical config, scoring and retrieval remain unchanged. Previous rejected prose was not retained; exact replay was impossible and no reconstruction was attempted.
+
+Latest live evidence: input14808/output1821 tokens; estimated standard-price cost$0.0193005; headers7531.90ms, body107.06ms, service7696.70ms, browser9919ms. Combined two-test reservation$0.648288; estimated reported usage cost$0.038775. These application tokens are NOT coding-agent tokens. Public daily$1 remains untouched. Synthetic test inputs were used with a real provider response; no synthetic advice was substituted.
+
+Workflow rules from0226c9d were integrated locally after verification, preserving newer edits and history. Approved checks and the exhausted live allowance are recorded in codex.prompting.memory.md. No docs-only full gate.
+
+Manual acceptance: open public URL; create/review context and answers; generate once; inspect scores/summary/actions/citations and fixed disclosure; download report and use browser Print→Save as PDF if desired; edit only notes and confirm advice invalidates without score changes; refresh without automatic generation. Accept M3 explicitly only after reviewing quality and the stated evidence limits. No M4 work starts before that acceptance.
+
+Effort item M3-HOSTED-DISCLOSURE: first clock checkpoint11:59:16 to12:09:46 Asia/Bangkok =10m30s measured elapsed through functional verification/ledger confirmation; initial inspection before the first checkpoint was not timed. Active labor and coding-agent tokens unavailable. No initial time/token estimate was recorded retrospectively; documentation-only remaining-work forecast5–10 active minutes was given at the final checkpoint. Final elapsed interval will be reported in the handoff; acceptance pending.
+
+Final measured effort checkpoint:11:59:16–12:12:07 Asia/Bangkok =12m51s elapsed from first clock reading; initial inspection before that reading was not timed. Active time and coding-agent tokens unavailable. Original estimate not recorded; final documentation-only forecast5–10 active minutes was given, but active labor was not measured so variance is unavailable. M3 acceptance pending; no commands/tests/provider calls remain running. Hosted application stays running. All changes remain unstaged/uncommitted.

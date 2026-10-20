@@ -30,7 +30,7 @@ describe("setup and raw answer validation", () => {
   });
 });
 describe("questionnaire reducer", () => {
-  test("navigation and skip preserve raw drafts and stable answer identity", () => {
+  test("navigation preserves other answers and skip removes the active raw value", () => {
     let state = validState();
     state = assessmentReducer(state, { type: "answer", id: mockQuestions[0].id, raw: "No" });
     state = assessmentReducer(state, { type: "next" });
@@ -45,7 +45,9 @@ describe("questionnaire reducer", () => {
     state = assessmentReducer(state, { type: "answer", id: mockQuestions[4].id, raw: "not a number" });
     expect(assessmentReducer(state, { type: "next" }).activeId).toBe(mockQuestions[4].id);
     state = assessmentReducer(state, { type: "skip" });
-    expect(state.answers[mockQuestions[4].id]).toBe("not a number");
+    expect(state.answers).not.toHaveProperty(mockQuestions[4].id);
+    expect(state.answers[mockQuestions[0].id]).toBe("No");
+    expect(sessionSchema.parse(JSON.parse(JSON.stringify(state))).answers).not.toHaveProperty(mockQuestions[4].id);
   });
   test("review missing jumps to first missing and boundary has no score", () => {
     let state = assessmentReducer(validState(), { type: "review" });
@@ -89,4 +91,15 @@ describe("validated session adapter", () => {
     const full = createSessionAdapter(() => ({ getItem: () => null, setItem: () => { throw new Error("Quota"); } }));
     expect(full.save(validState())).toBeTruthy();
   });
+});
+
+
+test("Results access requires the review generation action and survives restoration", () => {
+ let state=validState();
+ expect(assessmentReducer(state,{type:"generate"}).progress).not.toBe(4);
+ state=assessmentReducer(state,{type:"answer",id:mockQuestions[0].id,raw:"No"});
+ state=assessmentReducer(state,{type:"review"});expect(state.progress).toBe(3);
+ state=assessmentReducer(state,{type:"generate"});expect(state.progress).toBe(4);
+ expect(sessionSchema.parse(JSON.parse(JSON.stringify(state))).progress).toBe(4);
+ expect(assessmentReducer(state,{type:"jump",id:mockQuestions[0].id}).progress).toBe(4);
 });

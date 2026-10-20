@@ -41,7 +41,7 @@ test("withholds known ambiguous page references and unsafe links, preserving can
 test("revised contract supplies business context and assessed categories without changing legacy text or scores", () => {
   const result = assemblePrompt(input, score, evidence);
   const context = JSON.parse(result.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
-  expect(context.prompt_version).toBe("legacy-runtime-v1-validated-transport-4");
+  expect(context.prompt_version).toBe("legacy-runtime-v1-validated-transport-7");
   expect(context).not.toHaveProperty("required_summary_labels");
   expect(result.sme).toMatchObject({ industry: input.context.industry, employee_band: input.context.companySize, business_goal: input.context.businessGoal });
   expect(context.allowed_assessed_categories).toEqual(["Governance"]);
@@ -57,4 +57,12 @@ test("revised contract supplies business context and assessed categories without
   const changedContext = JSON.parse(changed.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
   expect(changedContext.allowed_assessed_categories).toEqual(["Governance", "Resources"]);
   expect(changedContext.unassessed_categories).toEqual(["People", "Community"]);
+});
+
+test("missing individual answers remain explicit unknowns even within assessed categories", () => {
+  const result = assemblePrompt(input, score, evidence);
+  expect(result.scoring.unanswered_questions).toEqual(score.questions.filter(q => q.status === "missing").map(q => ({ question_id:q.id, question_text:q.title, category:q.category, evidence_state:"unknown" })));
+  expect(result.system).toContain("unknown at QUESTION level");
+  expect(result.system).toContain("qualitative priorities, not measured financial returns");
+  expect(result.scoring.answered_questions.map(q => q.answer)).toEqual(["No", "Yes"]);
 });

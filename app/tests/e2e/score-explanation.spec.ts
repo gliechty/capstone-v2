@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { loadCanonicalConfig } from "../../src/adapters/config-repository";
-import { assessmentCatalog } from "../../src/application/assessment-catalog";
+import { assessmentCatalog, selectedQuestions } from "../../src/application/assessment-catalog";
 import { goldenCases } from "../helpers/legacy-scoring";
 const catalog = assessmentCatalog(loadCanonicalConfig().config);
 const fixture = goldenCases[1]!;
 const p = fixture.profile;
-const state = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0],
+const state = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0],
   answers: Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)])), skipped: [],
   profile: { companyName: "Example business", subindustry: "", industry: p.industry, companySize: p.employee_band.replace("-", " - "), location: p.company_location, targetMarket: p.target_market_region.join(";"), targetBuyer: p.target_buyer, businessGoal: p.business_goal } };
 for (const width of [1440, 390, 320]) test("engine trace disclosure is keyboard accessible and responsive at " + width, async ({ page }, info) => {
@@ -110,7 +110,7 @@ test("editing a scored answer through the questionnaire updates scores, bars and
     if (!sessionStorage.getItem(key)) sessionStorage.setItem(key, JSON.stringify(s));
   }, state);
   await page.goto("/assessment");
-  await page.getByRole("button", { name: /^1\. / }).click();
+  await page.getByRole("button", { name: "1. " + selectedQuestions(catalog,state.profile)[0]!.title, exact: true }).click();
   await page.getByRole("radio", { name: "No", exact: true }).focus();
   await page.keyboard.press("Space");
   await page.getByRole("button", { name: "Continue", exact: true }).click();

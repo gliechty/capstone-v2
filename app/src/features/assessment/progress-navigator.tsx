@@ -49,9 +49,10 @@ function DesktopTrack({ items, onSelect }: { items: readonly ProgressItem[]; onS
     onKeyDownCapture={(event) => { if (event.key === "Escape") { setHovered(null); setFocused(null); } }}>
     <ol className="progress-markers" ref={listRef}>
       {items.map((item, index) => {
-        const distance = active === null ? 3 : Math.abs(index - active);
+        const distance = active === null ? 4 : Math.abs(index - active);
         return <li key={item.id}
-          data-proximity={distance === 0 ? "active" : distance <= 2 ? "near" : "far"}>
+          data-proximity={distance === 0 ? "active" : distance <= 2 ? "near" : "far"}
+          style={{ "--magnification": Math.max(1, 5-distance), "--spread": active === null ? "0rem" : (index < active ? -1 : 1) * [0, 1.05, 1.7, 2, 2][Math.min(distance,4)]! * Math.min(1, index / 4, (items.length - 1 - index) / 4) + "rem" } as CSSProperties}>
           <button type="button" className="progress-dot" aria-label={label(item)} aria-current={item.current ? "step" : undefined}
             onPointerEnter={(event) => { if (event.pointerType !== "touch") { setHovered(index); setFocused(null); } }}
             onPointerMove={(event) => { if (event.pointerType !== "touch") setHovered(index); }}
@@ -100,12 +101,14 @@ function MobileTrack({ items, onSelect }: { items: readonly ProgressItem[]; onSe
 // Presentation only. Assessment state and navigation remain owned by the caller.
 export function ProgressNavigator({ items, onSelect }: { items: readonly ProgressItem[]; onSelect: (id: string) => void }) {
   const complete = items.filter((item) => item.status === "Answered").length;
+  const [helpOpen,setHelpOpen] = useState(false);
+  const helpId = useId();
   return <>
     <aside className="desktop-progress" aria-label="Assessment progress">
       <nav className="progress-panel" aria-label="Question progress">
         <div className="progress-summary"><p className="text-small font-semibold">{complete} of {items.length} answered</p>
-        <p className="progress-legend text-small">● Answered · ○ Unanswered · – Skipped<br />Double ring: current</p>
-        <p className="mb-3 text-small text-muted">Hover or focus to explore.</p>
+        <button type="button" className="text-link navigation-help" aria-expanded={helpOpen} aria-controls={helpId} onClick={()=>setHelpOpen(!helpOpen)} onKeyDown={event=>{if(event.key==="Escape")setHelpOpen(false);}}>Navigation help</button><div id={helpId} className="navigation-help-content" hidden={!helpOpen}><p className="progress-legend text-small">● Answered · ○ Unanswered · – Skipped<br />Double ring: current</p>
+        <p className="mb-3 text-small text-muted">Hover or focus to explore.</p></div>
         </div><DesktopTrack items={items} onSelect={onSelect} />
       </nav>
     </aside>
@@ -177,6 +180,7 @@ export function MobileQuestionRail({ items, onSelect }: { items: readonly Progre
         }}>
         <span className="mobile-rail-markers" aria-hidden="true" style={{ "--question-count": items.length } as CSSProperties}>
           {items.map((item, index) => <span key={item.id} className="mobile-rail-marker" data-current={item.current}
+            style={{ "--magnification": open || touching ? Math.max(1,5-Math.abs(index-inspected)) : 1, "--spread": !(open || touching) ? "0rem" : (index < inspected ? -1 : 1) * [0,1.05,1.7,2,2][Math.min(Math.abs(index-inspected),4)]! + "rem" } as CSSProperties}
             data-proximity={!(open || touching) ? "far" : index === inspected ? "active" : Math.abs(index - inspected) <= 2 ? "near" : "far"}>
             <span className="progress-glyph" data-status={stateOf(item)} />
           </span>)}
