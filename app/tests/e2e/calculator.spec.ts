@@ -5,7 +5,7 @@ import { createAssessmentModel } from "../../src/features/assessment/model";
 const CALCULATOR_KEY = "mosaic.calculator.reference.v1";
 const catalog=assessmentCatalog(loadCanonicalConfig().config);
 const model=createAssessmentModel(catalog.version,()=>[]);
-test("Data Input calculator preserves review, corrections, manual answers and Skip across refresh",async({page})=>{
+test("Data Input calculator preserves review, corrections, manual answers across refresh",async({page})=>{
  const session={...model.initialSession(),phase:"method",profile:{...model.initialSession().profile,companyName:"Example workshop",industry:"Manufacturing (Industrial / Components)",companySize:"251 - 500",location:"APAC",targetMarket:"EU",targetBuyer:"Enterprise",businessGoal:"Prepare for procurement questionnaires"},answers:{"U-001":"No"}};
  await page.addInitScript(s=>{if(!sessionStorage.getItem("capstone.assessment.ui-preview.v1")) sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s));},session);
  await page.goto("/assessment");
@@ -22,7 +22,7 @@ test("Data Input calculator preserves review, corrections, manual answers and Sk
  await page.reload();await expect(reviewed).toContainText("5.703 tCO2e");
  await page.getByLabel("Quantity",{exact:false}).first().fill("12000");await expect(reviewed).toHaveCount(0);
  await page.getByRole("button",{name:"Calculate for review"}).click();await expect(reviewed).toContainText("6.8436 tCO2e");
- await page.getByRole("radio",{name:/Enter manually/}).check();await page.getByRole("radio",{name:/Skip quantitative data/}).check();await page.reload();await expect(page.getByRole("radio",{name:/Skip quantitative data/})).toBeChecked();
+ await page.getByRole("radio",{name:/Enter manually/}).check();await page.reload();await expect(page.getByRole("radio",{name:/Enter manually/})).toBeChecked();
  await page.getByRole("radio",{name:/Use emissions calculator/}).check();await expect(reviewed).toContainText("6.8436 tCO2e");
  await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.getByRole("button",{name:"Start questionnaire"}).click();

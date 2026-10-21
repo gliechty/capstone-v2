@@ -1,5 +1,7 @@
 # codex.prompting.memory.md
 
+Owner acceptance — 2026-10-21: M4.2 accepted as delivered, including the remaining calculator corrections and documented historical-factor limitations. Commit/push the scoped calculator follow-up and records on milestone-4-calculator. Then create milestone-4-branding-video from that checkpoint for M4.3 Claude branding/video; branch preparation only, no implementation, build, merge or deployment. Preserve unrelated work. This supersedes historical pending-acceptance wording below.
+
 Current M4.2 review checkpoint (2026-10-21): owner authorizes bounded calculator usability/spec corrections and scoped commit/push on milestone-4-calculator. Preserve unrelated work; no deploy or merge. Live checklist roadmap: M4.3 homepage branding/video, M4.4 metric mapping/autofill, M4.5 quantitative review. None starts in this checkpoint; historical numbering below remains historical.
 
 ## Current authority and synchronization — owner direction, 2026-10-20
@@ -9,7 +11,7 @@ Before EVERY milestone step, read the live F1 note and the relevant checklist ro
 
 PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
 
-Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 implemented and locally verified; owner review pending under the live protocol. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. M4.1 is published; the owner now authorizes committing/pushing only scoped M4.2 calculator work and its records on milestone-4-calculator. No merge or deployment authorized. This supersedes conflicting historical status text below.
+Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 accepted by the owner on2026-10-21; verified evidence and limitations retained. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. M4.1 is published; the owner now authorizes committing/pushing only scoped M4.2 calculator work and its records on milestone-4-calculator. No merge or deployment authorized. This supersedes conflicting historical status text below.
 
 Updated: 2026-10-19. Owner-approved workflow correction; no runtime changes.
 
@@ -192,3 +194,5 @@ M4.2 local gate evidence2026-10-21: focused calculator16/16; all unit/Golden291/
 M4.2 review corrections: owner authorizes reusing affected calculator checks for geography/factor selector, explicit coverage states, persistence and accepted MWh/negative-revenue semantics. Retain prior291-unit/75-browser evidence for unaffected paths. Run saved typecheck, affected-file ESLint, calculator unit file, build and calculator/assessment browser files; do not restart the full gate. No new test files, dependencies or provider calls.
 
 M4.2 review correction result: affected unit16/16, assessment browser25/25 and final calculator browser1/1 passed; typecheck, affected lint and build passed. Existing fixture initialization moved before app mount and coverage locator uses accessible combobox role; no expectations/tolerances removed. Search/selection, complete/none/incomplete, review/refresh and unchanged answers verified. Preserve earlier full-gate evidence. Scoped publication authorized, owner acceptance pending.
+
+M4.2 owner follow-up2026-10-21: remove redundant quantitative Skip; preserve saved assessment; inspect port3000 process/project/build, rebuild/restart as necessary and verify actual browser Beta label. Reuse affected calculator browser check with removed-choice expectations adapted; no provider calls/full gate. Saved build/lint permitted.
