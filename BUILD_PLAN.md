@@ -9,6 +9,10 @@ PM maintains the checklist and reconciles completion/commit evidence available i
 
 Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 authorized next under the live protocol. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. The owner authorizes committing/pushing only scoped M4.1 changes now; subsequent M4.2 changes remain uncommitted unless separately authorized. No merge or deployment authorized. This supersedes conflicting historical status text below.
 
+## Standing delivery-effort protocol — owner direction, 2026-10-21
+
+Use live F1 and the reconciled protocol in AGENTS.md / EXECUTION_PLAN.md / codex.prompting.memory.md for every milestone step. Forecast implementation and verification separately, state their non-overlapping combined total, and measure elapsed delivery across sessions including reading and closeout. Record approval/overnight pauses separately; elapsed is not active time. Calibrate against comparable work (M4.1:27m33s overall, including the10-minute final continuation versus30–60-minute forecast), accounting for scope differences rather than a blanket multiplier. Preserve historical measurements and unavailable coding tokens; record one closing comparison and at most one correction. Historical active-time forecast wording below is evidence, not current guidance. No tools/tests/UI layout are approved by this correction.
+
 ## Historical delivery direction — superseded by current authority above
 
 ## Current delivery direction — 2026-10-19
