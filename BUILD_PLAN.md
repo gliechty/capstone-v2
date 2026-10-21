@@ -1,5 +1,7 @@
 # BUILD_PLAN.md
 
+Current M4.2 review checkpoint (2026-10-21): owner authorizes bounded calculator usability/spec corrections and scoped commit/push on milestone-4-calculator. Preserve unrelated work; no deploy or merge. Live checklist roadmap: M4.3 homepage branding/video, M4.4 metric mapping/autofill, M4.5 quantitative review. None starts in this checkpoint; historical numbering below remains historical.
+
 ## Current authority and synchronization — owner direction, 2026-10-20
 Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
 
@@ -7,7 +9,9 @@ Before EVERY milestone step, read the live F1 note and the relevant checklist ro
 
 PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
 
-Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 authorized next under the live protocol. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. The owner authorizes committing/pushing only scoped M4.1 changes now; subsequent M4.2 changes remain uncommitted unless separately authorized. No merge or deployment authorized. This supersedes conflicting historical status text below.
+Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 implemented and locally verified; owner review pending under the live protocol. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. M4.1 is published; the owner now authorizes committing/pushing only scoped M4.2 calculator work and its records on milestone-4-calculator. No merge or deployment authorized. This supersedes conflicting historical status text below.
+
+M4.2 local delivery checkpoint2026-10-21: calculator engine and existing Data Input stage integration implemented and locally verified; owner review pending. Historical factors remain reference-only, U-026 pending, Scope3 excluded. No M4.4 autofill, deployment or milestone advancement; scoped M4.2 checkpoint authorized. See EXECUTION_PLAN.md for evidence and effort.
 
 ## Standing delivery-effort protocol — owner direction, 2026-10-21
 

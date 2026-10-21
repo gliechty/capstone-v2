@@ -28,7 +28,7 @@ async function start(page: Page) {
   await fillSetup(page);
   await page.getByRole("button", { name: "Continue to input method" }).click();
   await expect(page.getByRole("radio", { name: /Enter manually/ })).toBeChecked();
-  await expect(page.getByRole("radio", { name: /Use emissions calculator/ })).toBeDisabled();
+  await expect(page.getByRole("radio", { name: /Use emissions calculator/ })).toBeEnabled();
   await expect(page.getByRole("radio", { name: /Upload utility bills/ })).toBeDisabled();
   await page.getByRole("button", { name: "Start questionnaire" }).click();
 }

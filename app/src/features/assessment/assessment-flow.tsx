@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CalculatorPanel } from "../calculator/calculator-panel";
 import { browserSession } from "../../adapters/assessment-session";
 import { createAssessmentModel } from "./model";
 import { selectedQuestions } from "../../application/assessment-catalog";
@@ -104,12 +105,7 @@ function InputMethod() {
   return <section className="assessment-setup">
     <span className="section-label">02 / Quantitative data</span>
     <StageHeading>How would you like to enter your quantitative sustainability data?</StageHeading>
-    <fieldset className="mt-8 grid gap-4">
-      <legend className="sr-only">Quantitative-data input method</legend>
-      <label className="choice-option"><input type="radio" name="method" value="manual" defaultChecked /> <span>Enter manually<span className="block text-small text-muted">Available. Enter example values directly in the questionnaire.</span></span></label>
-      <label className="choice-option unavailable"><input type="radio" name="method" value="calculator" disabled /> <span>Use emissions calculator<span className="block text-small text-muted">Unavailable · planned for a later milestone.</span></span></label>
-      <label className="choice-option unavailable"><input type="radio" name="method" value="upload" disabled /> <span>Upload utility bills/evidence<span className="block text-small text-muted">Unavailable · future stretch capability.</span></span></label>
-    </fieldset>
+    <CalculatorPanel />
     <div className="mt-8 flex flex-wrap gap-4">
       <button className="button-secondary" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Back to setup</button>
       {questions.length === 0 && <p role="alert">No questions match this context. Review your setup; no fallback questionnaire has been substituted.</p>}
