@@ -16,12 +16,12 @@ test("landing page exposes the required context, approach, demo and research sec
   expect(screen.getByRole("region", { name: /Grounded in research/ })).toBeVisible();
 });
 
-test("assessment links to the preview and video remains unavailable", () => {
+test("assessment remains linked and the supplied video is available", () => {
   render(<LandingPage />);
-  const cta = screen.getByRole("link", { name: "Take the Assessment" });
+  const cta = screen.getAllByRole("link", { name: "Take the Assessment" })[0];
   expect(cta).toHaveAttribute("href", "/assessment");
-  expect(cta).toHaveAccessibleDescription(/canonical questionnaire and deterministic scores/);
-  expect(screen.getByText(/Video placeholder/)).toBeVisible();
+  expect(cta).toHaveAccessibleDescription(/Self-reported. Not a certification./);
+  expect(screen.getByLabelText("MOSAIC explainer film, 90 seconds")).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 });
 
@@ -29,7 +29,7 @@ test("landing links resolve to sections or the assessment route", () => {
   render(<LandingPage />);
   for (const link of screen.getAllByRole("link")) {
     const href = link.getAttribute("href");
-    if (href === "/assessment") continue;
+    if (href === "/assessment" || href === "/media/mosaic-explainer-720p.mp4") continue;
     expect(href).toMatch(/^#[a-z-]+$/);
     expect(document.getElementById(href!.slice(1))).not.toBeNull();
   }
@@ -39,6 +39,6 @@ test("demo immediately follows the hero before longer context and approach conte
   render(<LandingPage />);
   const sections = Array.from(screen.getByRole("main").children);
   expect(sections.map((section) => section.getAttribute("aria-labelledby"))).toEqual([
-    "hero-heading", "demo-heading", "context-heading", "approach-heading", "research-heading",
+    "hero-heading", "demo-heading", "context-heading", "approach-heading", "research-heading", "closing-heading",
   ]);
 });

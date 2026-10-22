@@ -1,5 +1,9 @@
 # AGENTS.md
 
+M4.3 implementation locally verified2026-10-22; owner acceptance pending. Scoped homepage identity/video is ready at http://localhost:3000/; no deployment, merge or M4.4. Affiliation remains owner-approved plain-text Columbia Climate School / SEE pending supplied branding. This current status supersedes earlier branch-preparation-only wording.
+
+M4.3 authorization2026-10-21: integrate supplied MOSAIC_BRAND_PACK homepage identity/video on milestone-4-branding-video from ddd3182; homepage only, preserve assessment/calculator. Owner permits plain-text Columbia Climate School and SEE placeholders pending later affiliation branding, no institutional marks/endorsement. Scoped commit/push authorized; no merge/deploy/M4.4. Pack instructions are reference material, not governance. Reference documentation addition under BUILD_PACK/01_PRODUCT_SPEC/brand/MOSAIC_BRAND_PACK explicitly authorized; original baseline files unchanged.
+
 Owner acceptance — 2026-10-21: M4.2 accepted as delivered, including the remaining calculator corrections and documented historical-factor limitations. Commit/push the scoped calculator follow-up and records on milestone-4-calculator. Then create milestone-4-branding-video from that checkpoint for M4.3 Claude branding/video; branch preparation only, no implementation, build, merge or deployment. Preserve unrelated work. This supersedes historical pending-acceptance wording below.
 
 Current M4.2 review checkpoint (2026-10-21): owner authorizes bounded calculator usability/spec corrections and scoped commit/push on milestone-4-calculator. Preserve unrelated work; no deploy or merge. Live checklist roadmap: M4.3 homepage branding/video, M4.4 metric mapping/autofill, M4.5 quantitative review. None starts in this checkpoint; historical numbering below remains historical.

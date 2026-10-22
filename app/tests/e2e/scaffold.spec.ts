@@ -12,10 +12,10 @@ for (const viewport of [
     page.on("pageerror", (error) => errors.push(error.message));
     const response = await page.goto("/");
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sustainability,in your context.");
-    await expect(page).toHaveTitle("Capstone | Sustainability in context");
-    await expect(page.getByRole("link", { name: "Take the Assessment" })).toHaveAttribute("href", "/assessment");
-    await expect(page.getByText(/Video placeholder/)).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("The pieces that matter.A clearer way forward.");
+    await expect(page).toHaveTitle("MOSAIC · context-weighted sustainability assessment");
+    await expect(page.getByRole("link", { name: "Take the Assessment" }).first()).toHaveAttribute("href", "/assessment");
+    await expect(page.getByLabel("MOSAIC explainer film, 90 seconds", { exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
@@ -41,7 +41,7 @@ test("keyboard users can skip navigation, follow anchors and open research discl
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Take the Assessment" })).toBeFocused();
+  await expect(page.getByRole("link", { name: "Take the Assessment" }).first()).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: /Explore the approach/ })).toBeFocused();
   await page.keyboard.press("Enter");
@@ -67,7 +67,7 @@ test("normal motion is brief and UI tokens reach the rendered controls", async (
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   expect(await page.locator(".intro-enter").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.22s");
-  expect(await page.getByRole("link", { name: "Take the Assessment" }).evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
+  expect(await page.getByRole("link", { name: "Take the Assessment" }).first().evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
 });
 
 test("unknown routes return an actual not-found response", async ({ request }) => {

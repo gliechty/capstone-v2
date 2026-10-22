@@ -1,0 +1,37 @@
+/* Supplied MOSAIC identity, scoped to homepage; assessment/results retain accepted tokens. */
+.mosaic-landing {
+  --surface: #faf8f3;
+  --surface-raised: #fffdf9;
+  --surface-muted: #f1ede4;
+  --text: #1b2a41;
+  --text-muted: #5b6b7f;
+  --accent: #2e7d7a;
+  --accent-hover: #24605e;
+  --accent-soft: #e3efee;
+  --on-accent: #fffdf9;
+  --border: #e4e0d6;
+  --border-strong: #7d7a70;
+  --font-body: var(--font-source-sans), "Segoe UI", Arial, sans-serif;
+  --tracking-heading: -0.01em;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--surface);
+}
+.mosaic-landing h1, .mosaic-landing h2, .mosaic-landing h3, .mosaic-landing .brand-subtitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+}
+.mosaic-landing h1 { font-variation-settings: "opsz" 32; }
+.mosaic-landing .brand-subtitle { font-size: clamp(1.1875rem, 1rem + 1vw, 1.75rem); font-style: italic; }
+.mosaic-landing .text-link, .mosaic-landing .section-label { color: var(--accent-hover); }
+.mosaic-landing a.button-primary:hover { background: var(--accent-hover); }
+.mosaic-landing .brand-hero-mark { display: flex; justify-content: center; }
+.mosaic-landing .brand-film { max-width: 60rem; margin-inline: auto; }
+.mosaic-landing .landing-header > div { padding-block: 0.5rem; }
+.mosaic-landing .brand-header-mark { width: 28px; height: 28px; }
+.mosaic-landing .brand-header-wordmark { width: auto; height: 20px; }
+@media (max-width: 639px) {
+  .mosaic-landing .brand-hero-mark { display: none; }
+  .mosaic-landing .brand-header-mark { width: 24px; height: 24px; }
+  .mosaic-landing .brand-header-wordmark { height: 18px; }
+  .mosaic-landing .button-primary { width: 100%; }
+}
