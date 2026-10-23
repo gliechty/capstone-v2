@@ -16,12 +16,12 @@ export const landingCopy = {
   },
   "hero": {
     "attribution": "MOSAIC · Multi-Organizational Synthesis for Adaptive Indicator Context",
-    "headingFirstLine": "The pieces that matter.",
-    "headingSecondLine": "A clearer way forward.",
+    "headingFirstLine": "The Pieces",
+    "headingSecondLine": "that Matter",
     "description": "What matters to your business, your market, and your buyers? A research-led approach to help small and medium enterprises make sense of sustainability expectations.",
     "primaryCta": "Take the Assessment",
     "secondaryCta": "Explore the approach",
-    "availability": "Self-reported. Not a certification.",
+    "availability": "Explore the questionnaire and deterministic scores, with AI recommendations and evidence references for review.",
     "illustrationLeft": "Small businesses",
     "illustrationRight": "Buyer expectations",
     "subtitle": "Context-weighted sustainability assessment synthesized from standards and frameworks."
@@ -30,7 +30,7 @@ export const landingCopy = {
     "label": "A look inside",
     "headingFirstLine": "See the approach",
     "headingSecondLine": "in practice.",
-    "description": "A short introduction to the method, the assessment and how to interpret its outputs.",
+    "description": "Watch a 90-second introduction to the assessment and how to interpret its outputs. English captions are available.",
     "caption": "90 seconds · narrated · captions available",
     "limitation": "Reconfiguring the method for a new document collection is proposed, not an available upload feature."
   },
@@ -44,7 +44,7 @@ export const landingCopy = {
   "approach": {
     "label": "02 / Our approach",
     "heading": "A clearer connection between your business and what matters.",
-    "description": "MOSAIC considers sustainability in relation to industry, market, buyer, and business goal. It is designed to support procurement readiness, rather than define one universal sustainability score.",
+    "description": "The MOSAIC approach considers sustainability in relation to industry, market, buyer, and business goal. It is designed to support procurement readiness, rather than define one universal sustainability score.",
     "firstHeading": "Start with context",
     "firstBody": "Understand the business and the sustainability expectations relevant to its commercial setting.",
     "secondHeading": "Make the method visible",
@@ -56,13 +56,13 @@ export const landingCopy = {
     "label": "03 / Research & verification",
     "headingFirstLine": "Grounded in research.",
     "headingSecondLine": "Open to scrutiny.",
-    "intro": "Making sustainability standards usable for enterprises without dedicated sustainability teams.",
+    "intro": "Developed by students in Columbia University’s M.S. in Sustainability Management.",
     "methodHeading": "Methodology & source basis",
     "methodBody": "MOSAIC keeps its questions, answer scales, benchmarks, contextual weighting, and source documents as explicit, versioned configuration. Scores follow fixed rules and are kept separate from the AI-written recommendations. Weights represent expected relevance, not calibrated statistical probabilities.",
     "verificationHeading": "What has been verified?",
     "verificationBody": "Five historical assessment cases provide regression references for the scoring engine. Calculation traces and automated checks verify the implemented rules; documented differences and evidence limitations remain. These checks are not independent assurance of sustainability performance.",
     "limitationsHeading": "Limitations & interpretation",
-    "limitationsBody": "Relevance depends on the source base and commercial context. This is not a universal sustainability rating or a guarantee of procurement eligibility. Scores use self-reported answers. AI recommendations may contain unsupported claims; review their cited evidence. Citation membership alone does not establish that a source supports a claim.",
+    "limitationsBody": "Relevance depends on the source base and commercial context. This is not a universal sustainability rating or a guarantee of procurement eligibility. Scores use self-reported answers. AI recommendations may contain unsupported claims; review their cited evidence. Citation membership alone does not establish that a source supports a claim. New document collections shown in the film are proposed, not an available upload feature.",
     "expansion": "Multi-Organizational Synthesis for Adaptive Indicator Context",
     "methodName": "Atomic Indicator Synthesis"
   },
@@ -73,8 +73,5 @@ export const landingCopy = {
     "credit": "Developed by students in Columbia University’s M.S. in Sustainability Management.",
     "scope": "MOSAIC complements, and does not replace, formal due diligence or assurance.",
     "expansion": "Multi-Organizational Synthesis for Adaptive Indicator Context"
-  },
-  "closing": {
-    "heading": "The pieces that matter. A clearer way forward."
   }
 };

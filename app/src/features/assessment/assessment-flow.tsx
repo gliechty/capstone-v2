@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { CalculatorPanel } from "../calculator/calculator-panel";
 import { browserSession } from "../../adapters/assessment-session";
 import { createAssessmentModel } from "./model";
@@ -336,7 +337,8 @@ function Flow() {
   return <>
     <a href="#assessment-main" className="skip-link">Skip to assessment</a>
     <header className="page-container flex flex-wrap items-center justify-between gap-4 py-6">
-      <Link className="nav-link" href="/">← Capstone home</Link>
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- Full navigation avoids restored/combined homepage fragments; sessionStorage is preserved. */}
+      <a className="nav-link inline-flex items-center gap-2" href="/#top"><span aria-hidden="true">←</span><Image src="/brand/mosaic-mark-straight.svg" alt="" width={24} height={24} />MOSAIC home</a>
       {ready && session.phase !== "setup" && <button className="text-link" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Edit business context</button>}
     </header>
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">

@@ -4,14 +4,22 @@ import "../styles/landing-brand.css";
 import { LandingHeader } from "../components/landing-header";
 import { landingCopy } from "../content/landing";
 
+function ContextIllustration() {
+  return (
+    <svg viewBox="0 0 440 320" fill="none" aria-hidden="true" focusable="false" className="w-full">
+      <image href="/brand/mosaic-mark.svg" x="110" y="50" width="220" height="220" preserveAspectRatio="xMidYMid meet" />
+    </svg>
+  );
+}
+
 export default function LandingPage() {
   return (
-    <div className="mosaic-landing">
+    <div id="top" className="mosaic-landing">
       <a href="#main-content" className="skip-link">{landingCopy.navigation.skip}</a>
       <LandingHeader>
         <a href="#main-content" className="flex min-h-12 items-center gap-3 font-semibold" aria-label={landingCopy.navigation.homeLabel}>
-          <Image src="/brand/mosaic-mark-straight.svg" alt="" width={28} height={28} className="brand-header-mark" />
-          <Image src="/brand/mosaic-wordmark.svg" alt="" width={94} height={20} className="brand-header-wordmark" />
+          <Image src="/brand/mosaic-mark-straight.svg" alt="" width={28} height={28} />
+          <Image src="/brand/mosaic-wordmark.svg" alt="" width={94} height={20} />
         </a>
         <nav aria-label={landingCopy.navigation.label} className="flex flex-wrap gap-x-6">
           <a className="nav-link" href="#context">{landingCopy.navigation.context}</a>
@@ -25,7 +33,6 @@ export default function LandingPage() {
           <div className="intro-enter">
             <p className="section-label">{landingCopy.hero.attribution}</p>
             <h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}<br />{landingCopy.hero.headingSecondLine}</h1>
-            <p className="brand-subtitle mt-6 max-w-copy">{landingCopy.hero.subtitle}</p>
             <p className="mt-6 max-w-copy text-muted">{landingCopy.hero.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link className="button-primary" href="/assessment" aria-describedby="assessment-availability">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
@@ -34,27 +41,32 @@ export default function LandingPage() {
             </div>
             <p id="assessment-availability" className="mt-3 text-small text-muted">{landingCopy.hero.availability}</p>
           </div>
-          <div className="brand-hero-mark" aria-hidden="true">
-            <Image src="/brand/mosaic-mark.svg" alt="" width={220} height={220} priority />
-          </div>
+          <figure className="mx-auto w-full max-w-md text-foreground">
+            <ContextIllustration />
+            <figcaption className="flex justify-between border-t border-line pt-4 text-small text-muted">
+              <span>{landingCopy.hero.illustrationLeft}</span><span>{landingCopy.hero.illustrationRight}</span>
+            </figcaption>
+          </figure>
         </section>
 
         <section id="demo" className="page-container pb-section" aria-labelledby="demo-heading">
-          <div className="max-w-copy">
-            <span className="section-label">{landingCopy.demo.label}</span>
-            <h2 id="demo-heading" className="text-heading">{landingCopy.demo.headingFirstLine}<br />{landingCopy.demo.headingSecondLine}</h2>
-            <p className="mt-6 text-muted">{landingCopy.demo.description}</p>
+          <div className="grid overflow-hidden rounded-panel border border-line bg-surface shadow-panel md:grid-cols-[1fr_1.2fr]">
+            <div className="p-8 md:p-12">
+              <span className="section-label">{landingCopy.demo.label}</span>
+              <h2 id="demo-heading" className="text-heading">{landingCopy.demo.headingFirstLine}<br />{landingCopy.demo.headingSecondLine}</h2>
+              <p className="mt-6 max-w-copy text-muted">{landingCopy.demo.description}</p>
+            </div>
+            <div className="relative flex min-h-64 flex-col items-center justify-center border-t border-line bg-[#faf8f3] text-center md:border-t-0 md:border-l">
+              <div className="absolute inset-0">
+              <video controls preload="metadata" playsInline poster="/media/mosaic-explainer-poster.jpg" aria-label="MOSAIC explainer film, 90 seconds" className="h-full w-full object-contain">
+                <source src="/media/mosaic-explainer-720p.mp4" type="video/mp4" media="(max-width: 639px)" />
+                <source src="/media/mosaic-explainer-1080p.mp4" type="video/mp4" />
+                <track kind="captions" srcLang="en" label="English" src="/media/mosaic-explainer.en.vtt" default />
+                Your browser cannot play this video. <a href="/media/mosaic-explainer-720p.mp4">Download the MOSAIC explainer</a>.
+              </video>
+              </div>
+            </div>
           </div>
-          <figure className="brand-film mt-8">
-            <video controls preload="metadata" playsInline poster="/media/mosaic-explainer-poster.jpg" aria-label="MOSAIC explainer film, 90 seconds" className="aspect-video w-full rounded-panel border border-line">
-              <source src="/media/mosaic-explainer-720p.mp4" type="video/mp4" media="(max-width: 639px)" />
-              <source src="/media/mosaic-explainer-1080p.mp4" type="video/mp4" />
-              <track kind="captions" srcLang="en" label="English" src="/media/mosaic-explainer.en.vtt" default />
-              Your browser cannot play this video. <a href="/media/mosaic-explainer-720p.mp4">Download the MOSAIC explainer</a>.
-            </video>
-            <figcaption className="mt-3 text-small text-muted">{landingCopy.demo.caption}</figcaption>
-            <p className="mt-2 text-small text-muted">{landingCopy.demo.limitation}</p>
-          </figure>
         </section>
 
         <section id="context" className="border-y border-line bg-muted-surface py-section" aria-labelledby="context-heading">
@@ -101,8 +113,6 @@ export default function LandingPage() {
               <span className="section-label">{landingCopy.research.label}</span>
               <h2 id="research-heading" className="text-heading">{landingCopy.research.headingFirstLine}<br />{landingCopy.research.headingSecondLine}</h2>
               <p className="mt-6 max-w-copy text-muted">{landingCopy.research.intro}</p>
-              <h3 className="mt-6 text-subheading">{landingCopy.research.expansion}</h3>
-              <p className="mt-4 text-small text-muted">{landingCopy.research.methodName}: bringing requirements from multiple organizations together, adapting their relevance to the business context.</p>
             </div>
             <div>
               <details className="research-detail" open>
@@ -120,23 +130,12 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="border-t border-line bg-muted-surface py-section" aria-labelledby="closing-heading">
-          <div className="page-container text-center">
-            <h2 id="closing-heading" className="text-heading"><span className="sr-only">Start your assessment. </span>{landingCopy.closing.heading}</h2>
-            <Link className="button-primary mt-8" href="/assessment">{landingCopy.hero.primaryCta}</Link>
-          </div>
-        </section>
       </main>
 
       <footer className="border-t border-line py-8">
         <div className="page-container flex flex-wrap items-center justify-between gap-6 text-small text-muted">
-          <div className="max-w-copy">
-            <Image src="/brand/mosaic-wordmark.svg" alt="MOSAIC" width={85} height={18} />
-            <p className="mt-4">{landingCopy.footer.expansion}</p>
-            <p className="mt-3">{landingCopy.footer.credit}</p>
-            <p className="mt-2">{landingCopy.footer.attribution}</p>
-            <p className="mt-3">{landingCopy.footer.scope}</p>
-          </div>
+          <p><span className="font-semibold text-foreground">{landingCopy.navigation.brand}</span>{landingCopy.footer.tagline}</p>
+          <p>{landingCopy.footer.attribution}</p>
           <a href="#main-content" className="nav-link">{landingCopy.footer.backToTop}</a>
         </div>
       </footer>

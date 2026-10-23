@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { previewEnabled } from "../../adapters/preview-mode";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ComputedScores } from "../../features/results/computed-scores";
 import { assessmentCatalog } from "../../application/assessment-catalog";
 import { loadCanonicalConfig } from "../../adapters/config-repository";
@@ -22,7 +23,8 @@ export default function ResultsPage() {
   return <>
     <a href="#results-main" className="skip-link">Skip to results</a>
     <header className="page-container flex flex-wrap items-center justify-between gap-4 py-6">
-      <Link href="/" className="nav-link">← Capstone home</Link>
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- Full navigation avoids restored/combined homepage fragments; sessionStorage is preserved. */}
+      <a href="/#top" className="nav-link inline-flex items-center gap-2"><span aria-hidden="true">←</span><Image src="/brand/mosaic-mark-straight.svg" alt="" width={24} height={24} />MOSAIC home</a>
       <Link href="/assessment" className="text-link">Return to assessment</Link>
     </header>
     <main id="results-main" tabIndex={-1} className="page-container results-page">

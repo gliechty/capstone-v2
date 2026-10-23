@@ -15,7 +15,7 @@
 .action-list { list-style: none; }
 .action-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-6); padding-block: var(--space-8); border-top: var(--border-width) solid var(--border); }
 .action-list article { max-width: var(--text-width); }
-.action-number { color: var(--accent); font-size: var(--font-size-subheading); font-variant-numeric: tabular-nums; }
+.action-number { color: var(--accent-text); font-size: var(--font-size-subheading); font-variant-numeric: tabular-nums; }
 @media (min-width: 768px) {
   .results-heading { grid-template-columns: minmax(0, 1fr) auto; }
   .score-summary { grid-template-columns: 1fr 1fr; }
@@ -30,8 +30,8 @@
 /* Compact navigation keeps the existing full-width results hierarchy intact. */
 .results-navigation { position: sticky; top: 0; z-index: 5; margin-top: var(--space-6); background: var(--surface); border-block: var(--border-width) solid var(--border); }
 .results-navigation a { display: flex; align-items: center; gap: var(--space-3); min-height: var(--control-height); padding: var(--space-3); color: var(--text-muted); font-size: var(--font-size-small); text-underline-offset: var(--space-1); transition: background var(--motion-duration) var(--motion-easing); }
-.results-navigation a:hover, .results-navigation a:focus-visible { background: var(--accent-soft); color: var(--accent); text-decoration: underline; }
-.results-nav-number { color: var(--accent); font-variant-numeric: tabular-nums; }
+.results-navigation a:hover, .results-navigation a:focus-visible { background: var(--accent-soft); color: var(--accent-text); text-decoration: underline; }
+.results-nav-number { color: var(--accent-text); font-variant-numeric: tabular-nums; }
 .results-desktop-nav { display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-2); }
 .results-mobile-nav { display: none; }
 .results-page > section[id] { scroll-margin-top: var(--space-24); }
@@ -46,14 +46,14 @@
   .results-desktop-nav { display: none; }
   .results-mobile-nav { display: block; }
   .results-mobile-nav summary { min-height: var(--control-height); padding: var(--space-3); cursor: pointer; font-weight: var(--weight-semibold); }
-  .results-mobile-nav summary::marker { color: var(--accent); }
+  .results-mobile-nav summary::marker { color: var(--accent-text); }
   .results-mobile-nav nav { position: absolute; top: 100%; left: 0; right: 0; padding: var(--space-2); max-height: 65vh; overflow-y: auto; background: var(--surface-raised); border: var(--border-width) solid var(--border); border-radius: var(--corner-control); box-shadow: var(--elevation-panel); }
 }
 
 /* Trace detail is progressive disclosure, subordinate to the normal results. */
 .score-explanation { margin-top: var(--space-6); border-block: var(--border-width) solid var(--border); }
 .score-explanation summary { cursor: pointer; min-height: var(--control-height); padding-block: var(--space-3); font-weight: var(--weight-semibold); }
-.score-explanation summary:hover { color: var(--accent); }
+.score-explanation summary:hover { color: var(--accent-text); }
 .score-explanation summary:focus-visible { outline: var(--focus-width) solid var(--accent); outline-offset: var(--space-1); }
 .explanation-body { padding-block: var(--space-4); }
 .trace-questions { list-style: none; margin-top: var(--space-4); }
@@ -124,9 +124,9 @@
 .category-badge, .difficulty-badge { display: inline-flex; align-items: center; padding: .35rem .65rem; border-radius: .35rem; font-size: .875rem; font-weight: 600; }
 .category-badge { background: var(--surface-muted); color: var(--text); }
 .action-badges { display: flex; flex-wrap: wrap; gap: .5rem; }
-.difficulty-low { color: #175333; background: #e5f3e9; }
-.difficulty-medium { color: #684300; background: #fff0c2; }
-.difficulty-high, .difficulty-hard { color: #852720; background: #fbe5e1; }
+.difficulty-low { color: var(--text); background: var(--surface-muted); }
+.difficulty-medium { color: var(--text); background: var(--surface-muted); }
+.difficulty-high, .difficulty-hard { color: var(--text); background: var(--surface-muted); }
 .source-control { display: inline-flex; min-height: 2.75rem; align-items: center; border: 1px solid var(--border); border-radius: var(--corner-control); padding: .4rem .8rem; font-size: .875rem; margin-top: 1rem; cursor: pointer; }
 .source-control:hover { background: var(--surface-muted); }
 .source-dialog { width: min(46rem, calc(100vw - 2rem)); max-height: 85dvh; overflow: auto; margin: auto; padding: clamp(1rem, 3vw, 2rem); background: var(--surface-raised); color: var(--text); border: 1px solid var(--border); border-radius: var(--corner-panel); }

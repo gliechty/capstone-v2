@@ -20,7 +20,7 @@ test("assessment remains linked and the supplied video is available", () => {
   render(<LandingPage />);
   const cta = screen.getAllByRole("link", { name: "Take the Assessment" })[0];
   expect(cta).toHaveAttribute("href", "/assessment");
-  expect(cta).toHaveAccessibleDescription(/Self-reported. Not a certification./);
+  expect(cta).toHaveAccessibleDescription(/questionnaire and deterministic scores/);
   expect(screen.getByLabelText("MOSAIC explainer film, 90 seconds")).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 });
@@ -39,6 +39,6 @@ test("demo immediately follows the hero before longer context and approach conte
   render(<LandingPage />);
   const sections = Array.from(screen.getByRole("main").children);
   expect(sections.map((section) => section.getAttribute("aria-labelledby"))).toEqual([
-    "hero-heading", "demo-heading", "context-heading", "approach-heading", "research-heading", "closing-heading",
+    "hero-heading", "demo-heading", "context-heading", "approach-heading", "research-heading",
   ]);
 });

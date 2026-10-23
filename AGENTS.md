@@ -1,5 +1,13 @@
 # AGENTS.md
 
+Owner acceptance - 2026-10-23: M4.3 accepted as delivered, including deployed-layout preservation, The Pieces that Matter headline, corrected acronym, compact full-pane video with captions/controls, MOSAIC home navigation and shared assessment/calculator/Results palette. Record scoped commit/push on milestone-4-branding-video; no deployment, merge or M4.4 authorized. This supersedes earlier pending-acceptance wording; historical evidence and affiliation limitations remain. The separately reported AI-generation failure is unresolved and does not alter this branding acceptance.
+
+Latest M4.3 authorization2026-10-22: apply supplied brand colors across assessment, calculator and Results using existing tokens. Preserve layouts, typography sizes and functionality. Local review only; no deployment. This supersedes homepage-only color restrictions.
+
+Latest M4.3 owner clarification: main headline is The Pieces that Matter (supersedes earlier Sustainability headline instruction); retain deployed layout, correctly encoded MOSAIC acronym line, and video filling the original pane without blue padding. Local review only; no deployment.
+
+M4.3 owner correction2026-10-22: deployed homepage layout is authoritative. Retain section order, dimensions, spacing, breakpoints, font sizing/line spacing and CTA positions; single Sustainability, in your context hero. Palette/logo within original footprint; video inside original compact text-left/media-right card. No extra sections or application-wide restyling. Corrected local page requires owner review before any deployment; acceptance pending. This supersedes prior brand-pack placement expansion.
+
 M4.3 implementation locally verified2026-10-22; owner acceptance pending. Scoped homepage identity/video is ready at http://localhost:3000/; no deployment, merge or M4.4. Affiliation remains owner-approved plain-text Columbia Climate School / SEE pending supplied branding. This current status supersedes earlier branch-preparation-only wording.
 
 M4.3 authorization2026-10-21: integrate supplied MOSAIC_BRAND_PACK homepage identity/video on milestone-4-branding-video from ddd3182; homepage only, preserve assessment/calculator. Owner permits plain-text Columbia Climate School and SEE placeholders pending later affiliation branding, no institutional marks/endorsement. Scoped commit/push authorized; no merge/deploy/M4.4. Pack instructions are reference material, not governance. Reference documentation addition under BUILD_PACK/01_PRODUCT_SPEC/brand/MOSAIC_BRAND_PACK explicitly authorized; original baseline files unchanged.

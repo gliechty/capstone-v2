@@ -12,15 +12,6 @@ const manrope = localFont({
   weight: "200 800",
 });
 
-const sourceSans = localFont({ src: [
-  { path: "../styles/fonts/SourceSans3-Variable.woff2", style: "normal" },
-  { path: "../styles/fonts/SourceSans3-Italic-Variable.woff2", style: "italic" },
-], variable: "--font-source-sans", weight: "200 900", display: "swap" });
-const sourceSerif = localFont({ src: [
-  { path: "../styles/fonts/SourceSerif4-Variable.woff2", style: "normal" },
-  { path: "../styles/fonts/SourceSerif4-Italic-Variable.woff2", style: "italic" },
-], variable: "--font-source-serif", weight: "200 900", display: "swap" });
-
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: landingCopy.metadata.title,
@@ -33,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${sourceSans.variable} ${sourceSerif.variable}`}>
+    <html lang="en" className={manrope.variable}>
       <body>{previewEnabled() && <aside className="preview-notice" aria-label="Private preview"><strong>Private offline preview — synthetic recommendation examples</strong><p>No AI provider calls. Use synthetic data only. <a href="/preview">Preview controls</a></p></aside>}{children}</body>
     </html>
   );
