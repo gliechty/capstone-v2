@@ -88,7 +88,7 @@ export function createRecommendationService(dependencies: {
       return { status: dependencies.provider.kind === "test-double" ? "test_only" as const : "available" as const,
         identity, assessment, evidence: audit, metrics: metrics(), content: validated.content,
         provider: { id: dependencies.provider.id, model: dependencies.provider.model },
-        validation: "structural-and-reference-checks; semantic quality and source accuracy require review" as const };
+        validation: "renderable-structure-only; generated scores, claims and citations are not fact-verified" as const };
     } catch (error) {
       providerMs = performance.now() - providerStarted;
       if (error instanceof ProviderFailure) { usage = error.usage; return unavailable(error.code); }

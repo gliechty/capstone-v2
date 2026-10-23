@@ -1,5 +1,11 @@
 # AGENTS.md
 
+Current bounded M3.3 correction — owner2026-10-23: restore Appsmith-equivalent recommendation delivery. Prompt guidance is not an output rejection contract. Remove v2-only semantic/editorial gates and unauthorized evidence exclusions, preserve required renderable structure and technical protections, verify five unchanged Golden outputs offline, then commit/push only this correction. No paid calls or deployment.
+
+## Standing migration principle - owner direction 2026-10-23
+Investigate differences from the legacy implementation before proposing fixes; a single problematic output does not authorize a new domain-specific rule. Tests must enforce agreed requirements, not silently create them.
+Follow the Build Plan, Execution Plan and product vision within current owner authorization. Preserve agreed behavior/contracts while using the approved v2 architecture; legacy code need not be copied literally. Distinguish migration requirements from later quality improvements and present undocumented behavior changes for one consolidated owner decision before editing them. Do not infer rule-level approval from broad milestone acceptance. Reuse existing evidence and approved checks; no new rejection gate, harness or diagnostic subsystem without applicable authorization.
+
 Owner acceptance - 2026-10-23: M4.3 accepted as delivered, including deployed-layout preservation, The Pieces that Matter headline, corrected acronym, compact full-pane video with captions/controls, MOSAIC home navigation and shared assessment/calculator/Results palette. Record scoped commit/push on milestone-4-branding-video; no deployment, merge or M4.4 authorized. This supersedes earlier pending-acceptance wording; historical evidence and affiliation limitations remain. The separately reported AI-generation failure is unresolved and does not alter this branding acceptance.
 
 Latest M4.3 authorization2026-10-22: apply supplied brand colors across assessment, calculator and Results using existing tokens. Preserve layouts, typography sizes and functionality. Local review only; no deployment. This supersedes homepage-only color restrictions.

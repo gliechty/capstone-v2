@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from "vitest";
-import { goldenCases } from "../helpers/legacy-scoring";
+import { goldenCases, goldenExpected } from "../helpers/legacy-scoring";
 import { goldenAnswers } from "../helpers/golden-comparison";
 import { setupConfig } from "../../src/application/assessment-setup";
 import { computeAssessment } from "../../src/application/score-request";
@@ -37,12 +37,11 @@ test("empty answers, oversized prompts, and unavailable evidence do not call pro
   expect(await createRecommendationService({ loadConfig: () => ({ ...config, DocumentIndex: [], DocumentChunks: [] }), provider })(input)).toMatchObject({ code: "insufficient_evidence" });
   expect(generate).not.toHaveBeenCalled();
 });
-test("malformed or mismatched output is unavailable with diagnostic paths, never repaired", async () => {
-  const bad = validTestContent(); bad.executive_summary = "Your score is 100%.";
-  const result = await make(async () => JSON.stringify(bad))(input);
+test("unparseable output is unavailable with diagnostic paths, never repaired", async () => {
+  const result = await make(async () => "not JSON")(input);
   expect(result).toMatchObject({ status: "unavailable", code: "invalid_output" });
   expect(result).not.toHaveProperty("content");
-  if (result.status === "unavailable") expect(result.issues).toContainEqual({ code: "score_mismatch", path: "executive_summary" });
+  if (result.status === "unavailable") expect(result.issues).toContainEqual({ code: "malformed_json", path: "output" });
 });
 test("deadline aborts even an uncooperative provider and ignores its late settlement", async () => {
   vi.useFakeTimers();
@@ -120,22 +119,20 @@ test("HTTP rejects invalid UTF-8 and a missing body", async () => {
   expect((await POST(new Request(req.url, { method: "POST", headers: { "Origin": "http://localhost", "Content-Type": "application/json" } }))).status).toBe(400);
 });
 
-for (const fixture of goldenCases) test(`${fixture.case_id}: controlled output passes the same context/evidence/score contract`, async () => {
+for (const fixture of goldenCases) test(`${fixture.case_id}: archived unmodified output passes actual service response path`, async () => {
   const p = fixture.profile;
   const request = { ...input, companyName: String(p.company_name), subindustry: String(p.subindustry), context: {
     industry: p.industry, companySize: setupConfig.options.companySize.find(c => c.value.replaceAll(" ", "") === p.employee_band.replaceAll(" ", ""))!.value,
     location: p.company_location, targetMarkets: [...p.target_market_region], targetBuyer: p.target_buyer, businessGoal: p.business_goal,
   }, answers: goldenAnswers(fixture) };
   const expected = computeAssessment(config, { configVersion: request.configVersion, context: request.context, answers: request.answers });
-  const selectedEvidence = prepareEvidence(config, request, recommendationPolicy);
-  const category = expected.categories.filter(c => c.percent !== null).sort((a, b) => a.percent! - b.percent!)[0]!.category;
-  const content = validTestContent();
-  content.executive_summary = `${request.context.industry} has an observed strength. For employee band ${request.context.companySize}, improve the observed gap for ${request.context.businessGoal}. ${scoreClosing(expected)}`;
-  content.priority_recommendations[0]!.related_categories = [category];
-  content.priority_recommendations[0]!.evidence = [selectedEvidence.citations[0]!];
-  content.key_gaps[0]!.category = category; content.key_gaps[0]!.evidence = [selectedEvidence.citations[0]!];
-  const result = await make(async () => JSON.stringify(content))(request);
+  const captured = goldenExpected(fixture);
+  const raw = captured.recommendation_output_raw[0].content[0].text;
+  expect(JSON.parse(raw)).toEqual(captured.recommendation_output);
+  const result = await make(async () => raw)(request);
   expect(result.status, JSON.stringify(result.status === "unavailable" ? result.issues : [])).toBe("test_only");
+  if (result.status !== "unavailable") expect(result.content).toEqual(captured.recommendation_output);
+  expect(result.assessment.rawOverall).toBe(expected.rawOverall);
 });
 
 test("configured ratings goal and employee-band numbers are context, not a generated score claim", async () => {
@@ -147,5 +144,5 @@ test("configured ratings goal and employee-band numbers are context, not a gener
   content.priority_recommendations[0]!.evidence = [selected.citations[0]!]; content.key_gaps[0]!.evidence = [selected.citations[0]!];
   expect((await make(async () => JSON.stringify(content))(request)).status).toBe("test_only");
   content.executive_summary = `A generated rating is 99. ${content.executive_summary}`;
-  expect(await make(async () => JSON.stringify(content))(request)).toMatchObject({ status: "unavailable", code: "invalid_output", issues: expect.arrayContaining([{ code: "unstructured_score_claim", path: "executive_summary" }]) });
+  expect(await make(async () => JSON.stringify(content))(request)).toMatchObject({ status: "test_only", content, assessment:{rawOverall:expected.rawOverall} });
 });

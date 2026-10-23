@@ -2,7 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { recommendationContentSchema, ProviderFailure, type RecommendationProvider, type ProviderDiagnostic } from "../../application/recommendations/contracts";
 import type { ProviderSettings } from "./configuration";
-// Transport schema deliberately leaves semantic/refinement checks to the existing validator.
+// Transport schema describes the legacy response fields; semantic guidance is not an acceptance gate.
 export const outputSchema = JSON.parse(JSON.stringify(z.toJSONSchema(recommendationContentSchema), (key, value) => ["$schema", "format", "minLength", "maxLength"].includes(key) ? undefined : value)) as Record<string, unknown>;
 const usageSchema = z.object({ input_tokens: z.number().int().nonnegative(), output_tokens: z.number().int().nonnegative() });
 const envelopeSchema = z.object({ status: z.string(), model: z.string(), usage: usageSchema.nullish(), output: z.array(z.object({

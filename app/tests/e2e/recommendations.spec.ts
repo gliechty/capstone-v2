@@ -206,3 +206,47 @@ test("daily budget modal preserves existing results, keyboard access and scores"
  await expect(page.locator('.score-values')).toHaveText(scores!);
  await expect(page.getByText(validTestContent().executive_summary,{exact:true})).toBeVisible();expect(posts).toBe(2);
 });
+
+// Owner-authorized unchanged historical replay through the real parser, controller and Results components.
+import { goldenCases, goldenExpected } from "../helpers/legacy-scoring";
+import { goldenAnswers } from "../helpers/golden-comparison";
+import { setupConfig } from "../../src/application/assessment-setup";
+import { prepareEvidence } from "../../src/application/recommendations/prepare";
+import { recommendationPolicy as livePolicy } from "../../src/application/recommendations/policy";
+import { validateRecommendationOutput } from "../../src/application/recommendations/validate-output";
+import { groupCitations } from "../../src/features/results/evidence-controls";
+for (const fixture of goldenCases) test(fixture.case_id + ": archived recommendations and citations display unchanged", async ({page}) => {
+ const p=fixture.profile;
+ const matching={...input,companyName:String(p.company_name),subindustry:String(p.subindustry),notes:String(p.notes??""),context:{industry:p.industry,companySize:setupConfig.options.companySize.find(c=>c.value.replaceAll(" ","")===p.employee_band.replaceAll(" ",""))!.value,location:p.company_location,targetMarkets:[...p.target_market_region],targetBuyer:p.target_buyer,businessGoal:p.business_goal},answers:goldenAnswers(fixture)};
+ const historical=goldenExpected(fixture);
+ const raw=historical.recommendation_output_raw[0].content[0].text;
+ const computed=computeAssessment(config,{configVersion:matching.configVersion,context:matching.context,answers:matching.answers});
+ const evidence=prepareEvidence(config,matching,livePolicy);
+ const parsed=validateRecommendationOutput(raw,matching,computed,evidence,config,livePolicy.maxResponseBytes);
+ expect(parsed.ok,JSON.stringify(parsed)).toBe(true); if(!parsed.ok)throw new Error("Archived output rejected");
+ expect(parsed.content).toEqual(historical.recommendation_output);
+ const restored={...session,answers:matching.answers,profile:{companyName:matching.companyName,subindustry:matching.subindustry,notes:matching.notes,industry:matching.context.industry,companySize:matching.context.companySize,location:matching.context.location,targetMarket:matching.context.targetMarkets.join(";"),targetBuyer:matching.context.targetBuyer,businessGoal:matching.context.businessGoal}};
+ await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),restored);
+ let posts=0;
+ await page.route("**/api/assessment-recommendations",route=>{
+  if(route.request().method()==="GET")return route.fulfill({json:configuration});
+  posts++;expect(route.request().postDataJSON()).toEqual(matching);
+  return route.fulfill({json:{...result(input),content:parsed.content,evidence:{limitations:evidence.limitations},identity:{...result(input).identity,inputId:createHash("sha256").update(inputIdentityText(matching)).digest("hex")}}});
+ });
+ await page.goto("/results");await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();
+ await expect(page.locator("#summary .results-prose")).toHaveText(parsed.content.executive_summary);
+ for(const id of ["actions","gaps","sources"])await page.locator("#"+id+" > details > summary").click();
+ await expect(page.locator("#actions h3")).toHaveText(parsed.content.priority_recommendations.map(r=>r.title));
+ await expect(page.locator("#gaps h3")).toHaveText(parsed.content.key_gaps.map(g=>g.gap));
+ const citations=[...parsed.content.priority_recommendations,...parsed.content.key_gaps].flatMap(r=>r.evidence);
+ const grouped=groupCitations(citations);
+ await expect(page.locator("#sources .bibliography > li")).toHaveCount(grouped.length);
+ for(const [i,c] of grouped.entries()){
+  const row=page.locator("#sources .bibliography > li").nth(i);
+  await expect(row.locator("a")).toHaveText(c.title);await expect(row.locator("a")).toHaveAttribute("href",c.link);
+  await expect(row.locator("p")).toHaveText(c.source);await expect(row.locator("ul > li")).toHaveText(c.sections);
+ }
+ await expect(page.locator(".score-values")).toContainText(computed.rawOverall!.toFixed(1));
+ expect(posts).toBe(1);expect(goldenExpected(fixture)).toEqual(historical);
+ console.log(fixture.case_id+": PASS; "+parsed.content.priority_recommendations.length+" actions, "+parsed.content.key_gaps.length+" gaps, "+citations.length+" citations ("+grouped.length+" bibliography entries); unchanged historical prose and authoritative computed score displayed.");
+});

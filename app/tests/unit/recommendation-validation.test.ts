@@ -33,12 +33,11 @@ const mutations: [string, (c: RecommendationContent) => void][] = [
   ["unstructured_score_claim", c => { c.key_gaps[0]!.gap = "You received 80 out of 100."; }],
   ["schema", c => { Object.assign(c, { raw_overall: 100 }); }],
 ];
-test.each(mutations)("rejects %s without rewriting output", (code, mutate) => {
+test.each(mutations)("legacy delivery does not reject %s or rewrite output", (_code, mutate) => {
   const content = structuredClone(validTestContent()); mutate(content);
   const raw = JSON.stringify(content);
   const result = validate(raw);
-  expect(result.ok).toBe(false);
-  if (!result.ok) expect(result.issues.map(i => i.code)).toContain(code);
+  expect(result).toEqual({ ok: true, content });
   expect(JSON.stringify(content)).toBe(raw);
 });
 test("response bytes are bounded; bounded inference may have no citation", () => {
@@ -47,10 +46,10 @@ test("response bytes are bounded; bounded inference may have no citation", () =>
   expect(validate(JSON.stringify(content)).ok).toBe(true);
 });
 
-test("permits percentages present in supplied excerpts and rejects invented percentages", () => {
+test("percentages remain model guidance rather than acceptance conditions", () => {
   const content = structuredClone(validTestContent());
   content.priority_recommendations[0]!.recommended_action = "Review the documented target of 12.34567%.";
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: expect.arrayContaining([expect.objectContaining({ code: "unsupported_percentage" })]) });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
   const augmented = { ...evidence, chunks: [{ ...evidence.chunks[0]!, record: { ...evidence.chunks[0]!.record, chunk_text: "Documented target of 12.34567%." } }] };
   expect(validateRecommendationOutput(JSON.stringify(content), input, score, augmented, config, 40000).ok).toBe(true);
 });
@@ -63,17 +62,14 @@ test.each(["omit", "paraphrase"])("summary may %s context labels without changin
   expect(validate(before)).toEqual({ ok: true, content });
   expect(JSON.stringify(content)).toBe(before);
   content.executive_summary = "Your score is 99. " + content.executive_summary;
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: expect.arrayContaining([{ code: "unstructured_score_claim", path: "executive_summary" }]) });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
-test("diagnostics name each unobserved category while keeping one issue per rejected row", () => {
+test("category coverage is guidance rather than a rejection gate", () => {
   const content = structuredClone(validTestContent());
   content.priority_recommendations[0]!.related_categories = ["Governance", "Resources", "People"];
   content.key_gaps[0]!.category = "Community";
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: [
-    { code: "unanswered_category", path: "priority_recommendations.0", categories: ["Resources", "People"] },
-    { code: "unanswered_category", path: "key_gaps.0", categories: ["Community"] },
-  ] });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
 test("missing information can be disclosed in grounding notes without asserting an assessed weakness", () => {
@@ -81,41 +77,36 @@ test("missing information can be disclosed in grounding notes without asserting 
   content.grounding_notes += " Resources, People and Community were not assessed; collect answers before drawing conclusions about these areas.";
   expect(validate(JSON.stringify(content)).ok).toBe(true);
   content.key_gaps.push({ category: "Resources", gap: "Resources was not assessed; collect answers before drawing conclusions.", evidence: [] });
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: [
-    { code: "unanswered_category", path: "key_gaps.1", categories: ["Resources"] },
-  ] });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
-test("exact context labels do not hide incorrect generated scores", () => {
+test("generated score prose is preserved, not certified or corrected", () => {
   const content = structuredClone(validTestContent());
   content.executive_summary = "The score is 99. " + content.executive_summary;
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: expect.arrayContaining([
-    { code: "unstructured_score_claim", path: "executive_summary" },
-  ]) });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
-test.each(["score", "citation", "unanswered"])("omitted labels do not excuse %s violations", kind => {
+test.each(["score", "citation", "unanswered"])("legacy delivery preserves %s prose even with omitted labels", kind => {
   const content = structuredClone(validTestContent());
   for (const label of [input.context.industry, input.context.companySize, input.context.businessGoal]) content.executive_summary = content.executive_summary.replace(label, "");
   if (kind === "score") content.executive_summary = content.executive_summary.replace("score is 51.0%", "score is 99.0%");
   if (kind === "citation") content.priority_recommendations[0]!.evidence[0]!.link = "https://invented.example/";
   if (kind === "unanswered") content.key_gaps[0]!.category = "Resources";
-  const expected = { score: "score_mismatch", citation: "unknown_citation", unanswered: "unanswered_category" }[kind];
-  expect(validate(JSON.stringify(content))).toMatchObject({ ok: false, issues: expect.arrayContaining([expect.objectContaining({ code: expected })]) });
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
-test.each(["No operational emissions baseline or energy tracking", "The company does not track total energy consumption."])("rejects unknown energy tracking as confirmed absence: %s", text => {
+test.each(["No operational emissions baseline or energy tracking", "The company does not track total energy consumption."])("does not reject unknown-answer claims under migration parity: %s", text => {
   const content = structuredClone(validTestContent());
   content.key_gaps[0]!.gap = text;
-  expect(validate(JSON.stringify(content))).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unknown_answer_as_absence"})])});
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 test.each(["No evidence of energy tracking was supplied; the practice remains unconfirmed.", "Energy tracking is unknown; confirm whether consumption is monitored before drawing conclusions.", "If the company does not track energy, a practical next step would be to establish a baseline.", "Evaluate ROI using project costs and potential benefits before choosing an investment.", "Return on investment has not been calculated; this is a qualitative priority."])("permits qualified advice without exact wording: %s", text => {
   const content = structuredClone(validTestContent()); content.grounding_notes = text;
   expect(validate(JSON.stringify(content)).ok).toBe(true);
 });
-test.each(["This is the highest-ROI next step.", "This project delivers the best return on investment.", "The calculated ROI is 12 months."])("rejects unsupported measured or ranked ROI: %s", text => {
+test.each(["This is the highest-ROI next step.", "This project delivers the best return on investment.", "The calculated ROI is 12 months."])("does not reject ROI prose under migration parity: %s", text => {
   const content = structuredClone(validTestContent()); content.executive_summary = text + " " + content.executive_summary;
-  expect(validate(JSON.stringify(content))).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unsupported_roi_claim"})])});
+  expect(validate(JSON.stringify(content))).toEqual({ ok: true, content });
 });
 
 test("an assessed Resources category does not turn its missing energy answer into No", () => {
@@ -128,7 +119,7 @@ test("an assessed Resources category does not turn its missing energy answer int
   content.priority_recommendations[0]!.related_categories = ["Resources"];
   content.key_gaps[0] = {category:"Resources",gap:"No operational emissions baseline or energy tracking",evidence:[]};
   const result = validateRecommendationOutput(JSON.stringify(content),answeredInput,partial,evidence,config,40000);
-  expect(result).toMatchObject({ok:false,issues:expect.arrayContaining([expect.objectContaining({code:"unknown_answer_as_absence"})])});
+  expect(result).toEqual({ok:true,content});
   content.key_gaps[0]!.gap = "An answered resource practice needs improvement.";
   content.grounding_notes = "Energy tracking remains unknown even though other resource answers were supplied.";
   expect(validateRecommendationOutput(JSON.stringify(content),answeredInput,partial,evidence,config,40000).ok).toBe(true);

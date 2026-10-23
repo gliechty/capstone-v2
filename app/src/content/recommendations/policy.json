@@ -13,12 +13,6 @@
     ],
     "buyer": 2
   },
-  "excludedCitationDocuments": [
-    {
-      "reason": "Scope 3 page references conflict with public-source provenance; source/page review required (CONFIG-MIGRATION.md).",
-      "docId": "capstone-doc-005"
-    }
-  ],
   "levels": {
     "high": 3,
     "low": 1,
@@ -39,7 +33,7 @@
     ],
     "buyer": 3
   },
-  "version": "native-metadata-v1",
+  "version": "native-metadata-v2-legacy-inclusion",
   "chunkLimit": 18,
   "maxRequestBytes": 400000,
   "documentLimit": 8,

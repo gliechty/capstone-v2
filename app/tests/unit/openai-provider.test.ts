@@ -62,12 +62,12 @@ test("malformed and oversized responses, transport failures and offline fence ne
   const result = await createRecommendationService({ loadConfig: () => config, provider })(input);
   expect(result).toMatchObject({ code: "provider_failure", assessment: { rawOverall: score.rawOverall } }); expect(JSON.stringify(result)).not.toContain("secret-key");
 });
-test("adapter output passes existing application validation; wrong scores remain rejected with usage retained", async () => {
+test("adapter preserves generated prose and usage while deterministic scores remain authoritative", async () => {
   const service = (body: unknown) => createRecommendationService({ loadConfig: () => config, provider: openAIProvider(settings, "secret", async () => Response.json(body)) });
   expect(await service(envelope())(input)).toMatchObject({ status: "available", metrics: { usage: { inputTokens: 50, outputTokens: 30 } } });
   const content = validTestContent(); content.executive_summary += " The score is 99.";
   const result = await service(envelope({ output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: JSON.stringify(content) }] }] }))(input);
-  expect(result).toMatchObject({ code: "invalid_output", metrics: { usage: { inputTokens: 50 } } }); expect(result).not.toHaveProperty("content");
+  expect(result).toMatchObject({ status: "available", content, assessment: { rawOverall: score.rawOverall }, metrics: { usage: { inputTokens: 50 } } });
 });
 test("local admission rejects cross-origin/non-loopback, duplicate calls and sixth attempt", () => {
   expect(isLocalRequest(new Request("http://localhost/api", { headers: { Origin: "http://localhost" } }), true)).toBe(true);

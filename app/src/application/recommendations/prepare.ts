@@ -3,8 +3,8 @@ import type { AssessmentScore } from "../../domain/scoring/score-assessment";
 import { retrieveEvidence } from "../../domain/recommendations/retrieve";
 import type { Citation, RecommendationRequest } from "./contracts";
 import type { RecommendationPolicy } from "./policy";
-import template from "../../content/recommendations/legacy-prompt.json";
-export const PROMPT_VERSION = "legacy-runtime-v1-validated-transport-7";
+import template from "../../content/recommendations/legacy-prompt.json" with { type: "json" };
+export const PROMPT_VERSION = "legacy-runtime-v1-parity-8";
 export function contextForRetrieval(input: RecommendationRequest) {
   const c = input.context;
   return { industry: c.industry, subindustry: input.subindustry, company_location: c.location,
@@ -20,23 +20,20 @@ export function safeSourceLink(value: string): string | null {
 export function prepareEvidence(config: CanonicalConfig, input: RecommendationRequest, policy: RecommendationPolicy) {
   const ranked = retrieveEvidence(config, contextForRetrieval(input), policy);
   const limitations = [
-    "Source membership and preserved excerpts are checked; source binaries, editions, external accessibility and factual correctness have not been independently verified.",
+    "Legacy-ranked metadata and excerpts are supplied; source binaries, editions, external accessibility and factual correctness have not been independently verified.",
     "Legacy page/section metadata is unverified; a stable document identity is not citation verification.",
     "Revenue band and country are not collected by the current UI and are unavailable.",
   ];
-  const withheld = new Map(policy.excludedCitationDocuments.map(d => [d.docId, d.reason]));
-  const documents = ranked.documents.filter(d => {
-    const reason = withheld.get(d.record.doc_id) ?? (!safeSourceLink(d.record.link) ? "Source link is not a safe HTTPS URL." : undefined);
-    if (reason) { limitations.push(`${d.record.doc_id}: ${reason}`); return false; }
-    return true;
-  });
+  // Preserve the archived ranked inclusion and order. Provenance limitations are disclosures, not exclusions.
+  const documents = ranked.documents;
+  const chunks = ranked.chunks;
   const parents = new Map(documents.map(d => [d.record.doc_id, d.record]));
-  const chunks = ranked.chunks.filter(c => parents.has(c.record.doc_id) && c.record.source_section_or_page.trim());
   const citations: Citation[] = chunks.map(c => {
-    const parent = parents.get(c.record.doc_id)!;
-    return { doc_title: parent.doc_title, source: parent.source, pages_or_section: c.record.source_section_or_page, link: safeSourceLink(parent.link)! };
+    const parent = parents.get(c.record.doc_id);
+    if (!parent) throw new Error("Ranked chunk has no parent document");
+    return { doc_title: parent.doc_title, source: parent.source, pages_or_section: c.record.source_section_or_page, link: parent.link };
   });
-  if (documents.length < ranked.documents.length || chunks.length < ranked.chunks.length) limitations.push("Unsafe or unresolved evidence is withheld after ranking; no lower-ranked replacements are silently added.");
+  limitations.push("Legacy document 005 page/source provenance remains unresolved; inclusion does not verify its claims or references.");
   return { ranked, documents, chunks, citations, limitations };
 }
 export type PreparedEvidence = ReturnType<typeof prepareEvidence>;
@@ -55,7 +52,7 @@ export function assemblePrompt(input: RecommendationRequest, score: AssessmentSc
     answered_questions: score.questions.filter(q => q.status === "scored").map(q => ({ question_id: q.id, question_text: q.title, category: q.category, answer: q.rawAnswer,
       ...(q.status === "scored" ? { normalized_score: q.normalization.value, final_score: q.earned, total_possible: q.possible } : {}) })),
   };
-  const docs = evidence.documents.map(d => ({ ...d.record, link: safeSourceLink(d.record.link), retrieval_score: d.score, retrieval_reasons: d.reasons }));
+  const docs = evidence.documents.map(d => ({ ...d.record, retrieval_score: d.score, retrieval_reasons: d.reasons }));
   const chunks = evidence.chunks.map(c => ({ ...c.record, retrieval_score: c.score, retrieval_reasons: c.reasons }));
   const values = [sme, scoring, docs, chunks];
   let index = 0;

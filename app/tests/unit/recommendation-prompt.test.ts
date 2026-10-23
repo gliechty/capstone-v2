@@ -25,14 +25,15 @@ test("embedded instructions remain quoted data and do not replace the trusted pr
   expect(result.legacyPrompt).toContain(JSON.stringify(hostile.subindustry));
   expect(result.system).toBe(assemblePrompt(input, score, evidence).system);
 });
-test("withholds known ambiguous page references and unsafe links, preserving canonical records", () => {
+test("restores legacy-ranked evidence including ambiguous provenance without rewriting canonical records", () => {
   const blocked = config.DocumentIndex.find(d => d.doc_id === "capstone-doc-005")!;
   const before = JSON.stringify(config);
   const snapshot = { ...config, DocumentIndex: [{ ...blocked, priority: "10000" }, { ...config.DocumentIndex[0]!, link: "javascript:alert(1)", priority: "9999" }] };
   const result = prepareEvidence(snapshot, input, recommendationPolicy);
   expect(result.ranked.documents).toHaveLength(2);
-  expect(result.documents).toHaveLength(0); expect(result.citations).toHaveLength(0);
-  expect(result.limitations.join(" ")).toContain("Scope 3 page references");
+  expect(result.documents).toEqual(result.ranked.documents); expect(result.chunks).toEqual(result.ranked.chunks);
+  expect(result.documents.map(d=>d.record.doc_id)).toContain("capstone-doc-005");
+  expect(result.limitations.join(" ")).toContain("provenance remains unresolved");
   expect(JSON.stringify(config)).toBe(before);
   expect(safeSourceLink(" https://example.org/a ")).toBe("https://example.org/a");
   for (const link of ["http://example.org", "https://user:pass@example.org", "file:///secret", "invalid"]) expect(safeSourceLink(link)).toBeNull();
@@ -41,7 +42,7 @@ test("withholds known ambiguous page references and unsafe links, preserving can
 test("revised contract supplies business context and assessed categories without changing legacy text or scores", () => {
   const result = assemblePrompt(input, score, evidence);
   const context = JSON.parse(result.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
-  expect(context.prompt_version).toBe("legacy-runtime-v1-validated-transport-7");
+  expect(context.prompt_version).toBe("legacy-runtime-v1-parity-8");
   expect(context).not.toHaveProperty("required_summary_labels");
   expect(result.sme).toMatchObject({ industry: input.context.industry, employee_band: input.context.companySize, business_goal: input.context.businessGoal });
   expect(context.allowed_assessed_categories).toEqual(["Governance"]);
