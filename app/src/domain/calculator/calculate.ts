@@ -108,7 +108,7 @@ export function calculate(input: CalculatorInput, factors: readonly ReferenceFac
   if (Object.values(totals).some(t => !t.complete)) flags.push("Only explicitly complete activity coverage produces a total; other values are known subtotals.");
   if (input.revenue.amount !== null && input.revenue.amount <= 0) flags.push("Zero or negative revenue cannot be used as an intensity denominator; absolute quantities remain available.");
   if (revenue === null) flags.push("Same-period USD revenue is required for intensity; no currency conversion is assumed.");
-  flags.push("Renewable share is separate from location-based emissions. U-026 autofill remains pending.");
+  flags.push("Renewable share is separate from location-based emissions.");
   const result: CalculatorResult = {
     methodVersion: "m4.1-reconciled-reference-v1", factorVersion, periodStart: input.periodStart, periodEnd: input.periodEnd, traces, totals, combinedEmissions,
     intensities: { carbon: intensity(combinedEmissions), energy: intensity(totals.energy), water: intensity(totals.water), waste: intensity(totals.waste) },

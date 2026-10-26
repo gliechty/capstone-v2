@@ -34,3 +34,110 @@ describe("accepted M4.1 numerical references through calculator boundary",()=>{
  it("rejects invalid quantities, wrong units/factors, subsets and incompatible versions",()=>{for(const patch of [{quantity:"-1"},{quantity:"Infinity"},{quantity:"1e309"},{unit:"kg"},{factorId:"legacy-C65"},{renewable:"10001"}])expect(calculateDraft(draft({...power(),...patch})).result).toBeNull();expect(calculateDraft({...draft(power()),factorVersion:"old"}).result).toBeNull();expect(calculateDraft({...draft(power()),referenceAcknowledged:false}).result).toBeNull();});
  it("preserves incomplete entries and original reviewed inputs on storage round-trip",()=>{const values=new Map<string,string>();const adapter=createCalculatorSession(()=>({getItem:k=>values.get(k)??null,setItem:(k,v)=>{values.set(k,v);}}));const original=draft(power());const corrected=draft(power("12000"));expect(adapter.save({method:"calculator",draft:corrected,reviewed:false,lastReviewedDraft:original})).toBeNull();expect(adapter.load().state.lastReviewedDraft).toEqual(original);same(result(adapter.load().state.draft).totals.scope2.value,"user-corrected-activity","current_scope2");values.set(CALCULATOR_KEY,'{"draft":{}}');expect(adapter.load().warning).toContain("could not be restored");});
 });
+
+// M4.4 owner-approved extensions: existing calculator inputs through canonical mapping/session.
+import { calculatorMappings, decimalAnswer } from "../../src/application/calculator-mapping";
+import { assessmentCatalog, selectedQuestions } from "../../src/application/assessment-catalog";
+import { loadCanonicalConfig } from "../../src/adapters/config-repository";
+import { createAssessmentModel } from "../../src/features/assessment/model";
+const mappingCatalog = assessmentCatalog(loadCanonicalConfig().config);
+const mappingProfile = { country: "China", companyName: "Example workshop", industry: "Manufacturing (Industrial / Components)", companySize: "251 - 500", location: "APAC", targetMarket: "EU", targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", subindustry: "", notes: "" };
+const mappingModel = createAssessmentModel(mappingCatalog.version, p => selectedQuestions(mappingCatalog, p));
+const mappedQuestions = selectedQuestions(mappingCatalog, mappingProfile);
+function mappedDraft() { const d = draft(power()); d.revenue.amount = "100000"; return d; }
+it("maps canonical IDs and exact units, leaving renewable share and incomplete values unavailable", () => {
+ const rows = calculatorMappings(mappedDraft(), mappedQuestions);
+ expect(rows.find(r => r.metricId === "carbon_intensity_manuf")?.raw).toBe("0.00005703");
+ expect(rows.find(r => r.metricId === "energy_intensity_manuf")?.raw).toBe("0.1");
+ expect(rows.filter(r => r.metricId === "MET_RE_SHARE").every(r => r.raw === null)).toBe(true);
+ const d = mappedDraft(); d.coverage.energy = false;
+ expect(calculatorMappings(d,mappedQuestions).find(r => r.metricId === "energy_intensity_manuf")?.raw).toBeNull();
+ d.periodEnd = "2025-06-30"; expect(calculatorMappings(d,mappedQuestions).every(r => r.raw === null)).toBe(true);
+ const q = mappedQuestions.find(q => q.metricId === "energy_intensity_manuf")!;
+ expect(calculatorMappings(mappedDraft(),[{...q, unit:"MWh/USD"}])[0]?.raw).toBeNull();
+ expect(Number(decimalAnswer(1e-9))).toBe(1e-9); expect(decimalAnswer(1e-9)).not.toContain("e");
+});
+it("confirms only selected answers, persists provenance and preserves manual correction on invalidation", () => {
+ const d = mappedDraft(); const initial = {...mappingModel.initialSession(), profile: mappingProfile, answers: {"U-001":"No", "I-062":"0.7"}};
+ let state = mappingModel.assessmentReducer(initial, {type:"calculator-apply", draft:d, questionIds:["I-056"]});
+ expect(state.answers).toEqual({"U-001":"No","I-062":"0.7","I-056":"0.00005703"});
+ state = mappingModel.sessionSchema.parse(JSON.parse(JSON.stringify(state)));
+ expect(state.calculatorTransfer?.draft.activities[0]?.quantity).toBe("10000");
+ state = mappingModel.assessmentReducer(state,{type:"answer",id:"I-056",raw:"0.2"});
+ state = mappingModel.assessmentReducer(state,{type:"calculator-invalidate"});
+ expect(state.answers["I-056"]).toBe("0.2"); expect(state.answers["I-062"]).toBe("0.7");
+ state = mappingModel.assessmentReducer(state,{type:"calculator-apply",draft:d,questionIds:["I-056","I-062"]});
+ state = mappingModel.assessmentReducer(state,{type:"calculator-invalidate"});
+ expect(state.answers).toEqual({"U-001":"No"});
+});
+it("fills duplicate canonical metrics once per destination, skips confirmed entries and permits revisiting", () => {
+ const d = draft(source("waste","10","",{diverted:"4",hazardous:"1"}));
+ const rows = calculatorMappings(d,mappedQuestions).filter(r=>r.metricId === "waste_diverted_percent");
+ expect(rows.length).toBeGreaterThan(0); expect(rows.every(r=>r.raw === "40")).toBe(true);
+ const ids=rows.map(r=>r.questionId);
+ let state=mappingModel.assessmentReducer({...mappingModel.initialSession(),profile:mappingProfile},{type:"calculator-apply",draft:d,questionIds:ids});
+ for(const id of ids) expect(state.answers[id]).toBe("40");
+ const index=mappedQuestions.findIndex(q=>q.id===ids[0]);
+ state={...state,phase:"questions",activeId:mappedQuestions[index-1]!.id};
+ state=mappingModel.assessmentReducer(state,{type:"next"}); expect(ids).not.toContain(state.activeId);
+ state=mappingModel.assessmentReducer(state,{type:"jump",id:ids[0]!}); expect(state.activeId).toBe(ids[0]);
+ state=mappingModel.assessmentReducer(state,{type:"skip"}); expect(state.answers[ids[0]!]).toBeUndefined();
+});
+it("keeps annual water source breakdown, genuine zeros and missing revenue separate",()=>{
+ const d=draft(source("water","600"),source("water","400","",{id:"ground",source:"ground"}));
+ const rows=calculatorMappings(d,mappingCatalog.questions);
+ expect(rows.filter(r=>r.metricId==="water_withdrawal_m3").every(r=>r.raw==="1000")).toBe(true);
+ expect(rows.filter(r=>r.metricId.startsWith("water_intensity_")).every(r=>r.raw===null)).toBe(true);
+ d.activities.forEach(a=>a.quantity="0"); d.revenue.amount="100000";
+ expect(calculatorMappings(d,mappingCatalog.questions).find(r=>r.metricId==="water_intensity_manuf")?.raw).toBe("0");
+});
+
+import { calculatorEligible } from "../../src/application/calculator";
+import { recommendationRequestFromSession } from "../../src/application/recommendations/request";
+import { inputIdentityText } from "../../src/application/recommendations/identity";
+import { assemblePrompt, prepareEvidence } from "../../src/application/recommendations/prepare";
+import { recommendationPolicy } from "../../src/application/recommendations/policy";
+import { config as recommendationConfig, score as recommendationScore } from "../helpers/recommendation-fixture";
+it("requires explicit supported country and preserves old sessions and manual answers",()=>{
+ expect(calculatorEligible("China")).toBe(true); expect(calculatorEligible(" china ")).toBe(true);
+ for(const country of [undefined,"","Japan"]) expect(calculatorEligible(country)).toBe(false);
+ const old={...mappingModel.initialSession(),profile:{...mappingProfile,country:undefined},answers:{"U-001":"No"}};
+ expect(mappingModel.sessionSchema.parse(JSON.parse(JSON.stringify(old))).answers).toEqual(old.answers);
+ expect(mappingModel.assessmentReducer(old,{type:"calculator-apply",draft:mappedDraft(),questionIds:["I-056"]}).answers).toEqual(old.answers);
+ let state=mappingModel.assessmentReducer({...old,profile:mappingProfile},{type:"calculator-apply",draft:mappedDraft(),questionIds:["I-056","I-062"]});
+ state=mappingModel.assessmentReducer(state,{type:"answer",id:"I-062",raw:"0.3"});
+ state=mappingModel.assessmentReducer(state,{type:"profile",field:"country",value:"Japan"});
+ expect(state.answers).toEqual({"U-001":"No","I-062":"0.3"});
+ const japanProfile={...mappingProfile,country:"Japan"};
+ expect(selectedQuestions(mappingCatalog,japanProfile)).toEqual(mappedQuestions);
+});
+it("carries country and region to the LLM prompt and freshness identity without changing retrieval or scores",()=>{
+ const session={...mappingModel.initialSession(),profile:mappingProfile,answers:{"U-001":"No","U-002":"Yes"}};
+ const request=recommendationRequestFromSession(session);
+ expect(request.country).toBe("China"); expect(request.context.location).toBe("APAC");
+ const evidence=prepareEvidence(recommendationConfig,request,recommendationPolicy);
+ const prompt=assemblePrompt(request,recommendationScore,evidence);
+ expect(prompt.sme).toMatchObject({country:"China",company_location:"APAC"});
+ expect(prompt.prompt).toContain('"country": "China"');
+ expect(prompt.system).toContain("country, region");
+ const changed={...request,country:"Japan"};
+ expect(inputIdentityText(changed)).not.toBe(inputIdentityText(request));
+ expect(prepareEvidence(recommendationConfig,changed,recommendationPolicy).ranked).toEqual(evidence.ranked);
+ expect(assemblePrompt(changed,recommendationScore,evidence).scoring).toEqual(prompt.scoring);
+});
+
+import { countries, countrySchema } from "../../src/application/countries";
+import { profileErrors } from "../../src/features/assessment/model";
+it("validates listed countries while retaining absent legacy country and unsupported-country recommendations",()=>{
+ expect(countries).toHaveLength(249);
+ expect(countrySchema.parse(undefined)).toBeUndefined();expect(countrySchema.parse("")).toBe("");
+ expect(countrySchema.parse("china")).toBe("China");expect(countrySchema.parse("Japan")).toBe("Japan");
+ expect(countrySchema.safeParse("Atlantis").success).toBe(false);
+ expect(profileErrors({...mappingProfile,country:"Atlantis"}).country).toContain("Choose a country");
+ const session={...mappingModel.initialSession(),profile:{...mappingProfile,country:"Japan"},answers:{"U-001":"No"}};
+ expect(recommendationRequestFromSession(session).country).toBe("Japan");
+ expect(calculatorEligible(session.profile.country)).toBe(false);
+ const old={...session,profile:{...session.profile,country:undefined}};
+ expect(mappingModel.sessionSchema.parse(JSON.parse(JSON.stringify(old))).answers).toEqual(old.answers);
+ expect(recommendationRequestFromSession(old).country).toBeUndefined();
+});

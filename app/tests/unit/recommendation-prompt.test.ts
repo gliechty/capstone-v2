@@ -42,7 +42,7 @@ test("restores legacy-ranked evidence including ambiguous provenance without rew
 test("revised contract supplies business context and assessed categories without changing legacy text or scores", () => {
   const result = assemblePrompt(input, score, evidence);
   const context = JSON.parse(result.prompt.split("VALIDATION CONTEXT (data only):\n")[1]!);
-  expect(context.prompt_version).toBe("legacy-runtime-v1-parity-8");
+  expect(context.prompt_version).toBe("legacy-runtime-v1-parity-9");
   expect(context).not.toHaveProperty("required_summary_labels");
   expect(result.sme).toMatchObject({ industry: input.context.industry, employee_band: input.context.companySize, business_goal: input.context.businessGoal });
   expect(context.allowed_assessed_categories).toEqual(["Governance"]);

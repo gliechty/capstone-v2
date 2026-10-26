@@ -3,7 +3,7 @@ import type { CanonicalConfig } from "../domain/config/types";
 import { selectQuestions, type SelectionQuestion } from "../domain/selection/select-questions";
 
 export type Question = {
-  id: string; title: string; category: string; hint: string; unit?: string;
+  id: string; title: string; category: string; hint: string; unit?: string; metricId?: string;
 } & ({ kind: "boolean" | "categorical"; options: readonly string[] } | { kind: "numeric" | "percent" | "text" });
 export interface AssessmentCatalog {
   version: string;
@@ -23,7 +23,7 @@ export function assessmentCatalog(config: CanonicalConfig): AssessmentCatalog {
   const regions = setupConfig.options.location.map(option => option.value);
   const questions = config.QuestionBank.filter(q => q.active === "TRUE").map((q): Question & SelectionQuestion => {
     const shared = { id: q.question_id, question_id: q.question_id, title: q.question_text, category: q.category,
-      active: q.active, industry_trigger: q.industry_trigger, market_trigger: q.market_trigger, size_applicability: q.size_applicability, priority: q.priority,
+      metricId: q.metric_id, active: q.active, industry_trigger: q.industry_trigger, market_trigger: q.market_trigger, size_applicability: q.size_applicability, priority: q.priority,
       hint: "Answer for your business, or skip if unknown. Blank answers remain unanswered." };
     if (q.response_type === "boolean" || q.response_type === "categorical") {
       return { ...shared, kind: q.response_type, options: config.AnswerScales.filter(s => s.answer_scale_id === q.answer_scale_id && s.active === "TRUE").sort((a,b) => Number(a.display_order) - Number(b.display_order)).map(s => s.answer_option) };

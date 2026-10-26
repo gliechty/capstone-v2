@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { countrySchema } from "../countries";
 import { notesSchema } from "../assessment-notes";
 import { scoreRequestSchema } from "../score-request";
 
 export const recommendationRequestSchema = scoreRequestSchema.extend({
   // Only additional context actually collected by the current questionnaire.
-  companyName: z.string().trim().min(1).max(200), subindustry: z.string().max(200), notes: notesSchema,
+  companyName: z.string().trim().min(1).max(200), subindustry: z.string().max(200), notes: notesSchema, country: countrySchema,
 });
 export type RecommendationRequest = z.infer<typeof recommendationRequestSchema>;
 const text = z.string();

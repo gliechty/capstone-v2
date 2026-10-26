@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { CountryPicker } from "./country-picker";
 import Image from "next/image";
+import { CalculatorProvenance } from "../calculator/metric-review";
 import { CalculatorPanel } from "../calculator/calculator-panel";
 import { browserSession } from "../../adapters/assessment-session";
 import { createAssessmentModel } from "./model";
@@ -27,7 +29,9 @@ function StageHeading({ children }: { children: string }) {
 function Setup() {
   const { session, dispatch, catalog } = useAssessment();
   const [submitted, setSubmitted] = useState(false);
+  const [countrySearchPending, setCountrySearchPending] = useState(false);
   const errors = catalogProfileErrors(catalog, session.profile);
+  if (countrySearchPending) errors.country = "Choose a country from the search results, or clear this optional field.";
   const markets = marketValues(session.profile.targetMarket);
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -76,19 +80,19 @@ function Setup() {
             return <div key={field.key}>
               <label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
               <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              {field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4}
+              {field.key === "country" ? <CountryPicker onPendingChange={setCountrySearchPending} id={id} value={session.profile.country ?? ""} onChange={value => dispatch({ type: "profile", field: "country", value })} describedBy={id + "-hint" + (error ? " " + id + "-error" : "")} invalid={Boolean(error)} /> : field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4}
                 maxLength={NOTES_MAX_LENGTH} value={session.profile.notes} aria-invalid={Boolean(error)}
                 aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
                 onChange={event => dispatch({ type: "profile", field: "notes", value: event.target.value })} />
                 : field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
-                required value={session.profile[field.key]} aria-invalid={Boolean(error)}
+                required value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
                 aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
                 onChange={event => dispatch({ type: "profile", field: field.key, value: event.target.value })}>
                 <option value="">Choose one</option>
                 {catalog.setupOptions[field.key].map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
               </select> : <input id={id} name={field.key} className="field-control" type="text"
                 autoComplete={field.key === "companyName" ? "organization" : "off"} required={field.required} maxLength={200}
-                value={session.profile[field.key]} aria-invalid={Boolean(error)}
+                value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
                 aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
                 onChange={event => dispatch({ type: "profile", field: field.key as ProfileKey, value: event.target.value })} />}
               {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
@@ -110,7 +114,7 @@ function InputMethod() {
     <div className="mt-8 flex flex-wrap gap-4">
       <button className="button-secondary" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Back to setup</button>
       {questions.length === 0 && <p role="alert">No questions match this context. Review your setup; no fallback questionnaire has been substituted.</p>}
-      <button className="button-primary" type="button" disabled={questions.length === 0} onClick={() => dispatch({ type: "start" })}>Start questionnaire</button>
+
     </div>
   </section>;
 }
@@ -161,6 +165,7 @@ function AnswerForm({ question }: { question: Question }) {
   }
   function change(value: string) { cancelAdvance(); dispatch({ type: "answer", id: question.id, raw: value }); }
   return <form noValidate onSubmit={submit} className="mt-6" onKeyDownCapture={cancelAdvance} onPointerDownCapture={cancelAdvance}>
+    <CalculatorProvenance questionId={question.id} />
     {"options" in question ? <fieldset aria-describedby={"question-hint" + (error ? " answer-error" : "")}>
       <legend className="field-label">Your answer</legend>
       <div className="grid gap-3">
@@ -310,6 +315,7 @@ function Review() {
       <p role="status">{missing.length} questions are unanswered. Scores and recommendations will be based only on the available answers.</p>
       <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations anyway</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
     </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations</button>}
+    <CalculatorProvenance />
     <ul className="my-8 grid gap-3">
       {questions.map((question, i) => <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>

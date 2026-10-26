@@ -15,10 +15,11 @@ const numeric = questions[numericIndex]!;
 const numericLabel = "Your answer" + (numeric.unit ? " (" + numeric.unit + ")" : "");
 async function jump(page: Page, index: number) { await page.getByRole("button", { name: new RegExp("^Question " + (index + 1) + ":") }).click(); }
 async function fillSetup(page: Page, overrides: Record<string, string> = {}) {
-  const values = { companyName: "Example workshop", ...profile, targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", ...overrides };
+  const values = { companyName: "Example workshop", country: "China", ...profile, targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", ...overrides };
   for (const [name, value] of Object.entries(values)) {
     const field = page.locator('[name="' + name + '"]');
     if (name === "targetMarket") { for (const market of value.split(";")) await page.getByRole("checkbox", { name: market, exact: true }).check(); }
+    else if (name === "country") { await field.fill(value); await page.getByRole("option",{name:value,exact:true}).click(); }
     else if (name !== "companyName") await field.selectOption(value);
     else await field.fill(value);
   }
@@ -349,7 +350,7 @@ for (const width of [1440, 390]) {
     await page.goto("/assessment");
     await expect(page.getByRole("textbox")).toHaveCount(3);
     await expect(page.getByRole("textbox", { name: "Additional Context / Requirements (optional)", exact: true })).toBeVisible();
-    await expect(page.getByRole("combobox")).toHaveCount(5);
+    await expect(page.getByRole("combobox")).toHaveCount(6);
     await fillSetup(page);
     await page.getByRole("checkbox", { name: "UK", exact: true }).focus();
     await page.keyboard.press("Space");
@@ -605,4 +606,20 @@ test("selected answers can be cleared and Skip deletes stored answers across ref
  await page.reload();await expect(no).not.toBeChecked();
  const state=await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!));
  expect(state.answers).not.toHaveProperty(questions[0]!.id);expect(state.skipped).toContain(questions[0]!.id);
+});
+
+test("Country search distinguishes a query from selection and supports browsing and keyboard choice",async({page})=>{
+ await page.goto("/assessment"); await fillSetup(page);
+ const country=page.getByRole("combobox",{name:"Country (optional)",exact:true});
+ await page.getByRole("button",{name:"Browse all countries"}).click();
+ await expect(page.getByRole("listbox",{name:"Countries and territories"}).getByRole("option")).toHaveCount(249);
+ await country.fill("Jap"); await expect(page.getByRole("option",{name:"Japan",exact:true})).toBeVisible();
+ await page.getByRole("button",{name:"Continue to input method"}).click();
+ await expect(page.getByText("Choose a country from the search results, or clear this optional field.",{exact:true})).toBeVisible();
+ expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).profile.country)).toBe("China");
+ await country.fill("Japan"); await country.press("ArrowDown"); await country.press("Enter");
+ await page.getByRole("button",{name:"Continue to input method"}).click();
+ await expect(page.getByRole("radio",{name:/Use emissions calculator/})).toHaveCount(0);
+ await expect(page.getByRole("button",{name:"Start questionnaire",exact:true})).toBeVisible();
+ await page.reload();expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).profile.country)).toBe("Japan");
 });
