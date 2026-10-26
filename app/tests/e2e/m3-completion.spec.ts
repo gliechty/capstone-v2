@@ -1,0 +1,28 @@
+import {test,expect} from "@playwright/test";
+import {readFileSync} from "node:fs";
+import {syntheticSession} from "../../src/features/preview/fixtures";
+import {assessmentCatalog,selectedQuestions} from "../../src/application/assessment-catalog";
+import {loadCanonicalConfig} from "../../src/adapters/config-repository";
+const catalog=assessmentCatalog(loadCanonicalConfig().config);
+for(const width of [1440,390])test("M3 navigation, blank final answer and durable offline report "+width,async({page})=>{
+ await page.setViewportSize({width,height:1000});await page.goto('/');
+ const state=syntheticSession(catalog.version);const selected=selectedQuestions(catalog,state.profile);
+ await page.evaluate(s=>sessionStorage.setItem('capstone.assessment.ui-preview.v1',JSON.stringify(s)),state);
+ await page.goto('/results');await expect(page.getByRole('heading',{name:'Review before Results'})).toBeVisible();
+ await page.getByRole('button',{name:'Review assessment answers'}).click();
+ await expect(page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:'5. Results'})).toBeDisabled();
+ await page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:'3. Questions'}).click();
+ await expect(page.getByRole('button',{name:'Review all answers',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Review all answers',exact:true}).click();
+ await page.getByRole('button',{name:selected.length+'. '+selected.at(-1)!.title,exact:true}).click();
+ await page.getByRole('button',{name:'Review answers',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Review your answers.'})).toBeVisible();
+ await page.getByRole('button',{name:'Generate score and recommendations',exact:true}).click();
+ await page.getByRole('button',{name:'Generate score and recommendations anyway',exact:true}).click();await expect(page).toHaveURL(/results$/);
+ await expect(page.locator('.score-values')).toContainText('51.0');
+ const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download assessment report'}).click();
+ const download=await downloadPromise;const html=readFileSync((await download.path())!,'utf8');
+ expect(html).toContain('51.0');expect(html).toContain('Unanswered');expect(html).toContain('AI recommendations unavailable');expect(html).not.toContain('Synthetic UI example');
+ await page.reload();await expect(page.locator('.score-values')).toContainText('51.0');
+ await page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:'1. Set Up'}).click();await expect(page.locator('[name="notes"]')).toHaveValue(state.profile.notes);
+});

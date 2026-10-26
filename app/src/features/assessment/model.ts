@@ -1,4 +1,8 @@
 import { z } from "zod";
+import { listedCountry } from "../../application/countries";
+import { calculatorMappings, calculatorTransferSchema, type CalculatorTransfer } from "../../application/calculator-mapping";
+import { calculatorEligible, type CalculatorDraft } from "../../application/calculator";
+import { notesSchema, NOTES_MAX_LENGTH } from "../../application/assessment-notes";
 import type { Question } from "../../application/assessment-catalog";
 export type QuestionId = string;
 
@@ -7,30 +11,33 @@ export const profileFields = [
   { key: "industry", label: "Industry", hint: "Choose the industry used for this assessment.", required: true },
   { key: "subindustry", label: "Subindustry", hint: "Optional: add a more specific activity.", required: false },
   { key: "companySize", label: "Company size", hint: "Choose the employee band that describes your company.", required: true },
+  { key: "country", label: "Country", hint: "Search or browse countries and territories, then select one. Calculator support remains China only.", required: false },
   { key: "location", label: "Location", hint: "Choose the region where your business operates.", required: true },
   { key: "targetMarket", label: "Target market", hint: "Choose up to two regions. Your first choice is primary; your second is secondary.", required: true },
   { key: "targetBuyer", label: "Target buyer", hint: "Choose the type of buyer you want to work with.", required: true },
   { key: "businessGoal", label: "Business goal", hint: "Examples: attract new investors or prepare for procurement screening.", required: true },
+  { key: "notes", label: "Additional Context / Requirements", hint: "Optional: add relevant business context or buyer requirements (up to 1,000 characters).", required: false },
 ] as const;
 const shortText = z.string().max(200);
 const profileSchema = z.object({
   companyName: shortText, industry: shortText, subindustry: shortText,
-  companySize: shortText, location: shortText, targetMarket: shortText,
-  targetBuyer: shortText, businessGoal: z.string().max(1000),
+  companySize: shortText, country: shortText.optional(), location: shortText, targetMarket: shortText,
+  targetBuyer: shortText, businessGoal: z.string().max(1000), notes: notesSchema,
 }).strict();
 export type Profile = z.infer<typeof profileSchema>;
 export type ProfileKey = keyof Profile;
 export const emptyProfile: Profile = {
   companyName: "", industry: "", subindustry: "", companySize: "",
-  location: "", targetMarket: "", targetBuyer: "", businessGoal: "",
+  country: "", location: "", targetMarket: "", targetBuyer: "", businessGoal: "", notes: "",
 };
 export function profileErrors(profile: Profile): Partial<Record<ProfileKey, string>> {
   const errors: Partial<Record<ProfileKey, string>> = {};
   for (const field of profileFields) {
-    const value = profile[field.key].trim();
+    const value = (profile[field.key] ?? "").trim();
     if (field.required && !value) errors[field.key] = "Please enter " + field.label.toLowerCase() + ".";
-    if (value.length > (field.key === "businessGoal" ? 1000 : 200)) errors[field.key] = "Please shorten this entry.";
+    if ((field.key === "notes" ? profile.notes.length : value.length) > (field.key === "notes" ? NOTES_MAX_LENGTH : field.key === "businessGoal" ? 1000 : 200)) errors[field.key] = "Please shorten this entry.";
   }
+  if (profile.country?.trim() && !listedCountry(profile.country)) errors.country = "Choose a country from the list, or clear this optional field.";
   return errors;
 }
 export function answerError(question: Question, raw = ""): string | undefined {
@@ -48,14 +55,19 @@ export type Session = {
   phase: "setup" | "method" | "questions" | "review" | "boundary";
   profile: Profile; inputMethod: "manual"; activeId: string;
   answers: Record<string, string>; skipped: string[];
+  // Highest stage reached through its explicit action; absent in older sessions.
+  progress?: number;
+  calculatorTransfer?: CalculatorTransfer;
 };
 export type Action =
+  | { type: "calculator-apply"; draft: CalculatorDraft; questionIds: string[] }
+  | { type: "calculator-invalidate" }
   | { type: "profile"; field: ProfileKey; value: string }
   | { type: "method" } | { type: "start" } | { type: "edit-setup" }
   | { type: "answer"; id: QuestionId; raw: string }
   | { type: "jump"; id: QuestionId } | { type: "next" } | { type: "back" }
   | { type: "skip" } | { type: "review" } | { type: "review-missing" }
-  | { type: "boundary" };
+  | { type: "boundary" } | { type: "generate" };
 export function unanswered(state: Session, questions: readonly Question[]) {
   return questions.filter((q) => answerError(q, state.answers[q.id]) !== undefined);
 }
@@ -70,10 +82,12 @@ export function createAssessmentModel(version: string, select: (profile: Profile
     phase: z.enum(["setup", "method", "questions", "review", "boundary"]), profile: profileSchema,
     inputMethod: z.literal("manual"), activeId: z.string(),
     answers: z.record(z.string(), z.string().max(2000)), skipped: z.array(z.string()),
+    progress: z.number().int().min(0).max(4).optional(),
+    calculatorTransfer: calculatorTransferSchema.optional(),
   }).superRefine((state, ctx) => {
     const ids = new Set(select(state.profile).map(q => q.id));
     const errors = validateProfile(state.profile);
-    if (Object.keys(errors).some(key => state.phase !== "setup" || state.profile[key as ProfileKey].trim() !== "")) ctx.addIssue({ code: "custom", message: "Invalid setup" });
+    if (Object.keys(errors).some(key => state.phase !== "setup" || (state.profile[key as ProfileKey] ?? "").trim() !== "")) ctx.addIssue({ code: "custom", message: "Invalid setup" });
     if (["questions", "review", "boundary"].includes(state.phase) && (!ids.has(state.activeId) || Object.keys(state.answers).some(id => !ids.has(id)) || state.skipped.some(id => !ids.has(id)))) ctx.addIssue({ code: "custom", message: "Incompatible selected questions" });
     if (new Set(state.skipped).size !== state.skipped.length) ctx.addIssue({ code: "custom", message: "Duplicate skipped IDs" });
   });
@@ -81,35 +95,64 @@ export function createAssessmentModel(version: string, select: (profile: Profile
     return { version: 3, configVersion: version, phase: "setup", profile: { ...emptyProfile }, inputMethod: "manual", activeId: "", answers: {}, skipped: [] };
   }
   function advance(state: Session): Session {
-    const next = questions(state)[questions(state).findIndex((q) => q.id === state.activeId) + 1];
-    return next ? { ...state, activeId: next.id } : { ...state, phase: "review" };
+    const selected = questions(state);
+    const next = selected.slice(selected.findIndex(q => q.id === state.activeId) + 1).find(q => !state.calculatorTransfer?.questionIds.includes(q.id));
+    return next ? { ...state, activeId: next.id } : { ...state, phase: "review", progress: Math.max(state.progress ?? 0, 3) };
+  }
+  function forgetTransfer(state: Session, id: string): Session {
+    if (!state.calculatorTransfer) return state;
+    return { ...state, calculatorTransfer: { ...state.calculatorTransfer, questionIds: state.calculatorTransfer.questionIds.filter(q => q !== id) } };
+  }
+  function invalidateTransfer(state: Session): Session {
+    if (!state.calculatorTransfer) return state;
+    const answers = { ...state.answers };
+    for (const row of calculatorMappings(state.calculatorTransfer.draft, questions(state))) {
+      if (state.calculatorTransfer.questionIds.includes(row.questionId) && answers[row.questionId] === row.raw) delete answers[row.questionId];
+    }
+    return { ...state, answers, calculatorTransfer: undefined };
   }
   function assessmentReducer(state: Session, action: Action): Session {
     switch (action.type) {
-      case "profile": return { ...state, profile: { ...state.profile, [action.field]: action.value }, phase: "setup" };
+      case "calculator-invalidate": return invalidateTransfer(state);
+      case "calculator-apply": {
+        if (!calculatorEligible(state.profile.country)) return state;
+        const mappings = calculatorMappings(action.draft, questions(state)).filter(row => action.questionIds.includes(row.questionId) && row.raw !== null);
+        if (!mappings.length) return state;
+        const sameDraft = state.calculatorTransfer && JSON.stringify(state.calculatorTransfer.draft) === JSON.stringify(action.draft);
+        const base = sameDraft ? state : invalidateTransfer(state);
+        const answers = { ...base.answers };
+        for (const row of mappings) answers[row.questionId] = row.raw!;
+        const questionIds = [...new Set([...(sameDraft ? state.calculatorTransfer!.questionIds : []), ...mappings.map(row => row.questionId)])];
+        return { ...state, answers, skipped: state.skipped.filter(id => !questionIds.includes(id)), calculatorTransfer: { draft: action.draft, questionIds } };
+      }
+      case "profile": return { ...(action.field === "companyName" || action.field === "industry" || action.field === "location" || action.field === "country" ? invalidateTransfer(state) : state), profile: { ...state.profile, [action.field]: action.value }, phase: "setup" };
       case "edit-setup": return { ...state, phase: "setup" };
-      case "method": return Object.keys(validateProfile(state.profile)).length ? state : { ...state, phase: "method" };
+      case "method": return Object.keys(validateProfile(state.profile)).length ? state : { ...state, phase: "method", progress: Math.max(state.progress ?? 0, 1) };
       case "start": {
         if (Object.keys(validateProfile(state.profile)).length) return state;
         const selected = questions(state);
         if (!selected.length) return state;
         const ids = new Set(selected.map(q => q.id));
-        return { ...state, phase: "questions", activeId: ids.has(state.activeId) ? state.activeId : selected[0]!.id,
+        return { ...state, phase: "questions", progress: Math.max(state.progress ?? 0, 2), activeId: ids.has(state.activeId) && !state.calculatorTransfer?.questionIds.includes(state.activeId) ? state.activeId : (selected.find(q => !state.calculatorTransfer?.questionIds.includes(q.id)) ?? selected[0]!).id,
           answers: Object.fromEntries(Object.entries(state.answers).filter(([id]) => ids.has(id))), skipped: state.skipped.filter(id => ids.has(id)) };
       }
-      case "answer": if (!questions(state).some(q => q.id === action.id)) return state; return { ...state, answers: { ...state.answers, [action.id]: action.raw }, skipped: state.skipped.filter((id) => id !== action.id) };
+      case "answer": if (!questions(state).some(q => q.id === action.id)) return state; return { ...forgetTransfer(state, action.id), answers: { ...state.answers, [action.id]: action.raw }, skipped: state.skipped.filter((id) => id !== action.id) };
       case "jump": if (!questions(state).some(q => q.id === action.id)) return state; return { ...state, activeId: action.id, phase: "questions" };
       case "next": {
         const q = questions(state).find((q) => q.id === state.activeId);
-        return !q || answerError(q, state.answers[q.id]) ? state : advance(state);
+        return !q || (state.answers[q.id]?.trim() && answerError(q, state.answers[q.id])) ? state : advance(state);
       }
       case "back": {
         const previous = questions(state)[questions(state).findIndex((q) => q.id === state.activeId) - 1];
         return previous ? { ...state, activeId: previous.id } : state;
       }
-      // Skip never discards a draft or an existing answer.
-      case "skip": return advance({ ...state, skipped: [...new Set([...state.skipped, state.activeId])] });
-      case "review": return { ...state, phase: "review" };
+      // Skip means unknown: remove the raw value before persisting or advancing.
+      case "skip": return advance({ ...forgetTransfer(state, state.activeId), answers: Object.fromEntries(Object.entries(state.answers).filter(([id]) => id !== state.activeId)), skipped: [...new Set([...state.skipped, state.activeId])] });
+      case "review": return { ...state, phase: "review", progress: Math.max(state.progress ?? 0, 3) };
+      case "generate": {
+        if (state.phase !== "review" || state.skipped.some(id => state.answers[id]?.trim()) || Object.keys(validateProfile(state.profile)).length || questions(state).some(q => state.answers[q.id]?.trim() && answerError(q, state.answers[q.id]))) return state;
+        return { ...state, progress: 4 };
+      }
       case "review-missing": {
         const first = unanswered(state, questions(state))[0];
         return first ? { ...state, phase: "questions", activeId: first.id } : state;

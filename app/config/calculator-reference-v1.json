@@ -1,0 +1,779 @@
+{
+  "version": "china-advanced-workbook-c9457d72bced",
+  "source": {
+    "path": "BUILD_PACK/10_RESEARCH/alan_henry/raw/SME_ESG_Calculator_China_Advanced.xlsx",
+    "sha256": "c9457d72bced186be7994b805bd2312673b7c345797166ec60bac688061e9dee",
+    "owner_confirmed": true,
+    "reporting_year_default": 2025,
+    "reporting_year_cell": "1·Company!B5",
+    "reporting_currency_default": "CNY (RMB)",
+    "factor_year_not_inferred_from_reporting_year": true
+  },
+  "factors": [
+    {
+      "id": "legacy-C6",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C6",
+      "label": "Natural gas (kWh)",
+      "input_unit": "kWh",
+      "value": "0.184",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C7",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C7",
+      "label": "Diesel",
+      "input_unit": "litre",
+      "value": "2.68",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C8",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C8",
+      "label": "Petrol",
+      "input_unit": "litre",
+      "value": "2.31",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C9",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C9",
+      "label": "LPG",
+      "input_unit": "litre",
+      "value": "1.56",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C13",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C13",
+      "label": "kWh",
+      "input_unit": "kWh",
+      "value": "0.184",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C14",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C14",
+      "label": "m³ (cubic metre)",
+      "input_unit": "m³",
+      "value": "2.02",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C15",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C15",
+      "label": "therm",
+      "input_unit": "therm",
+      "value": "5.29",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C19",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C19",
+      "label": "全国平均 National avg",
+      "input_unit": "kWh",
+      "value": "0.5703",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE",
+      "geography": "China national",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C20",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C20",
+      "label": "北京 Beijing",
+      "input_unit": "kWh",
+      "value": "0.6",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "北京 Beijing",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C21",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C21",
+      "label": "上海 Shanghai",
+      "input_unit": "kWh",
+      "value": "0.42",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "上海 Shanghai",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C22",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C22",
+      "label": "广东 Guangdong",
+      "input_unit": "kWh",
+      "value": "0.47",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "广东 Guangdong",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C23",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C23",
+      "label": "江苏 Jiangsu",
+      "input_unit": "kWh",
+      "value": "0.64",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "江苏 Jiangsu",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C24",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C24",
+      "label": "浙江 Zhejiang",
+      "input_unit": "kWh",
+      "value": "0.52",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "浙江 Zhejiang",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C25",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C25",
+      "label": "山东 Shandong",
+      "input_unit": "kWh",
+      "value": "0.66",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "山东 Shandong",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C26",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C26",
+      "label": "河北 Hebei",
+      "input_unit": "kWh",
+      "value": "0.73",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "河北 Hebei",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C27",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C27",
+      "label": "山西 Shanxi",
+      "input_unit": "kWh",
+      "value": "0.79",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "山西 Shanxi",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C28",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C28",
+      "label": "内蒙古 Inner Mongolia",
+      "input_unit": "kWh",
+      "value": "0.75",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "内蒙古 Inner Mongolia",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C29",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C29",
+      "label": "四川 Sichuan",
+      "input_unit": "kWh",
+      "value": "0.14",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "四川 Sichuan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C30",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C30",
+      "label": "云南 Yunnan",
+      "input_unit": "kWh",
+      "value": "0.11",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "云南 Yunnan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C31",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C31",
+      "label": "河南 Henan",
+      "input_unit": "kWh",
+      "value": "0.61",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "河南 Henan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C32",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C32",
+      "label": "湖北 Hubei",
+      "input_unit": "kWh",
+      "value": "0.36",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "湖北 Hubei",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C33",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C33",
+      "label": "福建 Fujian",
+      "input_unit": "kWh",
+      "value": "0.41",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "福建 Fujian",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C34",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C34",
+      "label": "陕西 Shaanxi",
+      "input_unit": "kWh",
+      "value": "0.66",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "陕西 Shaanxi",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C35",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C35",
+      "label": "辽宁 Liaoning",
+      "input_unit": "kWh",
+      "value": "0.62",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "辽宁 Liaoning",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C36",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C36",
+      "label": "安徽 Anhui",
+      "input_unit": "kWh",
+      "value": "0.69",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "安徽 Anhui",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C41",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C41",
+      "label": "Purchased heat / steam",
+      "input_unit": "kWh",
+      "value": "0.17",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C45",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C45",
+      "label": "R-410A",
+      "input_unit": "GWP",
+      "value": "2088",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C46",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C46",
+      "label": "R-134a",
+      "input_unit": "GWP",
+      "value": "1430",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C47",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C47",
+      "label": "R-404A",
+      "input_unit": "GWP",
+      "value": "3922",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C48",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C48",
+      "label": "R-32",
+      "input_unit": "GWP",
+      "value": "675",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C49",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C49",
+      "label": "R-407C",
+      "input_unit": "GWP",
+      "value": "1774",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C50",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C50",
+      "label": "R-22 (HCFC)",
+      "input_unit": "GWP",
+      "value": "1810",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C54",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C54",
+      "label": "Petrol car (avg)",
+      "input_unit": "km",
+      "value": "0.17",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C55",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C55",
+      "label": "Diesel car (avg)",
+      "input_unit": "km",
+      "value": "0.171",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C56",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C56",
+      "label": "Petrol van",
+      "input_unit": "km",
+      "value": "0.22",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C57",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C57",
+      "label": "Diesel van",
+      "input_unit": "km",
+      "value": "0.253",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C58",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C58",
+      "label": "Motorbike",
+      "input_unit": "km",
+      "value": "0.114",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C62",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C62",
+      "label": "Electricity",
+      "input_unit": "kWh",
+      "value": "1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "-",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C63",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C63",
+      "label": "Natural gas (kWh)",
+      "input_unit": "kWh",
+      "value": "1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "-",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C64",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C64",
+      "label": "Natural gas (m³)",
+      "input_unit": "m³",
+      "value": "10.55",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C65",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C65",
+      "label": "Diesel",
+      "input_unit": "litre",
+      "value": "10.7",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C66",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C66",
+      "label": "Petrol",
+      "input_unit": "litre",
+      "value": "9.7",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C67",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C67",
+      "label": "LPG",
+      "input_unit": "litre",
+      "value": "7.1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C92",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C92",
+      "label": "Cement clinker",
+      "input_unit": "t",
+      "value": "0.52",
+      "factor_unit": "tCO2e/t",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C93",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C93",
+      "label": "Lime",
+      "input_unit": "t",
+      "value": "0.75",
+      "factor_unit": "tCO2e/t",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    }
+  ]
+}

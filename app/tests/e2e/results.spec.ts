@@ -11,8 +11,8 @@ for (const width of [1440, 390, 320]) {
     const response = await page.goto("/results");
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle("Assessment results | Capstone");
-    await expect(page.getByText("Calculated scores · Example narrative", { exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Download full report" })).toBeDisabled();
+    await expect(page.getByText("Calculated scores · Optional AI recommendations", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Download assessment report" })).toBeDisabled();
     await expect(page.getByRole("heading", { name: "Scores unavailable" })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.evaluate(() => document.fonts.ready);
@@ -31,7 +31,7 @@ test("results support keyboard navigation and reduced motion without a session",
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
-  const evidence = page.getByRole("link", { name: "Evidence status: not connected" }).first();
+  const evidence = page.getByRole("link", { name: "Evidence/Sources" }).first();
   await expect(page.getByRole("navigation", { name: "Results sections" }).getByRole("link", { name: "Summary", exact: true })).toBeFocused();
   await evidence.focus();
   await expect(evidence).toBeFocused();
@@ -110,20 +110,23 @@ for (const width of [1440, 390]) test("real Golden assessment results are access
   const fixture = goldenCases[1]!;
   const p = fixture.profile;
   const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
-  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0], answers, skipped: [],
+  const session = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: fixture.expected_question_ids[0], answers, skipped: [],
     profile: { companyName: "Example business", subindustry: "", industry: p.industry, companySize: p.employee_band.replace("-", " - "), location: p.company_location, targetMarket: p.target_market_region.join(";"), targetBuyer: p.target_buyer, businessGoal: p.business_goal } };
   await page.setViewportSize({ width, height: 1000 });
   await page.addInitScript(value => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(value)), session);
   const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
   await page.goto("/assessment");
-  await page.getByRole("button", { name: "Generate score", exact: true }).click();
-  await page.getByRole("link", { name: "View calculated results" }).click();
+  await page.getByRole("button", { name: "Generate score and recommendations", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
+  const context = page.getByLabel("Assessment context", { exact: true });
+  await expect(context).toContainText(p.industry);
+  await expect(context).toContainText(session.profile.companySize);
+  await expect(context).toContainText(p.business_goal);
   const score = scoreAssessment(config, p, answers);
   await expect(page.locator(".score-values")).toContainText(score.rawOverall!.toFixed(1));
   await expect(page.locator(".score-values")).toContainText(score.weightedOverall!.toFixed(1));
   await expect(page.getByRole("figure", { name: "Calculated category scores" })).toContainText("People100.0");
-  await expect(page.getByText(/Example narrative/).last()).toContainText("Not AI-generated");
+  await expect(page.getByRole("button", { name: /^(Generate|Retry) recommendations$/ })).toBeDisabled();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: testInfo.outputPath("computed-results-" + width + ".png"), fullPage: true });
@@ -132,7 +135,7 @@ for (const width of [1440, 390]) test("real Golden assessment results are access
 });
 test("results reject invalid drafts, show missing categories, and do not replace storage with calculated values", async ({ page }) => {
   const profile = { companyName: "Example", subindustry: "", industry: catalog.industries[0], companySize: "251 - 500", location: "APAC", targetMarket: "EU", targetBuyer: "Enterprise", businessGoal: "Investor readiness" };
-  const state = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
+  const state = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
   await page.goto("/results");
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), state);
   await page.reload(); await expect(page.getByRole("main").getByRole("alert")).toContainText("non-negative decimal");
@@ -144,4 +147,8 @@ test("results reject invalid drafts, show missing categories, and do not replace
   expect(saved.answers).toEqual({ "U-001": "Yes" }); expect(saved).not.toHaveProperty("rawOverall");
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify({ ...s, answers: {} })), state);
   await page.reload(); await expect(page.locator(".score-values")).toHaveText(/Not scored.*Not scored/);
+  await page.evaluate(() => { const key = "capstone.assessment.ui-preview.v1"; const saved = JSON.parse(sessionStorage.getItem(key)!); saved.profile.businessGoal = "Improve sustainability ratings"; sessionStorage.setItem(key, JSON.stringify(saved)); });
+  await page.reload();
+  await expect(page.getByLabel("Assessment context", { exact: true })).toContainText("Improve sustainability ratings");
+  await expect(page.getByLabel("Assessment context", { exact: true })).not.toContainText("Investor readiness");
 });

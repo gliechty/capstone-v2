@@ -1,0 +1,3 @@
+/* Homepage inherits the shared MOSAIC palette; no layout/type overrides. */
+.mosaic-landing { color: var(--text); background: var(--surface); }
+.mosaic-landing a.button-primary:hover { background: var(--accent-hover); }

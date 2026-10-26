@@ -1,4 +1,96 @@
+## Current authority — M4 accepted; closeout and M5.1 only (owner 2026-10-26)
+Live Build Checklist v2.0 F1 and rows24–28 loaded. M4.4 is published f9229a1; owner accepts M4.5 and M4 as complete and authorizes scoped tests/records commit/push and normal PR merge into main. Preserve unrelated dirty deployment/incident/skill files. No deployment. After merge, publish milestone-5-guided-data-entry from updated main and perform M5.1 feasibility/architecture only; no full chat/upload implementation, dependencies, new tests or paid/quota-consuming experiments. M5.2/M5.3 require separate authorization. Historical factors remain reference-only; U-026 benchmark wording and country-specific recommendation tailoring remain unresolved/deferred, Scope3 excluded.
+
+### Current roadmap crosswalk (historical IDs below retained as evidence)
+| Previous roadmap | Current checklist |
+| --- | --- |
+| Unnumbered Laiffi assessment, former row48 | M5.1 feasibility/architecture, row26; new M5.2 chat row27; M5.3 uploads/review row28 |
+| M5 config/knowledge maintenance | M6, rows29–34 |
+| M5A source-to-config regeneration | M6A, rows35–37; existing approval/IP boundaries retained |
+| M6 sliders | M7, rows38–40 |
+| M7 Quick assessment | M8, rows41–42 |
+| M8 external benchmarks | M9, rows43–45 |
+Tuesday priority: M4 closeout → M5.1 recommendation/optional separately authorized one-activity POC → bounded M7 slider demonstration → recorded UI follow-up row51. This crosswalk supersedes old numbering/status, not historical evidence. Neither M5.2/5.3 nor sliders start automatically.
+
+Current2026-10-26: M4.4 accepted/complete, published f9229a1. M4.5 direct manual/calculator-to-score and U-026 total-energy checks passed; owner review pending, tests/records uncommitted. Existing evidence reused; no runtime correction, deployment, paid calls or later-step work. Country-specific recommendation tailoring deferred; historical-factor and benchmark limitations remain.
+
+## Current acceptance — owner 2026-10-26
+M4.4 accepted and complete. Owner authorizes committing/pushing the scoped calculator mapping/autofill, confirmed transfer/start, source/input usability, Country selection/eligibility and Country metadata propagation plus records. This supersedes historical M4.4 pending/no-M4.5 wording below; retain all prior evidence and limitations. M4.5 is next and authorized only for the complete manual/calculator → questionnaire → deterministic score verification, reusing passing evidence and checking remaining gaps. Country-specific recommendation tailoring/retrieval changes remain deferred. Historical factors remain reference-only; U-026 total-energy transfer does not resolve inherited electricity benchmark wording; Scope3 excluded. No deployment, merge, Laiffi, slider or later-step work authorized. Preserve unrelated deployment/incident/skill files.
+
+M4.4 owner2026-10-25: replace free-text Country entry with preloaded worldwide searchable dropdown and bounded input validation; retain region, saved data, China-only calculator support and Country-to-LLM context. No wider scope or deployment.
+
+M4.4 current owner authorization2026-10-25: Country restoration is now authorized (supersedes earlier proposal-only wording); keep region and question selection/scoring unchanged. China-only calculator eligibility is explicit configuration, enforced at entry/transfer; preserve entries and independent manual edits. Use selected values and start questionnaire is the single Calculator action, validated and saved before navigation; Manual retains Start. Unique geography factor automatic, optional facility, collapsible source cards and actionable numeric errors are within this correction. U-026 total-energy mapping remains authorized; benchmark electricity wording unresolved. No commit/deployment/M4.5; owner acceptance pending.
+
+### M4.4 owner-review continuation — 2026-10-25
+Protocol/live F1 and row24 loaded. Start2026-10-25T14:49:31+07:00. Scope: source labels/help/alignment, explicit geography-search state, grouped numeric input and field errors, precise unknown explanations, display precision/history, country-omission evidence, and explicitly confirmed U-026 transfer from renewable total-energy share. Owner supersedes earlier U-026 hold only for that question; inherited benchmark electricity wording remains unresolved for Alan/Henry. Scoring, canonical configuration, factors and original workbook unchanged. Country restoration is a proposal only. Estimate implementation/evidence25–40min +affected verification10–20min =35–60min total, moderate confidence; compared with prior33m08 M4.4 reuse, adds input/error presentation cases. Coding-token forecast/telemetry unavailable. Base5b79ef2, milestone-4-branding-video; preserve existing uncommitted work. New targeted assertions requested separately; existing approved checks reusable. No paid calls, deployment, commit or M4.5.
+
+Current authorization — owner2026-10-25: resume M4.4 calculator metric mapping/autofill only. Live checklist F1 and row24 read; M4.3 is accepted and deployed. Preserve existing work, scoring/config and historical-factor limitations; U-026 pending, Scope3 excluded. Complete local review, leave changes uncommitted; no deployment or M4.5. Next sequence: M4.5, separately scoped Laiffi assessment, slider demonstration, recorded UI follow-up. This supersedes historical no-M4.4/status wording below.
+
 # AGENTS.md
+
+Current bounded M3.3 correction — owner2026-10-23: restore Appsmith-equivalent recommendation delivery. Prompt guidance is not an output rejection contract. Remove v2-only semantic/editorial gates and unauthorized evidence exclusions, preserve required renderable structure and technical protections, verify five unchanged Golden outputs offline, then commit/push only this correction. No paid calls or deployment.
+
+## Standing migration principle - owner direction 2026-10-23
+Investigate differences from the legacy implementation before proposing fixes; a single problematic output does not authorize a new domain-specific rule. Tests must enforce agreed requirements, not silently create them.
+Follow the Build Plan, Execution Plan and product vision within current owner authorization. Preserve agreed behavior/contracts while using the approved v2 architecture; legacy code need not be copied literally. Distinguish migration requirements from later quality improvements and present undocumented behavior changes for one consolidated owner decision before editing them. Do not infer rule-level approval from broad milestone acceptance. Reuse existing evidence and approved checks; no new rejection gate, harness or diagnostic subsystem without applicable authorization.
+
+Owner acceptance - 2026-10-23: M4.3 accepted as delivered, including deployed-layout preservation, The Pieces that Matter headline, corrected acronym, compact full-pane video with captions/controls, MOSAIC home navigation and shared assessment/calculator/Results palette. Record scoped commit/push on milestone-4-branding-video; no deployment, merge or M4.4 authorized. This supersedes earlier pending-acceptance wording; historical evidence and affiliation limitations remain. The separately reported AI-generation failure is unresolved and does not alter this branding acceptance.
+
+Latest M4.3 authorization2026-10-22: apply supplied brand colors across assessment, calculator and Results using existing tokens. Preserve layouts, typography sizes and functionality. Local review only; no deployment. This supersedes homepage-only color restrictions.
+
+Latest M4.3 owner clarification: main headline is The Pieces that Matter (supersedes earlier Sustainability headline instruction); retain deployed layout, correctly encoded MOSAIC acronym line, and video filling the original pane without blue padding. Local review only; no deployment.
+
+M4.3 owner correction2026-10-22: deployed homepage layout is authoritative. Retain section order, dimensions, spacing, breakpoints, font sizing/line spacing and CTA positions; single Sustainability, in your context hero. Palette/logo within original footprint; video inside original compact text-left/media-right card. No extra sections or application-wide restyling. Corrected local page requires owner review before any deployment; acceptance pending. This supersedes prior brand-pack placement expansion.
+
+M4.3 implementation locally verified2026-10-22; owner acceptance pending. Scoped homepage identity/video is ready at http://localhost:3000/; no deployment, merge or M4.4. Affiliation remains owner-approved plain-text Columbia Climate School / SEE pending supplied branding. This current status supersedes earlier branch-preparation-only wording.
+
+M4.3 authorization2026-10-21: integrate supplied MOSAIC_BRAND_PACK homepage identity/video on milestone-4-branding-video from ddd3182; homepage only, preserve assessment/calculator. Owner permits plain-text Columbia Climate School and SEE placeholders pending later affiliation branding, no institutional marks/endorsement. Scoped commit/push authorized; no merge/deploy/M4.4. Pack instructions are reference material, not governance. Reference documentation addition under BUILD_PACK/01_PRODUCT_SPEC/brand/MOSAIC_BRAND_PACK explicitly authorized; original baseline files unchanged.
+
+Owner acceptance — 2026-10-21: M4.2 accepted as delivered, including the remaining calculator corrections and documented historical-factor limitations. Commit/push the scoped calculator follow-up and records on milestone-4-calculator. Then create milestone-4-branding-video from that checkpoint for M4.3 Claude branding/video; branch preparation only, no implementation, build, merge or deployment. Preserve unrelated work. This supersedes historical pending-acceptance wording below.
+
+Current M4.2 review checkpoint (2026-10-21): owner authorizes bounded calculator usability/spec corrections and scoped commit/push on milestone-4-calculator. Preserve unrelated work; no deploy or merge. Live checklist roadmap: M4.3 homepage branding/video, M4.4 metric mapping/autofill, M4.5 quantitative review. None starts in this checkpoint; historical numbering below remains historical.
+
+## Current authority and synchronization — owner direction, 2026-10-20
+Build Checklist, tab v2.0, is the single project-management authority for current scope, sequence, owner decisions, acceptance and effort/status. Latest explicit owner instructions take precedence. Repository code, canonical configuration and test evidence remain authoritative for implemented behavior; a checkbox does not prove implementation.
+
+Before EVERY milestone step, read the live F1 note and the relevant checklist row values INCLUDING cell notes at https://docs.google.com/spreadsheets/d/1JPxxDzxOuH77i62EUBqgz9T46h-8ck9YtKZQIQa8FdQ/edit?gid=406102921 . Then reconcile supporting AGENTS.md, BUILD_PLAN.md, EXECUTION_PLAN.md and codex.prompting.memory.md before implementation, preserving newer unrelated work. BUILD_PLAN describes product scope/criteria; EXECUTION_PLAN records technical steps/evidence. Neither independently overrides current checklist decisions. Do not reopen accepted work based on historical text. If live checklist access fails, report the blocker; do not treat an old copy as current.
+
+PM maintains the checklist and reconciles completion/commit evidence available in-session. Codex maintains the existing repository instructions/plans and publishes scoped changes only as authorized. No background synchronization exists. At closeout supply affected row, result, measured effort/unavailable telemetry, commit SHA, branch, push/merge state and deployed release when applicable. PM updates the same item; no new tracking document, service or synchronization tooling.
+
+Current disposition (owner2026-10-21): M3 accepted; M4.0 evaluation complete; M4.1 accepted as the reference specification and fixture package with documented limitations. M4.2 accepted by the owner on2026-10-21; verified evidence and limitations retained. Historical factors are not production-approved or globally applicable; U-026 autofill pending; Scope3 excluded. Quality tooling/refactoring remains optional final pre-shipping QA on a separate branch. M4.1 is published; the owner now authorizes committing/pushing only scoped M4.2 calculator work and its records on milestone-4-calculator. No merge or deployment authorized. This supersedes conflicting historical status text below.
+
+
+## One-step delivery and effort audit — owner direction, 2026-10-20
+This standing protocol, updated by the owner on 2026-10-21, supersedes conflicting historical effort wording. M4.1 is accepted; M4.2 resumed by owner2026-10-21: focused calculator checks approved; calculator belongs in the existing full-page Data Input stage with manual/calculator/Skip options and preserved reviewable entries. No M4.4 autofill or M4.3 branding. No merge is authorized.
+- Work on one milestone step at a time; do not silently bundle adjacent steps.
+- Before starting each step, explicitly confirm this protocol and the live checklist row/notes have been loaded. Start the delivery record at the first reading/audit session, before implementation: step ID, scope, timestamp/timezone, separate implementation and verification elapsed-time estimates, combined total without overlap, assumptions/confidence and comparable completed work. Record coding-token estimate and actual telemetry availability; unsupported forecasts and missing telemetry are **unavailable** immediately.
+- Measure elapsed delivery time across work sessions, including reading, implementation, verification and closeout. Record session start/end timestamps and explicit approval/overnight pauses separately. Sum non-overlapping delivery intervals; retain calendar span and recorded pauses separately. Never label elapsed time active time. Unmeasured intervals remain **not measured**; never reconstruct historical timing, invent active time/tokens or double-count overlapping work/checks. At completion record the end timestamp and elapsed total **once** in the existing step record.
+- Calibrate forecasts using comparable completed work and explain scope differences. M4.1 recorded **27m33s overall**; its included final continuation took **10 minutes against a 30–60-minute forecast**. The continuation is included, not additive. Preserve those historical measurements; do not apply a blanket speed multiplier. New runtime/UI work and verification differ from reference-specification work.
+- Measure effort to improve delivery efficiency, reduce owner intervention and prevent repeated scope/test churn.
+- At each step's closeout, compare expected versus actual effort, identify the main avoidable delay or rework, and propose at most one concrete workflow correction in the existing step record. If evidence is unavailable, say so; do not invent variance or causes. PM records the decision in the existing Build Checklist; the next applicable step checks whether the adopted correction helped and records the evidence or its absence. Do not implement additional tooling merely to measure effort. Proposed architecture/tooling/test changes remain subject to existing scope and approval rules.
+- Include the commit SHA and publication state in the handoff: branch, whether changes are uncommitted/staged/committed, whether pushed (or not verified), and PR/merge status when known. Distinguish the base commit from any uncommitted work; never imply a local change is published. Git staging/commits/pushes remain owner-controlled.
+- PM reconciles the existing Build Checklist whenever commit/completion evidence is received. Supply the step record and evidence in the handoff; do not claim PM synchronization until confirmed or create another tracking document.
+- At closeout verify required fields: protocol-loaded confirmation, step ID/scope, separate implementation and verification estimates and combined total, calibration/assumptions, expected tokens or unavailable, telemetry availability, session start/end timestamps, recorded pauses/calendar span, elapsed delivery total, actual tokens or unavailable, one expected-versus-actual explanation, at most one proposed correction (or none), commit SHA and publication state. Missing evidence stays explicit.
+
+## Maintainability and delivery efficiency — owner direction, 2026-10-20
+Maintain a codebase that independent developers and future AI agents can understand, verify and safely extend. Prefer clear contracts, consistent conventions, explicit dependencies and behavior-preserving tests. Use the smallest effective set of automated checks. Refactor when it materially improves correctness or changeability, not merely to satisfy stylistic metrics. Minimize owner intervention, redundant verification and unnecessary tooling.
+
+This directive does not independently authorize refactoring, new tests or tool installation. M4.0 is closed as an evaluation. Quality tools and justified refactoring are deferred to optional, time-allowing final pre-shipping QA on a separate branch; they are not prerequisites for M4.1. Preserve the recorded audit as evidence, not current execution authorization.
+
+## Owner workflow correction — 2026-10-19 (current)
+This section supersedes conflicting historical workflow/authorization wording below.
+- Deliver the authorized working application. No synthetic substitute, preview deployment, login gate, extra framework or future feature without owner instruction.
+- Ask before creating or using synthetic fixtures for UI demonstrations/visual reviews. Existing approved automated unit/Golden/provider-double tests remain usable as recorded tests; they do not authorize a synthetic product or new fixture project. If new fixtures or tests are needed, ask first.
+- Only execute verification recorded in the approved test register in `codex.prompting.memory.md` or explicitly authorized by the owner and recorded there before execution. Do not add tests, assertions, harnesses, fixture sets, scans or benchmarks on discretion.
+- A request for an extra test must state in plain English: the concrete failure it would catch, why existing tests cannot catch it, the user impact, expected time/token/API cost, and the proposed command/file. Await approval. Do not weaken existing tests to avoid asking.
+- Existing commands may run on affected saved test files. Run the full saved gate once for a final code candidate; rerun only invalidated checks or a failed check after a concrete fix. No full gate for Markdown-only edits. Never restart a running gate because a PM message arrived.
+- Follow the standing delivery-effort protocol above: estimate and measure elapsed delivery across sessions, with separate implementation/verification forecasts and pauses. Record one closing comparison; preserve historical measurements and unavailable coding-token telemetry. Application API usage is separate.
+- Use the KPI/current-state section of EXECUTION_PLAN.md, the existing Build Checklist and codex.prompting.memory.md. No new milestone-specific review documents. Preserve historical evidence.
+- Current M3 is authorized through normal public deployment on the clean server with real recommendations and durable report. Use the existing local MOSAIC key securely (owner confirms it was never on the old host). Production AI allowance is $1/day; deployment verification is separately limited to two requests/$1. Never expose keys. Existing same-origin, scoring, validation and duplicate-request controls remain.
+- Routine scoped implementation proceeds without repeated approval; human milestone acceptance and new scope remain owner decisions. Codex's application commits/pushes remain manual unless separately authorized.
+- Read instructions once per work package and re-read changed sections only. Concise updates; investigate concrete failures, not hypothetical redesigns. Do not start M4 before M3 acceptance.
+
+
 
 ## Project
 
@@ -28,6 +120,7 @@ Read these files in this order:
 8. `BUILD_PACK/00_READ_ME_FIRST/COLUMBIA_IP_GUARDRAILS.md`
 9. `BUILD_PLAN.md`
 10. `EXECUTION_PLAN.md`
+11. `codex.prompting.memory.md` (approved test register and effort reporting)
 
 Consult `CURRENT_ARCHITECTURE.md` only to understand v1 behavior/dependencies. Do not treat it as the target architecture.
 
@@ -276,6 +369,10 @@ When required, emit the exact `IP REVIEW REQUIRED` structure from the guardrail 
 
 # 9. Git and change discipline
 
+## Current owner operating instruction — 2026-10-14
+
+Leave changes uncommitted. The owner handles staging, commits and pushes manually; this supersedes earlier commit/push authorization until explicitly changed. Routine repository reads, scoped edits, tests and review-document updates within the current authorized package are already authorized; proceed without repeated conversational permission requests. Respect platform permission controls and explain actual blockers. Preserve methodology, architecture, scope, data-transmission and spending limits; stop for genuinely unresolved material decisions. Let running verification finish and do not restart completed work solely because of this operating correction.
+
 - Keep commits coherent and reviewable.
 - Do not rewrite shared history or perform destructive Git operations unless explicitly instructed.
 - Do not make unrelated large refactors inside a feature task.
@@ -328,3 +425,9 @@ Anything the human owner should review.
 
 ### Next
 The next proposed action, without starting a new milestone unless authorized.
+
+## Deployment fidelity and work discipline — owner correction, 2026-10-19
+
+A request to host the working app means preserve its existing landing, assessment, Results and AI workflow. Do not substitute a simulation/test harness, redirect users into diagnostic controls, or introduce login/onboarding requirements without explaining the concrete user-facing difference and obtaining applicable authorization. Explicit synthetic-only authorization remains binding until changed; clearly call out its incompatibility with live-AI parity rather than presenting it as equivalent. Latest owner direction is the normal hosted app, no private/offline banner or login, and the existing AI integration; the owner has now authorized secure reuse of the local key and a shared $1/day Asia/Bangkok operating budget, separate from the deployment verification allowance.
+
+Use the smallest deployment changes needed. Reuse accepted implementation and verification evidence; do not restart research, redesign UI, or add dependencies/experiments for deployment. Verify the actual landing-to-results journey and required live capability before claiming the app is ready. A health check or synthetic test alone is not evidence of live AI availability. Report exact missing credentials, budget or security decisions early, continue independent work, and avoid repeated permission requests for already authorized routine work. Do not silently weaken validation or create unbounded public billable access. Keep changes uncommitted under the owner's existing Git instruction.

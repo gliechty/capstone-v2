@@ -1,0 +1,188 @@
+{
+  "$comment": "MOSAIC approved copy v1 (2026-10-21). status: approved = owner-confirmed; proposed = this pack's suggestion, owner may edit; open = must be confirmed before public launch (see OPEN_ITEMS.md).",
+  "identity": {
+    "name": {
+      "text": "MOSAIC",
+      "status": "approved"
+    },
+    "expansion": {
+      "text": "Multi-Organizational Synthesis for Adaptive Indicator Context",
+      "status": "approved",
+      "rule": "Live text, not an image: hero eyebrow, first line of the method section, footer. See PLACEMENT.md section 1."
+    },
+    "subtitle": {
+      "text": "Context-weighted sustainability assessment synthesized from standards and frameworks.",
+      "status": "approved"
+    },
+    "short_form": {
+      "text": "MOSAIC · context-weighted sustainability assessment",
+      "status": "approved"
+    },
+    "method_name": {
+      "text": "Atomic Indicator Synthesis",
+      "status": "approved"
+    },
+    "purpose": {
+      "text": "Making sustainability standards usable for enterprises without dedicated sustainability teams.",
+      "status": "approved"
+    },
+    "scope_statement": {
+      "text": "MOSAIC complements, and does not replace, formal due diligence or assurance.",
+      "status": "approved",
+      "rule": "Required wherever results appear."
+    },
+    "credit_line": {
+      "text": "Developed by students in Columbia University’s M.S. in Sustainability Management.",
+      "status": "approved"
+    },
+    "affiliation_line": {
+      "text": "[Affiliation wording to be confirmed]",
+      "status": "open",
+      "rule": "Plain text only, no University logo or colours. Do not ship publicly until confirmed."
+    },
+    "self_reported_label": {
+      "text": "Self-reported. Not a certification.",
+      "status": "approved"
+    },
+    "tagline": {
+      "text": "The pieces that matter. A clearer way forward.",
+      "status": "approved",
+      "rule": "The site tagline (owner, 2026-10-21). Landing hero H1, set as two lines, and once more as the closing band. Not in the header. Short form 'The pieces that matter.' may stand alone where space is tight."
+    }
+  },
+  "labels": {
+    "primary_cta": {
+      "text": "Take the Assessment",
+      "status": "approved"
+    },
+    "start_questionnaire": {
+      "text": "Start questionnaire",
+      "status": "approved"
+    },
+    "download_report": {
+      "text": "Download full report",
+      "status": "approved"
+    },
+    "start_here_tag": {
+      "text": "Start here",
+      "status": "approved"
+    },
+    "benchmark_label": {
+      "text": "Industry benchmark",
+      "status": "approved"
+    },
+    "proposed_feature_tag": {
+      "text": "Proposed",
+      "status": "approved",
+      "rule": "For re-running the method on a new document collection."
+    },
+    "planned_feature_tag": {
+      "text": "Planned feature, illustrative values",
+      "status": "approved",
+      "rule": "For what-if levers."
+    }
+  },
+  "landing_replacements": {
+    "$comment": "Keys match app/src/content/landing.ts. Only keys that change are listed; keep every other string as it is. Swap these in the content file, not in layout code.",
+    "metadata.title": {
+      "from": "Capstone | Sustainability in context",
+      "to": "MOSAIC · context-weighted sustainability assessment",
+      "status": "proposed"
+    },
+    "metadata.description": {
+      "from": "A Columbia Climate School capstone for SEE Foundation, exploring SME sustainability and procurement readiness.",
+      "to": "Context-weighted sustainability assessment synthesized from standards and frameworks. A research project for small and medium enterprises.",
+      "status": "proposed",
+      "note": "Institutional wording removed until the affiliation line is confirmed."
+    },
+    "navigation.homeLabel": {
+      "from": "Capstone home",
+      "to": "MOSAIC home",
+      "status": "proposed"
+    },
+    "navigation.brand": {
+      "from": "Capstone",
+      "to": "MOSAIC",
+      "status": "proposed",
+      "note": "Render the lockup or wordmark SVG here; keep this string as its accessible name."
+    },
+    "navigation.tagline": {
+      "from": "/ SME sustainability",
+      "to": "",
+      "status": "proposed",
+      "note": "The lockup already carries the expansion. Drop the separate tagline."
+    },
+    "hero.attribution": {
+      "from": "Columbia Climate School · SEE Foundation",
+      "to": "MOSAIC · Multi-Organizational Synthesis for Adaptive Indicator Context",
+      "status": "proposed",
+      "note": "This slot becomes the hero eyebrow carrying the expansion. The affiliation moves to the footer (footer.attribution), still pending confirmation."
+    },
+    "hero.headingFirstLine": {
+      "from": "Sustainability,",
+      "to": "The pieces that matter.",
+      "status": "approved"
+    },
+    "hero.headingSecondLine": {
+      "from": "in your context.",
+      "to": "A clearer way forward.",
+      "status": "approved"
+    },
+    "hero.subtitle": {
+      "from": null,
+      "to": "Context-weighted sustainability assessment synthesized from standards and frameworks.",
+      "status": "proposed",
+      "note": "New key, rendered in serif italic between the H1 and hero.description."
+    },
+    "approach.description": {
+      "from": "The Capstone approach considers sustainability in relation to industry, market, buyer, and business goal. It is designed to support procurement readiness, rather than define one universal sustainability score.",
+      "to": "MOSAIC considers sustainability in relation to industry, market, buyer, and business goal. It is designed to support procurement readiness, rather than define one universal sustainability score.",
+      "status": "proposed"
+    },
+    "approach.thirdBody": {
+      "from": "The intended assessment pairs transparent results with source-grounded guidance on what to improve.",
+      "to": "The assessment pairs traceable results with guidance on what to improve, each point citing its source.",
+      "status": "proposed"
+    },
+    "research.methodBody": {
+      "from": "The Capstone baseline preserves questions, answer scales, benchmarks, contextual weighting, and source documents. The planned assessment keeps deterministic calculations separate from AI-generated recommendations. Weights represent expected relevance, not calibrated statistical probabilities.",
+      "to": "MOSAIC keeps its questions, answer scales, benchmarks, contextual weighting, and source documents as explicit, versioned configuration. Scores follow fixed rules and are kept separate from the AI-written recommendations. Weights represent expected relevance, not calibrated statistical probabilities.",
+      "status": "proposed",
+      "note": "Says 'fixed rules' instead of 'deterministic'. Leave the verification and limitations text to the owner; it reflects build status."
+    },
+    "footer.tagline": {
+      "from": "· SME sustainability in context",
+      "to": "· context-weighted sustainability assessment",
+      "status": "proposed"
+    },
+    "footer.attribution": {
+      "from": "Columbia Climate School / SEE Foundation · Research preview",
+      "to": "[Affiliation wording to be confirmed] · Research preview",
+      "status": "open"
+    },
+    "footer.credit": {
+      "from": null,
+      "to": "Developed by students in Columbia University’s M.S. in Sustainability Management.",
+      "status": "proposed",
+      "note": "New key. Add to the footer as plain text."
+    },
+    "footer.scope": {
+      "from": null,
+      "to": "MOSAIC complements, and does not replace, formal due diligence or assurance.",
+      "status": "proposed",
+      "note": "New key."
+    },
+    "closing.heading": {
+      "from": null,
+      "to": "The pieces that matter. A clearer way forward.",
+      "status": "proposed",
+      "note": "New closing band before the footer, with the primary CTA."
+    },
+    "footer.expansion": {
+      "from": null,
+      "to": "Multi-Organizational Synthesis for Adaptive Indicator Context",
+      "status": "proposed",
+      "note": "New key, first line under the footer wordmark."
+    }
+  }
+}

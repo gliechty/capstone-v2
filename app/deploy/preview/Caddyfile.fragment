@@ -1,0 +1,20 @@
+# PROPOSED only: preserve existing global settings and all current site blocks.
+# Caddy >=2.8; validate the actual installed version before applying.
+preview.flowagentai.website {
+    basic_auth {
+        import /etc/caddy/capstone-preview-users
+    }
+    header {
+        X-Robots-Tag "noindex, nofollow, noarchive"
+        Cache-Control "no-store"
+        Referrer-Policy "no-referrer"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+    }
+    request_body {
+        max_size 400KB
+    }
+    reverse_proxy 127.0.0.1:3201 {
+        header_up -Authorization
+    }
+}

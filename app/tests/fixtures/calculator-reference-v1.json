@@ -1,0 +1,2289 @@
+{
+  "schema_version": 1,
+  "method_version": "m4.1-reconciled-reference-v1",
+  "purpose": "Offline numerical specification fixtures; not runtime configuration, provider content or a production-approved factor library.",
+  "source": {
+    "path": "BUILD_PACK/10_RESEARCH/alan_henry/raw/SME_ESG_Calculator_China_Advanced.xlsx",
+    "sha256": "c9457d72bced186be7994b805bd2312673b7c345797166ec60bac688061e9dee",
+    "owner_confirmed": true,
+    "reporting_year_default": 2025,
+    "reporting_year_cell": "1·Company!B5",
+    "reporting_currency_default": "CNY (RMB)",
+    "factor_year_not_inferred_from_reporting_year": true
+  },
+  "factor_library_version": "china-advanced-workbook-c9457d72bced",
+  "factors": [
+    {
+      "id": "legacy-C6",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C6",
+      "label": "Natural gas (kWh)",
+      "input_unit": "kWh",
+      "value": "0.184",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C7",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C7",
+      "label": "Diesel",
+      "input_unit": "litre",
+      "value": "2.68",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C8",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C8",
+      "label": "Petrol",
+      "input_unit": "litre",
+      "value": "2.31",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C9",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C9",
+      "label": "LPG",
+      "input_unit": "litre",
+      "value": "1.56",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C13",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C13",
+      "label": "kWh",
+      "input_unit": "kWh",
+      "value": "0.184",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C14",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C14",
+      "label": "m³ (cubic metre)",
+      "input_unit": "m³",
+      "value": "2.02",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C15",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C15",
+      "label": "therm",
+      "input_unit": "therm",
+      "value": "5.29",
+      "factor_unit": "kgCO2e/input_unit",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C19",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C19",
+      "label": "全国平均 National avg",
+      "input_unit": "kWh",
+      "value": "0.5703",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE",
+      "geography": "China national",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C20",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C20",
+      "label": "北京 Beijing",
+      "input_unit": "kWh",
+      "value": "0.6",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "北京 Beijing",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C21",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C21",
+      "label": "上海 Shanghai",
+      "input_unit": "kWh",
+      "value": "0.42",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "上海 Shanghai",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C22",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C22",
+      "label": "广东 Guangdong",
+      "input_unit": "kWh",
+      "value": "0.47",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "广东 Guangdong",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C23",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C23",
+      "label": "江苏 Jiangsu",
+      "input_unit": "kWh",
+      "value": "0.64",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "江苏 Jiangsu",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C24",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C24",
+      "label": "浙江 Zhejiang",
+      "input_unit": "kWh",
+      "value": "0.52",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "浙江 Zhejiang",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C25",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C25",
+      "label": "山东 Shandong",
+      "input_unit": "kWh",
+      "value": "0.66",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "山东 Shandong",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C26",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C26",
+      "label": "河北 Hebei",
+      "input_unit": "kWh",
+      "value": "0.73",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "河北 Hebei",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C27",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C27",
+      "label": "山西 Shanxi",
+      "input_unit": "kWh",
+      "value": "0.79",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "山西 Shanxi",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C28",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C28",
+      "label": "内蒙古 Inner Mongolia",
+      "input_unit": "kWh",
+      "value": "0.75",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "内蒙古 Inner Mongolia",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C29",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C29",
+      "label": "四川 Sichuan",
+      "input_unit": "kWh",
+      "value": "0.14",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "四川 Sichuan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C30",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C30",
+      "label": "云南 Yunnan",
+      "input_unit": "kWh",
+      "value": "0.11",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "云南 Yunnan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C31",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C31",
+      "label": "河南 Henan",
+      "input_unit": "kWh",
+      "value": "0.61",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "河南 Henan",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C32",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C32",
+      "label": "湖北 Hubei",
+      "input_unit": "kWh",
+      "value": "0.36",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "湖北 Hubei",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C33",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C33",
+      "label": "福建 Fujian",
+      "input_unit": "kWh",
+      "value": "0.41",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "福建 Fujian",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C34",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C34",
+      "label": "陕西 Shaanxi",
+      "input_unit": "kWh",
+      "value": "0.66",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "陕西 Shaanxi",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C35",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C35",
+      "label": "辽宁 Liaoning",
+      "input_unit": "kWh",
+      "value": "0.62",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "辽宁 Liaoning",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C36",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C36",
+      "label": "安徽 Anhui",
+      "input_unit": "kWh",
+      "value": "0.69",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE~",
+      "geography": "安徽 Anhui",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C37",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C37",
+      "label": "Global average",
+      "input_unit": "kWh",
+      "value": "0.5703",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "MEE national (fallback)",
+      "geography": "China national fallback (mislabelled Global average)",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "mislabelled_global_fallback",
+        "automatic_selection_forbidden"
+      ]
+    },
+    {
+      "id": "legacy-C41",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C41",
+      "label": "Purchased heat / steam",
+      "input_unit": "kWh",
+      "value": "0.17",
+      "factor_unit": "kgCO2e/kWh",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C45",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C45",
+      "label": "R-410A",
+      "input_unit": "GWP",
+      "value": "2088",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C46",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C46",
+      "label": "R-134a",
+      "input_unit": "GWP",
+      "value": "1430",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C47",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C47",
+      "label": "R-404A",
+      "input_unit": "GWP",
+      "value": "3922",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C48",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C48",
+      "label": "R-32",
+      "input_unit": "GWP",
+      "value": "675",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C49",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C49",
+      "label": "R-407C",
+      "input_unit": "GWP",
+      "value": "1774",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C50",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C50",
+      "label": "R-22 (HCFC)",
+      "input_unit": "GWP",
+      "value": "1810",
+      "factor_unit": "kgCO2e/kg",
+      "source_label": "AR5",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C54",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C54",
+      "label": "Petrol car (avg)",
+      "input_unit": "km",
+      "value": "0.17",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C55",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C55",
+      "label": "Diesel car (avg)",
+      "input_unit": "km",
+      "value": "0.171",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C56",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C56",
+      "label": "Petrol van",
+      "input_unit": "km",
+      "value": "0.22",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C57",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C57",
+      "label": "Diesel van",
+      "input_unit": "km",
+      "value": "0.253",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C58",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C58",
+      "label": "Motorbike",
+      "input_unit": "km",
+      "value": "0.114",
+      "factor_unit": "kgCO2e/km",
+      "source_label": "DEFRA",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C62",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C62",
+      "label": "Electricity",
+      "input_unit": "kWh",
+      "value": "1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "-",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C63",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C63",
+      "label": "Natural gas (kWh)",
+      "input_unit": "kWh",
+      "value": "1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "-",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C64",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C64",
+      "label": "Natural gas (m³)",
+      "input_unit": "m³",
+      "value": "10.55",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C65",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C65",
+      "label": "Diesel",
+      "input_unit": "litre",
+      "value": "10.7",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C66",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C66",
+      "label": "Petrol",
+      "input_unit": "litre",
+      "value": "9.7",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C67",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C67",
+      "label": "LPG",
+      "input_unit": "litre",
+      "value": "7.1",
+      "factor_unit": "kWh/input_unit",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C71",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C71",
+      "label": "1100L general bin",
+      "input_unit": "lift",
+      "value": "110",
+      "factor_unit": "kg/lift",
+      "source_label": "approx",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C72",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C72",
+      "label": "240L general bin",
+      "input_unit": "lift",
+      "value": "30",
+      "factor_unit": "kg/lift",
+      "source_label": "approx",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C73",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C73",
+      "label": "1100L recycling bin",
+      "input_unit": "lift",
+      "value": "45",
+      "factor_unit": "kg/lift",
+      "source_label": "approx",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C74",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C74",
+      "label": "240L food/organic bin",
+      "input_unit": "lift",
+      "value": "80",
+      "factor_unit": "kg/lift",
+      "source_label": "approx",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "approximate"
+      ]
+    },
+    {
+      "id": "legacy-C78",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C78",
+      "label": "Electricity price",
+      "input_unit": "kWh",
+      "value": "0.15",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C79",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C79",
+      "label": "Natural gas price",
+      "input_unit": "kWh",
+      "value": "0.07",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C80",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C80",
+      "label": "Diesel price",
+      "input_unit": "litre",
+      "value": "1.5",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C81",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C81",
+      "label": "Petrol price",
+      "input_unit": "litre",
+      "value": "1.4",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C82",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C82",
+      "label": "Heat price",
+      "input_unit": "kWh",
+      "value": "0.08",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C83",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C83",
+      "label": "Water price",
+      "input_unit": "m³",
+      "value": "2",
+      "factor_unit": "unspecified_currency/input_unit",
+      "source_label": "edit",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "price_currency_and_date_unspecified"
+      ]
+    },
+    {
+      "id": "legacy-C92",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C92",
+      "label": "Cement clinker",
+      "input_unit": "t",
+      "value": "0.52",
+      "factor_unit": "tCO2e/t",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    },
+    {
+      "id": "legacy-C93",
+      "version": "china-advanced-workbook-c9457d72bced",
+      "cell": "Factors!C93",
+      "label": "Lime",
+      "input_unit": "t",
+      "value": "0.75",
+      "factor_unit": "tCO2e/t",
+      "source_label": "IPCC",
+      "geography": "not specified in workbook",
+      "validity_year": null,
+      "source_url": null,
+      "production_approved": false,
+      "limitations": [
+        "source_edition_or_year_unverified"
+      ]
+    }
+  ],
+  "oracle": {
+    "kind": "independent decimal arithmetic against explicitly cited workbook operands and owner-approved corrections",
+    "excel_recalculated": false,
+    "engine_implemented": false,
+    "decimal_values": "Strings preserve authored decimal inputs and exact expected arithmetic; null means unavailable, never zero.",
+    "comparison": "IDs, units, states and flags exact. Numeric engine comparisons, when implemented, use existing NUMERIC-POLICY binary64 tolerance; no intermediate rounding."
+  },
+  "default_context": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "application": "synthetic regression data only",
+    "production_autofill": false
+  },
+  "cases": [
+    {
+      "id": "electricity-only",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "factor_ids": [
+          "legacy-C19"
+        ],
+        "geography": "China national explicitly selected",
+        "reporting_year": 2025,
+        "coverage": "one site; all applicable Scope1 sources explicitly zero; Scope2 electricity only; complete"
+      },
+      "factor_ids": [
+        "legacy-C19"
+      ],
+      "intermediates": [
+        {
+          "name": "electricity_kg",
+          "expression": "10000 * 0.5703",
+          "expected": "5703",
+          "unit": "kgCO2e"
+        },
+        {
+          "name": "scope2",
+          "expression": "5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "scope1": {
+            "value": "0",
+            "unit": "tCO2e"
+          },
+          "scope2_location_based": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "energy": {
+            "value": "10000",
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "3·Scope 2!F5",
+        "Factors!C19"
+      ],
+      "notes": [
+        "Uses preserved factor for arithmetic, not a claim of valid 2025 national accounting."
+      ]
+    },
+    {
+      "id": "electricity-and-stationary-gas",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "gas_kwh": "10000",
+        "revenue_usd": "100000",
+        "period": "2025-01-01/2025-12-31",
+        "coverage": "complete for one site, only electricity and gas applicable",
+        "factor_ids": [
+          "legacy-C19",
+          "legacy-C13",
+          "legacy-C63"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C13",
+        "legacy-C19",
+        "legacy-C63"
+      ],
+      "intermediates": [
+        {
+          "name": "gas_kg",
+          "expression": "10000 * 0.184",
+          "expected": "1840",
+          "unit": "kgCO2e"
+        },
+        {
+          "name": "scope1",
+          "expression": "1840 / 1000",
+          "expected": "1.84",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope2",
+          "expression": "10000 * 0.5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "combined",
+          "expression": "1.84 + 5.703",
+          "expected": "7.543",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "energy",
+          "expression": "10000 + 10000 * 1",
+          "expected": "20000",
+          "unit": "kWh"
+        },
+        {
+          "name": "carbon_intensity",
+          "expression": "7.543 / 100000",
+          "expected": "0.00007543",
+          "unit": "tCO2e/USD"
+        },
+        {
+          "name": "energy_intensity",
+          "expression": "20000 / 100000",
+          "expected": "0.2",
+          "unit": "kWh/USD"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "scope1": {
+            "value": "1.84",
+            "unit": "tCO2e"
+          },
+          "scope2_location_based": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": "7.543",
+            "unit": "tCO2e"
+          },
+          "energy": {
+            "value": "20000",
+            "unit": "kWh"
+          },
+          "carbon_intensity": {
+            "value": "0.00007543",
+            "unit": "tCO2e/USD"
+          },
+          "energy_intensity": {
+            "value": "0.2",
+            "unit": "kWh/USD"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F5",
+        "3·Scope 2!F5",
+        "4·Energy!E7",
+        "17·中国ESG总览 Summary!B8"
+      ],
+      "notes": []
+    },
+    {
+      "id": "vehicle-fuel-factor-correction",
+      "inputs": {
+        "diesel_litres": "100",
+        "petrol_litres": "100",
+        "coverage": "distinct vehicle groups, no mileage entered for same sources",
+        "factor_ids": [
+          "legacy-C7",
+          "legacy-C8",
+          "legacy-C65",
+          "legacy-C66"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C65",
+        "legacy-C66",
+        "legacy-C7",
+        "legacy-C8"
+      ],
+      "intermediates": [
+        {
+          "name": "diesel_emissions",
+          "expression": "100 * 2.68 / 1000",
+          "expected": "0.268",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "petrol_emissions",
+          "expression": "100 * 2.31 / 1000",
+          "expected": "0.231",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope1_subtotal",
+          "expression": "0.268 + 0.231",
+          "expected": "0.499",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "fuel_energy",
+          "expression": "100 * 10.7 + 100 * 9.7",
+          "expected": "2040",
+          "unit": "kWh"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "vehicle_scope1_subtotal": {
+            "value": "0.499",
+            "unit": "tCO2e"
+          },
+          "fuel_energy": {
+            "value": "2040",
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F6",
+        "Factors!C7:C8",
+        "Factors!C65:C66"
+      ],
+      "notes": [
+        "Owner-approved CALC-02: C65/C66 remain energy factors, never emissions factors. Legacy wrong emissions would be 2.04 tCO2e."
+      ]
+    },
+    {
+      "id": "gas-unit-specific-factors",
+      "inputs": {
+        "gas_m3": "100",
+        "gas_therm": "10",
+        "coverage": "two distinct boilers; gas unit factors selected directly",
+        "factor_ids": [
+          "legacy-C14",
+          "legacy-C15",
+          "legacy-C64"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C14",
+        "legacy-C15",
+        "legacy-C64"
+      ],
+      "intermediates": [
+        {
+          "name": "gas_m3_emissions",
+          "expression": "100 * 2.02 / 1000",
+          "expected": "0.202",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "gas_therm_emissions",
+          "expression": "10 * 5.29 / 1000",
+          "expected": "0.0529",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope1_subtotal",
+          "expression": "0.202 + 0.0529",
+          "expected": "0.2549",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "known_energy",
+          "expression": "100 * 10.55",
+          "expected": "1055",
+          "unit": "kWh"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "gas_scope1_subtotal": {
+            "value": "0.2549",
+            "unit": "tCO2e"
+          },
+          "known_energy_subtotal": {
+            "value": "1055",
+            "unit": "kWh"
+          },
+          "total_energy": {
+            "value": null,
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified",
+          "therm_energy_conversion_not_in_reference"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F5",
+        "Factors!C14:C15",
+        "Factors!C64"
+      ],
+      "notes": [
+        "Do not derive a therm energy conversion from ratios of emissions factors."
+      ]
+    },
+    {
+      "id": "vehicle-distance-km",
+      "inputs": {
+        "vehicle": "Diesel van",
+        "distance_km": "1000",
+        "coverage": "one vehicle group, no fuel method for that group",
+        "factor_ids": [
+          "legacy-C57"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C57"
+      ],
+      "intermediates": [
+        {
+          "name": "vehicle_emissions",
+          "expression": "1000 * 0.253 / 1000",
+          "expected": "0.253",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "vehicle_scope1": {
+            "value": "0.253",
+            "unit": "tCO2e"
+          },
+          "fuel_energy": {
+            "value": null,
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified",
+          "fuel_quantity_not_known"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F7",
+        "Factors!C57"
+      ],
+      "notes": [
+        "No inferred litres or energy from mileage. Miles conversion remains outside this fixture."
+      ]
+    },
+    {
+      "id": "refrigerant-reference",
+      "inputs": {
+        "refrigerant": "R-410A",
+        "refill_kg": "2",
+        "method": "legacy top-up-as-emission proxy, explicitly identified",
+        "factor_ids": [
+          "legacy-C45"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C45"
+      ],
+      "intermediates": [
+        {
+          "name": "refrigerant_emissions",
+          "expression": "2 * 2088 / 1000",
+          "expected": "4.176",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "refrigerant_scope1": {
+            "value": "4.176",
+            "unit": "tCO2e"
+          }
+        },
+        "quality_flags": [
+          "ar5_source_label_only",
+          "top_up_proxy_requires_applicability_confirmation"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F8",
+        "Factors!C45"
+      ],
+      "notes": []
+    },
+    {
+      "id": "purchased-heat",
+      "inputs": {
+        "heat_kwh": "1000",
+        "factor_ids": [
+          "legacy-C41"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C41"
+      ],
+      "intermediates": [
+        {
+          "name": "heat_emissions",
+          "expression": "1000 * 0.17 / 1000",
+          "expected": "0.17",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "heat_scope2": {
+            "value": "0.17",
+            "unit": "tCO2e"
+          }
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "3·Scope 2!F7",
+        "Factors!C41"
+      ],
+      "notes": []
+    },
+    {
+      "id": "multi-site-corrected-gas",
+      "inputs": {
+        "sites": [
+          {
+            "id": "A",
+            "province": "Sichuan",
+            "electricity_kwh": "10000",
+            "gas_kwh": "1000"
+          },
+          {
+            "id": "B",
+            "province": "Shanxi",
+            "electricity_kwh": "10000",
+            "gas_kwh": "2000"
+          }
+        ],
+        "coverage": "only these two sites; electricity/gas complete; no overlapping company-level totals",
+        "factor_ids": [
+          "legacy-C29",
+          "legacy-C27",
+          "legacy-C13",
+          "legacy-C63"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C13",
+        "legacy-C27",
+        "legacy-C29",
+        "legacy-C63"
+      ],
+      "intermediates": [
+        {
+          "name": "site_A_scope2",
+          "expression": "10000 * 0.14 / 1000",
+          "expected": "1.4",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "site_B_scope2",
+          "expression": "10000 * 0.79 / 1000",
+          "expected": "7.9",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "site_A_scope1",
+          "expression": "1000 * 0.184 / 1000",
+          "expected": "0.184",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "site_B_scope1",
+          "expression": "2000 * 0.184 / 1000",
+          "expected": "0.368",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope2",
+          "expression": "1.4 + 7.9",
+          "expected": "9.3",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope1",
+          "expression": "0.184 + 0.368",
+          "expected": "0.552",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "combined",
+          "expression": "9.3 + 0.552",
+          "expected": "9.852",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "energy",
+          "expression": "10000 + 10000 + 1000 + 2000",
+          "expected": "23000",
+          "unit": "kWh"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "scope1": {
+            "value": "0.552",
+            "unit": "tCO2e"
+          },
+          "scope2_location_based": {
+            "value": "9.3",
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": "9.852",
+            "unit": "tCO2e"
+          },
+          "energy": {
+            "value": "23000",
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "approximate_provincial_factors",
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "13·多厂区 Sites!H6:J16",
+        "Factors!C13",
+        "Factors!C27",
+        "Factors!C29"
+      ],
+      "notes": [
+        "CALC-01 corrects gas factor from C63 to C13. Site and company aggregate inputs cannot both be summed."
+      ]
+    },
+    {
+      "id": "renewable-share-separate",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "renewable_electricity_kwh": "2000",
+        "gas_kwh": "10000",
+        "coverage": "complete electricity and total energy; no renewable gas",
+        "factor_ids": [
+          "legacy-C19",
+          "legacy-C63"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C19",
+        "legacy-C63"
+      ],
+      "intermediates": [
+        {
+          "name": "electricity_share",
+          "expression": "2000 / 10000 * 100",
+          "expected": "20",
+          "unit": "percent"
+        },
+        {
+          "name": "total_energy_share",
+          "expression": "2000 / (10000 + 10000) * 100",
+          "expected": "10",
+          "unit": "percent"
+        },
+        {
+          "name": "scope2",
+          "expression": "10000 * 0.5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "renewable_electricity_share": {
+            "value": "20",
+            "unit": "percent"
+          },
+          "renewable_total_energy_share": {
+            "value": "10",
+            "unit": "percent"
+          },
+          "scope2_location_based": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "U-026_autofill": null
+        },
+        "quality_flags": [
+          "factor_year_unverified",
+          "U-026_mapping_unresolved"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "3·Scope 2!F5:F6",
+        "4·Energy!B12",
+        "app/config/capstone-v1/QuestionBank.json:U-026",
+        "app/config/capstone-v1/MetricBenchmarks.json:MET_RE_SHARE"
+      ],
+      "notes": [
+        "Preserve denominator identity; never guess which share populates U-026. No renewable deduction from location-based emissions."
+      ]
+    },
+    {
+      "id": "water-and-waste-metrics",
+      "inputs": {
+        "period": "2025-01-01/2025-12-31",
+        "water_m3": {
+          "municipal": "600",
+          "groundwater": "300",
+          "surface": "100"
+        },
+        "waste_t": {
+          "landfill": "6",
+          "recycled": "3",
+          "composted": "1"
+        },
+        "hazardous_waste_t": "1",
+        "hazardous_is_subset": true,
+        "revenue_usd": "100000",
+        "coverage": "all sources and destinations complete, no overlapping waste streams",
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [
+        {
+          "name": "water",
+          "expression": "600 + 300 + 100",
+          "expected": "1000",
+          "unit": "m3"
+        },
+        {
+          "name": "water_intensity",
+          "expression": "1000 / 100000",
+          "expected": "0.01",
+          "unit": "m3/USD"
+        },
+        {
+          "name": "waste_t",
+          "expression": "6 + 3 + 1",
+          "expected": "10",
+          "unit": "t"
+        },
+        {
+          "name": "waste_kg",
+          "expression": "10 * 1000",
+          "expected": "10000",
+          "unit": "kg"
+        },
+        {
+          "name": "waste_intensity",
+          "expression": "10000 / 100000",
+          "expected": "0.1",
+          "unit": "kg/USD"
+        },
+        {
+          "name": "diversion",
+          "expression": "(3 + 1) / 10 * 100",
+          "expected": "40",
+          "unit": "percent"
+        },
+        {
+          "name": "hazardous",
+          "expression": "1 / 10 * 100",
+          "expected": "10",
+          "unit": "percent"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "annual_water_withdrawal": {
+            "value": "1000",
+            "unit": "m3/yr"
+          },
+          "water_intensity": {
+            "value": "0.01",
+            "unit": "m3/USD"
+          },
+          "waste_mass": {
+            "value": "10000",
+            "unit": "kg"
+          },
+          "waste_intensity": {
+            "value": "0.1",
+            "unit": "kg/USD"
+          },
+          "waste_diverted_percent": {
+            "value": "40",
+            "unit": "percent"
+          },
+          "hazardous_waste_percent": {
+            "value": "10",
+            "unit": "percent"
+          }
+        },
+        "quality_flags": [],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "5·Water!B8:B9",
+        "6·Waste!F9:F10",
+        "10·污染物 Pollutants!C14",
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:sections7,9,10"
+      ],
+      "notes": [
+        "All-source withdrawal and hazardous fraction are explicit metric-contract derivations; not claimed as identical legacy formula outputs. Hazardous mass is a classification subset, not added again to waste total."
+      ]
+    },
+    {
+      "id": "explicit-usd-million-conversion",
+      "inputs": {
+        "known_emissions_tco2e": "5.703",
+        "known_energy_mwh": "10",
+        "annual_revenue": "0.1",
+        "revenue_scale": "million",
+        "currency": "USD",
+        "period_match": true,
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [
+        {
+          "name": "revenue_usd",
+          "expression": "0.1 * 1000000",
+          "expected": "100000",
+          "unit": "USD"
+        },
+        {
+          "name": "energy_kwh",
+          "expression": "10 * 1000",
+          "expected": "10000",
+          "unit": "kWh"
+        },
+        {
+          "name": "carbon_intensity",
+          "expression": "5.703 / 100000",
+          "expected": "0.00005703",
+          "unit": "tCO2e/USD"
+        },
+        {
+          "name": "energy_intensity",
+          "expression": "10000 / 100000",
+          "expected": "0.1",
+          "unit": "kWh/USD"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "carbon_intensity": {
+            "value": "0.00005703",
+            "unit": "tCO2e/USD"
+          },
+          "energy_intensity": {
+            "value": "0.1",
+            "unit": "kWh/USD"
+          }
+        },
+        "quality_flags": [],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "1·Company!B7:B8",
+        "17·中国ESG总览 Summary!B8",
+        "4·Energy!B13"
+      ],
+      "notes": [
+        "Explicit USD fixture, not an FX conversion of workbook CNY default."
+      ]
+    },
+    {
+      "id": "missing-revenue",
+      "inputs": {
+        "known_emissions_tco2e": "5.703",
+        "revenue_usd": null,
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [],
+      "expected": {
+        "status": "partial",
+        "outputs": {
+          "known_emissions": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "carbon_intensity": {
+            "value": null,
+            "unit": "tCO2e/USD"
+          }
+        },
+        "quality_flags": [
+          "revenue_missing"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:sections7,15"
+      ],
+      "notes": []
+    },
+    {
+      "id": "zero-revenue",
+      "inputs": {
+        "known_emissions_tco2e": "5.703",
+        "revenue_usd": "0",
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [],
+      "expected": {
+        "status": "invalid_intensity",
+        "outputs": {
+          "known_emissions": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "carbon_intensity": {
+            "value": null,
+            "unit": "tCO2e/USD"
+          }
+        },
+        "quality_flags": [
+          "invalid_zero_denominator"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:section7"
+      ],
+      "notes": []
+    },
+    {
+      "id": "cny-without-fx",
+      "inputs": {
+        "known_emissions_tco2e": "5.703",
+        "revenue": "1",
+        "revenue_scale": "million",
+        "currency": "CNY",
+        "usd_conversion": null,
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [],
+      "expected": {
+        "status": "partial",
+        "outputs": {
+          "known_emissions": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "carbon_intensity": {
+            "value": null,
+            "unit": "tCO2e/USD"
+          }
+        },
+        "quality_flags": [
+          "usd_revenue_unresolved"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "1·Company!B7:B8",
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:section7"
+      ],
+      "notes": []
+    },
+    {
+      "id": "genuine-zero",
+      "inputs": {
+        "electricity_kwh": "0",
+        "gas_kwh": "0",
+        "waste_t": "0",
+        "renewable_electricity_kwh": "0",
+        "coverage": "all applicable sources explicitly confirmed zero",
+        "factor_ids": [
+          "legacy-C19",
+          "legacy-C13"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C13",
+        "legacy-C19"
+      ],
+      "intermediates": [
+        {
+          "name": "scope2",
+          "expression": "0 * 0.5703 / 1000",
+          "expected": "0",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "scope1",
+          "expression": "0 * 0.184 / 1000",
+          "expected": "0",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "scope1": {
+            "value": "0",
+            "unit": "tCO2e"
+          },
+          "scope2_location_based": {
+            "value": "0",
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": "0",
+            "unit": "tCO2e"
+          },
+          "waste_mass": {
+            "value": "0",
+            "unit": "kg"
+          },
+          "waste_diverted_percent": {
+            "value": null,
+            "unit": "percent"
+          },
+          "renewable_electricity_share": {
+            "value": null,
+            "unit": "percent"
+          }
+        },
+        "quality_flags": [
+          "zero_denominator_ratios_undefined",
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:sections5,15"
+      ],
+      "notes": []
+    },
+    {
+      "id": "blank-activity",
+      "inputs": {
+        "electricity_kwh": null,
+        "gas_kwh": null,
+        "waste_t": null,
+        "coverage": "not provided",
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [],
+      "expected": {
+        "status": "unknown",
+        "outputs": {
+          "scope1": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "scope2_location_based": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "energy": {
+            "value": null,
+            "unit": "kWh"
+          },
+          "waste_mass": {
+            "value": null,
+            "unit": "kg"
+          }
+        },
+        "quality_flags": [
+          "activity_missing"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F9",
+        "3·Scope 2!F9",
+        "4·Energy!E9",
+        "6·Waste!F9",
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:section15"
+      ],
+      "notes": []
+    },
+    {
+      "id": "partial-source-coverage",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "gas_kwh": null,
+        "coverage": "gas applicable but missing; electricity complete",
+        "factor_ids": [
+          "legacy-C19"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C19"
+      ],
+      "intermediates": [
+        {
+          "name": "known_electricity",
+          "expression": "10000 * 0.5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "partial",
+        "outputs": {
+          "scope2_location_based": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "scope1": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "known_emissions_subtotal": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "scope1_plus_2": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "carbon_intensity": {
+            "value": null,
+            "unit": "tCO2e/USD"
+          }
+        },
+        "quality_flags": [
+          "incomplete_scope1",
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:sections5,10,15"
+      ],
+      "notes": []
+    },
+    {
+      "id": "overlapping-vehicle-methods",
+      "inputs": {
+        "source_id": "fleet-A",
+        "period": "2025",
+        "fuel_litres": "100",
+        "distance_km": "1000",
+        "selected_method": null,
+        "factor_ids": [
+          "legacy-C7",
+          "legacy-C57"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C57",
+        "legacy-C7"
+      ],
+      "intermediates": [],
+      "expected": {
+        "status": "invalid",
+        "outputs": {
+          "vehicle_scope1": {
+            "value": null,
+            "unit": "tCO2e"
+          }
+        },
+        "quality_flags": [
+          "overlapping_activity_methods"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "2·Scope 1!F6:F9"
+      ],
+      "notes": [
+        "Require a selected method for this source/period; do not sum fuel and mileage or silently choose a winner."
+      ]
+    },
+    {
+      "id": "unknown-grid-geography",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "geography": "not provided",
+        "selected_factor": null,
+        "factor_ids": []
+      },
+      "factor_ids": [],
+      "intermediates": [],
+      "expected": {
+        "status": "partial",
+        "outputs": {
+          "electricity_scope2": {
+            "value": null,
+            "unit": "tCO2e"
+          },
+          "electricity_energy": {
+            "value": "10000",
+            "unit": "kWh"
+          }
+        },
+        "quality_flags": [
+          "factor_geography_unresolved"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "3·Scope 2!D3:F5",
+        "Factors!C37"
+      ],
+      "notes": [
+        "Energy remains known; never fall back to China national as a global factor."
+      ]
+    },
+    {
+      "id": "user-corrected-activity",
+      "inputs": {
+        "source_id": "electricity-A",
+        "period": "2025",
+        "original_candidate_kwh": "10000",
+        "confirmed_corrected_kwh": "12000",
+        "confirmation": true,
+        "supersedes": "original_candidate",
+        "factor_ids": [
+          "legacy-C19"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C19"
+      ],
+      "intermediates": [
+        {
+          "name": "old_result",
+          "expression": "10000 * 0.5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "corrected_result",
+          "expression": "12000 * 0.5703 / 1000",
+          "expected": "6.8436",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "previous_result_state": "stale",
+          "current_scope2": {
+            "value": "6.8436",
+            "unit": "tCO2e"
+          },
+          "current_activity_kwh": "12000",
+          "original_candidate_retained": true
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "BUILD_PACK/10_RESEARCH/emissions/EMISSIONS_CALCULATOR_SPEC.md:sections12,13",
+        "Factors!C19"
+      ],
+      "notes": [
+        "Specification-only confirmed input transition; no upload extractor, UI or session implementation. Recompute from replacement input, never sum old and new readings."
+      ]
+    },
+    {
+      "id": "process-source-alternatives",
+      "inputs": {
+        "clinker_t": "100",
+        "lime_t": "20",
+        "measured_process_tco2e": "70",
+        "selected_method": "activity",
+        "source_id": "process-A",
+        "coverage": "same process inventory; measured value is alternative, not additional",
+        "factor_ids": [
+          "legacy-C92",
+          "legacy-C93"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C92",
+        "legacy-C93"
+      ],
+      "intermediates": [
+        {
+          "name": "clinker",
+          "expression": "100 * 0.52",
+          "expected": "52",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "lime",
+          "expression": "20 * 0.75",
+          "expected": "15",
+          "unit": "tCO2e"
+        },
+        {
+          "name": "process_total",
+          "expression": "52 + 15",
+          "expected": "67",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "calculated_reference",
+        "outputs": {
+          "process_scope1": {
+            "value": "67",
+            "unit": "tCO2e"
+          },
+          "measured_alternative_excluded": "70"
+        },
+        "quality_flags": [
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "14·工艺材料 Process&Mat!B9",
+        "Factors!C92:C93"
+      ],
+      "notes": [
+        "Selecting measured method instead would use70, not137. Different non-overlapping process sources may be summed with explicit identities."
+      ]
+    },
+    {
+      "id": "missing-renewable-quantity",
+      "inputs": {
+        "electricity_kwh": "10000",
+        "renewable_electricity_kwh": null,
+        "factor_ids": [
+          "legacy-C19"
+        ]
+      },
+      "factor_ids": [
+        "legacy-C19"
+      ],
+      "intermediates": [
+        {
+          "name": "scope2",
+          "expression": "10000 * 0.5703 / 1000",
+          "expected": "5.703",
+          "unit": "tCO2e"
+        }
+      ],
+      "expected": {
+        "status": "partial",
+        "outputs": {
+          "scope2_location_based": {
+            "value": "5.703",
+            "unit": "tCO2e"
+          },
+          "renewable_electricity_share": {
+            "value": null,
+            "unit": "percent"
+          },
+          "U-026_autofill": null
+        },
+        "quality_flags": [
+          "renewable_quantity_missing",
+          "U-026_mapping_unresolved",
+          "factor_year_unverified"
+        ],
+        "production_autofill": false
+      },
+      "source_refs": [
+        "4·Energy!B12",
+        "3·Scope 2!F5:F6"
+      ],
+      "notes": [
+        "Unknown renewable quantity is not zero and does not prevent location-based electricity emissions."
+      ]
+    }
+  ],
+  "out_of_scope": [
+    "Scope 3 (owner excluded)",
+    "M4.2 engine/UI",
+    "U-026 autofill (individual unresolved mapping)",
+    "new external factors or FX rates",
+    "real evidence upload/extraction"
+  ]
+}

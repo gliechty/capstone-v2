@@ -1,0 +1,2 @@
+import { defineConfig, devices } from "@playwright/test";
+export default defineConfig({testDir:"./tests/preview",workers:1,retries:0,use:{baseURL:"http://127.0.0.1:3101",trace:"retain-on-failure"},projects:[{name:"chromium",use:{...devices["Desktop Chrome"]}}],webServer:{command:"npm run start -- --hostname 127.0.0.1 --port 3101",env:{CAPSTONE_BUILD_TARGET:"private-preview",CAPSTONE_PREVIEW_MODE:"synthetic",CAPSTONE_OFFLINE_TESTS:"1",RECOMMENDATION_PROVIDER:"disabled"},url:"http://127.0.0.1:3101/api/preview-health",reuseExistingServer:false,timeout:60000}});

@@ -1,20 +1,27 @@
-/* M1.1 visual system. Category colors are presentation tokens, not engine rules. */
+/* MOSAIC palette on the existing M1 layout/type system. Presentation only; no engine rules. */
 :root {
   --surface: #faf8f3;
   --surface-raised: #fffdf9;
-  --surface-muted: #efeae1;
-  --text: #282b29;
-  --text-muted: #5f625c;
-  --accent: #9d402d;
-  --accent-hover: #7c3021;
-  --accent-soft: #f2e1d8;
+  --surface-muted: #f1ede4;
+  --text: #1b2a41;
+  --text-muted: #5b6b7f;
+  --accent: #2e7d7a;
+  --accent-hover: #24605e;
+  --accent-soft: #e3efee;
+  --accent-text: #24605e;
+  --status-error: #8e2f25;
+  --status-error-soft: #f7e4df;
+  --status-warning: #5e4a1c;
+  --status-warning-soft: #f2ecdd;
+  --status-success: #2d5a3d;
+  --status-success-soft: #e4efe6;
   --on-accent: #fffdf9;
-  --border: #d5d0c5;
-  --border-strong: #85877c;
-  --category-people: #76516b;
-  --category-governance: #49647c;
-  --category-community: #886029;
-  --category-resources: #4b6e61;
+  --border: #e4e0d6;
+  --border-strong: #7d7a70;
+  --category-people: #2e7d7a;
+  --category-governance: #2e7d7a;
+  --category-community: #2e7d7a;
+  --category-resources: #2e7d7a;
   --font-body: var(--font-manrope), "Segoe UI", Arial, sans-serif;
   --font-size-display: clamp(2.5rem, 1.75rem + 3vw, 4rem);
   --font-size-heading: clamp(2rem, 1.5rem + 1.5vw, 2.625rem);
@@ -43,7 +50,7 @@
   --corner-control: 0.625rem;
   --corner-panel: 0.875rem;
   --border-width: 1px;
-  --elevation-panel: 0 2px 8px #282b2908;
+  --elevation-panel: 0 2px 8px #1b2a4108;
   --focus-width: 3px;
   --focus-offset: 4px;
   --control-height: 3rem;
