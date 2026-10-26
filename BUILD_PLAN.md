@@ -1,3 +1,7 @@
+M5.1 source/primary-doc assessment ready for review: standalone third path can reuse quantity arithmetic and deterministic scoring; external Laiffi factors require a compatible boundary/provenance adapter. Published OpenAPI1.0.0 fixes scope to dataset_upstream; direct Scope1/2, years, account price/quota/retention/attribution unresolved. Recommend factor-free quantity path first, defer paid POC. No runtime/test/provider work. Full reuse/metric/API assessment and effort are in EXECUTION_PLAN.md. M5.2/M5.3 unstarted.
+
+Current2026-10-26: M4 accepted/merged via PR#4 (a185709), scoped checkpoint31d7082. M5.1 assessment only on published milestone-5-guided-data-entry from merged main; no paid calls, implementation, tests or deployment authorized here. Original dirty tree preserved in its prior checkout.
+
 ## Current authority — M4 accepted; closeout and M5.1 only (owner 2026-10-26)
 Live Build Checklist v2.0 F1 and rows24–28 loaded. M4.4 is published f9229a1; owner accepts M4.5 and M4 as complete and authorizes scoped tests/records commit/push and normal PR merge into main. Preserve unrelated dirty deployment/incident/skill files. No deployment. After merge, publish milestone-5-guided-data-entry from updated main and perform M5.1 feasibility/architecture only; no full chat/upload implementation, dependencies, new tests or paid/quota-consuming experiments. M5.2/M5.3 require separate authorization. Historical factors remain reference-only; U-026 benchmark wording and country-specific recommendation tailoring remain unresolved/deferred, Scope3 excluded.
 
