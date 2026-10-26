@@ -402,11 +402,11 @@ Let the user explore how plausible operational improvements could affect assessm
 
 ## Expected behavior
 
-- recommendation logic identifies likely improvement opportunities;
+- recommendation prose may explain opportunities but does not define mappings, bounds or scoring; deterministic counterfactual comparison selects opportunities;
 - eligible opportunities are mapped to known manipulable canonical metrics;
-- the system selects approximately 2–3 useful levers;
+- owner correction2026-10-26: standalone Results section Explore your improvement levers selects up to4–5 answered/scored opportunities by attainable industry-weighted score gain, using the existing engine and fixed remaining answers/context; unanswered and zero-gain questions are not levers;
 - the user can adjust those values;
-- relevant what-if scores/metrics update immediately.
+- relevant what-if scores/metrics update immediately through one combined scenario recomputation, without changing actual answers; selected levers stay stable and Reset to actual answers restores baseline. M7.1 revised specification, interaction details, unresolved numeric precision/bounds and Golden worked example are in EXECUTION_PLAN.md; owner accepted M7.1 on2026-10-26 and authorized M7.2 locally. Percentage controls step1 point with finer numeric entry and exact reset; binary/categorical controls retain existing options; numeric cases without finite defensible optimum/range are excluded without method changes. No deployment.
 
 Only metrics with a defined deterministic relationship to scoring should become levers.
 
