@@ -1,3 +1,19 @@
+## Current authority — M4 accepted; closeout and M5.1 only (owner 2026-10-26)
+Live Build Checklist v2.0 F1 and rows24–28 loaded. M4.4 is published f9229a1; owner accepts M4.5 and M4 as complete and authorizes scoped tests/records commit/push and normal PR merge into main. Preserve unrelated dirty deployment/incident/skill files. No deployment. After merge, publish milestone-5-guided-data-entry from updated main and perform M5.1 feasibility/architecture only; no full chat/upload implementation, dependencies, new tests or paid/quota-consuming experiments. M5.2/M5.3 require separate authorization. Historical factors remain reference-only; U-026 benchmark wording and country-specific recommendation tailoring remain unresolved/deferred, Scope3 excluded.
+
+### Current roadmap crosswalk (historical IDs below retained as evidence)
+| Previous roadmap | Current checklist |
+| --- | --- |
+| Unnumbered Laiffi assessment, former row48 | M5.1 feasibility/architecture, row26; new M5.2 chat row27; M5.3 uploads/review row28 |
+| M5 config/knowledge maintenance | M6, rows29–34 |
+| M5A source-to-config regeneration | M6A, rows35–37; existing approval/IP boundaries retained |
+| M6 sliders | M7, rows38–40 |
+| M7 Quick assessment | M8, rows41–42 |
+| M8 external benchmarks | M9, rows43–45 |
+Tuesday priority: M4 closeout → M5.1 recommendation/optional separately authorized one-activity POC → bounded M7 slider demonstration → recorded UI follow-up row51. This crosswalk supersedes old numbering/status, not historical evidence. Neither M5.2/5.3 nor sliders start automatically.
+
+Current2026-10-26: M4.4 accepted/complete, published f9229a1. M4.5 direct manual/calculator-to-score and U-026 total-energy checks passed; owner review pending, tests/records uncommitted. Existing evidence reused; no runtime correction, deployment, paid calls or later-step work. Country-specific recommendation tailoring deferred; historical-factor and benchmark limitations remain.
+
 ## Current acceptance — owner 2026-10-26
 M4.4 accepted and complete. Owner authorizes committing/pushing the scoped calculator mapping/autofill, confirmed transfer/start, source/input usability, Country selection/eligibility and Country metadata propagation plus records. This supersedes historical M4.4 pending/no-M4.5 wording below; retain all prior evidence and limitations. M4.5 is next and authorized only for the complete manual/calculator → questionnaire → deterministic score verification, reusing passing evidence and checking remaining gaps. Country-specific recommendation tailoring/retrieval changes remain deferred. Historical factors remain reference-only; U-026 total-energy transfer does not resolve inherited electricity benchmark wording; Scope3 excluded. No deployment, merge, Laiffi, slider or later-step work authorized. Preserve unrelated deployment/incident/skill files.
 

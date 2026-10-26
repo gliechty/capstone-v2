@@ -141,3 +141,15 @@ it("validates listed countries while retaining absent legacy country and unsuppo
  expect(mappingModel.sessionSchema.parse(JSON.parse(JSON.stringify(old))).answers).toEqual(old.answers);
  expect(recommendationRequestFromSession(old).country).toBeUndefined();
 });
+
+it("M4.5 transfers renewable total energy to U-026 using the existing mixed-energy oracle",()=>{
+ const d=draft({...power(),renewable:"2000"},source("gas","10000","legacy-C13",{renewable:"0"}));
+ const row=calculatorMappings(d,mappedQuestions).find(r=>r.questionId==="U-026")!;
+ expect(row.metricId).toBe("MET_RE_SHARE");expect(row.unit).toBe("%");
+ expect(Number(row.raw)).toBe(expected("renewable-share-separate","renewable_total_energy_share"));
+ expect(Number(row.raw)).not.toBe(expected("renewable-share-separate","renewable_electricity_share"));
+ const transferred=mappingModel.assessmentReducer({...mappingModel.initialSession(),profile:mappingProfile},{type:"calculator-apply",draft:d,questionIds:["U-026"]});
+ expect(transferred.answers["U-026"]).toBe("10");
+ d.activities[0]!.renewable="";
+ expect(calculatorMappings(d,mappedQuestions).find(r=>r.questionId==="U-026")?.raw).toBeNull();
+});

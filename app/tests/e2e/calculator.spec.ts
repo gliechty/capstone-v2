@@ -88,3 +88,50 @@ test("collapsed sources reopen on cross-source errors without losing entries",as
  await expect(page.getByRole("textbox",{name:"Quantity",exact:true}).nth(1)).toHaveValue("10000");
  await expect(page.getByRole("alert").filter({hasText:"Check calculator entries"})).toContainText("already has an entry");
 });
+
+test("M4.5 equivalent manual and calculator inputs reach the same real deterministic score",async({browser,baseURL})=>{
+ const session={...model.initialSession(),phase:"method",profile:{...model.initialSession().profile,companyName:"Example workshop",country:"China",industry:"Manufacturing (Industrial / Components)",companySize:"251 - 500",location:"APAC",targetMarket:"EU",targetBuyer:"Enterprise",businessGoal:"Prepare for procurement questionnaires"},answers:{"U-001":"No"}};
+ const outcomes:unknown[]=[];
+ for(const method of ["calculator","manual"]){
+  const context=await browser.newContext({baseURL});const page=await context.newPage();
+  try {
+   await page.addInitScript(s=>{if(!sessionStorage.getItem("capstone.assessment.ui-preview.v1"))sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s));},session);
+   await page.goto("/assessment");
+   if(method==="calculator"){
+    await page.getByRole("radio",{name:/Use emissions calculator/}).check();
+    await page.getByLabel("Period start",{exact:true}).fill("2025-01-01");await page.getByLabel("Period end",{exact:true}).fill("2025-12-31");
+    await page.getByRole("button",{name:"Add source",exact:true}).click();
+    await page.getByRole("textbox",{name:"Source name",exact:true}).fill("electricity-A");
+    await page.getByRole("textbox",{name:"Quantity",exact:true}).fill("10000");
+    await page.getByRole("combobox",{name:"Electricity geography",exact:true}).fill("China national");await page.getByRole("option",{name:"China national",exact:true}).click();
+    await page.getByRole("combobox",{name:"Scope 1 sources",exact:true}).selectOption("none");
+    for(const name of ["Scope 2 sources","Energy sources"])await page.getByRole("combobox",{name,exact:true}).selectOption("complete");
+    await page.getByRole("checkbox",{name:/I understand these/}).check();
+    await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100000");
+    await page.getByRole("button",{name:"Calculate for review"}).click();
+    await page.getByRole("checkbox",{name:/I confirm the selected values/}).check();
+    await page.getByRole("button",{name:"Use selected values and start questionnaire",exact:true}).click();
+   }else{
+    await page.getByRole("radio",{name:/Enter manually/}).check();await page.getByRole("button",{name:"Start questionnaire",exact:true}).click();
+    for(const [id,value] of [["I-056","0.00005703"],["I-062","0.1"]]){
+     await page.getByRole("button",{name:"Review all answers",exact:true}).click();
+     const title=catalog.questions.find(q=>q.id===id)!.title;
+     await page.getByRole("button").filter({hasText:title}).click();
+     await page.getByRole("textbox",{name:/Your answer/}).fill(value!);
+    }
+   }
+   const saved=await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!));
+   expect(saved.answers).toEqual({"U-001":"No","I-056":"0.00005703","I-062":"0.1"});
+   await page.getByRole("button",{name:"Review all answers",exact:true}).click();
+   await page.getByRole("button",{name:"Generate score and recommendations",exact:true}).click();
+   const responsePromise=page.waitForResponse(r=>r.url().endsWith("/api/assessment-score") && r.request().method()==="POST");
+   await page.getByRole("button",{name:"Generate score and recommendations anyway",exact:true}).click();
+   const response=await responsePromise;expect(response.status()).toBe(200);const score=await response.json();
+   expect(response.request().postDataJSON().answers).toEqual(saved.answers);
+   await expect(page.locator(".score-values")).toContainText(score.rawOverall.toFixed(1));
+   await expect(page.locator(".score-values")).toContainText(score.weightedOverall.toFixed(1));
+   outcomes.push(score);
+  }finally{await context.close();}
+ }
+ expect(outcomes[0]).toEqual(outcomes[1]);
+});
