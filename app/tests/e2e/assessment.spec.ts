@@ -623,3 +623,102 @@ test("Country search distinguishes a query from selection and supports browsing 
  await expect(page.getByRole("button",{name:"Start questionnaire",exact:true})).toBeVisible();
  await page.reload();expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).profile.country)).toBe("Japan");
 });
+
+import { goldenCases } from "../helpers/legacy-scoring";
+import { scoreAssessment } from "../../src/domain/scoring/score-assessment";
+
+test("levers use approved Golden ranking, combined scenario, keyboard and reset without changing saved assessment", async ({ page }, testInfo) => {
+  await page.setViewportSize({width:1440,height:768});
+  const fixture = goldenCases[0]!;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
+  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: "251 - 500", country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(";"), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: "" },
+    answers, skipped: [] };
+  let providerPosts = 0;
+  page.on("request", request => { if (request.url().includes("/api/assessment-recommendations") && request.method() === "POST") providerPosts++; });
+  await page.addInitScript(s => { sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)); }, session);
+  await page.goto("/results");
+  const section = page.getByRole("region", { name: "Explore your improvement levers" });
+  await expect(section.getByRole("slider")).toHaveCount(5);
+  const saved = await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
+  const first = section.getByRole("slider").first();
+  await expect(first).toHaveAttribute("aria-valuetext", "No");
+  await first.focus(); await page.keyboard.press("End");
+  await expect(first).toHaveAttribute("aria-valuetext", "Yes");
+  await section.getByRole("textbox", { name: "U-035 scenario value" }).fill("8");
+  const expected = scoreAssessment(loadCanonicalConfig().config, fixture.profile, { ...answers, "U-034": "Yes", "U-035": "8" });
+  const weighted = section.getByRole("row").filter({ has: page.getByRole("rowheader", { name: "Industry-weighted overall", exact: true }) });
+  await section.getByText("Full score comparison",{exact:true}).click();
+  await expect(weighted.getByRole("cell").nth(1)).toHaveText(expected.weightedOverall!.toFixed(2));
+  await section.getByText("Full score comparison",{exact:true}).click();
+  const active=section.getByRole("textbox",{name:"U-035 scenario value"});
+  await active.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(active).toBeInViewport();
+  expect(await page.evaluate(()=>visualViewport?.scale)).toBe(1);
+  const marker=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-035 scenario value"})}).locator(".lever-actual-marker");
+  await expect(marker).toHaveText("Actual");
+  await page.screenshot({path:testInfo.outputPath("levers-desktop-feedback.png")});
+  const downloadEvent=page.waitForEvent("download");
+  await section.getByRole("button",{name:"Download report with hypothetical levers"}).filter({visible:true}).click();
+  const download=await downloadEvent;
+  const stream=await download.createReadStream();let report="";
+  for await(const chunk of stream!)report+=chunk.toString();
+  expect(report).toContain('id="hypothetical-levers"');
+  expect(report).toContain(expected.weightedOverall!.toFixed(2));
+  expect(report).toContain("The actual assessment and recommendations above are unchanged");
+  await section.getByText("Full score comparison",{exact:true}).click();
+  expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(saved);
+  await section.getByRole("button", { name: "Reset to actual answers" }).click();
+  await expect(first).toHaveAttribute("aria-valuetext", "No");
+  await expect(section.getByRole("textbox", { name: "U-035 scenario value" })).toHaveValue("0");
+  await expect(weighted.getByRole("cell").nth(1)).toHaveText("24.43");
+  expect((await new AxeBuilder({ page }).include("#improvement-levers").analyze()).violations).toEqual([]);
+  await section.getByText("Full score comparison",{exact:true}).click();
+  await page.setViewportSize({ width: 390, height: 900 });
+  await expect(first).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await first.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(first).toBeInViewport();
+  await page.screenshot({path:testInfo.outputPath("levers-mobile-feedback.png")});
+  const lastSlider=section.getByRole("slider").last();
+  await lastSlider.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(lastSlider).toBeInViewport();
+  await page.screenshot({path:testInfo.outputPath("levers-mobile-sticky.png")});
+  await page.reload();
+  await expect(section.getByRole("slider").first()).toHaveAttribute("aria-valuetext", "No");
+  expect(providerPosts).toBe(0);
+});
+
+test("levers percentage entry preserves exact actual value and reset", async ({ page }) => {
+  const fixture = goldenCases[0]!;
+  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: "251 - 500", country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(";"), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: "" },
+    answers: { "U-026": "12.3456789", "U-031": "33.3333333333" }, skipped: [] };
+  await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), session);
+  await page.goto("/results");
+  const section = page.getByRole("region", { name: "Explore your improvement levers" });
+  const value = section.getByRole("textbox", { name: "U-026 scenario value" });
+  await expect(value).toHaveValue("12.3456789");
+  const slider = section.getByRole("slider", { name: /What percentage of your energy/ });
+  await slider.focus(); await page.keyboard.press("ArrowRight");
+  await expect(value).toHaveValue("13.3456789");
+  await value.fill("15.123456789");
+  await expect(slider).toHaveAttribute("aria-valuetext", "15.123456789 %");
+  const card=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-026 scenario value"})});
+  const beforeMarker=await card.locator(".lever-track").getAttribute("style");
+  await value.fill("5");
+  await expect(card.getByText("Lower than actual",{exact:false})).toBeVisible();
+  expect((await card.locator(".lever-track").getAttribute("style"))?.split(";")[0]).toBe(beforeMarker?.split(";")[0]);
+  await value.fill("101");
+  await expect(section.getByRole("alert").first()).toContainText("0 to 100");
+  await section.getByRole("button", { name: "Reset to actual answers" }).click();
+  await expect(value).toHaveValue("12.3456789");
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).answers)).toEqual(session.answers);
+});

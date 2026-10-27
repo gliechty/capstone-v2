@@ -12,7 +12,7 @@ test("results preserve the narrative hierarchy and show truthful not-generated s
   render(<ResultsPage />);
   expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   expect(screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent)).toEqual([
-    "Calculated overall scores", "Executive summary", "Key gaps — unavailable", "Recommended actions — unavailable", "Evidence & sources",
+    "Calculated overall scores", "Executive summary", "Key gaps — unavailable", "Recommended actions — unavailable", "Evidence & sources", "Explore your improvement levers",
   ]);
   expect(screen.getByRole("complementary", { name: "Results limitations" })).toHaveTextContent("require explicit generation");
   expect(screen.getByRole("button", { name: "Generate recommendations" })).toBeDisabled();

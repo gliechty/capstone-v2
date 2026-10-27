@@ -1,3 +1,11 @@
+Owner acceptance2026-10-27: M7.3 accepted and complete with documented limitations/deferred polish. Owner now authorizes scoped commit/push and deployment of accepted M7 Levers to the existing clean MOSAIC server. Supersedes earlier no-commit/no-deployment wording for this release only. M7.4 deferred until tomorrow; no implementation now. Release session start2026-10-27T21:19:10+07; estimate commit/package3–5min +server build/verification5–7min =8–12min total, based on prior M4 deployment9m47. Coding-token forecast/telemetry unavailable. Preserve saved data, credentials and USD1/day Bangkok budget; no paid generation tests. Existing passing evidence reused.
+
+Current2026-10-27: M7.3 technical review complete, ready for owner acceptance; M7.1/M7.2 already accepted. Existing evidence satisfies bounded Levers requirements; no scoring/config changes or test reruns needed. Deferred M10 cosmetics and M12 reports remain separate. M7.4 not started. Work remains local/uncommitted on milestone-7-sliders basefb9206e; no deployment or publication. Detailed review/effort in EXECUTION_PLAN.md.
+
+Current owner acceptance2026-10-26: M7.2 accepted/DONE locally; cosmetics deferred to M10.1/M10.2 pending Guo review. M12.1 is the final report presentation and multi-format export milestone, planned only. M7.3 remains a separate gate. No publication/deployment or later implementation in this closeout.
+
+Current M7 status2026-10-26: M7.1 accepted/published fb9206e; M7.2 personalized levers with owner-authorized compact sticky feedback and scenario-report appendix ready for local review, uncommitted, not deployed. Existing-engine ranking and combined scenarios preserve actual answers; unbounded numeric cases excluded without methodology changes. Verification/effort and local walkthrough in EXECUTION_PLAN.md. M7.3 does not start automatically.
+
 ## Current authority — M4 accepted; closeout and M5.1 only (owner 2026-10-26)
 Live Build Checklist v2.0 F1 and rows24–28 loaded. M4.4 is published f9229a1; owner accepts M4.5 and M4 as complete and authorizes scoped tests/records commit/push and normal PR merge into main. Preserve unrelated dirty deployment/incident/skill files. No deployment. After merge, publish milestone-5-guided-data-entry from updated main and perform M5.1 feasibility/architecture only; no full chat/upload implementation, dependencies, new tests or paid/quota-consuming experiments. M5.2/M5.3 require separate authorization. Historical factors remain reference-only; U-026 benchmark wording and country-specific recommendation tailoring remain unresolved/deferred, Scope3 excluded.
 
@@ -410,7 +418,7 @@ Let the user explore how plausible operational improvements could affect assessm
 
 Only metrics with a defined deterministic relationship to scoring should become levers.
 
-The recommendation model may help rank/select eligible levers, but it must not invent the mathematical relationship between the lever and the score.
+Accepted M7.1 design: the deterministic engine selects and ranks eligible levers. Recommendation prose may provide context but does not select levers or define scoring relationships. This supersedes the historical proposal for model-assisted selection.
 
 ## Review gate
 
@@ -468,6 +476,14 @@ Do not:
 Show exactly what the source data supports before deciding how it appears in the product.
 
 ---
+
+# Milestone 12 — Final report presentation and multi-format downloads
+## M12.1 — Planned, not started
+Owner2026-10-26 requests a final Report milestone. Planned only, not started: improve report color, MOSAIC branding, readable formatting/hierarchy and page layout; provide several downloadable formats (exact set to be selected when scoped). Preserve authoritative actual scores/answers, evidence/limitations and separately labeled hypothetical appendix. Current HTML/print-to-PDF functionality remains accepted as the working baseline. Review proposed formats/layout before implementation; no new library, provider call or deployment authorized by this planning entry. Final delivery placement after applicable functional work/review; optional research is not a prerequisite.
+
+## Deferred visual wrap-up cross-reference
+Owner2026-10-26: M7.2 accepted/DONE. Cosmetic follow-up only, pending Guo review: distinguish actual/hypothetical colors; per-card signed point changes with up/down arrows and accessible non-color cues; consider removing visible keyboard-help copy while retaining keyboard access; number levers sequentially in current leverage order; icons via M10.2; minor site-wide branding/color/polish coherence. Do not change ranking, scoring or add independent gains to combined scenario scores. Exact per-card contribution presentation to be scoped when scheduled; not a blocker for accepted M7.2.
+M10.1/M10.2 are existing checklist backlog IDs; M11.1 optional research remains separate and is not a prerequisite for final report delivery.
 
 # Cross-cutting portability and security requirements
 
