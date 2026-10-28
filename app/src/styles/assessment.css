@@ -253,3 +253,21 @@ html:has(.stage-navigation) { scroll-padding-top: 4.5rem; }
 /* Half the original size increase; brackets share the bubble transform, hit slots do not. */
 
 .mobile-progress { padding: .5rem .75rem; }
+
+/* M7.5: two-line phone stage buttons need clearance when text is enlarged. */
+@media (max-width: 40rem) { html:has(.stage-navigation) { scroll-padding-top: 6rem; } }
+
+/* M7.5: capture rail gestures without scrolling the surrounding page. */
+.mobile-rail-surface { touch-action: none; user-select: none; }
+
+/* Keep intrinsic field/label widths from expanding the mobile card beneath its rail. */
+@media (max-width: 63.999rem) {
+  .question-stage { grid-template-columns: minmax(0, 1fr); }
+  .question-card, .question-card fieldset { min-inline-size: 0; }
+  .question-card .choice-option > span { min-width: 0; overflow-wrap: anywhere; }
+}
+
+/* The explored choice is green; the actual current question keeps its orange edge. */
+.mobile-rail-choices .nearby-choice[aria-current="step"] { background: transparent; }
+.mobile-rail-choices .nearby-choice[data-inspected="true"] { background: var(--accent-soft); }
+.mobile-rail-choices .nearby-choice[data-pressed="true"]:enabled { background: var(--accent); color: var(--on-accent); }

@@ -76,15 +76,11 @@ test("keyboard focus magnifies locally; arrows, Home, End and Escape do not sele
   expect(first).toHaveFocus();
   expect(onSelect).not.toHaveBeenCalled();
 });
-test("mobile disclosure selects a question and closes without hover behavior", () => {
-  const onSelect = vi.fn();
-  const { container } = render(<ProgressNavigator items={items} onSelect={onSelect} />);
-  const details = container.querySelector("details")!;
-  details.open = true;
-  fireEvent.click(within(details).getByRole("button", { name: /^Question 48:/ }));
-  expect(onSelect).toHaveBeenCalledWith("fixture-47");
-  expect(details.open).toBe(false);
-  expect(within(details).queryByRole("group")).toBeNull();
+test("mobile rail selects a question and closes without hover behavior", () => {
+ const onSelect=vi.fn();const {getByRole,queryByRole}=render(<MobileQuestionRail items={items} onSelect={onSelect}/>);
+ const trigger=getByRole('button',{name:'Explore question track'});fireEvent.keyDown(trigger,{key:'End'});
+ fireEvent.click(getByRole('button',{name:/^Go to question 48:/}));expect(onSelect).toHaveBeenCalledWith('fixture-47');
+ expect(trigger).toHaveAttribute('aria-expanded','false');expect(queryByRole('group')).toBeNull();
 });
 
 test("switching from keyboard to a magnified pointer target clears detail on leave", () => {
@@ -124,11 +120,12 @@ test("tap position opens five choices and tapping the rail updates the contextua
   const onSelect = vi.fn();
   const { getByRole } = render(<MobileQuestionRail items={items} onSelect={onSelect} />);
   const trigger = getByRole("button", { name: "Explore question track" });
-  vi.spyOn(trigger, "getBoundingClientRect").mockReturnValue({ top: 100, height: 500 } as DOMRect);
-  fireEvent.click(trigger, { detail: 1, clientY: 345 });
+  Object.defineProperty(trigger,'setPointerCapture',{value:vi.fn()});
+  trigger.querySelectorAll('.progress-glyph').forEach((el,i)=>vi.spyOn(el,'getBoundingClientRect').mockReturnValue({top:100+i*10,height:10} as DOMRect));
+  fireEvent(trigger,new MouseEvent("pointerdown",{bubbles:true,clientY:345}));
   expect(getByRole("button", { name: /^Go to question 25:/ })).toBeInTheDocument();
   expect(within(getByRole("group", { name: "Choose a nearby question" })).getAllByRole("button")).toHaveLength(5);
-  fireEvent.click(trigger, { detail: 1, clientY: 395 });
+  fireEvent(trigger,new MouseEvent("pointerdown",{bubbles:true,clientY:395}));
   fireEvent.click(getByRole("button", { name: /^Go to question 30:/ }));
   expect(onSelect).toHaveBeenCalledExactlyOnceWith("fixture-29");
 });

@@ -143,8 +143,8 @@ for (const interruption of ["refresh", "navigation"] as const) test("in-flight "
  await expect(page.getByRole("button",{name:"Regenerate recommendations",exact:true})).toBeVisible();expect(posts).toBe(2);
 });
 
-for(const width of [1440,768,390]) test("reviewed Results hierarchy and source dialog at "+width,async({page},testInfo)=>{
- await page.emulateMedia({reducedMotion:"reduce"});await page.setViewportSize({width,height:1000});await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+for(const width of [1440,768,390,320,844]) test("reviewed Results hierarchy and source dialog at "+width,async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.setViewportSize({width,height:width===844?390:1000});await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
  const difficulty=width===1440?"Low":width===768?"Medium":"High";
  await page.route("**/api/assessment-recommendations",route=>{const response=result(input);response.content.priority_recommendations[0]!.implementation_difficulty=difficulty;return route.fulfill({json:route.request().method()==="GET"?configuration:response});});
  await page.goto("/results");await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toHaveClass("button-secondary");
@@ -157,6 +157,7 @@ for(const width of [1440,768,390]) test("reviewed Results hierarchy and source d
  expect((await badges.boundingBox())!.y).toBeLessThan((await page.getByRole("heading",{name:"Review the observed practice",exact:true}).boundingBox())!.y);
  await page.locator("#actions").screenshot({path:testInfo.outputPath("expanded-action.png")});
  const source=page.locator("#actions .source-control");await source.focus();await page.keyboard.press("Enter");const dialog=page.getByRole("dialog");await expect(dialog).toBeVisible();await expect(dialog.getByRole("link")).toHaveAttribute("href",citation.link);
+ const close=dialog.getByRole("button",{name:/Close/});await close.scrollIntoViewIfNeeded();await expect(close).toBeInViewport();expect(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);await page.screenshot({path:testInfo.outputPath("open-source-dialog.png")});
  await page.keyboard.press("Escape");await expect(dialog).not.toBeVisible();await expect(source).toBeFocused();
  await page.locator("#sources > details > summary").click();expect(await page.locator("#sources h3").allTextContents()).toEqual(["How recommendations use evidence","Assessment evidence & coverage","Bibliography"]);
@@ -188,7 +189,8 @@ for(const reducedMotion of ["reduce","no-preference"] as const)test("delayed off
 });
 
 
-test("daily budget modal preserves existing results, keyboard access and scores",async({page})=>{
+test("daily budget modal preserves existing results, keyboard access and scores",async({page},info)=>{
+ await page.setViewportSize({width:320,height:568});
  let posts=0;
  await page.addInitScript(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
  await page.route("**/api/assessment-recommendations",async route=>{
@@ -201,6 +203,7 @@ test("daily budget modal preserves existing results, keyboard access and scores"
  const modal=page.getByRole("dialog",{name:"Daily AI budget reached"});await expect(modal).toBeVisible();
  await expect(modal).toContainText("Today’s AI recommendation budget has been reached. Your scores remain available. Please try again tomorrow or contact Guy / the Climate School to arrange additional access.");
  await expect(modal.getByRole("button",{name:"Close",exact:true})).toBeFocused();
+ await modal.getByRole("button",{name:"Close",exact:true}).scrollIntoViewIfNeeded();await expect(modal.getByRole("button",{name:"Close",exact:true})).toBeInViewport();await page.screenshot({path:info.outputPath("budget-mobile.png")});
  expect((await new AxeBuilder({page}).include('dialog[open]').analyze()).violations).toEqual([]);
  await page.keyboard.press('Escape');await expect(modal).not.toBeVisible();await expect(regenerate).toBeFocused();
  await expect(page.locator('.score-values')).toHaveText(scores!);

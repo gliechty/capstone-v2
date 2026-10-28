@@ -5,7 +5,8 @@ import { createAssessmentModel } from "../../src/features/assessment/model";
 const CALCULATOR_KEY = "mosaic.calculator.reference.v1";
 const catalog=assessmentCatalog(loadCanonicalConfig().config);
 const model=createAssessmentModel(catalog.version,()=>[]);
-test("Data Input calculator preserves review, corrections, manual answers across refresh",async({page})=>{
+test("Data Input calculator preserves review, corrections, manual answers across refresh",async({page},info)=>{
+ await page.setViewportSize({width:390,height:844});
  const session={...model.initialSession(),phase:"method",profile:{...model.initialSession().profile,companyName:"Example workshop",country:"China",industry:"Manufacturing (Industrial / Components)",companySize:"251 - 500",location:"APAC",targetMarket:"EU",targetBuyer:"Enterprise",businessGoal:"Prepare for procurement questionnaires"},answers:{"U-001":"No"}};
  await page.addInitScript(s=>{if(!sessionStorage.getItem("capstone.assessment.ui-preview.v1")) sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s));},session);
  await page.goto("/assessment");
@@ -22,6 +23,7 @@ test("Data Input calculator preserves review, corrections, manual answers across
  await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100000");
  await page.getByRole("button",{name:"Calculate for review"}).click();
  const reviewed=page.getByRole("region",{name:"Calculated values for review"});await expect(reviewed).toContainText("5.703 tCO2e");
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:info.outputPath("calculator-mobile-review.png"),fullPage:true});
  await page.getByRole("checkbox",{name:/I confirm the selected values/}).check();
  await page.evaluate(()=>{ const original=Storage.prototype.setItem; Object.assign(window,{restoreStorage:()=>{Storage.prototype.setItem=original;}}); Storage.prototype.setItem=function(key,value){if(key==="capstone.assessment.ui-preview.v1") throw new DOMException("Storage blocked","QuotaExceededError"); original.call(this,key,value);}; });
  await page.getByRole("button",{name:"Use selected values and start questionnaire"}).click();

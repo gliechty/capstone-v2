@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
+import { MobileQuestionRail, ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
 
 import { loadCanonicalConfig } from "../../src/adapters/config-repository";
 import { assessmentCatalog, selectedQuestions } from "../../src/application/assessment-catalog";
@@ -13,7 +13,12 @@ const numericIndex = questions.findIndex(q => q.kind === "numeric");
 const percentIndex = questions.findIndex(q => q.kind === "percent");
 const numeric = questions[numericIndex]!;
 const numericLabel = "Your answer" + (numeric.unit ? " (" + numeric.unit + ")" : "");
-async function jump(page: Page, index: number) { await page.getByRole("button", { name: new RegExp("^Question " + (index + 1) + ":") }).click(); }
+async function jump(page: Page, index: number) {
+ if(await page.locator('.desktop-progress').isVisible()){await page.getByRole('button',{name:new RegExp('^Question '+(index+1)+':')}).click();return;}
+ const rail=page.getByRole('button',{name:'Explore question track'});await rail.focus();await rail.press('Home');
+ for(let i=0;i<index;i++)await rail.press('ArrowDown');
+ await page.getByRole('button',{name:new RegExp('^Go to question '+(index+1)+':')}).click();
+}
 async function fillSetup(page: Page, overrides: Record<string, string> = {}) {
   const values = { companyName: "Example workshop", country: "China", ...profile, targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", ...overrides };
   for (const [name, value] of Object.entries(values)) {
@@ -80,13 +85,12 @@ for (const width of [1440, 390]) {
     for (const option of await page.getByRole("radio").all()) { await option.scrollIntoViewIfNeeded(); await expect(option).toBeInViewport(); }
     await page.mouse.move(0, 0);
     await page.screenshot({ path: testInfo.outputPath("questionnaire.png"), fullPage: true });
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
-    await page.getByRole("button", { name: /^Question 3:/ }).click();
+    await jump(page,2);
     await expect(page.locator(".category-label")).toContainText(questions[2]!.category);
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
-    await expect(page.getByRole("button", { name: /^Question 3:/ })).toHaveAttribute("aria-current", "step");
+    if(width<1024){await page.getByRole('button',{name:'Explore question track'}).focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowDown');await page.keyboard.press('ArrowDown');}
+    await expect(page.getByRole("button", { name: width<1024 ? /^Go to question 3:/ : /^Question 3:/ })).toHaveAttribute("aria-current", "step");
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
+    if (width < 1024) await page.keyboard.press("Escape");
     await page.screenshot({ path: testInfo.outputPath("category-transition.png"), fullPage: true });
     expect(errors).toEqual([]);
   });
@@ -239,10 +243,9 @@ test("touch selection advances and mobile compact navigation opens on tap", asyn
   await page.getByRole("button", { name: "Start questionnaire" }).tap();
   await page.getByRole("radio", { name: "Yes", exact: true }).tap();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
-  await page.locator(".mobile-progress summary").tap();
-  await page.getByRole("button", { name: new RegExp("^Question " + (numericIndex + 1) + ":") }).tap();
+  await jump(page,numericIndex);
   await expect(page.getByLabel(numericLabel, { exact: true })).toBeVisible();
-  await expect(page.locator(".mobile-progress")).not.toHaveAttribute("open");
+  await expect(page.getByRole("button",{name:"Explore question track"})).toHaveAttribute("aria-expanded","false");
   await context.close();
 });
 
@@ -341,7 +344,8 @@ test("50-question navigator fixture fits every position without collapsed scroll
   const styles = await page.locator('link[rel="stylesheet"]').evaluateAll((links) => links.map((link) => link.outerHTML).join(""));
   const fontClass = await page.locator("html").getAttribute("class") ?? "";
   const markup = renderToStaticMarkup(createElement(ProgressNavigator, { items, onSelect: () => {} }));
-  await page.setContent('<!doctype html><html lang="en"><head><title>Navigator fixture</title>' + styles + '</head><body><main class="page-container"><h1 class="text-subheading">50-question navigation fixture</h1><div class="assessment-grid">' + markup + '<section class="question-region"><div class="question-toolbar">Question fixture</div><div class="question-stage"><div class="question-peek-boundary">Previous</div><article class="question-card" style="min-height:640px"><h2>Active question fixture</h2></article><div class="question-peek-boundary">Next</div></div></section></div></main></body></html>');
+  const mobileMarkup=renderToStaticMarkup(createElement(MobileQuestionRail,{items,onSelect:()=>{}}));
+  await page.setContent('<!doctype html><html lang="en"><head><title>Navigator fixture</title>' + styles + '</head><body><main class="page-container"><h1 class="text-subheading">50-question navigation fixture</h1><div class="assessment-grid">' + markup + '<section class="question-region"><div class="question-toolbar">Question fixture</div><div class="question-stage"><div class="question-peek-boundary">Previous</div><article class="question-card" style="min-height:640px"><h2>Active question fixture</h2></article><div class="question-peek-boundary">Next</div>'+mobileMarkup+'</div></section></div></main></body></html>');
   await page.locator("html").evaluate((element, className) => { element.setAttribute("class", className); }, fontClass);
   await page.evaluate(() => document.fonts.ready);
   const track = page.locator(".desktop-progress .progress-track");
@@ -370,9 +374,8 @@ test("50-question navigator fixture fits every position without collapsed scroll
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.screenshot({ path: testInfo.outputPath("all-50-positions.png"), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.locator(".mobile-progress summary").click();
-  await page.getByRole("button", { name: /^Question 50:/ }).focus();
-  await expect(page.getByRole("button", { name: /^Question 50:/ })).toBeInViewport();
+  await page.locator(".mobile-rail-marker").last().scrollIntoViewIfNeeded();
+  await expect(page.locator(".mobile-rail-marker").last()).toBeInViewport();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
@@ -531,6 +534,8 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   // Tapping an exposed answer beneath the popout only dismisses it.
   const outsideAnswer = page.getByRole("radio").last();
   await page.screenshot({ path: testInfo.outputPath("mobile-open-before-dismiss.png"), fullPage: false });
+  // Explore the first neighborhood so an answer is exposed even at 320px.
+  await surface.press('Home');
   await outsideAnswer.tap();
   await expect(popout).toHaveCount(0);
   await expect(outsideAnswer).not.toBeChecked();
@@ -758,4 +763,63 @@ test("levers percentage entry preserves exact actual value and reset", async ({ 
   await section.getByRole("button", { name: "Reset to actual answers" }).click();
   await expect(value).toHaveValue("12.3456789");
   expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).answers)).toEqual(session.answers);
+});
+
+for (const viewport of [{width:320,height:740},{width:390,height:844},{width:844,height:390},{width:768,height:1024}]) test("M7.5 touch labels, readable options and numeric persistence "+viewport.width, async ({browser,baseURL},info)=>{
+ const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,baseURL,reducedMotion:"reduce"});const page=await context.newPage();
+ await start(page);
+ await page.locator('.choice-option span').filter({hasText:/^Yes$/}).tap();
+ await expect(page.getByRole('heading',{level:1})).toHaveText(questions[1]!.title);
+ await page.waitForTimeout(1000);await expect(page.getByRole('heading',{level:1})).toHaveText(questions[1]!.title);
+ const choice=page.locator('.choice-option span').last();const answer=await choice.innerText();await choice.tap();
+ await expect(page.getByRole('heading',{level:1})).toHaveText(questions[2]!.title);
+ const stored=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));expect(stored.answers[questions[1]!.id]).toBe(answer);
+ for(const index of [numericIndex,percentIndex].filter(i=>i>=0)){
+ const q=questions[index]!;await jump(page,index);
+ await page.getByRole('textbox',{name:/Your answer/}).fill('3');await page.waitForTimeout(1000);await expect(page.getByRole('heading',{level:1})).toHaveText(q.title);
+ await page.getByRole('button',{name:'Continue',exact:true}).tap();await page.reload();
+ expect(await page.evaluate(id=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).answers[id],q.id)).toBe('3');
+ }
+ const longest=questions.reduce((best,q,i)=>q.title.length+('options' in q?q.options.join('').length:0)>questions[best]!.title.length+('options' in questions[best]!?(questions[best] as {options:readonly string[]}).options.join('').length:0)?i:best,0);
+ await jump(page,longest);
+ await page.evaluate(()=>{document.documentElement.style.fontSize='125%';});
+ const card=page.locator('.question-card');expect(await card.evaluate(el=>el.scrollHeight<=el.clientHeight+1)).toBe(true);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ for(const option of await page.getByRole('radio').all()){await option.scrollIntoViewIfNeeded();await expect(option).toBeInViewport();}
+ await page.getByRole('heading',{level:1}).evaluate(el=>el.scrollIntoView({block:'start'}));
+ const headingBox=(await page.getByRole('heading',{level:1}).boundingBox())!,navBox=(await page.getByRole('navigation',{name:'Assessment stages'}).boundingBox())!;expect(headingBox.y).toBeGreaterThanOrEqual(navBox.y+navBox.height);
+ await page.screenshot({path:info.outputPath('mobile-long-question.png'),fullPage:false});
+ await context.close();
+});
+
+for(const width of [280,320,390])test("M7.5 exact rail touch and drag containment "+width,async({browser,baseURL},info)=>{
+ const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:true,baseURL,reducedMotion:"reduce"});const page=await context.newPage();await start(page);
+ await page.getByRole('button',{name:'Review all answers',exact:true}).click();await page.getByRole('button',{name:'3. '+questions[2]!.title,exact:true}).click();
+ await page.getByRole('radio',{name:'Yes',exact:true}).focus();await page.keyboard.press('Space');
+ const card=page.locator('.question-card'),rail=page.locator('.mobile-rail-markers');
+ const bounds=await card.boundingBox(),ticks=await rail.boundingBox();expect(bounds!.x+bounds!.width).toBeLessThanOrEqual(width);expect(await card.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
+ const markerBox=(await page.locator('.mobile-rail-marker .progress-glyph').first().boundingBox())!;expect(bounds!.x+bounds!.width).toBeLessThan(markerBox.x);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const glyph=page.locator('.mobile-rail-marker[data-current="true"] .progress-glyph');await glyph.scrollIntoViewIfNeeded();
+ const g=(await glyph.boundingBox())!;const touch=await context.newCDPSession(page);const snapshot=await page.evaluate(()=>sessionStorage.getItem('capstone.assessment.ui-preview.v1'));
+ await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:g.x+g.width/2,y:g.y+g.height/2}]});
+ await expect(page.locator('.mobile-rail-marker').nth(2)).toHaveAttribute('data-proximity','active');
+ let previousPopoutTop=0;
+ await expect(page.locator('.mobile-progress')).toHaveCount(0);
+ for(const index of [10,20,questions.length-2]){
+ const slot=(await page.locator('.mobile-rail-marker').nth(index).boundingBox())!;
+ await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:g.x+g.width/2,y:slot.y+slot.height/2}]});
+ await expect(page.locator('.mobile-rail-marker').nth(index)).toHaveAttribute('data-proximity','active');
+ const panel=page.getByRole('group',{name:'Choose a nearby question'});const panelBox=(await panel.boundingBox())!;
+ expect(panelBox.y).toBeGreaterThanOrEqual(7);expect(panelBox.y+panelBox.height).toBeLessThanOrEqual(845);
+ const inspected=panel.locator('[data-inspected="true"]');await expect(inspected).toHaveAttribute('aria-label',new RegExp('^Go to question '+(index+1)+':'));
+ await expect(inspected).toHaveCSS('background-color','rgb(227, 239, 238)');
+ if(index===20){expect(panelBox.y).toBeGreaterThan(previousPopoutTop);await page.screenshot({path:info.outputPath('drag-middle.png')});}previousPopoutTop=panelBox.y;
+ }
+ await page.screenshot({path:info.outputPath('drag-neighborhood.png')});await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ await expect(page.getByRole('group',{name:'Choose a nearby question'})).toBeVisible();expect(await page.evaluate(()=>sessionStorage.getItem('capstone.assessment.ui-preview.v1'))).toBe(snapshot);
+ await page.getByRole('button',{name:new RegExp('^Go to question '+(questions.length-1)+':')}).tap();await expect(page.getByRole('heading',{level:1})).toHaveText(questions.at(-2)!.title);
+ await page.getByRole('button',{name:'Review all answers',exact:true}).click();await page.getByRole('button',{name:'3. '+questions[2]!.title,exact:true}).click();
+ await page.screenshot({path:info.outputPath('card-containment.png'),fullPage:true});
+ expect(ticks!.width).toBeGreaterThan(0);await context.close();
 });

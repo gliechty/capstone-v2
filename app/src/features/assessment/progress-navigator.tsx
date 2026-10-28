@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 "use client";
 
-import { useEffect, useId, useRef, useState, type ComponentProps, type CSSProperties, type KeyboardEvent } from "react";
+import { useEffect, useLayoutEffect, useId, useRef, useState, type ComponentProps, type CSSProperties, type KeyboardEvent } from "react";
 
 export type ProgressItem = {
   id: string; number: number; title: string; category: string;
@@ -82,24 +82,6 @@ function DesktopTrack({ items, onSelect }: { items: readonly ProgressItem[]; onS
   </div>;
 }
 
-function MobileTrack({ items, onSelect }: { items: readonly ProgressItem[]; onSelect: (id: string) => void }) {
-  const ref = useRef<HTMLOListElement>(null);
-  return <ol ref={ref} className="mobile-progress-list">
-    {items.map((item, index) => <li key={item.id}>
-      {index === 0 || items[index - 1]?.category !== item.category ? <p className="text-small text-muted">{item.category}</p> : null}
-      <button type="button" className="progress-dot" aria-label={label(item)} aria-current={item.current ? "step" : undefined}
-        onKeyDown={(event) => moveFocus(event, index, ref.current, items.length)}
-        onClick={(event) => {
-          onSelect(item.id);
-          const details = event.currentTarget.closest("details");
-          if (details) details.open = false;
-        }}>
-        <span aria-hidden="true">{symbol(item)}</span><span>{item.number}. {item.title}</span>
-      </button>
-    </li>)}
-  </ol>;
-}
-
 // Presentation only. Assessment state and navigation remain owned by the caller.
 export function ProgressNavigator({ items, onSelect }: { items: readonly ProgressItem[]; onSelect: (id: string) => void }) {
   return <>
@@ -109,10 +91,7 @@ export function ProgressNavigator({ items, onSelect }: { items: readonly Progres
         <DesktopTrack items={items} onSelect={onSelect} />
       </nav>
     </aside>
-    <details className="mobile-progress lg:hidden">
-      <summary>Jump to a question</summary>
-      <nav aria-label="Question progress"><MobileTrack items={items} onSelect={onSelect} /></nav>
-    </details>
+
   </>;
 }
 
@@ -136,6 +115,8 @@ export function MobileQuestionRail({ items, onSelect }: { items: readonly Progre
   const [touching, setTouching] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const rail = useRef<HTMLElement>(null);
+  const activePointer = useRef<number | null>(null);
+  const choices = useRef<HTMLDivElement>(null);
   const panelId = useId();
   const start = Math.max(0, Math.min(inspected - 2, items.length - 5));
   useEffect(() => {
@@ -153,22 +134,56 @@ export function MobileQuestionRail({ items, onSelect }: { items: readonly Progre
     document.addEventListener("click", dismissOutside, true);
     return () => document.removeEventListener("click", dismissOutside, true);
   }, [open]);
-  function inspectPosition(element: HTMLElement, clientY: number) {
-    const box = element.getBoundingClientRect();
-    setInspected(Math.max(0, Math.min(items.length - 1, Math.floor((clientY - box.top) / box.height * items.length))));
+  useLayoutEffect(() => {
+    if (!open) return;
+    function positionChoices() {
+      const panel = choices.current;
+      const marker = trigger.current?.querySelectorAll(".mobile-rail-marker")[inspected];
+      const row = panel?.querySelector<HTMLElement>('[data-inspected="true"]');
+      if (!panel || !marker || !row || !panel.parentElement) return;
+      const anchor = marker.getBoundingClientRect();
+      const container = panel.parentElement.getBoundingClientRect();
+      const rowCenter = row.offsetTop + row.offsetHeight / 2;
+      const top = Math.max(8, Math.min(window.innerHeight - panel.offsetHeight - 8, anchor.top + anchor.height / 2 - rowCenter));
+      panel.style.top = top - container.top + "px";
+    }
+    positionChoices();
+    window.addEventListener("resize", positionChoices);
+    window.addEventListener("scroll", positionChoices, true);
+    return () => { window.removeEventListener("resize", positionChoices); window.removeEventListener("scroll", positionChoices, true); };
+  }, [open, inspected]);
+  function inspectPosition(element: HTMLElement, clientY: number, visible = false) {
+    // Hit-test the actual marker centers, including the inset track. On first
+    // contact use visible bubbles; during dragging use stable, unscaled slots.
+    const markers = element.querySelectorAll(visible ? ".progress-glyph" : ".mobile-rail-marker");
+    let nearest = 0, distance = Infinity;
+    markers.forEach((marker, index) => {
+      const box = marker.getBoundingClientRect();
+      const delta = Math.abs(clientY - (box.top + box.height / 2));
+      if (delta < distance) { nearest = index; distance = delta; }
+    });
+    setInspected(nearest);
   }
   function close() { setTouching(false); setOpen(false); trigger.current?.focus({ preventScroll: true }); }
   return <nav ref={rail} className="mobile-card-rail lg:hidden" aria-label="Active card question navigation">
     <div className="mobile-rail-sticky" onKeyDownCapture={event => { if (event.key === "Escape") { event.preventDefault(); close(); } }}>
       <button ref={trigger} type="button" className="mobile-rail-surface" aria-label="Explore question track"
         aria-expanded={open} aria-controls={panelId} aria-describedby={panelId + "-hint"}
-        onPointerDown={event => { inspectPosition(event.currentTarget, event.clientY); setTouching(true); }}
-        onPointerUp={() => setTouching(false)}
-        onPointerCancel={() => setTouching(false)}
-        onClick={event => {
-          if (event.detail > 0) inspectPosition(event.currentTarget, event.clientY);
-          setOpen(true);
+        onPointerDown={event => {
+          activePointer.current = event.pointerId;
+          event.currentTarget.setPointerCapture(event.pointerId);
+          inspectPosition(event.currentTarget, event.clientY, true);
+          setTouching(true); setOpen(true);
         }}
+        onPointerMove={event => {
+          if (activePointer.current === event.pointerId) inspectPosition(event.currentTarget, event.clientY);
+        }}
+        onPointerUp={event => {
+          activePointer.current = null; setTouching(false);
+          if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+        }}
+        onPointerCancel={() => { activePointer.current = null; setTouching(false); setOpen(false); }}
+        onClick={() => setOpen(true)}
         onKeyDown={event => {
           if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
           event.preventDefault();
@@ -185,11 +200,11 @@ export function MobileQuestionRail({ items, onSelect }: { items: readonly Progre
           </span>)}
         </span>
       </button>
-      <span id={panelId + "-hint"} className="sr-only">Tap a position to explore nearby questions. Arrow keys, Home and End explore; Tab reaches the question choices; Escape closes them.</span>
-      {open && <div id={panelId} className="mobile-rail-choices" role="group" aria-label="Choose a nearby question">
+      <span id={panelId + "-hint"} className="sr-only">Press and drag the track to explore nearby questions; release, then choose a question. Arrow keys, Home and End explore; Tab reaches the question choices; Escape closes them.</span>
+      {open && <div ref={choices} id={panelId} className="mobile-rail-choices" role="group" aria-label="Choose a nearby question">
         <p className="sr-only" aria-live="polite">Questions {start + 1}–{Math.min(start + 5, items.length)} of {items.length}</p>
         {items.slice(start, start + 5).map(item => <TouchChoice key={item.id} type="button" className="nearby-choice"
-          aria-label={"Go to " + label(item).toLowerCase()} aria-current={item.current ? "step" : undefined}
+          data-inspected={items[inspected]?.id === item.id} aria-label={"Go to " + label(item).toLowerCase()} aria-current={item.current ? "step" : undefined}
           onClick={() => { close(); onSelect(item.id); }}>
           <span aria-hidden="true">{symbol(item)}</span><span>{item.number}. {item.title}</span>
         </TouchChoice>)}
