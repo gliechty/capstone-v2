@@ -54,6 +54,31 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[0]!.title);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.mouse.move(0, 0);
+    const currentMarker = width >= 1024
+      ? page.locator('.desktop-progress [aria-current="step"] .progress-glyph')
+      : page.locator('.mobile-rail-marker[data-current="true"] .progress-glyph');
+    await expect(currentMarker).toBeVisible();
+    await expect(currentMarker).toHaveCSS("rotate", "none");
+    const brackets = page.locator(width >= 1024 ? '.desktop-progress [aria-current="step"] .progress-current-brackets' : '.mobile-rail-marker[data-current="true"] .progress-current-brackets');
+    await expect(brackets).toBeVisible();
+    expect(await brackets.evaluate(el => getComputedStyle(el, "::before").borderLeftColor)).toBe("rgb(166, 75, 32)");
+    // Normal markers remain distinct; owner restored the original magnified hover presentation.
+    const neighbors = await page.locator(width >= 1024 ? ".desktop-progress .progress-glyph" : ".mobile-rail-marker .progress-glyph").evaluateAll(nodes => nodes.slice(0, 3).map(el => { const r=el.getBoundingClientRect(); return {top:r.top,bottom:r.bottom}; }));
+    for (let i=1;i<neighbors.length;i++) expect(neighbors[i]!.top).toBeGreaterThanOrEqual(neighbors[i-1]!.bottom);
+    if (width >= 1024) await page.getByRole("button", { name: /^Question 2:/ }).hover();
+    else await page.getByRole("button", { name: "Explore question track" }).focus();
+    const attachment = await brackets.evaluate(el => {
+      const b=el.getBoundingClientRect(), g=el.parentElement!.querySelector(".progress-glyph")!.getBoundingClientRect();
+      return { dx: Math.abs(b.x+b.width/2-g.x-g.width/2), dy: Math.abs(b.y+b.height/2-g.y-g.height/2) };
+    });
+    expect(attachment.dx).toBeLessThan(1);
+    expect(attachment.dy).toBeLessThan(1);
+    const cardOverflow = await page.locator(".question-card").evaluate(el => ({client:el.clientHeight,scroll:el.scrollHeight,overflow:getComputedStyle(el).overflowY}));
+    expect(cardOverflow.scroll).toBe(cardOverflow.client);
+    expect(cardOverflow.overflow).toBe("visible");
+    for (const option of await page.getByRole("radio").all()) { await option.scrollIntoViewIfNeeded(); await expect(option).toBeInViewport(); }
+    await page.mouse.move(0, 0);
     await page.screenshot({ path: testInfo.outputPath("questionnaire.png"), fullPage: true });
     if (width < 1024) await page.locator(".mobile-progress summary").click();
     await page.getByRole("button", { name: /^Question 3:/ }).click();
@@ -88,6 +113,14 @@ test("answers survive canonical navigation, skip, refresh, missing review and th
   await page.getByRole("button", { name: "Skip", exact: true }).click();
   await page.getByRole("button", { name: "Review all answers" }).click();
   await expect(page.getByText(new RegExp((questions.length - 2) + " unanswered questions"))).toBeVisible();
+  await page.getByRole("button", { name: /^Skipped \/ unanswered/ }).click();
+  await expect(page.locator(".review-row")).toHaveCount(questions.length - 2);
+  await expect(page.getByRole("button", { name: "1. " + questions[0]!.title, exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: (numericIndex + 1) + ". " + questions[numericIndex]!.title, exact: true })).toHaveCount(0);
+  await expect(page.locator(".review-row").filter({ hasText: questions[1]!.title })).toContainText("Unanswered · skipped");
+  await page.getByRole("button", { name: "2. " + questions[1]!.title, exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
+  await page.getByRole("button", { name: "Review all answers" }).click();
   await page.getByRole("button", { name: "Review missing answers" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
   await jump(page, numericIndex);
@@ -239,7 +272,8 @@ test("roller navigation uses visible directional motion and local progress stays
     return {top:region.top,bottom:region.bottom,navBottom:nav.bottom,navHeight:nav.height,height:innerHeight,zoom:devicePixelRatio};
   });
   expect(viewport.top).toBeGreaterThanOrEqual(viewport.navBottom);
-  expect(viewport.bottom).toBeLessThanOrEqual(viewport.height);
+  // Browser layout uses fractional CSS pixels; compare the visible pixel edge.
+  expect(Math.round(viewport.bottom)).toBeLessThanOrEqual(viewport.height);
   expect(viewport.navHeight).toBeLessThanOrEqual(64);
   const controls=(await page.locator(".answer-actions").boundingBox())!;
   expect(controls.y+controls.height).toBeLessThanOrEqual(viewport.height);
@@ -254,8 +288,7 @@ test("roller navigation uses visible directional motion and local progress stays
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "forward");
   await page.mouse.move(1400, 10);
   const rail = await page.locator(".desktop-progress .progress-track").boundingBox();
-  const card = await page.locator(".question-card").boundingBox();
-  expect(rail!.height).toBeLessThanOrEqual(card!.height + 60);
+  expect(rail!.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   await page.screenshot({ path: testInfo.outputPath("roller-desktop.png"), fullPage: true });
 
 });
@@ -317,7 +350,7 @@ test("50-question navigator fixture fits every position without collapsed scroll
     return { top: box.top, bottom: box.bottom, height: box.height, client: element.clientHeight, scroll: element.scrollHeight, overflow: getComputedStyle(element).overflowY };
   });
   expect(metrics.height).toBeGreaterThan(400);
-  expect(metrics.height).toBeCloseTo((await page.locator(".question-card").boundingBox())!.height, 0);
+  expect(metrics.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   expect(metrics.scroll).toBe(metrics.client);
   expect(metrics.overflow).toBe("visible");
   const positions = await page.locator(".desktop-progress .progress-dot").evaluateAll((buttons) => buttons.map((button) => {
@@ -332,7 +365,7 @@ test("50-question navigator fixture fits every position without collapsed scroll
     expect(positions[i]!.height).toBeGreaterThan(0);
     if (i) expect(positions[i]!.y).toBeGreaterThanOrEqual(positions[i - 1]!.bottom - 0.1);
   }
-  expect((await page.locator(".desktop-progress .progress-track").boundingBox())!.height).toBeCloseTo((await page.locator(".question-card").boundingBox())!.height, 0);
+  expect((await page.locator(".desktop-progress .progress-track").boundingBox())!.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   await expect(page.getByRole("button", { name: /^Question 50:/ })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.screenshot({ path: testInfo.outputPath("all-50-positions.png"), fullPage: true });
@@ -392,7 +425,7 @@ test("old count/free-text sessions are rejected visibly", async ({ page }) => {
 });
 
 import { readFileSync, readdirSync } from "node:fs";
-test("real 64-question rail tracks active card height without scrolling", async ({ page }, testInfo) => {
+test("real 64-question rail tracks available question stage without scrolling", async ({ page }, testInfo) => {
   const dir = "../BUILD_PACK/07_GOLDEN_TESTS/sme_cases/";
   const fixture = JSON.parse(readFileSync(dir + readdirSync(dir).find(file => file.toLowerCase().includes("construction")), "utf8"));
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -403,7 +436,7 @@ test("real 64-question rail tracks active card height without scrolling", async 
   await page.getByRole("button", { name: "Start questionnaire" }).click();
   await expect(page.locator(".desktop-progress .progress-dot")).toHaveCount(64);
   async function checkGeometry() {
-    const card = (await page.locator(".question-card").boundingBox())!;
+    const card = (await page.locator(".question-region").boundingBox())!;
     const panel = (await page.locator(".desktop-progress .progress-track").boundingBox())!;
     expect(panel.y).toBeCloseTo(card.y, 0);
     expect(panel.height).toBeCloseTo(card.height, 0);
@@ -415,12 +448,15 @@ test("real 64-question rail tracks active card height without scrolling", async 
     expect(markers.at(-1)!.bottom).toBeLessThan(card.y + card.height);
     expect(markers.every(m => m.height > 0)).toBe(true);
     for (let i = 1; i < markers.length; i++) expect(markers[i]!.y).toBeGreaterThanOrEqual(markers[i - 1]!.bottom - 0.1);
-    return card.height;
+    return (await page.locator(".question-card").boundingBox())!.height;
   }
   const first = await checkGeometry();
-  await jump(page, 1); // Different option counts retain the requested bounded card height.
+  await jump(page, 1); // Natural card height accommodates different option counts.
   const second = await checkGeometry();
-  expect(second).toBe(first);
+  expect(first).toBeGreaterThan(0);
+  expect(second).toBeGreaterThan(0);
+  const overflow = await page.locator(".question-card").evaluate(el => ({client:el.clientHeight,scroll:el.scrollHeight}));
+  expect(overflow.scroll).toBe(overflow.client);
   await page.screenshot({ path: testInfo.outputPath("canonical-rail.png"), fullPage: true });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.setViewportSize({ width: 390, height: 844 });
@@ -449,11 +485,11 @@ test("first question removes the previous row; desktop summary precedes full-hei
   const card = (await page.locator(".question-card").boundingBox())!;
   expect(card.y - toolbar.y - toolbar.height).toBeLessThanOrEqual(24);
   await jump(page, 1);
-  const previous = (await page.locator(".question-peek.previous").boundingBox())!;
+  const previous = (await page.locator(".question-toolbar").boundingBox())!;
   const summary = (await page.locator(".progress-summary").boundingBox())!;
   expect(Math.abs((summary.y + summary.height / 2) - (previous.y + previous.height / 2))).toBeLessThan(4);
   const track = (await page.locator(".desktop-progress .progress-track").boundingBox())!;
-  const active = (await page.locator(".question-card").boundingBox())!;
+  const active = (await page.locator(".question-region").boundingBox())!;
   expect(track.y).toBeCloseTo(active.y, 0);
   expect(track.height).toBeCloseTo(active.height, 0);
 });
@@ -477,7 +513,7 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
     if (i) expect(positions[i]!.y).toBeGreaterThanOrEqual(positions[i - 1]!.bottom - 0.1);
   }
   const card = (await page.locator(".question-card").boundingBox())!;
-  const glyph = (await page.locator(".mobile-rail-marker .progress-glyph").first().boundingBox())!;
+  const glyph = (await page.locator('.mobile-rail-marker:not([data-current="true"]) .progress-glyph').first().boundingBox())!;
   expect(glyph.x - (card.x + card.width)).toBeCloseTo(11, 0);
   expect(width - glyph.x - glyph.width).toBeCloseTo(11, 0);
   expect(card.width).toBeGreaterThanOrEqual(width - 48);
@@ -487,13 +523,14 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   await touch.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: box.x + box.width / 2, y: box.y + box.height / 2 }] });
   const magnified = page.locator('.mobile-rail-marker[data-proximity="active"]');
   await expect(magnified).toHaveCount(1);
-  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transform", "matrix(5, 0, 0, 5, 12, 0)");
-  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transition-duration", "0s");
+  await expect(magnified.locator(".progress-symbol")).toHaveCSS("transform", "matrix(3, 0, 0, 3, 12, 0)");
+  await expect(magnified.locator(".progress-symbol")).toHaveCSS("transition-duration", "0s");
   await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   const popout = page.getByRole("group", { name: "Choose a nearby question" });
   await expect(popout.getByRole("button")).toHaveCount(5);
   // Tapping an exposed answer beneath the popout only dismisses it.
   const outsideAnswer = page.getByRole("radio").last();
+  await page.screenshot({ path: testInfo.outputPath("mobile-open-before-dismiss.png"), fullPage: false });
   await outsideAnswer.tap();
   await expect(popout).toHaveCount(0);
   await expect(outsideAnswer).not.toBeChecked();
@@ -537,13 +574,13 @@ test("desktop navigator choices show hover and keyboard focus while retaining cu
   const current = page.getByRole("button", { name: /^Go to question 1:/ });
   const adjacent = page.getByRole("button", { name: /^Go to question 2:/ });
   const normal = await adjacent.evaluate(el => getComputedStyle(el).backgroundColor);
-  const currentMark = await current.evaluate(el => getComputedStyle(el).boxShadow);
+  const currentMark = await current.evaluate(el => getComputedStyle(el).borderLeftWidth);
   await adjacent.hover();
   expect(await adjacent.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe(normal);
   await expect(adjacent).toHaveCSS("text-decoration-line", "underline");
-  expect(await current.evaluate(el => getComputedStyle(el).boxShadow)).toBe(currentMark);
-  expect(currentMark).not.toBe("none");
-  expect(await adjacent.evaluate(el => getComputedStyle(el).boxShadow)).toBe("none");
+  expect(await current.evaluate(el => getComputedStyle(el).borderLeftWidth)).toBe(currentMark);
+  expect(currentMark).toBe("3px");
+  expect(await adjacent.evaluate(el => getComputedStyle(el).borderLeftWidth)).toBe("0px");
   await adjacent.focus();
   await page.keyboard.press("Tab");
   const third = page.getByRole("button", { name: /^Go to question 3:/ });
