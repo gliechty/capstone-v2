@@ -76,3 +76,40 @@ test("multiplier cap applies after the entire product, never after each rule", (
   const rules = [{ ...base, rule_id: "a", multiplier: "2" }, { ...base, rule_id: "b", multiplier: "0.5" }];
   expect(resolveMultiplier({ ...config, MultiplierRules: rules }, q, profile).value).toBe(1);
 });
+
+import { selectImprovementLevers } from "../../src/application/improvement-levers";
+
+test("levers rank approved Golden answers by real weighted gain, include numeric targets, and preserve baseline", () => {
+  const fixture = goldenCases[0]!;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
+  const before = JSON.stringify(answers);
+  const baseline = scoreAssessment(config, fixture.profile, answers);
+  const selected = selectImprovementLevers(config, baseline);
+  expect(selected.levers.map(l => l.id)).toEqual(["U-034", "U-033", "U-035", "U-036", "I-069"]);
+  expect(selected.levers[0]!.options).toEqual(["No", "Some", "Yes"]);
+  sameNumber(selected.levers[0]!.weightedGain, 3.1972789115646307);
+  const combined = { ...answers, "U-034": "Yes", "U-035": "8" };
+  const scenario = scoreAssessment(config, fixture.profile, combined);
+  expect(scenario.categories.find(c => c.category === "Community")!.percent).toBeGreaterThan(baseline.categories.find(c => c.category === "Community")!.percent!);
+  sameNumber(scenario.weightedOverall!, 30.41997828024284);
+  expect(JSON.stringify(answers)).toBe(before);
+  expect(selectImprovementLevers(config, scoreAssessment(config, fixture.profile, {})).levers).toEqual([]);
+  expect(selectImprovementLevers(config, scoreAssessment(config, fixture.profile, { "U-034": "Yes" })).levers).toEqual([]);
+});
+
+test("levers preserve fractional actual answers, disclose U-026 and exclude inherited unbounded water functions", () => {
+  const score = scoreAssessment(config, profile, { "U-026": "12.3456789", "U-031": "33.3333333333" });
+  const selected = selectImprovementLevers(config, score);
+  const renewable = selected.levers.find(l => l.id === "U-026")!;
+  expect(renewable.actual).toBe("12.3456789");
+  expect(renewable.best).toBe("100");
+  expect(renewable.kind).toBe("percent");
+  expect(renewable.note).toContain("total-energy");
+  expect(renewable.note).toContain("electricity");
+  expect(selected.levers.find(l => l.id === "U-031")!.actual).toBe("33.3333333333");
+  const waterProfile = { ...profile, target_market_region: ["South Asia"] };
+  const water = scoreAssessment(config, waterProfile, { "IM-6": "20" });
+  const unresolved = selectImprovementLevers(config, water);
+  expect(unresolved.levers).toEqual([]);
+  expect(unresolved.excluded).toEqual([{ id: "IM-6", reason: "No finite, defensible best answer and scenario range under the current scoring function." }]);
+});

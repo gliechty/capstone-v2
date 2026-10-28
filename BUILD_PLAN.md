@@ -1,3 +1,45 @@
+M7.5 publication authorization — owner2026-10-28: commit/push the reviewed mobile navigation and associated UI/test/record changes; minor UI polish deferred. This supersedes historical uncommitted/pending-publication wording below. No deployment or next-step authorization. Existing verification evidence retained without rerun; publication SHA supplied in handoff/checklist. Broader native-device limitations remain recorded.
+
+M7.5 popout correction verified locally2026-10-28: mobile five-question panel follows the explored marker/thumb, with inspected row aligned near that position and panel clamped to viewport. Explored row is light green; actual current question retains its distinct marker. Redundant Jump dropdown removed; rail keyboard/touch navigation retained. Pressed feedback preserved. Desktop/data/scoring unchanged. Local build CjqGuNSBVBmhDYjraOi-B HTTP200/served identity confirmed, PID23152. Owner/native Samsung review pending. Uncommitted on codex/m7.4-assessment-ui base4346afa; no deployment/provider calls. Current live checklist M7.5 is row43 (rows shifted; earlier row42 references historical).
+
+M7.5 mobile owner correction verified locally2026-10-28: press/drag explores magnified neighborhoods with pointer capture; tap maps to actual visible marker centers, drag to stable slots; no click-time remapping. Mobile-only grid/fieldset minimum-width constraints prevent intrinsic content expansion beneath the rail. Desktop scales/layout unchanged. Build7i4M9LY1SzrFP91S-tT8T HTTP200/served identity verified at localhost3000, PID40352.10 affected browser checks pass1.5min; build/types/affected lint pass. Uncommitted on codex/m7.4-assessment-ui base4346afa; no deployment/provider calls, owner/native-device acceptance pending.
+
+## M7.5 local audit ready for owner review — 2026-10-28
+Accepted M7.4 base4346afa retained on codex/m7.4-assessment-ui. One demonstrated phone-only correction:6rem scroll clearance below two-line sticky stage navigation prevents enlarged-text question-heading occlusion; desktop behavior and auto-advance unchanged. Local build0rjOCStW9NV4jQUggwK_y, HTTP200/served identity verified, PID34692. Changes uncommitted/unpushed; no deployment or paid calls. Owner acceptance and native-device verification pending; no later milestone started.
+
+## M7.5 mobile usability — started 2026-10-28
+Live Build Checklist F1 and row42 including notes loaded. Owner authorizes M7.5 only, prioritizing questionnaire readability and categorical auto-advance; preserve accepted desktop behavior. Branch codex/m7.4-assessment-ui includes4346afa102c707050727880d59342f6e64704f52; initial tree clean. No deployment, paid calls or subsequent milestone. Historical no-M7.5 text below is superseded only by this authorization.
+
+## M7.4 accepted and complete — owner 2026-10-28
+Owner accepted the final local assessment UI: responsive cards, compact header/help, missing-only review, taller rail, moderate bubble magnification, attached orange current brackets and corrected endpoint spacing. This supersedes historical pending-review states below. Scoped commit/push on codex/m7.4-assessment-ui is authorized; no deployment or M7.5. Preserve prior evidence and unrelated work. This acceptance checkpoint contains the nine scoped UI/test/control files; publication SHA is recorded in Build Checklist row41 and the handoff after push.
+
+M7.4 endpoint spacing corrected2026-10-28: desktop edge damping removed, so first/last neighbors use the same spread distances as middle. Sizes3/2.5/2/1.5/1 and attached brackets unchanged; mobile already undamped. Local build w8konXQ28RQ0lya2aJFCK HTTP200/served identity verified, PID19696.2 existing affected browser checks pass19.6s; build/type/affected lint pass. Uncommitted codex/m7.4-assessment-ui base2ccfca2, no paid calls/deployment; owner review pending.
+
+M7.4 owner clarification locally verified2026-10-28: current brackets share bubble transform (move/scale together); size increases halved from original, giving300/250/200/150/100% normal size. Status dots/dashes and hit targets preserved. Build iqP8lE3bDVEqbXAoKDnx3 served localhost3000 HTTP200/identity verified, PID612.5 affected browser checks pass55.1s; build/TypeScript/affected lint pass. Uncommitted codex/m7.4-assessment-ui base2ccfca2, no deployment/paid calls; owner review pending.
+
+M7.4 original ballooning restored2026-10-28 at owner direction, superseding reduced-scale record below: exact a66c3ca5/4/3/2/1 size formula plus original spread/origin restored; orange brackets remain independently unscaled. Local build kla-zKu6DnJFVWr8cEHUI HTTP200/served identity verified, PID8036.5 affected browser checks pass56.7s; build/TypeScript/affected lint pass. Uncommitted codex/m7.4-assessment-ui base2ccfca2, no deployment/paid calls, owner review pending.
+
+M7.4 gentle hover restored2026-10-28: hovered120%, immediate neighbors115%, next pair105%, others100%. Fixed orange brackets/hit slots, no vertical spreading; existing nearby-question panel, keyboard and reduced-motion behavior preserved. Local build vlVVzsi-ZY6Dh10TKNXGf at localhost3000 HTTP200/served identity verified.5 affected browser checks pass57.8s, build/TypeScript and affected lint pass. Uncommitted codex/m7.4-assessment-ui base2ccfca2; no paid calls/deployment; owner review pending.
+
+M7.4 owner-review corrections locally verified2026-10-28; acceptance pending. Natural-height responsive question cards and readable type, non-overlapping answer actions, compact About this assessment disclosure below stages, toolbar count/help, concise mobile jump control, and fixed orange brackets around unchanged status dots/dashes. Marker magnification removed; existing nearby-question panel/keyboard navigation retained. Build r8eBNBs6_B5j7CfCa2gMj at http://localhost:3000/assessment, served identity/HTTP200 verified. All changes remain unstaged/uncommitted on codex/m7.4-assessment-ui base2ccfca2; no providers/deployment.
+
+M7.4 locally implemented/verified2026-10-28, owner review pending. Branch codex/m7.4-assessment-ui from2ccfca2; changes unstaged/uncommitted/unpushed. Orange secondary accents, skipped/unanswered-only review with direct jumps, and full-stage question rail with persistent diamond/number marker. Existing scores, answers, calculator, Levers and provider behavior unchanged. Localhost3000 build ZlWQ4KQTq26v5ywomZbcg HTTP200/served identity verified. No paid calls/deployment; M7.5 remains separate.
+
+## M7.4 — assessment UI start / owner authorization 2026-10-28
+Standing protocol and live Build Checklist v2.0 F1 plus row41 values/notes loaded; row42 identifies separate M7.5 mobile audit. Latest owner instruction authorizes M7.4 only on a new UI branch. M7.3 already accepted, committed and pushed: implementation a66c3ca, release records2ccfca2; remote milestone-7-sliders verified at2ccfca2bbb3fd471850fc9f936116e5985771b7d. Clean starting working tree; no duplicate commit required. New local branch codex/m7.4-assessment-ui starts at that checkpoint; preserved M5/sliders branches and unrelated original checkout.
+Scope: coherent orange secondary/action accent; skipped/unanswered-only review with direct question navigation and distinct existing statuses; taller readable desktop/mobile rail, move answered count/help outside its allocation, persistent orange current marker plus non-color cue and keyboard access. Preserve accepted layout outside these adjustments, answers, scoring, calculator, Levers and provider behavior. Reuse existing skipped state, review/jump actions and navigation components. M7.5 broad mobile audit, M10 polish, M12 reports, M5/M6 remain separate; no paid calls or deployment.
+Effort: first audit timestamp not measured; first recorded timestamp2026-10-28T11:20:29+07:00 (initial reading before this is not measured). Estimate implementation including audit/records20–35min +affected verification10–20min =30–55min combined, moderate confidence. Calibrated against M7.2 review correction25m38: this reuses existing state/scoring and adds bounded rail/filter presentation, while desktop/mobile viewport work may require iteration. Coding-token forecast and actual telemetry unavailable; active/wait split not measured. No retrospective reconstruction. End/elapsed/variance recorded once at completion, not yet complete. Prior deployment LF correction is not applicable to this local UI step.
+Verification plan: reuse approved assessment browser checks and saved typecheck/lint/build as affected; inspect desktop/mobile at100% zoom. Audit existing assertions before changing tests; obtain authorization for genuinely new assertions. No tests run at this planning checkpoint. No runtime implementation yet: scope/estimate presented to owner before implementation. M7.4 records remain uncommitted; new branch not pushed, no PR/merge.
+Current2026-10-27: M7.3 accepted/complete. Accepted M7 Levers implementation a66c3ca pushed and live at https://preview.flowagentai.website, release mosaic-a7a30a44c5bc64d35aac; non-generating HTTPS/build/budget verification passed. USD1/day and saved data preserved. No main merge; M7.4 deferred until tomorrow, not started. Full deployment/effort evidence in EXECUTION_PLAN.md.
+
+Owner acceptance2026-10-27: M7.3 accepted and complete with documented limitations/deferred polish. Owner now authorizes scoped commit/push and deployment of accepted M7 Levers to the existing clean MOSAIC server. Supersedes earlier no-commit/no-deployment wording for this release only. M7.4 deferred until tomorrow; no implementation now. Release session start2026-10-27T21:19:10+07; estimate commit/package3–5min +server build/verification5–7min =8–12min total, based on prior M4 deployment9m47. Coding-token forecast/telemetry unavailable. Preserve saved data, credentials and USD1/day Bangkok budget; no paid generation tests. Existing passing evidence reused.
+
+Current2026-10-27: M7.3 technical review complete, ready for owner acceptance; M7.1/M7.2 already accepted. Existing evidence satisfies bounded Levers requirements; no scoring/config changes or test reruns needed. Deferred M10 cosmetics and M12 reports remain separate. M7.4 not started. Work remains local/uncommitted on milestone-7-sliders basefb9206e; no deployment or publication. Detailed review/effort in EXECUTION_PLAN.md.
+
+Current owner acceptance2026-10-26: M7.2 accepted/DONE locally; cosmetics deferred to M10.1/M10.2 pending Guo review. M12.1 is the final report presentation and multi-format export milestone, planned only. M7.3 remains a separate gate. No publication/deployment or later implementation in this closeout.
+
+Current M7 status2026-10-26: M7.1 accepted/published fb9206e; M7.2 personalized levers with owner-authorized compact sticky feedback and scenario-report appendix ready for local review, uncommitted, not deployed. Existing-engine ranking and combined scenarios preserve actual answers; unbounded numeric cases excluded without methodology changes. Verification/effort and local walkthrough in EXECUTION_PLAN.md. M7.3 does not start automatically.
+
 ## Current authority — M4 accepted; closeout and M5.1 only (owner 2026-10-26)
 Live Build Checklist v2.0 F1 and rows24–28 loaded. M4.4 is published f9229a1; owner accepts M4.5 and M4 as complete and authorizes scoped tests/records commit/push and normal PR merge into main. Preserve unrelated dirty deployment/incident/skill files. No deployment. After merge, publish milestone-5-guided-data-entry from updated main and perform M5.1 feasibility/architecture only; no full chat/upload implementation, dependencies, new tests or paid/quota-consuming experiments. M5.2/M5.3 require separate authorization. Historical factors remain reference-only; U-026 benchmark wording and country-specific recommendation tailoring remain unresolved/deferred, Scope3 excluded.
 
@@ -402,15 +444,15 @@ Let the user explore how plausible operational improvements could affect assessm
 
 ## Expected behavior
 
-- recommendation logic identifies likely improvement opportunities;
+- recommendation prose may explain opportunities but does not define mappings, bounds or scoring; deterministic counterfactual comparison selects opportunities;
 - eligible opportunities are mapped to known manipulable canonical metrics;
-- the system selects approximately 2–3 useful levers;
+- owner correction2026-10-26: standalone Results section Explore your improvement levers selects up to4–5 answered/scored opportunities by attainable industry-weighted score gain, using the existing engine and fixed remaining answers/context; unanswered and zero-gain questions are not levers;
 - the user can adjust those values;
-- relevant what-if scores/metrics update immediately.
+- relevant what-if scores/metrics update immediately through one combined scenario recomputation, without changing actual answers; selected levers stay stable and Reset to actual answers restores baseline. M7.1 revised specification, interaction details, unresolved numeric precision/bounds and Golden worked example are in EXECUTION_PLAN.md; owner accepted M7.1 on2026-10-26 and authorized M7.2 locally. Percentage controls step1 point with finer numeric entry and exact reset; binary/categorical controls retain existing options; numeric cases without finite defensible optimum/range are excluded without method changes. No deployment.
 
 Only metrics with a defined deterministic relationship to scoring should become levers.
 
-The recommendation model may help rank/select eligible levers, but it must not invent the mathematical relationship between the lever and the score.
+Accepted M7.1 design: the deterministic engine selects and ranks eligible levers. Recommendation prose may provide context but does not select levers or define scoring relationships. This supersedes the historical proposal for model-assisted selection.
 
 ## Review gate
 
@@ -468,6 +510,14 @@ Do not:
 Show exactly what the source data supports before deciding how it appears in the product.
 
 ---
+
+# Milestone 12 — Final report presentation and multi-format downloads
+## M12.1 — Planned, not started
+Owner2026-10-26 requests a final Report milestone. Planned only, not started: improve report color, MOSAIC branding, readable formatting/hierarchy and page layout; provide several downloadable formats (exact set to be selected when scoped). Preserve authoritative actual scores/answers, evidence/limitations and separately labeled hypothetical appendix. Current HTML/print-to-PDF functionality remains accepted as the working baseline. Review proposed formats/layout before implementation; no new library, provider call or deployment authorized by this planning entry. Final delivery placement after applicable functional work/review; optional research is not a prerequisite.
+
+## Deferred visual wrap-up cross-reference
+Owner2026-10-26: M7.2 accepted/DONE. Cosmetic follow-up only, pending Guo review: distinguish actual/hypothetical colors; per-card signed point changes with up/down arrows and accessible non-color cues; consider removing visible keyboard-help copy while retaining keyboard access; number levers sequentially in current leverage order; icons via M10.2; minor site-wide branding/color/polish coherence. Do not change ranking, scoring or add independent gains to combined scenario scores. Exact per-card contribution presentation to be scoped when scheduled; not a blocker for accepted M7.2.
+M10.1/M10.2 are existing checklist backlog IDs; M11.1 optional research remains separate and is not a prerequisite for final report delivery.
 
 # Cross-cutting portability and security requirements
 

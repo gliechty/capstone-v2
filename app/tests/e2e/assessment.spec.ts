@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
+import { MobileQuestionRail, ProgressNavigator, type ProgressItem } from "../../src/features/assessment/progress-navigator";
 
 import { loadCanonicalConfig } from "../../src/adapters/config-repository";
 import { assessmentCatalog, selectedQuestions } from "../../src/application/assessment-catalog";
@@ -13,7 +13,12 @@ const numericIndex = questions.findIndex(q => q.kind === "numeric");
 const percentIndex = questions.findIndex(q => q.kind === "percent");
 const numeric = questions[numericIndex]!;
 const numericLabel = "Your answer" + (numeric.unit ? " (" + numeric.unit + ")" : "");
-async function jump(page: Page, index: number) { await page.getByRole("button", { name: new RegExp("^Question " + (index + 1) + ":") }).click(); }
+async function jump(page: Page, index: number) {
+ if(await page.locator('.desktop-progress').isVisible()){await page.getByRole('button',{name:new RegExp('^Question '+(index+1)+':')}).click();return;}
+ const rail=page.getByRole('button',{name:'Explore question track'});await rail.focus();await rail.press('Home');
+ for(let i=0;i<index;i++)await rail.press('ArrowDown');
+ await page.getByRole('button',{name:new RegExp('^Go to question '+(index+1)+':')}).click();
+}
 async function fillSetup(page: Page, overrides: Record<string, string> = {}) {
   const values = { companyName: "Example workshop", country: "China", ...profile, targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", ...overrides };
   for (const [name, value] of Object.entries(values)) {
@@ -54,14 +59,38 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[0]!.title);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.mouse.move(0, 0);
+    const currentMarker = width >= 1024
+      ? page.locator('.desktop-progress [aria-current="step"] .progress-glyph')
+      : page.locator('.mobile-rail-marker[data-current="true"] .progress-glyph');
+    await expect(currentMarker).toBeVisible();
+    await expect(currentMarker).toHaveCSS("rotate", "none");
+    const brackets = page.locator(width >= 1024 ? '.desktop-progress [aria-current="step"] .progress-current-brackets' : '.mobile-rail-marker[data-current="true"] .progress-current-brackets');
+    await expect(brackets).toBeVisible();
+    expect(await brackets.evaluate(el => getComputedStyle(el, "::before").borderLeftColor)).toBe("rgb(166, 75, 32)");
+    // Normal markers remain distinct; owner restored the original magnified hover presentation.
+    const neighbors = await page.locator(width >= 1024 ? ".desktop-progress .progress-glyph" : ".mobile-rail-marker .progress-glyph").evaluateAll(nodes => nodes.slice(0, 3).map(el => { const r=el.getBoundingClientRect(); return {top:r.top,bottom:r.bottom}; }));
+    for (let i=1;i<neighbors.length;i++) expect(neighbors[i]!.top).toBeGreaterThanOrEqual(neighbors[i-1]!.bottom);
+    if (width >= 1024) await page.getByRole("button", { name: /^Question 2:/ }).hover();
+    else await page.getByRole("button", { name: "Explore question track" }).focus();
+    const attachment = await brackets.evaluate(el => {
+      const b=el.getBoundingClientRect(), g=el.parentElement!.querySelector(".progress-glyph")!.getBoundingClientRect();
+      return { dx: Math.abs(b.x+b.width/2-g.x-g.width/2), dy: Math.abs(b.y+b.height/2-g.y-g.height/2) };
+    });
+    expect(attachment.dx).toBeLessThan(1);
+    expect(attachment.dy).toBeLessThan(1);
+    const cardOverflow = await page.locator(".question-card").evaluate(el => ({client:el.clientHeight,scroll:el.scrollHeight,overflow:getComputedStyle(el).overflowY}));
+    expect(cardOverflow.scroll).toBe(cardOverflow.client);
+    expect(cardOverflow.overflow).toBe("visible");
+    for (const option of await page.getByRole("radio").all()) { await option.scrollIntoViewIfNeeded(); await expect(option).toBeInViewport(); }
+    await page.mouse.move(0, 0);
     await page.screenshot({ path: testInfo.outputPath("questionnaire.png"), fullPage: true });
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
-    await page.getByRole("button", { name: /^Question 3:/ }).click();
+    await jump(page,2);
     await expect(page.locator(".category-label")).toContainText(questions[2]!.category);
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
-    await expect(page.getByRole("button", { name: /^Question 3:/ })).toHaveAttribute("aria-current", "step");
+    if(width<1024){await page.getByRole('button',{name:'Explore question track'}).focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowDown');await page.keyboard.press('ArrowDown');}
+    await expect(page.getByRole("button", { name: width<1024 ? /^Go to question 3:/ : /^Question 3:/ })).toHaveAttribute("aria-current", "step");
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    if (width < 1024) await page.locator(".mobile-progress summary").click();
+    if (width < 1024) await page.keyboard.press("Escape");
     await page.screenshot({ path: testInfo.outputPath("category-transition.png"), fullPage: true });
     expect(errors).toEqual([]);
   });
@@ -88,6 +117,14 @@ test("answers survive canonical navigation, skip, refresh, missing review and th
   await page.getByRole("button", { name: "Skip", exact: true }).click();
   await page.getByRole("button", { name: "Review all answers" }).click();
   await expect(page.getByText(new RegExp((questions.length - 2) + " unanswered questions"))).toBeVisible();
+  await page.getByRole("button", { name: /^Skipped \/ unanswered/ }).click();
+  await expect(page.locator(".review-row")).toHaveCount(questions.length - 2);
+  await expect(page.getByRole("button", { name: "1. " + questions[0]!.title, exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: (numericIndex + 1) + ". " + questions[numericIndex]!.title, exact: true })).toHaveCount(0);
+  await expect(page.locator(".review-row").filter({ hasText: questions[1]!.title })).toContainText("Unanswered · skipped");
+  await page.getByRole("button", { name: "2. " + questions[1]!.title, exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
+  await page.getByRole("button", { name: "Review all answers" }).click();
   await page.getByRole("button", { name: "Review missing answers" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
   await jump(page, numericIndex);
@@ -206,10 +243,9 @@ test("touch selection advances and mobile compact navigation opens on tap", asyn
   await page.getByRole("button", { name: "Start questionnaire" }).tap();
   await page.getByRole("radio", { name: "Yes", exact: true }).tap();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(questions[1]!.title);
-  await page.locator(".mobile-progress summary").tap();
-  await page.getByRole("button", { name: new RegExp("^Question " + (numericIndex + 1) + ":") }).tap();
+  await jump(page,numericIndex);
   await expect(page.getByLabel(numericLabel, { exact: true })).toBeVisible();
-  await expect(page.locator(".mobile-progress")).not.toHaveAttribute("open");
+  await expect(page.getByRole("button",{name:"Explore question track"})).toHaveAttribute("aria-expanded","false");
   await context.close();
 });
 
@@ -239,7 +275,8 @@ test("roller navigation uses visible directional motion and local progress stays
     return {top:region.top,bottom:region.bottom,navBottom:nav.bottom,navHeight:nav.height,height:innerHeight,zoom:devicePixelRatio};
   });
   expect(viewport.top).toBeGreaterThanOrEqual(viewport.navBottom);
-  expect(viewport.bottom).toBeLessThanOrEqual(viewport.height);
+  // Browser layout uses fractional CSS pixels; compare the visible pixel edge.
+  expect(Math.round(viewport.bottom)).toBeLessThanOrEqual(viewport.height);
   expect(viewport.navHeight).toBeLessThanOrEqual(64);
   const controls=(await page.locator(".answer-actions").boundingBox())!;
   expect(controls.y+controls.height).toBeLessThanOrEqual(viewport.height);
@@ -254,8 +291,7 @@ test("roller navigation uses visible directional motion and local progress stays
   await expect(page.locator(".question-stage")).toHaveAttribute("data-direction", "forward");
   await page.mouse.move(1400, 10);
   const rail = await page.locator(".desktop-progress .progress-track").boundingBox();
-  const card = await page.locator(".question-card").boundingBox();
-  expect(rail!.height).toBeLessThanOrEqual(card!.height + 60);
+  expect(rail!.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   await page.screenshot({ path: testInfo.outputPath("roller-desktop.png"), fullPage: true });
 
 });
@@ -308,7 +344,8 @@ test("50-question navigator fixture fits every position without collapsed scroll
   const styles = await page.locator('link[rel="stylesheet"]').evaluateAll((links) => links.map((link) => link.outerHTML).join(""));
   const fontClass = await page.locator("html").getAttribute("class") ?? "";
   const markup = renderToStaticMarkup(createElement(ProgressNavigator, { items, onSelect: () => {} }));
-  await page.setContent('<!doctype html><html lang="en"><head><title>Navigator fixture</title>' + styles + '</head><body><main class="page-container"><h1 class="text-subheading">50-question navigation fixture</h1><div class="assessment-grid">' + markup + '<section class="question-region"><div class="question-toolbar">Question fixture</div><div class="question-stage"><div class="question-peek-boundary">Previous</div><article class="question-card" style="min-height:640px"><h2>Active question fixture</h2></article><div class="question-peek-boundary">Next</div></div></section></div></main></body></html>');
+  const mobileMarkup=renderToStaticMarkup(createElement(MobileQuestionRail,{items,onSelect:()=>{}}));
+  await page.setContent('<!doctype html><html lang="en"><head><title>Navigator fixture</title>' + styles + '</head><body><main class="page-container"><h1 class="text-subheading">50-question navigation fixture</h1><div class="assessment-grid">' + markup + '<section class="question-region"><div class="question-toolbar">Question fixture</div><div class="question-stage"><div class="question-peek-boundary">Previous</div><article class="question-card" style="min-height:640px"><h2>Active question fixture</h2></article><div class="question-peek-boundary">Next</div>'+mobileMarkup+'</div></section></div></main></body></html>');
   await page.locator("html").evaluate((element, className) => { element.setAttribute("class", className); }, fontClass);
   await page.evaluate(() => document.fonts.ready);
   const track = page.locator(".desktop-progress .progress-track");
@@ -317,7 +354,7 @@ test("50-question navigator fixture fits every position without collapsed scroll
     return { top: box.top, bottom: box.bottom, height: box.height, client: element.clientHeight, scroll: element.scrollHeight, overflow: getComputedStyle(element).overflowY };
   });
   expect(metrics.height).toBeGreaterThan(400);
-  expect(metrics.height).toBeCloseTo((await page.locator(".question-card").boundingBox())!.height, 0);
+  expect(metrics.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   expect(metrics.scroll).toBe(metrics.client);
   expect(metrics.overflow).toBe("visible");
   const positions = await page.locator(".desktop-progress .progress-dot").evaluateAll((buttons) => buttons.map((button) => {
@@ -332,14 +369,13 @@ test("50-question navigator fixture fits every position without collapsed scroll
     expect(positions[i]!.height).toBeGreaterThan(0);
     if (i) expect(positions[i]!.y).toBeGreaterThanOrEqual(positions[i - 1]!.bottom - 0.1);
   }
-  expect((await page.locator(".desktop-progress .progress-track").boundingBox())!.height).toBeCloseTo((await page.locator(".question-card").boundingBox())!.height, 0);
+  expect((await page.locator(".desktop-progress .progress-track").boundingBox())!.height).toBeCloseTo((await page.locator(".question-region").boundingBox())!.height, 0);
   await expect(page.getByRole("button", { name: /^Question 50:/ })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.screenshot({ path: testInfo.outputPath("all-50-positions.png"), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.locator(".mobile-progress summary").click();
-  await page.getByRole("button", { name: /^Question 50:/ }).focus();
-  await expect(page.getByRole("button", { name: /^Question 50:/ })).toBeInViewport();
+  await page.locator(".mobile-rail-marker").last().scrollIntoViewIfNeeded();
+  await expect(page.locator(".mobile-rail-marker").last()).toBeInViewport();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
@@ -392,7 +428,7 @@ test("old count/free-text sessions are rejected visibly", async ({ page }) => {
 });
 
 import { readFileSync, readdirSync } from "node:fs";
-test("real 64-question rail tracks active card height without scrolling", async ({ page }, testInfo) => {
+test("real 64-question rail tracks available question stage without scrolling", async ({ page }, testInfo) => {
   const dir = "../BUILD_PACK/07_GOLDEN_TESTS/sme_cases/";
   const fixture = JSON.parse(readFileSync(dir + readdirSync(dir).find(file => file.toLowerCase().includes("construction")), "utf8"));
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -403,7 +439,7 @@ test("real 64-question rail tracks active card height without scrolling", async 
   await page.getByRole("button", { name: "Start questionnaire" }).click();
   await expect(page.locator(".desktop-progress .progress-dot")).toHaveCount(64);
   async function checkGeometry() {
-    const card = (await page.locator(".question-card").boundingBox())!;
+    const card = (await page.locator(".question-region").boundingBox())!;
     const panel = (await page.locator(".desktop-progress .progress-track").boundingBox())!;
     expect(panel.y).toBeCloseTo(card.y, 0);
     expect(panel.height).toBeCloseTo(card.height, 0);
@@ -415,12 +451,15 @@ test("real 64-question rail tracks active card height without scrolling", async 
     expect(markers.at(-1)!.bottom).toBeLessThan(card.y + card.height);
     expect(markers.every(m => m.height > 0)).toBe(true);
     for (let i = 1; i < markers.length; i++) expect(markers[i]!.y).toBeGreaterThanOrEqual(markers[i - 1]!.bottom - 0.1);
-    return card.height;
+    return (await page.locator(".question-card").boundingBox())!.height;
   }
   const first = await checkGeometry();
-  await jump(page, 1); // Different option counts retain the requested bounded card height.
+  await jump(page, 1); // Natural card height accommodates different option counts.
   const second = await checkGeometry();
-  expect(second).toBe(first);
+  expect(first).toBeGreaterThan(0);
+  expect(second).toBeGreaterThan(0);
+  const overflow = await page.locator(".question-card").evaluate(el => ({client:el.clientHeight,scroll:el.scrollHeight}));
+  expect(overflow.scroll).toBe(overflow.client);
   await page.screenshot({ path: testInfo.outputPath("canonical-rail.png"), fullPage: true });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.setViewportSize({ width: 390, height: 844 });
@@ -449,11 +488,11 @@ test("first question removes the previous row; desktop summary precedes full-hei
   const card = (await page.locator(".question-card").boundingBox())!;
   expect(card.y - toolbar.y - toolbar.height).toBeLessThanOrEqual(24);
   await jump(page, 1);
-  const previous = (await page.locator(".question-peek.previous").boundingBox())!;
+  const previous = (await page.locator(".question-toolbar").boundingBox())!;
   const summary = (await page.locator(".progress-summary").boundingBox())!;
   expect(Math.abs((summary.y + summary.height / 2) - (previous.y + previous.height / 2))).toBeLessThan(4);
   const track = (await page.locator(".desktop-progress .progress-track").boundingBox())!;
-  const active = (await page.locator(".question-card").boundingBox())!;
+  const active = (await page.locator(".question-region").boundingBox())!;
   expect(track.y).toBeCloseTo(active.y, 0);
   expect(track.height).toBeCloseTo(active.height, 0);
 });
@@ -477,7 +516,7 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
     if (i) expect(positions[i]!.y).toBeGreaterThanOrEqual(positions[i - 1]!.bottom - 0.1);
   }
   const card = (await page.locator(".question-card").boundingBox())!;
-  const glyph = (await page.locator(".mobile-rail-marker .progress-glyph").first().boundingBox())!;
+  const glyph = (await page.locator('.mobile-rail-marker:not([data-current="true"]) .progress-glyph').first().boundingBox())!;
   expect(glyph.x - (card.x + card.width)).toBeCloseTo(11, 0);
   expect(width - glyph.x - glyph.width).toBeCloseTo(11, 0);
   expect(card.width).toBeGreaterThanOrEqual(width - 48);
@@ -487,13 +526,16 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   await touch.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: box.x + box.width / 2, y: box.y + box.height / 2 }] });
   const magnified = page.locator('.mobile-rail-marker[data-proximity="active"]');
   await expect(magnified).toHaveCount(1);
-  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transform", "matrix(5, 0, 0, 5, 12, 0)");
-  await expect(magnified.locator(".progress-glyph")).toHaveCSS("transition-duration", "0s");
+  await expect(magnified.locator(".progress-symbol")).toHaveCSS("transform", "matrix(3, 0, 0, 3, 12, 0)");
+  await expect(magnified.locator(".progress-symbol")).toHaveCSS("transition-duration", "0s");
   await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   const popout = page.getByRole("group", { name: "Choose a nearby question" });
   await expect(popout.getByRole("button")).toHaveCount(5);
   // Tapping an exposed answer beneath the popout only dismisses it.
   const outsideAnswer = page.getByRole("radio").last();
+  await page.screenshot({ path: testInfo.outputPath("mobile-open-before-dismiss.png"), fullPage: false });
+  // Explore the first neighborhood so an answer is exposed even at 320px.
+  await surface.press('Home');
   await outsideAnswer.tap();
   await expect(popout).toHaveCount(0);
   await expect(outsideAnswer).not.toBeChecked();
@@ -537,13 +579,13 @@ test("desktop navigator choices show hover and keyboard focus while retaining cu
   const current = page.getByRole("button", { name: /^Go to question 1:/ });
   const adjacent = page.getByRole("button", { name: /^Go to question 2:/ });
   const normal = await adjacent.evaluate(el => getComputedStyle(el).backgroundColor);
-  const currentMark = await current.evaluate(el => getComputedStyle(el).boxShadow);
+  const currentMark = await current.evaluate(el => getComputedStyle(el).borderLeftWidth);
   await adjacent.hover();
   expect(await adjacent.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe(normal);
   await expect(adjacent).toHaveCSS("text-decoration-line", "underline");
-  expect(await current.evaluate(el => getComputedStyle(el).boxShadow)).toBe(currentMark);
-  expect(currentMark).not.toBe("none");
-  expect(await adjacent.evaluate(el => getComputedStyle(el).boxShadow)).toBe("none");
+  expect(await current.evaluate(el => getComputedStyle(el).borderLeftWidth)).toBe(currentMark);
+  expect(currentMark).toBe("3px");
+  expect(await adjacent.evaluate(el => getComputedStyle(el).borderLeftWidth)).toBe("0px");
   await adjacent.focus();
   await page.keyboard.press("Tab");
   const third = page.getByRole("button", { name: /^Go to question 3:/ });
@@ -622,4 +664,162 @@ test("Country search distinguishes a query from selection and supports browsing 
  await expect(page.getByRole("radio",{name:/Use emissions calculator/})).toHaveCount(0);
  await expect(page.getByRole("button",{name:"Start questionnaire",exact:true})).toBeVisible();
  await page.reload();expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).profile.country)).toBe("Japan");
+});
+
+import { goldenCases } from "../helpers/legacy-scoring";
+import { scoreAssessment } from "../../src/domain/scoring/score-assessment";
+
+test("levers use approved Golden ranking, combined scenario, keyboard and reset without changing saved assessment", async ({ page }, testInfo) => {
+  await page.setViewportSize({width:1440,height:768});
+  const fixture = goldenCases[0]!;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]));
+  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: "251 - 500", country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(";"), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: "" },
+    answers, skipped: [] };
+  let providerPosts = 0;
+  page.on("request", request => { if (request.url().includes("/api/assessment-recommendations") && request.method() === "POST") providerPosts++; });
+  await page.addInitScript(s => { sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)); }, session);
+  await page.goto("/results");
+  const section = page.getByRole("region", { name: "Explore your improvement levers" });
+  await expect(section.getByRole("slider")).toHaveCount(5);
+  const saved = await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
+  const first = section.getByRole("slider").first();
+  await expect(first).toHaveAttribute("aria-valuetext", "No");
+  await first.focus(); await page.keyboard.press("End");
+  await expect(first).toHaveAttribute("aria-valuetext", "Yes");
+  await section.getByRole("textbox", { name: "U-035 scenario value" }).fill("8");
+  const expected = scoreAssessment(loadCanonicalConfig().config, fixture.profile, { ...answers, "U-034": "Yes", "U-035": "8" });
+  const weighted = section.getByRole("row").filter({ has: page.getByRole("rowheader", { name: "Industry-weighted overall", exact: true }) });
+  await section.getByText("Full score comparison",{exact:true}).click();
+  await expect(weighted.getByRole("cell").nth(1)).toHaveText(expected.weightedOverall!.toFixed(2));
+  await section.getByText("Full score comparison",{exact:true}).click();
+  const active=section.getByRole("textbox",{name:"U-035 scenario value"});
+  await active.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(active).toBeInViewport();
+  expect(await page.evaluate(()=>visualViewport?.scale)).toBe(1);
+  const marker=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-035 scenario value"})}).locator(".lever-actual-marker");
+  await expect(marker).toHaveText("Actual");
+  await page.screenshot({path:testInfo.outputPath("levers-desktop-feedback.png")});
+  const downloadEvent=page.waitForEvent("download");
+  await section.getByRole("button",{name:"Download report with hypothetical levers"}).filter({visible:true}).click();
+  const download=await downloadEvent;
+  const stream=await download.createReadStream();let report="";
+  for await(const chunk of stream!)report+=chunk.toString();
+  expect(report).toContain('id="hypothetical-levers"');
+  expect(report).toContain(expected.weightedOverall!.toFixed(2));
+  expect(report).toContain("The actual assessment and recommendations above are unchanged");
+  await section.getByText("Full score comparison",{exact:true}).click();
+  expect(await page.evaluate(() => sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(saved);
+  await section.getByRole("button", { name: "Reset to actual answers" }).click();
+  await expect(first).toHaveAttribute("aria-valuetext", "No");
+  await expect(section.getByRole("textbox", { name: "U-035 scenario value" })).toHaveValue("0");
+  await expect(weighted.getByRole("cell").nth(1)).toHaveText("24.43");
+  expect((await new AxeBuilder({ page }).include("#improvement-levers").analyze()).violations).toEqual([]);
+  await section.getByText("Full score comparison",{exact:true}).click();
+  await page.setViewportSize({ width: 390, height: 900 });
+  await expect(first).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await first.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(first).toBeInViewport();
+  await page.screenshot({path:testInfo.outputPath("levers-mobile-feedback.png")});
+  const lastSlider=section.getByRole("slider").last();
+  await lastSlider.scrollIntoViewIfNeeded();
+  await expect(section.locator(".lever-headline")).toBeInViewport();
+  await expect(lastSlider).toBeInViewport();
+  await page.screenshot({path:testInfo.outputPath("levers-mobile-sticky.png")});
+  await page.reload();
+  await expect(section.getByRole("slider").first()).toHaveAttribute("aria-valuetext", "No");
+  expect(providerPosts).toBe(0);
+});
+
+test("levers percentage entry preserves exact actual value and reset", async ({ page }) => {
+  const fixture = goldenCases[0]!;
+  const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: "251 - 500", country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(";"), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: "" },
+    answers: { "U-026": "12.3456789", "U-031": "33.3333333333" }, skipped: [] };
+  await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), session);
+  await page.goto("/results");
+  const section = page.getByRole("region", { name: "Explore your improvement levers" });
+  const value = section.getByRole("textbox", { name: "U-026 scenario value" });
+  await expect(value).toHaveValue("12.3456789");
+  const slider = section.getByRole("slider", { name: /What percentage of your energy/ });
+  await slider.focus(); await page.keyboard.press("ArrowRight");
+  await expect(value).toHaveValue("13.3456789");
+  await value.fill("15.123456789");
+  await expect(slider).toHaveAttribute("aria-valuetext", "15.123456789 %");
+  const card=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-026 scenario value"})});
+  const beforeMarker=await card.locator(".lever-track").getAttribute("style");
+  await value.fill("5");
+  await expect(card.getByText("Lower than actual",{exact:false})).toBeVisible();
+  expect((await card.locator(".lever-track").getAttribute("style"))?.split(";")[0]).toBe(beforeMarker?.split(";")[0]);
+  await value.fill("101");
+  await expect(section.getByRole("alert").first()).toContainText("0 to 100");
+  await section.getByRole("button", { name: "Reset to actual answers" }).click();
+  await expect(value).toHaveValue("12.3456789");
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).answers)).toEqual(session.answers);
+});
+
+for (const viewport of [{width:320,height:740},{width:390,height:844},{width:844,height:390},{width:768,height:1024}]) test("M7.5 touch labels, readable options and numeric persistence "+viewport.width, async ({browser,baseURL},info)=>{
+ const context=await browser.newContext({viewport,hasTouch:true,isMobile:true,baseURL,reducedMotion:"reduce"});const page=await context.newPage();
+ await start(page);
+ await page.locator('.choice-option span').filter({hasText:/^Yes$/}).tap();
+ await expect(page.getByRole('heading',{level:1})).toHaveText(questions[1]!.title);
+ await page.waitForTimeout(1000);await expect(page.getByRole('heading',{level:1})).toHaveText(questions[1]!.title);
+ const choice=page.locator('.choice-option span').last();const answer=await choice.innerText();await choice.tap();
+ await expect(page.getByRole('heading',{level:1})).toHaveText(questions[2]!.title);
+ const stored=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));expect(stored.answers[questions[1]!.id]).toBe(answer);
+ for(const index of [numericIndex,percentIndex].filter(i=>i>=0)){
+ const q=questions[index]!;await jump(page,index);
+ await page.getByRole('textbox',{name:/Your answer/}).fill('3');await page.waitForTimeout(1000);await expect(page.getByRole('heading',{level:1})).toHaveText(q.title);
+ await page.getByRole('button',{name:'Continue',exact:true}).tap();await page.reload();
+ expect(await page.evaluate(id=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).answers[id],q.id)).toBe('3');
+ }
+ const longest=questions.reduce((best,q,i)=>q.title.length+('options' in q?q.options.join('').length:0)>questions[best]!.title.length+('options' in questions[best]!?(questions[best] as {options:readonly string[]}).options.join('').length:0)?i:best,0);
+ await jump(page,longest);
+ await page.evaluate(()=>{document.documentElement.style.fontSize='125%';});
+ const card=page.locator('.question-card');expect(await card.evaluate(el=>el.scrollHeight<=el.clientHeight+1)).toBe(true);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ for(const option of await page.getByRole('radio').all()){await option.scrollIntoViewIfNeeded();await expect(option).toBeInViewport();}
+ await page.getByRole('heading',{level:1}).evaluate(el=>el.scrollIntoView({block:'start'}));
+ const headingBox=(await page.getByRole('heading',{level:1}).boundingBox())!,navBox=(await page.getByRole('navigation',{name:'Assessment stages'}).boundingBox())!;expect(headingBox.y).toBeGreaterThanOrEqual(navBox.y+navBox.height);
+ await page.screenshot({path:info.outputPath('mobile-long-question.png'),fullPage:false});
+ await context.close();
+});
+
+for(const width of [280,320,390])test("M7.5 exact rail touch and drag containment "+width,async({browser,baseURL},info)=>{
+ const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:true,baseURL,reducedMotion:"reduce"});const page=await context.newPage();await start(page);
+ await page.getByRole('button',{name:'Review all answers',exact:true}).click();await page.getByRole('button',{name:'3. '+questions[2]!.title,exact:true}).click();
+ await page.getByRole('radio',{name:'Yes',exact:true}).focus();await page.keyboard.press('Space');
+ const card=page.locator('.question-card'),rail=page.locator('.mobile-rail-markers');
+ const bounds=await card.boundingBox(),ticks=await rail.boundingBox();expect(bounds!.x+bounds!.width).toBeLessThanOrEqual(width);expect(await card.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
+ const markerBox=(await page.locator('.mobile-rail-marker .progress-glyph').first().boundingBox())!;expect(bounds!.x+bounds!.width).toBeLessThan(markerBox.x);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const glyph=page.locator('.mobile-rail-marker[data-current="true"] .progress-glyph');await glyph.scrollIntoViewIfNeeded();
+ const g=(await glyph.boundingBox())!;const touch=await context.newCDPSession(page);const snapshot=await page.evaluate(()=>sessionStorage.getItem('capstone.assessment.ui-preview.v1'));
+ await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:g.x+g.width/2,y:g.y+g.height/2}]});
+ await expect(page.locator('.mobile-rail-marker').nth(2)).toHaveAttribute('data-proximity','active');
+ let previousPopoutTop=0;
+ await expect(page.locator('.mobile-progress')).toHaveCount(0);
+ for(const index of [10,20,questions.length-2]){
+ const slot=(await page.locator('.mobile-rail-marker').nth(index).boundingBox())!;
+ await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:g.x+g.width/2,y:slot.y+slot.height/2}]});
+ await expect(page.locator('.mobile-rail-marker').nth(index)).toHaveAttribute('data-proximity','active');
+ const panel=page.getByRole('group',{name:'Choose a nearby question'});const panelBox=(await panel.boundingBox())!;
+ expect(panelBox.y).toBeGreaterThanOrEqual(7);expect(panelBox.y+panelBox.height).toBeLessThanOrEqual(845);
+ const inspected=panel.locator('[data-inspected="true"]');await expect(inspected).toHaveAttribute('aria-label',new RegExp('^Go to question '+(index+1)+':'));
+ await expect(inspected).toHaveCSS('background-color','rgb(227, 239, 238)');
+ if(index===20){expect(panelBox.y).toBeGreaterThan(previousPopoutTop);await page.screenshot({path:info.outputPath('drag-middle.png')});}previousPopoutTop=panelBox.y;
+ }
+ await page.screenshot({path:info.outputPath('drag-neighborhood.png')});await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ await expect(page.getByRole('group',{name:'Choose a nearby question'})).toBeVisible();expect(await page.evaluate(()=>sessionStorage.getItem('capstone.assessment.ui-preview.v1'))).toBe(snapshot);
+ await page.getByRole('button',{name:new RegExp('^Go to question '+(questions.length-1)+':')}).tap();await expect(page.getByRole('heading',{level:1})).toHaveText(questions.at(-2)!.title);
+ await page.getByRole('button',{name:'Review all answers',exact:true}).click();await page.getByRole('button',{name:'3. '+questions[2]!.title,exact:true}).click();
+ await page.screenshot({path:info.outputPath('card-containment.png'),fullPage:true});
+ expect(ticks!.width).toBeGreaterThan(0);await context.close();
 });

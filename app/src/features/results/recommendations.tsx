@@ -1,4 +1,5 @@
 "use client";
+import { ImprovementLevers } from "./improvement-levers";
 import { ReportDownload } from "./report-download";
 import { useEffect, useReducer, useRef, type ReactNode } from "react";
 import { RecommendationPresentation } from "./recommendation-presentation";
@@ -49,5 +50,5 @@ export function Recommendations({ catalog, children }: { catalog: AssessmentCata
     }); }, 0);
     return () => { active = false; clearTimeout(handoff); stop(); clearInterval(timer); controller.dispose(); control.current = null; };
   }, [catalog]);
-  return <RecommendationPresentation view={view} generate={() => void control.current?.generate()} cancel={() => control.current?.cancel()}>{children}<ReportDownload catalog={catalog} view={view}/></RecommendationPresentation>;
+  return <><RecommendationPresentation view={view} generate={() => void control.current?.generate()} cancel={() => control.current?.cancel()}>{children}<ReportDownload catalog={catalog} view={view}/></RecommendationPresentation><ImprovementLevers catalog={catalog} recommendationView={view}/></>;
 }

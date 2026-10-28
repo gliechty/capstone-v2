@@ -253,7 +253,13 @@ function Questionnaire() {
     <Progress />
     <section className="question-region min-w-0" aria-label="Questionnaire">
       <div className="question-toolbar flex flex-wrap items-center justify-between gap-3 text-small">
-        <p>Question {index + 1} of {questions.length}</p>
+        <div className="progress-summary"><p>Question {index + 1} of {questions.length} · {questions.length - unanswered(session, questions).length} answered</p>
+          <details className="navigation-help"><summary>Navigation help</summary><div className="navigation-help-content">
+            <p>● Answered: an answer is saved. ○ Unanswered: no answer is saved. – Skipped: you explicitly chose Skip.</p>
+            <p>Skipped and unanswered questions both remain missing, not zero. Orange brackets mark your current question.</p>
+            <p>Hover or tap the rail to explore; use arrow keys to navigate and Enter to select.</p>
+          </div></details>
+        </div>
         <button type="button" className="text-link" onClick={() => dispatch({ type: "review" })}>Review all answers</button>
       </div>
       <div className="question-stage" key={question.id} data-category={question.category} data-direction={motion.direction} data-moving={motion.previous !== null}>
@@ -265,11 +271,11 @@ function Questionnaire() {
           <article className="question-card" key={question.id}>
             <p className="category-label">{question.category} <span className="font-normal">/ {question.id}</span></p>
             <h1 ref={headingRef} tabIndex={-1} className="question-heading mt-3">{question.title}</h1>
-            <p id="question-hint" className="mt-4 text-muted">{question.hint}</p>
+            <p id="question-hint" className={question.hint === "Answer for your business, or skip if unknown. Blank answers remain unanswered." ? "sr-only" : "mt-3 text-muted"}>{question.hint}</p>
             <AnswerForm question={question} />
           </article>
-          <Progress mobileCard />
         </div>
+        <Progress mobileCard />
         <AdjacentCard question={questions[index + 1]} position="next" />
       </div>
     </section>
@@ -281,6 +287,7 @@ function Review() {
   const router = useRouter();
   const sending = useRef(false);
   const [confirmPartial, setConfirmPartial] = useState(false);
+  const [missingOnly, setMissingOnly] = useState(false);
   const confirmButton = useRef<HTMLButtonElement>(null);
   useEffect(() => { if (confirmPartial) confirmButton.current?.focus(); }, [confirmPartial]);
   const [message, setMessage] = useState("");
@@ -316,8 +323,13 @@ function Review() {
       <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations anyway</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
     </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations</button>}
     <CalculatorProvenance />
+    <div className="review-filters mt-6" role="group" aria-label="Filter answer review">
+      <button type="button" className="button-secondary" aria-pressed={!missingOnly} onClick={() => setMissingOnly(false)}>All answers ({questions.length})</button>
+      <button type="button" className="button-secondary" aria-pressed={missingOnly} onClick={() => setMissingOnly(true)}>Skipped / unanswered ({missing.length})</button>
+    </div>
+    <p className="mt-3 text-small" role="status">{missingOnly ? missing.length + " skipped or unanswered questions. Select a question to revisit it." : "Showing all questions. Select a question to review or edit it."}</p>
     <ul className="my-8 grid gap-3">
-      {questions.map((question, i) => <li key={question.id} className="review-row">
+      {questions.map((question, i) => (!missingOnly || missing.some(item => item.id === question.id)) && <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>
         <p className="text-small">{progressLabel(session, question)}</p>
         {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
@@ -348,15 +360,14 @@ function Flow() {
       {ready && session.phase !== "setup" && <button className="text-link" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Edit business context</button>}
     </header>
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
-      <div className="preview-notice mb-6">
-        <p className="font-semibold">Business assessment</p>
-        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. AI recommendations require an explicit generation request.</p>
-      </div>
       {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push("/results");}else dispatch(action);}}/>}
+      <details className="assessment-context-note text-small"><summary>About this assessment</summary>
+        <p>{saveWarning ? "Progress cannot currently be saved in this tab." : "Your progress is saved in this tab."} Answer what you know; you can revisit missing answers.</p>
+        <p>Scores use the answers you provide. This is a research assessment, not certification.</p>
+      </details>
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}
       {!ready ? <p role="status">Restoring this tab’s assessment…</p> : <>
-        <p className="mb-4 text-small text-muted">{saveWarning ? "Session saving unavailable." : "Session saving enabled for this tab."}</p>
         {session.phase === "setup" && <Setup />}
         {session.phase === "method" && <InputMethod />}
         {session.phase === "questions" && <Questionnaire />}
