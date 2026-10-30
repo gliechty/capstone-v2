@@ -113,3 +113,70 @@ test("levers preserve fractional actual answers, disclose U-026 and exclude inhe
   expect(unresolved.levers).toEqual([]);
   expect(unresolved.excluded).toEqual([{ id: "IM-6", reason: "No finite, defensible best answer and scenario range under the current scoring function." }]);
 });
+import portraitMapping from '../../config/portraits/portrait_family_mapping_v0.2.json';
+import { calculatePortrait, portraitLever, PORTRAIT_FAMILIES } from '../../src/application/sustainability-portrait';
+
+test('portrait beta mapping covers active and inactive records without changing scores', () => {
+  expect(portraitMapping.rows).toHaveLength(config.QuestionBank.length);
+  expect(new Set(portraitMapping.rows.map(r => r.question_id)).size).toBe(config.QuestionBank.length);
+  for (const q of config.QuestionBank) {
+    const row = portraitMapping.rows.find(r => r.question_id === q.question_id)!;
+    expect(row.active).toBe(q.active === 'TRUE');
+    expect(row.question_text_at_mapping).toBe(q.question_text);
+    expect(row.response_type).toBe(q.response_type);
+    expect(row.answer_scale_id).toBe(q.answer_scale_id);
+  }
+  for (const fixture of goldenCases) {
+    const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)]))), before = JSON.stringify(score);
+    const portrait = calculatePortrait(score, portraitMapping)!;
+    expect(portrait).not.toBeNull();
+    expect(JSON.stringify(score)).toBe(before);
+    const readable = portrait.families.filter(f => f.readable);
+    for (const family of portrait.families) {
+      expect(family.readable).toBe(family.applicable >= 2 && family.answered >= Math.ceil(family.applicable / 2));
+      if (family.evidence.length) expect(family.mean).toBe(family.evidence.reduce((sum, r) => sum + r.value, 0) / family.evidence.length);
+      expect(family.inputBasis).toBe('unknown');
+    }
+    if (readable.length < 3) expect(portrait.name).toBe('Portrait in progress');
+    else if (readable.every(f => f.mean! < .5)) expect(portrait.name).toBe('Explorer');
+    else {
+      const winner = [...readable].sort((a,b) => b.mean!-a.mean! || b.answered-a.answered || PORTRAIT_FAMILIES.indexOf(a.id)-PORTRAIT_FAMILIES.indexOf(b.id))[0]!;
+      expect(portrait.strongest).toBe(winner.id);
+    }
+  }
+});
+
+test('portrait figure supplied includes zero, skips unknown, and defers other numeric interpretation', () => {
+  const fixture = goldenCases[0]!;
+  const empty = scoreAssessment(config, fixture.profile, {});
+  expect(calculatePortrait(empty, portraitMapping)!.name).toBe('Portrait in progress');
+  const id = empty.trace.find(t => ['numeric','percent'].includes(t.response_type) && portraitMapping.rows.find(r => r.question_id === t.question_id)?.family === 'measure')!.question_id;
+  const zero = scoreAssessment(config, fixture.profile, { [id]: '0' });
+  const portrait = calculatePortrait(zero, portraitMapping, [id])!;
+  const measure = portrait.families.find(f => f.id === 'measure')!;
+  expect(measure.evidence.find(e => e.id === id)).toMatchObject({ value: 1, numeric: true, origin: 'calculator' });
+  expect(calculatePortrait(zero, portraitMapping)!.families.find(f => f.id === 'measure')!.inputBasis).toBe('unknown');
+  expect(calculatePortrait(empty, portraitMapping)!.families.find(f => f.id === 'measure')!.answered).toBe(0);
+  for (const raw of ['', 'NaN', '-1', '1e4']) {
+    if (raw) expect(() => scoreAssessment(config, fixture.profile, { [id]: raw })).toThrow();
+    else expect(calculatePortrait(scoreAssessment(config, fixture.profile, { [id]: raw }), portraitMapping)!.families.find(f => f.id === 'measure')!.answered).toBe(0);
+  }
+  const deferred = empty.trace.filter(t => ['numeric','percent'].includes(t.response_type) && !['measure','none'].includes(portraitMapping.rows.find(r => r.question_id === t.question_id)!.family));
+  expect(portrait.excludedNumeric.sort()).toEqual(deferred.map(r => r.question_id).sort());
+  for (const row of deferred) expect(portrait.families.flatMap(f => f.evidence).map(e => e.id)).not.toContain(row.question_id);
+  expect(calculatePortrait({ ...zero, configVersion: 'different-bank' }, portraitMapping)).toBeNull();
+});
+
+test('portrait uses only available actual top-five Levers with truthful fallback and no fabricated action', () => {
+  const fixture = goldenCases[0]!;
+  const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? "" : String(a.answer)])));
+  const available = selectImprovementLevers(config, score).levers;
+  for (const family of PORTRAIT_FAMILIES) {
+    const found = available.find(l => portraitMapping.rows.find(r => r.question_id === l.id)!.family === family);
+    const result = portraitLever(family, available, portraitMapping);
+    expect(result?.lever.id).toBe((found ?? available[0])?.id);
+    if (result) expect(result.label.startsWith('Top Lever in ')).toBe(Boolean(found));
+  }
+  expect(portraitLever('measure', [], portraitMapping)).toBeNull();
+  expect(portraitLever(null, available, portraitMapping)).toBeNull();
+});

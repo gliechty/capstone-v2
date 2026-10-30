@@ -823,3 +823,42 @@ for(const width of [280,320,390])test("M7.5 exact rail touch and drag containmen
  await page.screenshot({path:info.outputPath('card-containment.png'),fullPage:true});
  expect(ticks!.width).toBeGreaterThan(0);await context.close();
 });
+
+import portraitMapping from '../../config/portraits/portrait_family_mapping_v0.2.json' with { type: 'json' };
+import { calculatePortrait } from '../../src/application/sustainability-portrait';
+for (const width of [1440, 390]) test('portrait uses actual Golden answers with accessible disclosure at ' + width + 'px', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width, height: 1000 });
+  const fixture = goldenCases[0]!;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? '' : String(a.answer)]));
+  const expected = calculatePortrait(scoreAssessment(loadCanonicalConfig().config, fixture.profile, answers), portraitMapping)!;
+  const session = { version: 3, configVersion: catalog.version, phase: 'review', inputMethod: 'manual', activeId: 'U-001', progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: '251 - 500', country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(';'), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: '' }, answers, skipped: [] };
+  let providerPosts = 0;
+  page.on('request', r => { if (r.url().includes('/api/assessment-recommendations') && r.method() === 'POST') providerPosts++; });
+  await page.addInitScript(s => sessionStorage.setItem('capstone.assessment.ui-preview.v1', JSON.stringify(s)), session);
+  await page.goto('/results');
+  const portrait = page.locator('.portrait-card');
+  await expect(portrait).toHaveAttribute('data-portrait', expected.name);
+  await expect(portrait.getByText('Loading existing actual-answer Levers…')).toHaveCount(0);
+  await expect(portrait).toContainText('Input basis: unknown');
+  const saved = await page.evaluate(() => sessionStorage.getItem('capstone.assessment.ui-preview.v1'));
+  const disclosure = portrait.getByText('Why this portrait?', { exact: false }).first();
+  await disclosure.focus(); await page.keyboard.press('Enter');
+  await expect(portrait.getByText(/Beta interpretation rules:/)).toBeVisible();
+  await expect(portrait.getByText(/Numeric interpretation deferred/)).toContainText(expected.excludedNumeric.length + ' items');
+  expect((await new AxeBuilder({ page }).include('.portrait-card').analyze()).violations).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await disclosure.click();
+  const before = await portrait.innerText();
+  const levers = page.getByRole('region', { name: 'Explore your improvement levers' });
+  await expect(levers.getByRole('slider')).toHaveCount(5);
+  await levers.getByRole('slider').first().focus(); await page.keyboard.press('End');
+  await expect(levers.getByRole('slider').first()).toHaveAttribute('aria-valuetext', 'Yes');
+  expect(await portrait.innerText()).toBe(before);
+  expect(await page.evaluate(() => sessionStorage.getItem('capstone.assessment.ui-preview.v1'))).toBe(saved);
+  expect(providerPosts).toBe(0);
+  await portrait.scrollIntoViewIfNeeded();
+  await portrait.screenshot({ path: testInfo.outputPath('portrait-' + width + '.png') });
+});

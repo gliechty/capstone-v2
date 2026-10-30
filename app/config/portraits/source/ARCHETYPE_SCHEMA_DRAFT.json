@@ -1,0 +1,186 @@
+{
+  "_status": "ILLUSTRATIVE Claude example, not a verified assessment result or executable validation schema. Mapping reference corrected during M10.3 Phase A; v5.3 and owner2026-10-30 beta rules supersede conflicting examples.",
+  "definitions": {
+    "portrait_rule_version": "0.5-draft",
+    "families": [
+      {
+        "id": "commit",
+        "label": "Commit",
+        "archetype_id": "arch-anchor"
+      },
+      {
+        "id": "measure",
+        "label": "Measure",
+        "archetype_id": "arch-chronicler"
+      },
+      {
+        "id": "plan",
+        "label": "Plan",
+        "archetype_id": "arch-navigator"
+      },
+      {
+        "id": "do",
+        "label": "Do",
+        "archetype_id": "arch-steward"
+      },
+      {
+        "id": "engage",
+        "label": "Engage",
+        "archetype_id": "arch-partner"
+      }
+    ],
+    "explorer": "no family at or above strength_floor",
+    "family_mapping": {
+      "file": "portrait_family_mapping_v0.1.csv",
+      "values": [
+        "commit",
+        "measure",
+        "plan",
+        "do",
+        "engage",
+        "none"
+      ]
+    },
+    "values": {
+      "family_assessed_when": "applicable mapped questions >= 2",
+      "family_readable_when": "answered >= 50% of applicable",
+      "min_readable_families": 3,
+      "strength_floor": "TBD"
+    },
+    "tie_order": [
+      "higher percentage",
+      "more answered questions",
+      "commit, measure, plan, do, engage"
+    ],
+    "inputs": {
+      "use": [
+        "SME_CONTEXT",
+        "SCORING_OUTPUTS",
+        "EVIDENCE_PROVENANCE",
+        "SME_CONTEXT.notes"
+      ],
+      "exclude": [
+        "RETRIEVED_DOCUMENTS",
+        "RETRIEVED_CHUNKS"
+      ]
+    },
+    "never_used_as_evidence": [
+      "text_length",
+      "fluency",
+      "optional_field_filled",
+      "lever_values",
+      "retrieved_documents",
+      "manual_entry_as_penalty"
+    ]
+  },
+  "computed_portrait": {
+    "assessment_id": "<id>",
+    "archetype_id": "arch-anchor",
+    "next_step_family": "plan",
+    "families": {
+      "commit": {
+        "pct": 0.8,
+        "answered": 9,
+        "asked": 9,
+        "input_basis": "unknown"
+      },
+      "measure": {
+        "pct": 0.38,
+        "answered": 12,
+        "asked": 21,
+        "input_basis": "unknown"
+      },
+      "plan": {
+        "pct": 0.17,
+        "answered": 8,
+        "asked": 10,
+        "input_basis": "unknown"
+      },
+      "do": {
+        "pct": 0.67,
+        "answered": 3,
+        "asked": 3,
+        "input_basis": "unknown"
+      },
+      "engage": {
+        "pct": 0.4,
+        "answered": 7,
+        "asked": 7,
+        "input_basis": "unknown"
+      }
+    },
+    "strength": {
+      "category_ids": [
+        "<from category_scores>"
+      ],
+      "source": "existing category score"
+    },
+    "next_step_action": {
+      "lever_id": "<id>",
+      "source": "existing Levers ranking"
+    },
+    "setting": {
+      "industry": "<SME_CONTEXT.industry>",
+      "employee_band": "<…>",
+      "country": "<…>",
+      "target_market_region": [
+        "<…>"
+      ]
+    },
+    "input_basis_line": "Input basis unknown.",
+    "snapshot": "pasted review screen, 2026-10-28 06:54 UTC (to reconcile)",
+    "facts": [
+      {
+        "id": "f1",
+        "text": "Commit is the strongest family",
+        "inputs": [
+          "U-001",
+          "U-003",
+          "U-009",
+          "U-010",
+          "U-012",
+          "U-019",
+          "M-016",
+          "M-017",
+          "M-035"
+        ]
+      }
+    ],
+    "explanation": {
+      "mode": "template",
+      "cites": [
+        "f1"
+      ]
+    },
+    "qualifiers": [
+      {
+        "type": "not_yet_known",
+        "family": "measure",
+        "question_ids": [
+          "U-025",
+          "U-030",
+          "U-031",
+          "I-014",
+          "I-028",
+          "I-052",
+          "I-058",
+          "I-065",
+          "I-071"
+        ]
+      }
+    ],
+    "inputs_used": "confirmed answers only; Lever what-if values never used",
+    "verification_status": "unverified-illustration"
+  },
+  "traceability": {
+    "question_bank_version": "<id>",
+    "mapping_version": "<id>",
+    "portrait_rule_version": "0.5-draft",
+    "explanation_prompt_version": "<id>",
+    "computed_at": "<timestamp>"
+  },
+  "unassigned_states": {
+    "portrait_in_progress": "fewer than three readable families",
+    "not_enough_answers": "family shown dashed; neither strong nor weak"
+  }
+}

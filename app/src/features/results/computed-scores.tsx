@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { SustainabilityPortrait } from "./sustainability-portrait";
 import { useRouter } from "next/navigation";
 import { Information } from "./evidence-controls";
 import { useEffect, useReducer, type CSSProperties } from "react";
@@ -20,22 +21,24 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
     const storage=browserSession(model.sessionSchema), state=storage.load().state;
     if(state && !storage.save(model.assessmentReducer(state,{type:"review-missing"})))router.push("/assessment");
   }
-  const [view, dispatch] = useReducer((_state: ScoreView & { context?: ScoreInput["context"] }, next: ScoreView & { context?: ScoreInput["context"] }) => next, { status: "loading" });
+  const [view, dispatch] = useReducer((_state: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[] }, next: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[] }) => next, { status: "loading" });
   useEffect(() => {
     const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
     const storage = browserSession(model.sessionSchema);
     let context: ScoreInput["context"] | undefined;
+    let calculatorIds: string[] = [];
     const refresh = createScoreRefresh(() => {
-      context = undefined;
+      context = undefined; calculatorIds = [];
       const restored = storage.load();
       if (!restored.state || !["review", "boundary", "questions"].includes(restored.state.phase)) return { input: null,
         message: restored.warning ?? "No completed assessment context is available in this tab. Return to assessment to enter or review your answers." };
       const { profile: p, answers, configVersion } = restored.state;
+      calculatorIds = restored.state.calculatorTransfer?.questionIds ?? [];
       context = { industry: p.industry, companySize: p.companySize, location: p.location,
         targetMarkets: marketValues(p.targetMarket), targetBuyer: p.targetBuyer, businessGoal: p.businessGoal };
       return { input: { configVersion, context, answers }, message: "" };
-    }, requestAssessmentScore, next => dispatch({ ...next, context }));
-    const unsubscribe = watchAssessmentSession(() => refresh.refresh(), () => refresh.refresh(true), () => refresh.invalidate());
+    }, requestAssessmentScore, next => dispatch({ ...next, context, calculatorIds }));
+    const unsubscribe = watchAssessmentSession(() => refresh.refresh(true), () => refresh.refresh(true), () => refresh.invalidate());
     refresh.refresh();
     return () => { unsubscribe(); refresh.dispose(); };
   }, [catalog]);
@@ -64,6 +67,7 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
         </li>)}</ul>
       </figure>
     </div>
+    <SustainabilityPortrait score={s} sessionVersion={catalog.version} calculatorIds={view.calculatorIds ?? []} />
     <div className="mt-6"><h2 className="text-subheading">Lowest assessed categories</h2><ul>{s.categories.filter(c => c.percent !== null).sort((a, b) => a.percent! - b.percent!).slice(0, 2).map(c => <li key={c.category}>{c.category}: {display(c.percent)} / 100</li>)}</ul></div>
     {s.missing > 0 && <div className="incomplete-notice"><p>Incomplete assessment · Unanswered items are unknown, not confirmed weaknesses.</p><button type="button" className="text-link" onClick={reviewMissing}>Review unanswered items</button></div>}
     <ScoreExplanation score={s} />

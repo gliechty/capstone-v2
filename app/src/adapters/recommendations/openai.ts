@@ -21,14 +21,14 @@ async function boundedJson(response: Response, onDiagnostic?: (event: ProviderDi
   } catch { void reader.cancel().catch(() => {}); throw new ProviderFailure("invalid_response"); }
   finally { reader.releaseLock(); }
 }
-export function openAIProvider(settings: ProviderSettings, apiKey: string, transport?: typeof fetch): RecommendationProvider {
+export function openAIProvider(settings: ProviderSettings, apiKey: string, transport?: typeof fetch, format = { name: "assessment_recommendations", schema: outputSchema }): RecommendationProvider {
   return { id: "openai", model: settings.model, kind: "live", settings,
     async generate(request) {
       // Ordinary verification must never use the real network, including with a local key.
       if (!transport && process.env.CAPSTONE_OFFLINE_TESTS === "1") throw new ProviderFailure("provider_not_configured");
       const body = JSON.stringify({ model: settings.model, reasoning: { effort: settings.reasoning }, store: false,
         max_output_tokens: request.maxOutputTokens, input: [{ role: "system", content: request.system }, { role: "user", content: request.prompt }],
-        text: { format: { type: "json_schema", name: "assessment_recommendations", strict: true, schema: outputSchema } } });
+        text: { format: { type: "json_schema", name: format.name, strict: true, schema: format.schema } } });
       const started = performance.now();
       request.onDiagnostic?.({ stage: "awaiting_headers", requestBytes: Buffer.byteLength(body, "utf8") });
       const response = await (transport ?? fetch)("https://api.openai.com/v1/responses", { method: "POST", redirect: "error", signal: request.signal,
