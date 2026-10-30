@@ -14,5 +14,5 @@ export default function AssessmentPage() {
   if (diagnostics.length) console.warn("Canonical config diagnostics:", diagnostics.join("; "));
   const catalog = assessmentCatalog(config);
   if (!catalog.questions.length) return <main className="page-container py-12"><h1>Assessment unavailable</h1><p>No active canonical questions are configured.</p><Link href="/">Return home</Link></main>;
-  return <AssessmentFlow catalog={catalog} />;
+  return <AssessmentFlow catalog={catalog} guidedElectricity={process.env.LAIFFI_PROTOTYPE_ENABLED === "1"} />;
 }

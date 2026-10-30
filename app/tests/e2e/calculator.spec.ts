@@ -137,3 +137,18 @@ test("M4.5 equivalent manual and calculator inputs reach the same real determini
  }
  expect(outcomes[0]).toEqual(outcomes[1]);
 });
+
+test("guided electricity uses explicit submissions and preserves assessment answers",async({page})=>{
+ const session={...model.initialSession(),profile:{...model.initialSession().profile,companyName:"Example workshop",country:"China",industry:"Manufacturing (Industrial / Components)",companySize:"251 - 500",location:"APAC",targetMarket:"EU",targetBuyer:"Enterprise",businessGoal:"Prepare for procurement questionnaires"},answers:{"U-001":"No"}};
+ await page.addInitScript(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ const sent:Record<string,unknown>[]=[];
+ await page.route("**/api/guided-electricity",async route=>{
+  if(route.request().method()==="GET")return route.fulfill({json:{catalogs:[{catalog_id:"bafu",database_name:"BAFU",database_version:"2026",attribution:"BAFU",terms_url:"https://nexus.openlca.org/database/BAFU"}],usage:{completed_evaluations:25,monthly_limit:100,reserved_evaluations:0},attempts:0,limit:2,cost:"Offline test"}});
+  sent.push(route.request().postDataJSON());return route.fulfill({json:{attempt:sent.length,headersMs:10,totalMs:11,mapping:{request_id:"offline",decision:{status:"review_required",rationale:"Voltage not specified.",missing_information:[],selected_dataset:null,candidates:[{dataset:{id:"cn",name:"Electricity at grid",reference_unit:"kWh",geography:"CN",database_name:"BAFU",database_version:"2026"},emission_factor:{status:"unavailable",dataset_id:"cn",mapping_approved:false,impact_unit:"kg CO2eq",reference_unit:"kWh",value:null,reason:"factor_not_cached"}}]}}}});
+ });
+ await page.goto("/guided-electricity");await expect(page.getByRole("heading",{name:"Guided electricity — local prototype"})).toBeVisible();expect(sent).toHaveLength(0);
+ await page.getByLabel("Electricity description").fill("Purchased electricity in China in 2025; voltage unknown.");await page.getByLabel("Electricity quantity").fill("100,000");await page.getByLabel("Reporting period start").fill("2025-01-01");await page.getByLabel("Reporting period end").fill("2025-12-31");await page.getByRole("button",{name:/Check account/}).click();expect(sent).toHaveLength(0);
+ const confirm=page.getByRole("checkbox",{name:/I confirm these facts/});await confirm.check();await page.getByRole("button",{name:"Send initial request once"}).click();await expect(page.getByText("Mapping status: review_required")).toBeVisible();expect(sent).toHaveLength(1);await expect(page.getByText(/Factor: unavailable/)).toContainText("factor_not_cached");await expect(page.getByText(/MOSAIC wording derived/)).toBeVisible();
+ await page.getByLabel("Your clarification").fill("Voltage remains unknown.");expect(sent).toHaveLength(1);await confirm.check();await page.getByRole("button",{name:"Submit clarification once"}).click();await expect(page.getByRole("button",{name:"Submit clarification once"})).toBeDisabled();expect(sent).toHaveLength(2);expect(sent[1]!.facts).toEqual(sent[0]!.facts);
+ await page.getByRole("checkbox",{name:/This is all energy/}).check();await page.getByLabel("Same-period revenue in USD").fill("100000");await page.getByRole("button",{name:"Confirm answer preview"}).click();await expect(page.getByText(/Preview confirmed and saved/)).toBeVisible();expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).answers)).toEqual({"U-001":"No"});await page.reload();expect(sent).toHaveLength(2);
+});

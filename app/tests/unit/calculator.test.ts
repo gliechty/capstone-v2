@@ -153,3 +153,27 @@ it("M4.5 transfers renewable total energy to U-026 using the existing mixed-ener
  d.activities[0]!.renewable="";
  expect(calculatorMappings(d,mappedQuestions).find(r=>r.questionId==="U-026")?.raw).toBeNull();
 });
+
+import { electricityRequest, mappingResponseSchema, mappingReview, electricityAnswerPreview } from "../../src/application/guided-electricity";
+describe("guided electricity prototype",()=>{
+ const facts={description:"Purchased grid electricity in China, reporting year 2025. Voltage unknown.",quantity:"100,000",unit:"kWh" as const,countryCode:"CN",periodStart:"2025-01-01",periodEnd:"2025-12-31"};
+ it("preserves text and confirmed facts without inventing voltage or a dataset",()=>{
+  const first=electricityRequest(facts,"catalog","record");const next=electricityRequest(facts,"catalog","record2","Voltage remains unknown.");
+  expect(first.input.description).toBe(facts.description);expect(first.input.quantity).toEqual({value:"100000",unit:"kWh"});expect(first.context).toEqual({source_flow_role:"background_input",expected_reference_unit:"kWh",expected_geography:"CN"});expect(first).not.toHaveProperty("explicit_dataset_id");
+  expect(next.input.description).toBe(facts.description+"\nUser clarification: Voltage remains unknown.");expect(next.context).toEqual(first.context);expect(next.input.quantity).toEqual(first.input.quantity);
+ });
+ it("separates ambiguous mapping, missing cache and incompatible boundary",()=>{
+  const mapping=mappingResponseSchema.parse({request_id:"case",decision:{status:"review_required",rationale:"Voltage not specified.",missing_information:[],selected_dataset:null,candidates:[{dataset:{id:"cn",name:"Electricity at grid",reference_unit:"kWh",geography:"CN",database_name:"BAFU",database_version:"2026"},emission_factor:{status:"unavailable",dataset_id:"cn",mapping_approved:false,impact_unit:"kg CO2eq",reference_unit:"kWh",value:null,reason:"factor_not_cached"}}]}});
+  expect(mappingReview(mapping).status).toBe("review_required");expect(mappingReview(mapping).questionAuthor).toContain("MOSAIC");expect(mappingReview(mapping).rows[0]!.emission_factor!.reason).toBe("factor_not_cached");
+  mapping.decision.candidates[0]!.emission_factor!.status="available";mapping.decision.candidates[0]!.emission_factor!.value="0.10305082303867724";
+  expect(mappingReview(mapping).rows[0]!.emission_factor!.value).toBe("0.10305082303867724");expect(mappingReview(mapping).boundary).toContain("No factor is transferred");
+  const q={id:"I-062",title:"Energy intensity",category:"Resources",kind:"numeric" as const,metricId:"energy_intensity_manuf",unit:"kWh/USD",hint:""};
+  expect(electricityAnswerPreview(facts,false,"100000",[q]).mappings[0]!.raw).toBeNull();const p=electricityAnswerPreview(facts,true,"100000",[q]);expect(p.mappings[0]!.raw).toBe("1");expect(p.calculation.result!.combinedEmissions.value).toBeNull();
+ });
+});
+
+it("guided electricity accepts the loopback browser origin despite Next internal hostname without dispatch in offline tests",async()=>{
+ const {POST}=await import("../../src/app/api/guided-electricity/route");const previous=process.env.LAIFFI_PROTOTYPE_ENABLED;process.env.LAIFFI_PROTOTYPE_ENABLED="1";
+ try {const response=await POST(new Request("http://localhost:3002/api/guided-electricity",{method:"POST",headers:{host:"127.0.0.1:3002",origin:"http://127.0.0.1:3002","Content-Type":"application/json"},body:JSON.stringify({facts:{description:"Purchased electricity",quantity:"100000",unit:"kWh",countryCode:"CN",periodStart:"2025-01-01",periodEnd:"2025-12-31"},catalogId:"bafu",clientId:"6b6edc6f-98be-4521-a598-f84472b92e88",clarification:"",parentId:null})}));expect(response.status).toBe(400);expect(await response.json()).toEqual({error:"Live evaluations are disabled during offline tests."});}
+ finally{if(previous===undefined)delete process.env.LAIFFI_PROTOTYPE_ENABLED;else process.env.LAIFFI_PROTOTYPE_ENABLED=previous;}
+});

@@ -105,12 +105,13 @@ function Setup() {
   );
 }
 
-function InputMethod() {
+function InputMethod({ guidedElectricity }: { guidedElectricity: boolean }) {
   const { dispatch, questions } = useAssessment();
   return <section className="assessment-setup">
     <span className="section-label">02 / Quantitative data</span>
     <StageHeading>How would you like to enter your quantitative sustainability data?</StageHeading>
     <CalculatorPanel />
+    {guidedElectricity && <p className="mt-6"><Link className="button-secondary" href="/guided-electricity">Describe electricity use — local clarification prototype</Link></p>}
     <div className="mt-8 flex flex-wrap gap-4">
       <button className="button-secondary" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Back to setup</button>
       {questions.length === 0 && <p role="alert">No questions match this context. Review your setup; no fallback questionnaire has been substituted.</p>}
@@ -349,7 +350,7 @@ function Boundary() {
   </section>;
 }
 
-function Flow() {
+function Flow({ guidedElectricity }: { guidedElectricity: boolean }) {
   const router = useRouter();
   const { ready, session, dispatch, catalog, restoreWarning, saveWarning } = useAssessment();
   return <>
@@ -369,7 +370,7 @@ function Flow() {
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}
       {!ready ? <p role="status">Restoring this tab’s assessment…</p> : <>
         {session.phase === "setup" && <Setup />}
-        {session.phase === "method" && <InputMethod />}
+        {session.phase === "method" && <InputMethod guidedElectricity={guidedElectricity} />}
         {session.phase === "questions" && <Questionnaire />}
         {session.phase === "review" && <Review />}
         {session.phase === "boundary" && <Boundary />}
@@ -377,6 +378,6 @@ function Flow() {
     </main>
   </>;
 }
-export function AssessmentFlow({ catalog }: { catalog: AssessmentCatalog }) {
-  return <AssessmentProvider catalog={catalog}><Flow /></AssessmentProvider>;
+export function AssessmentFlow({ catalog, guidedElectricity = false }: { catalog: AssessmentCatalog; guidedElectricity?: boolean }) {
+  return <AssessmentProvider catalog={catalog}><Flow guidedElectricity={guidedElectricity} /></AssessmentProvider>;
 }
