@@ -180,3 +180,37 @@ test('portrait uses only available actual top-five Levers with truthful fallback
   expect(portraitLever('measure', [], portraitMapping)).toBeNull();
   expect(portraitLever(null, available, portraitMapping)).toBeNull();
 });
+
+import { portraitReading, portraitAdvice } from '../../src/application/portrait-reading';
+import { createRecommendationService } from '../../src/application/recommendations/service';
+import { input as recommendationInput, validTestContent } from '../helpers/recommendation-fixture';
+
+test('portrait reading grounds supporting language in readable answers and retains SME context', () => {
+  const fixture = goldenCases[2]!;
+  const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? '' : String(a.answer)])));
+  const portrait = calculatePortrait(score, portraitMapping)!;
+  const text = portraitReading(portrait, score.input.profile);
+  expect(text).toContain('As an Anchor');
+  expect(text).toContain(score.input.profile.target_buyer.toLowerCase());
+  const empty = scoreAssessment(config, fixture.profile, {});
+  const noEvidence = portraitReading(calculatePortrait(empty, portraitMapping)!, empty.input.profile);
+  expect(noEvidence).toContain('still coming into focus');
+  expect(noEvidence).not.toContain('also');
+  expect(noEvidence).not.toContain('Tracking or supplying figures');
+  const onlyCommit = Object.fromEntries(fixture.answers.filter(a => portraitMapping.rows.find(r => r.question_id === a.question_id)?.family === 'commit').map(a => [a.question_id, a.answer === null ? '' : String(a.answer)]));
+  const partial = scoreAssessment(config, fixture.profile, onlyCommit);
+  expect(portraitReading(calculatePortrait(partial, portraitMapping)!, partial.input.profile)).not.toContain('also');
+});
+
+test('portrait advice reuses only available matching recommendation output and never changes the portrait', async () => {
+  const result = await createRecommendationService({ loadConfig: () => config, provider: { id: 'openai', model: 'test-existing-double', kind: 'live', generate: async () => JSON.stringify(validTestContent()) } })(recommendationInput);
+  if (result.status !== 'available') throw new Error('Existing recommendation fixture unavailable');
+  const version = { configVersion: result.identity.configVersion, methodVersion: result.identity.methodVersion };
+  const view = { phase: 'available' as const, result };
+  expect(portraitAdvice(view, result.identity.inputId, version)).toBe([...result.content.priority_recommendations].sort((a,b)=>a.priority_rank-b.priority_rank)[0]!.title);
+  expect(portraitAdvice(view, 'changed-answers-or-context', version)).toBeNull();
+  expect(portraitAdvice(view, null, version)).toBeNull();
+  expect(portraitAdvice({ ...view, phase: 'loading' }, result.identity.inputId, version)).toBeNull();
+  expect(portraitAdvice(view, result.identity.inputId, { ...version, configVersion: 'changed' })).toBeNull();
+  expect(portraitAdvice(view, result.identity.inputId, { ...version, methodVersion: 'changed' })).toBeNull();
+});

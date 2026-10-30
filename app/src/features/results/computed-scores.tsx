@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { recommendationRequestFromSession } from "../../application/recommendations/request";
+import type { RecommendationRequest } from "../../application/recommendations/contracts";
 import { SustainabilityPortrait } from "./sustainability-portrait";
 import { useRouter } from "next/navigation";
 import { Information } from "./evidence-controls";
@@ -21,23 +23,26 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
     const storage=browserSession(model.sessionSchema), state=storage.load().state;
     if(state && !storage.save(model.assessmentReducer(state,{type:"review-missing"})))router.push("/assessment");
   }
-  const [view, dispatch] = useReducer((_state: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[] }, next: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[] }) => next, { status: "loading" });
+  const [view, dispatch] = useReducer((_state: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[]; portraitInput?: RecommendationRequest }, next: ScoreView & { context?: ScoreInput["context"]; calculatorIds?: string[]; portraitInput?: RecommendationRequest }) => next, { status: "loading" });
   useEffect(() => {
     const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
     const storage = browserSession(model.sessionSchema);
     let context: ScoreInput["context"] | undefined;
     let calculatorIds: string[] = [];
+    let portraitInput: RecommendationRequest | undefined;
     const refresh = createScoreRefresh(() => {
-      context = undefined; calculatorIds = [];
+      context = undefined; calculatorIds = []; portraitInput = undefined;
       const restored = storage.load();
       if (!restored.state || !["review", "boundary", "questions"].includes(restored.state.phase)) return { input: null,
         message: restored.warning ?? "No completed assessment context is available in this tab. Return to assessment to enter or review your answers." };
+      try { portraitInput = recommendationRequestFromSession(restored.state); }
+      catch { /* Optional advice metadata must never block deterministic scores. */ }
       const { profile: p, answers, configVersion } = restored.state;
       calculatorIds = restored.state.calculatorTransfer?.questionIds ?? [];
       context = { industry: p.industry, companySize: p.companySize, location: p.location,
         targetMarkets: marketValues(p.targetMarket), targetBuyer: p.targetBuyer, businessGoal: p.businessGoal };
       return { input: { configVersion, context, answers }, message: "" };
-    }, requestAssessmentScore, next => dispatch({ ...next, context, calculatorIds }));
+    }, requestAssessmentScore, next => dispatch({ ...next, context, calculatorIds, portraitInput }));
     const unsubscribe = watchAssessmentSession(() => refresh.refresh(true), () => refresh.refresh(true), () => refresh.invalidate());
     refresh.refresh();
     return () => { unsubscribe(); refresh.dispose(); };
@@ -67,7 +72,7 @@ export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
         </li>)}</ul>
       </figure>
     </div>
-    <SustainabilityPortrait score={s} sessionVersion={catalog.version} calculatorIds={view.calculatorIds ?? []} />
+    <SustainabilityPortrait score={s} sessionVersion={catalog.version} calculatorIds={view.calculatorIds ?? []} input={view.portraitInput} />
     <div className="mt-6"><h2 className="text-subheading">Lowest assessed categories</h2><ul>{s.categories.filter(c => c.percent !== null).sort((a, b) => a.percent! - b.percent!).slice(0, 2).map(c => <li key={c.category}>{c.category}: {display(c.percent)} / 100</li>)}</ul></div>
     {s.missing > 0 && <div className="incomplete-notice"><p>Incomplete assessment · Unanswered items are unknown, not confirmed weaknesses.</p><button type="button" className="text-link" onClick={reviewMissing}>Review unanswered items</button></div>}
     <ScoreExplanation score={s} />

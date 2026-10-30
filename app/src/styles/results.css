@@ -227,3 +227,33 @@
 .portrait-families li { display: grid; align-content: start; gap: var(--space-2); border-top: var(--border-width) solid var(--border); padding-top: var(--space-3); }
 .portrait-versions { overflow-wrap: anywhere; }
 @media (max-width: 600px) { .portrait-card { padding: var(--space-4); } .portrait-heading { align-items: flex-start; } .portrait-heading img { width: 48px; height: 48px; flex-basis: 48px; } .portrait-facts { grid-template-columns: 1fr; } }
+
+/* Chart gaps remain unknown rather than zero. */
+.portrait-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .9fr); gap: var(--space-8); align-items: center; }
+.portrait-story { min-width: 0; }
+.portrait-meaning { font-size: 1.25rem; line-height: 1.4; margin-top: var(--space-2); }
+.portrait-personal { margin-top: var(--space-6); max-width: 40ch; }
+.portrait-chart { margin: 0; width: 100%; max-width: 420px; justify-self: center; }
+.portrait-chart svg { display: block; width: 100%; height: auto; }
+.portrait-chart-boundary { fill: var(--surface-raised); stroke: var(--text-muted); stroke-width: 1; }
+.portrait-chart-grid { fill: none; stroke: var(--border); stroke-width: 1; }
+.portrait-chart-fill { fill: var(--accent); fill-opacity: .22; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.portrait-chart-segment { stroke: var(--accent); stroke-width: 2.5; }
+.portrait-chart-dot { fill: var(--accent); stroke: var(--surface-raised); stroke-width: 1.5; }
+.portrait-chart-label { fill: var(--text); font-size: 15px; font-weight: var(--weight-semibold); }
+.portrait-chart-value { fill: var(--text-muted); font-size: 15px; }
+.portrait-chart figcaption { text-align: center; color: var(--text-muted); font-size: var(--font-size-small); }
+.portrait-chart figcaption span { display: block; }
+.portrait-facts { padding-top: var(--space-4); border-top: var(--border-width) solid var(--border); }
+@media (max-width: 700px) { .portrait-overview { grid-template-columns: 1fr; gap: var(--space-3); } .portrait-chart { max-width: 360px; } .portrait-personal { max-width: none; } }
+
+.portrait-personal { max-width: 48ch; }
+.portrait-advice { margin-top: var(--space-3); }
+.portrait-tag-key { display: grid; gap: var(--space-3); margin-block: var(--space-4); }
+.portrait-tag-key dt { font-weight: var(--weight-semibold); }
+.portrait-tag-key dd { margin: 0; }
+
+/* Supplied small glyphs form secondary and tertiary levels below the hero icon. */
+.portrait-icon-label { display: inline-flex; align-items: center; gap: var(--space-2); }
+.portrait-detail-icon { flex: none; object-fit: contain; }
+.portrait-strength { margin-right: var(--space-4); }

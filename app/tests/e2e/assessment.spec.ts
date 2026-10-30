@@ -843,10 +843,24 @@ for (const width of [1440, 390]) test('portrait uses actual Golden answers with 
   await expect(portrait).toHaveAttribute('data-portrait', expected.name);
   await expect(portrait.getByText('Loading existing actual-answer Levers…')).toHaveCount(0);
   await expect(portrait).toContainText('Input basis: unknown');
+  const chart = portrait.getByRole('img', { name: /Approach profile/ });
+  await expect(chart).toBeVisible();
+  await expect(chart.locator('[data-portrait-shape="filled"]')).toHaveCount(1);
+  for (const family of expected.families) {
+    await expect(chart).toHaveAccessibleName(new RegExp(family.id + ': ' + Math.round(family.mean! * 100) + '%', 'i'));
+    const marker = chart.locator('[data-family="' + family.id + '"] circle');
+    const radius = await marker.evaluate(el => Math.hypot(Number(el.getAttribute('cx')) - 180, Number(el.getAttribute('cy')) - 170));
+    expect(radius / 103).toBeCloseTo(family.mean!, 8);
+  }
+  const polygon = await chart.locator('[data-portrait-shape="filled"]').getAttribute('points');
+  const vertices = polygon!.split(' ').map(pair => pair.split(',').map(Number));
+  for (let i = 0; i < vertices.length; i++) expect(Math.hypot(vertices[i]![0]! - 180, vertices[i]![1]! - 170) / 103).toBeCloseTo(expected.families[i]!.mean!, 8);
   const saved = await page.evaluate(() => sessionStorage.getItem('capstone.assessment.ui-preview.v1'));
-  const disclosure = portrait.getByText('Why this portrait?', { exact: false }).first();
+  const disclosure = portrait.getByText('Why this archetype?', { exact: false }).first();
   await disclosure.focus(); await page.keyboard.press('Enter');
   await expect(portrait.getByText(/Beta interpretation rules:/)).toBeVisible();
+  await expect(portrait.getByText(/there is no one-to-one mapping/)).toBeVisible();
+  await expect(portrait.getByText(/Tags are fixed before your answers/)).toBeVisible();
   await expect(portrait.getByText(/Numeric interpretation deferred/)).toContainText(expected.excludedNumeric.length + ' items');
   expect((await new AxeBuilder({ page }).include('.portrait-card').analyze()).violations).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -861,4 +875,19 @@ for (const width of [1440, 390]) test('portrait uses actual Golden answers with 
   expect(providerPosts).toBe(0);
   await portrait.scrollIntoViewIfNeeded();
   await portrait.screenshot({ path: testInfo.outputPath('portrait-' + width + '.png') });
+  // Reuse this Golden assessment, omitting Commit answers to check missing chart evidence.
+  const incompleteAnswers = { ...answers };
+  for (const row of portraitMapping.rows.filter(row => row.family === 'commit')) delete incompleteAnswers[row.question_id];
+  const partialContext = await page.context().browser()!.newContext({ viewport: { width, height: 1000 } });
+  const partialPage = await partialContext.newPage();
+  await partialPage.addInitScript(s => sessionStorage.setItem('capstone.assessment.ui-preview.v1', JSON.stringify(s)), { ...session, answers: incompleteAnswers });
+  await partialPage.goto(page.url());
+  const partialChart = partialPage.locator('.portrait-chart');
+  await expect(partialChart.getByRole('img')).toHaveAccessibleName(/Commit: insufficient evidence/);
+  await expect(partialChart.locator('[data-portrait-shape="filled"]')).toHaveCount(0);
+  await expect(partialChart.locator('[data-family="commit"] circle')).toHaveCount(0);
+  await expect(partialChart.locator('[data-family="commit"]')).toContainText('—');
+  await expect(partialChart).toContainText('Gaps mean insufficient evidence, not zero.');
+  await partialContext.close();
+
 });
