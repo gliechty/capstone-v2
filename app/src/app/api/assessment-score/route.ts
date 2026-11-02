@@ -1,3 +1,4 @@
+import { withPortraitPotential } from '../../../application/portrait-potential';
 import { ZodError } from "zod";
 import { loadCanonicalConfig } from "../../../adapters/config-repository";
 import { computeAssessment } from "../../../application/score-request";
@@ -25,10 +26,11 @@ export async function POST(request: Request) {
     input = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks)));
   } catch { return response({ error: "Assessment data is not valid JSON." }, 400); }
   try {
-    const score = computeAssessment(loadCanonicalConfig().config, input);
+    const { config } = loadCanonicalConfig();
+    const score = withPortraitPotential(config, computeAssessment(config, input));
     // The engine owns the versioned trace; the HTTP boundary only projects its output.
-    const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace } = score;
-    return response({ configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace });
+    const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace, portraitPotential } = score;
+    return response({ configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace, portraitPotential });
   } catch (error) {
     if (error instanceof ZodError) return response({ error: "Assessment context or answers are invalid. Return to assessment to review them." }, 400);
     if (error instanceof ScoringError) return response({ error: error.message }, 422);

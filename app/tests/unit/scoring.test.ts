@@ -113,8 +113,10 @@ test("levers preserve fractional actual answers, disclose U-026 and exclude inhe
   expect(unresolved.levers).toEqual([]);
   expect(unresolved.excluded).toEqual([{ id: "IM-6", reason: "No finite, defensible best answer and scenario range under the current scoring function." }]);
 });
+import { withPortraitPotential } from '../../src/application/portrait-potential';
 import portraitMapping from '../../config/portraits/portrait_family_mapping_v0.2.json';
-import { calculatePortrait, portraitLever, PORTRAIT_FAMILIES } from '../../src/application/sustainability-portrait';
+import { calculatePortrait as calculatePortraitBase, portraitLever, PORTRAIT_FAMILIES, portraitMaturity, comparePortraitFamilies } from '../../src/application/sustainability-portrait';
+const calculatePortrait: typeof calculatePortraitBase = (score, mapping, ids) => calculatePortraitBase(withPortraitPotential(config, score), mapping, ids);
 
 test('portrait beta mapping covers active and inactive records without changing scores', () => {
   expect(portraitMapping.rows).toHaveLength(config.QuestionBank.length);
@@ -133,14 +135,13 @@ test('portrait beta mapping covers active and inactive records without changing 
     expect(JSON.stringify(score)).toBe(before);
     const readable = portrait.families.filter(f => f.readable);
     for (const family of portrait.families) {
-      expect(family.readable).toBe(family.applicable >= 2 && family.answered >= Math.ceil(family.applicable / 2));
-      if (family.evidence.length) expect(family.mean).toBe(family.evidence.reduce((sum, r) => sum + r.value, 0) / family.evidence.length);
+      expect(family.readable).toBe(family.applicable > 0 && family.answered > 0);
+      if (family.evidence.length) expect(family.mean).toBe(family.evidence.reduce((sum, r) => sum + r.value, 0) / family.applicable);
       expect(family.inputBasis).toBe('unknown');
     }
-    if (readable.length < 3) expect(portrait.name).toBe('Portrait in progress');
-    else if (readable.every(f => f.mean! < .5)) expect(portrait.name).toBe('Explorer');
+    if (readable.length < 2) expect(portrait.name).toBe('Portrait in progress');
     else {
-      const winner = [...readable].sort((a,b) => b.mean!-a.mean! || b.answered-a.answered || PORTRAIT_FAMILIES.indexOf(a.id)-PORTRAIT_FAMILIES.indexOf(b.id))[0]!;
+      const winner = [...readable].sort(comparePortraitFamilies)[0]!;
       expect(portrait.strongest).toBe(winner.id);
     }
   }
@@ -185,21 +186,21 @@ import { portraitReading, portraitAdvice } from '../../src/application/portrait-
 import { createRecommendationService } from '../../src/application/recommendations/service';
 import { input as recommendationInput, validTestContent } from '../helpers/recommendation-fixture';
 
-test('portrait reading grounds supporting language in readable answers and retains SME context', () => {
+test('portrait reading grounds concise language in the computed answer pattern', () => {
   const fixture = goldenCases[2]!;
   const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? '' : String(a.answer)])));
   const portrait = calculatePortrait(score, portraitMapping)!;
-  const text = portraitReading(portrait, score.input.profile);
-  expect(text).toContain('As an Anchor');
-  expect(text).toContain(score.input.profile.target_buyer.toLowerCase());
+  const text = portraitReading(portrait);
+  expect(text).toContain('Policies and commitments lead your answers, followed by tracking and recording.');
+  expect(text).toContain('You answered');
   const empty = scoreAssessment(config, fixture.profile, {});
-  const noEvidence = portraitReading(calculatePortrait(empty, portraitMapping)!, empty.input.profile);
+  const noEvidence = portraitReading(calculatePortrait(empty, portraitMapping)!);
   expect(noEvidence).toContain('still coming into focus');
   expect(noEvidence).not.toContain('also');
   expect(noEvidence).not.toContain('Tracking or supplying figures');
   const onlyCommit = Object.fromEntries(fixture.answers.filter(a => portraitMapping.rows.find(r => r.question_id === a.question_id)?.family === 'commit').map(a => [a.question_id, a.answer === null ? '' : String(a.answer)]));
   const partial = scoreAssessment(config, fixture.profile, onlyCommit);
-  expect(portraitReading(calculatePortrait(partial, portraitMapping)!, partial.input.profile)).not.toContain('also');
+  expect(portraitReading(calculatePortrait(partial, portraitMapping)!)).not.toContain('also');
 });
 
 test('portrait advice reuses only available matching recommendation output and never changes the portrait', async () => {
@@ -213,4 +214,109 @@ test('portrait advice reuses only available matching recommendation output and n
   expect(portraitAdvice({ ...view, phase: 'loading' }, result.identity.inputId, version)).toBeNull();
   expect(portraitAdvice(view, result.identity.inputId, { ...version, configVersion: 'changed' })).toBeNull();
   expect(portraitAdvice(view, result.identity.inputId, { ...version, methodVersion: 'changed' })).toBeNull();
+});
+
+import subtypeDefinitions from '../../config/portraits/portrait_subtypes_v0.2.json';
+import { selectPortraitSubtype } from '../../src/application/portrait-subtype';
+
+test('paired portraits cover all twenty ordered pairs without changing the base portrait or Lever', () => {
+  const fixture = goldenCases[2]!;
+  const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, String(a.answer ?? '')])));
+  const base = calculatePortrait(score, portraitMapping)!;
+  const levers = selectImprovementLevers(config, score).levers;
+  expect(subtypeDefinitions.subtypes).toHaveLength(20);
+  expect(new Set(subtypeDefinitions.subtypes.map(s => s.subtype_id)).size).toBe(20);
+  for (const first of PORTRAIT_FAMILIES) for (const second of PORTRAIT_FAMILIES.filter(f => f !== first)) {
+    const portrait = { ...base, strongest: first, families: base.families.map(f => ({ ...f, readable: true, mean: f.id === first ? .8 : f.id === second ? .6 : .2 })) };
+    const before = JSON.stringify(portrait);
+    const selected = selectPortraitSubtype(portrait)!;
+    expect(selected.definition.strongest_family).toBe(first);
+    expect(selected.definition.second_family).toBe(second);
+    expect(selected.sharedLead).toBe(false);
+    expect(selectPortraitSubtype(portrait)).toEqual(selected);
+    expect(JSON.stringify(portrait)).toBe(before);
+    expect(portraitLever(portrait.weakest, levers, portraitMapping)).toEqual(portraitLever(base.weakest, levers, portraitMapping));
+  }
+});
+
+test('paired portraits use every eligible item, permit two low or zero families, and retain unknowns', () => {
+  const fixture = goldenCases[0]!;
+  const score = scoreAssessment(config, fixture.profile, { 'U-001': 'Yes', 'U-002': 'No' });
+  const before = JSON.stringify(score);
+  const portrait = calculatePortrait(score, portraitMapping)!;
+  const commit = portrait.families.find(f => f.id === 'commit')!;
+  expect(commit.mean).toBe(1 / commit.applicable);
+  expect(commit.answered).toBe(1);
+  expect(commit.readable).toBe(true);
+  const pair = selectPortraitSubtype(portrait)!;
+  expect(pair).not.toBeNull();
+  expect(pair.second.mean).toBe(0);
+  expect(pair.combined).toBe((pair.first.mean! + pair.second.mean!) / 2);
+  expect(JSON.stringify(score)).toBe(before);
+  expect(score.input.answers).toEqual({ 'U-001': 'Yes', 'U-002': 'No' });
+  const zero = calculatePortrait(scoreAssessment(config, fixture.profile, { 'U-001': 'No', 'U-002': 'No' }), portraitMapping)!;
+  expect(selectPortraitSubtype(zero)!.combined).toBe(0);
+  expect(portraitReading(zero)).toContain('does not imply established practices');
+  expect(portraitReading(zero)).not.toContain('setting commitments');
+  const one = calculatePortrait(scoreAssessment(config, fixture.profile, { 'U-001': 'Yes' }), portraitMapping)!;
+  expect(one.name).toBe('Portrait in progress');expect(selectPortraitSubtype(one)).toBeNull();
+  expect(one.families.find(f => f.id === 'measure')!.mean).toBeNull();
+  const empty = calculatePortrait(scoreAssessment(config, fixture.profile, {}), portraitMapping)!;
+  expect(selectPortraitSubtype(empty)).toBeNull();
+  expect(selectPortraitSubtype({ ...portrait, versions: { ...portrait.versions, rules: 'different' } })).toBeNull();
+});
+
+test('portrait ties use normalized weighted possible points only after exact percentage ties', () => {
+  const fixture = goldenCases[2]!;
+  const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, String(a.answer ?? '')])));
+  const base = calculatePortrait(score, portraitMapping)!;
+  const make = () => ({ ...base, families: base.families.map(f => ({ ...f, mean: .25, answered: 1, applicable: 8, readable: true, weightedPotential: 1 })) });
+  const tied = make();
+  expect(selectPortraitSubtype(tied)).toMatchObject({ sharedLead: true, definition: { subtype_id: 'A-CO-ME' } });
+  tied.families.find(f => f.id === 'measure')!.weightedPotential = 3;
+  tied.families.find(f => f.id === 'do')!.weightedPotential = 2;
+  tied.families.find(f => f.id === 'commit')!.answered = 8;
+  expect(selectPortraitSubtype(tied)?.definition.subtype_id).toBe('A-ME-DO');
+  const near = make();near.families.find(f => f.id === 'engage')!.mean = .25 + Number.EPSILON;
+  near.families.find(f => f.id === 'measure')!.weightedPotential = 100;
+  expect(selectPortraitSubtype(near)).toMatchObject({ sharedLead: false, definition: { subtype_id: 'A-EN-ME' } });
+  const second = make();second.families.find(f => f.id === 'commit')!.mean = .5;
+  second.families.find(f => f.id === 'plan')!.weightedPotential = 2;
+  expect(selectPortraitSubtype(second)?.definition.subtype_id).toBe('A-CO-PL');
+  second.families.find(f => f.id === 'plan')!.readable = false;
+  expect(selectPortraitSubtype(second)?.definition.subtype_id).toBe('A-CO-ME');
+  const potential = withPortraitPotential(config, score).portraitPotential;
+  const empty = withPortraitPotential(config, scoreAssessment(config, fixture.profile, {}));
+  expect(empty.portraitPotential).toEqual(potential); // Unanswered items never inflate category shares.
+  for (const category of score.categories) {
+    const total = score.trace.filter(t => t.category === category.category).reduce((sum, t) => sum + potential[t.question_id]!, 0);
+    if (score.trace.some(t => t.category === category.category)) expect(total).toBeCloseTo(category.weight * 100, 10);
+  }
+  expect(withPortraitPotential(config, score).rawOverall).toBe(score.rawOverall);
+  expect(withPortraitPotential(config, score).trace).toBe(score.trace);
+});
+
+test('portrait maturity boundaries and hero mean use unrounded values', () => {
+  for (const [value, label, dots] of [[0,'Emerging',1],[.5,'Emerging',1],[.5 + Number.EPSILON,'Growing',2],[.75,'Growing',2],[.75 + Number.EPSILON,'Mature',3],[1,'Mature',3]] as const) {
+    expect(portraitMaturity(value)).toMatchObject({ label, dots });
+  }
+  const fixture = goldenCases[2]!;
+  const base = calculatePortrait(scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id,String(a.answer ?? '')]))), portraitMapping)!;
+  const portrait = { ...base, families: base.families.map(f => ({ ...f, mean: f.id === 'commit' ? .5 : f.id === 'measure' ? .265 : .1, readable: true })) };
+  const pair = selectPortraitSubtype(portrait)!;
+  expect(pair.combined).toBe(.3825);
+  expect(portraitMaturity(pair.combined).label).toBe('Emerging');
+});
+
+test('paired portrait Golden observations are computed rather than tuned to supplied examples', () => {
+  const observations = goldenCases.map(fixture => {
+    const score = scoreAssessment(config, fixture.profile, Object.fromEntries(fixture.answers.map(a => [a.question_id, String(a.answer ?? '')])));
+    const portrait = calculatePortrait(score, portraitMapping)!;
+    const before = JSON.stringify(portrait);
+    const pair = selectPortraitSubtype(portrait);
+    expect(JSON.stringify(portrait)).toBe(before);
+    if (pair) { expect(pair.first.mean).toBeGreaterThanOrEqual(0); expect(pair.second.mean).toBeGreaterThanOrEqual(0); expect(pair.second.readable).toBe(true); }
+    return { archetype: portrait.name, subtype: pair?.definition.name ?? null, first: pair?.first.mean, second: pair?.second.mean };
+  });
+  console.log('Computed Golden portrait observations:', JSON.stringify(observations));
 });

@@ -257,3 +257,42 @@
 .portrait-icon-label { display: inline-flex; align-items: center; gap: var(--space-2); }
 .portrait-detail-icon { flex: none; object-fit: contain; }
 .portrait-strength { margin-right: var(--space-4); }
+
+/* Pair identity adds emphasis without changing the accepted pentagon or fallback card. */
+.portrait-role-art { border: 1px solid var(--text); border-radius: var(--corner-control); }
+.portrait-primary-label { font-size: var(--font-size-small); text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.portrait-pair { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); }
+.portrait-pair-chip { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-small); }
+.portrait-pair-chip small { display: block; color: var(--text-muted); }
+.portrait-chart [data-pair-rank="1"] .portrait-chart-dot { stroke: var(--text); stroke-width: 2.5; }
+.portrait-chart [data-pair-rank="2"] .portrait-chart-dot { stroke: var(--text); stroke-width: 1.5; }
+.portrait-shared-lead { margin-top: var(--space-3); }
+.portrait-subtype-explanation { margin-bottom: var(--space-4); }
+
+/* Three-dot maturity is always accompanied by a text label and accessible value. */
+.portrait-maturity { display: flex; align-items: center; gap: .5rem; font-size: var(--font-size-small); margin-block: .5rem; }
+.portrait-maturity-dots { display: inline-flex; gap: .25rem; flex: none; }
+.portrait-maturity-dots > span { display: block; width: .5rem; height: .5rem; border: 1px solid currentColor; border-radius: 50%; }
+.portrait-maturity-dots > span[data-filled="true"] { background: currentColor; }
+.portrait-pair-chip { align-items: flex-start; }
+.portrait-pair-chip > .portrait-detail-icon { margin-top: .15rem; }
+.portrait-pair-chip .portrait-maturity { margin-bottom: 0; }
+
+/* Explanatory hierarchy: introduction outside the card, full-width compact reading. */
+.portrait-section { margin-top: var(--space-8); }
+.portrait-introduction { max-width: 76ch; }
+.portrait-introduction p { margin-top: var(--space-2); }
+.portrait-section > .portrait-card { margin-top: var(--space-4); }
+.portrait-family-combination { font-size: 1.125rem; font-weight: var(--weight-semibold); margin-top: var(--space-2); }
+.portrait-development { margin-top: var(--space-4); }
+.portrait-development .portrait-maturity { margin-bottom: .25rem; }
+.portrait-personal { margin-top: var(--space-4); max-width: none; }
+.portrait-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.portrait-pair-chip small { margin-top: .25rem; }
+.portrait-chart figcaption { text-align: left; }
+.portrait-chart-scale { margin-top: var(--space-2); text-align: center; }
+@media (max-width: 600px) {
+  .portrait-heading { gap: var(--space-3); }
+  .portrait-pair { grid-template-columns: 1fr; gap: var(--space-3); }
+  .portrait-personal { font-size: 1rem; line-height: 1.55; }
+}
