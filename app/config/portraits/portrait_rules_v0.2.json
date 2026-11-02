@@ -1,0 +1,25 @@
+{
+  "version": "portrait-beta-2",
+  "templateVersion": "portrait-template-4",
+  "minimumScoredFamilies": 2,
+  "minimumAnswersPerFamily": 1,
+  "denominator": "all applicable eligible items",
+  "tieBreak": "maximum possible industry-weighted contribution across all selected category questions, then fixed family order",
+  "maturity": [
+    {
+      "maximum": 0.5,
+      "label": "Emerging",
+      "dots": 1
+    },
+    {
+      "maximum": 0.75,
+      "label": "Growing",
+      "dots": 2
+    },
+    {
+      "maximum": 1,
+      "label": "Mature",
+      "dots": 3
+    }
+  ]
+}

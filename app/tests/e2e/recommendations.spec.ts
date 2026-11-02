@@ -40,7 +40,7 @@ test("explicit generation, duplicate suppression, validated display, notes inval
   release(); await expect(page.getByRole("button", { name: "Regenerate recommendations" })).toBeVisible();
   await page.locator("#actions summary").click();
   await page.locator("#sources > details > summary").click();
-  await expect(page.getByText("Review the observed practice", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Review the observed practice", exact: true })).toBeVisible();
   await expect(page.locator("#sources a[target='_blank']")).toHaveCount(1);
   await page.evaluate(() => { const key = "capstone.assessment.ui-preview.v1"; const value = JSON.parse(sessionStorage.getItem(key)!); value.profile.notes = "Changed notes"; sessionStorage.setItem(key, JSON.stringify(value)); window.dispatchEvent(new Event("capstone:assessment-session-changed")); });
   await expect(page.getByText("Review the observed practice", { exact: true })).toHaveCount(0);
@@ -65,10 +65,10 @@ test("cancelled and stale responses cannot replace deterministic results; failur
   await expect(page.getByText(/Provider quota is exhausted/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
 });
-test("ordinary browser server is offline and enforces request origin", async ({ request }) => {
+test("ordinary browser server is offline and enforces request origin", async ({ request, baseURL }) => {
   const status = await request.get("/api/assessment-recommendations"); expect(status.ok()).toBe(true); expect(await status.json()).toMatchObject({ ready: false, code: "offline_tests" });
   const blocked = await request.post("/api/assessment-recommendations", { headers: { Origin: "https://untrusted.example" }, data: input }); expect(blocked.status()).toBe(403);
-  const local = await request.post("/api/assessment-recommendations", { headers: { Origin: "http://127.0.0.1:3100" }, data: input }); expect(local.status()).toBe(503); expect(await local.json()).toMatchObject({ code: "provider_not_configured", assessment: { rawOverall: score.rawOverall } });
+  const local = await request.post("/api/assessment-recommendations", { headers: { Origin: new URL(baseURL!).origin }, data: input }); expect(local.status()).toBe(503); expect(await local.json()).toMatchObject({ code: "provider_not_configured", assessment: { rawOverall: score.rawOverall } });
 });
 
 for (const width of [1440, 768, 390]) test("combined partial action generates once and disclosures work at " + width, async ({ page }, testInfo) => {

@@ -138,11 +138,11 @@ test("results reject invalid drafts, show missing categories, and do not replace
   const state = { version: 3, progress: 4, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", profile, answers: { "U-018": "invalid" }, skipped: [] };
   await page.goto("/results");
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), state);
-  await page.reload(); await expect(page.getByRole("main").getByRole("alert")).toContainText("non-negative decimal");
+  await page.reload(); await expect(page.getByRole("region", { name: "Deterministic assessment results", exact: true }).getByRole("alert")).toContainText("non-negative decimal");
   await expect(page.locator(".score-number")).toHaveCount(0);
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify({ ...s, answers: { "U-001": "Yes" } })), state);
-  await page.reload(); await expect(page.getByRole("figure")).toContainText("PeopleNot scored");
-  await expect(page.getByRole("figure")).toContainText("Governance100.0");
+  await page.reload(); await expect(page.getByRole("figure", { name: "Calculated category scores", exact: true })).toContainText("PeopleNot scored");
+  await expect(page.getByRole("figure", { name: "Calculated category scores", exact: true })).toContainText("Governance100.0");
   const saved = await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!));
   expect(saved.answers).toEqual({ "U-001": "Yes" }); expect(saved).not.toHaveProperty("rawOverall");
   await page.evaluate(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify({ ...s, answers: {} })), state);

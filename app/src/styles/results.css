@@ -212,3 +212,87 @@
 
 .lever-mobile-report { display:none; }
 @media(max-width:899px) { .lever-mobile-report { display:block; margin-top:1rem; } }
+
+/* Portrait interpretation stays beneath authoritative calculated scores. */
+.portrait-card { margin-top: var(--space-8); padding: var(--space-6); border: var(--border-width) solid var(--border); border-radius: var(--corner-panel); background: var(--surface-raised); }
+.portrait-heading { display: flex; gap: var(--space-6); align-items: center; }
+.portrait-heading img { flex: 0 0 72px; }
+.portrait-heading > div { min-width: 0; }
+.portrait-caption { margin-block: var(--space-4); color: var(--text-muted); }
+.portrait-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); margin-block: var(--space-6); }
+.portrait-facts dt { font-size: var(--font-size-small); color: var(--text-muted); }
+.portrait-facts dd { font-weight: var(--weight-semibold); margin-block: var(--space-2); }
+.portrait-next { border-left: 3px solid var(--accent); padding-left: var(--space-4); margin-block: var(--space-6); }
+.portrait-families { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--space-4); margin-block: var(--space-6); list-style: none; padding: 0; }
+.portrait-families li { display: grid; align-content: start; gap: var(--space-2); border-top: var(--border-width) solid var(--border); padding-top: var(--space-3); }
+.portrait-versions { overflow-wrap: anywhere; }
+@media (max-width: 600px) { .portrait-card { padding: var(--space-4); } .portrait-heading { align-items: flex-start; } .portrait-heading img { width: 48px; height: 48px; flex-basis: 48px; } .portrait-facts { grid-template-columns: 1fr; } }
+
+/* Chart gaps remain unknown rather than zero. */
+.portrait-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .9fr); gap: var(--space-8); align-items: center; }
+.portrait-story { min-width: 0; }
+.portrait-meaning { font-size: 1.25rem; line-height: 1.4; margin-top: var(--space-2); }
+.portrait-personal { margin-top: var(--space-6); max-width: 40ch; }
+.portrait-chart { margin: 0; width: 100%; max-width: 420px; justify-self: center; }
+.portrait-chart svg { display: block; width: 100%; height: auto; }
+.portrait-chart-boundary { fill: var(--surface-raised); stroke: var(--text-muted); stroke-width: 1; }
+.portrait-chart-grid { fill: none; stroke: var(--border); stroke-width: 1; }
+.portrait-chart-fill { fill: var(--accent); fill-opacity: .22; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.portrait-chart-segment { stroke: var(--accent); stroke-width: 2.5; }
+.portrait-chart-dot { fill: var(--accent); stroke: var(--surface-raised); stroke-width: 1.5; }
+.portrait-chart-label { fill: var(--text); font-size: 15px; font-weight: var(--weight-semibold); }
+.portrait-chart-value { fill: var(--text-muted); font-size: 15px; }
+.portrait-chart figcaption { text-align: center; color: var(--text-muted); font-size: var(--font-size-small); }
+.portrait-chart figcaption span { display: block; }
+.portrait-facts { padding-top: var(--space-4); border-top: var(--border-width) solid var(--border); }
+@media (max-width: 700px) { .portrait-overview { grid-template-columns: 1fr; gap: var(--space-3); } .portrait-chart { max-width: 360px; } .portrait-personal { max-width: none; } }
+
+.portrait-personal { max-width: 48ch; }
+.portrait-advice { margin-top: var(--space-3); }
+.portrait-tag-key { display: grid; gap: var(--space-3); margin-block: var(--space-4); }
+.portrait-tag-key dt { font-weight: var(--weight-semibold); }
+.portrait-tag-key dd { margin: 0; }
+
+/* Supplied small glyphs form secondary and tertiary levels below the hero icon. */
+.portrait-icon-label { display: inline-flex; align-items: center; gap: var(--space-2); }
+.portrait-detail-icon { flex: none; object-fit: contain; }
+.portrait-strength { margin-right: var(--space-4); }
+
+/* Pair identity adds emphasis without changing the accepted pentagon or fallback card. */
+.portrait-role-art { border: 1px solid var(--text); border-radius: var(--corner-control); }
+.portrait-primary-label { font-size: var(--font-size-small); text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.portrait-pair { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); }
+.portrait-pair-chip { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-small); }
+.portrait-pair-chip small { display: block; color: var(--text-muted); }
+.portrait-chart [data-pair-rank="1"] .portrait-chart-dot { stroke: var(--text); stroke-width: 2.5; }
+.portrait-chart [data-pair-rank="2"] .portrait-chart-dot { stroke: var(--text); stroke-width: 1.5; }
+.portrait-shared-lead { margin-top: var(--space-3); }
+.portrait-subtype-explanation { margin-bottom: var(--space-4); }
+
+/* Three-dot maturity is always accompanied by a text label and accessible value. */
+.portrait-maturity { display: flex; align-items: center; gap: .5rem; font-size: var(--font-size-small); margin-block: .5rem; }
+.portrait-maturity-dots { display: inline-flex; gap: .25rem; flex: none; }
+.portrait-maturity-dots > span { display: block; width: .5rem; height: .5rem; border: 1px solid currentColor; border-radius: 50%; }
+.portrait-maturity-dots > span[data-filled="true"] { background: currentColor; }
+.portrait-pair-chip { align-items: flex-start; }
+.portrait-pair-chip > .portrait-detail-icon { margin-top: .15rem; }
+.portrait-pair-chip .portrait-maturity { margin-bottom: 0; }
+
+/* Explanatory hierarchy: introduction outside the card, full-width compact reading. */
+.portrait-section { margin-top: var(--space-8); }
+.portrait-introduction { max-width: 76ch; }
+.portrait-introduction p { margin-top: var(--space-2); }
+.portrait-section > .portrait-card { margin-top: var(--space-4); }
+.portrait-family-combination { font-size: 1.125rem; font-weight: var(--weight-semibold); margin-top: var(--space-2); }
+.portrait-development { margin-top: var(--space-4); }
+.portrait-development .portrait-maturity { margin-bottom: .25rem; }
+.portrait-personal { margin-top: var(--space-4); max-width: none; }
+.portrait-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.portrait-pair-chip small { margin-top: .25rem; }
+.portrait-chart figcaption { text-align: left; }
+.portrait-chart-scale { margin-top: var(--space-2); text-align: center; }
+@media (max-width: 600px) {
+  .portrait-heading { gap: var(--space-3); }
+  .portrait-pair { grid-template-columns: 1fr; gap: var(--space-3); }
+  .portrait-personal { font-size: 1rem; line-height: 1.55; }
+}

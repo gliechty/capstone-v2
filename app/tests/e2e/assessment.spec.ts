@@ -823,3 +823,104 @@ for(const width of [280,320,390])test("M7.5 exact rail touch and drag containmen
  await page.screenshot({path:info.outputPath('card-containment.png'),fullPage:true});
  expect(ticks!.width).toBeGreaterThan(0);await context.close();
 });
+
+import portraitMapping from '../../config/portraits/portrait_family_mapping_v0.2.json' with { type: 'json' };
+import { calculatePortrait as calculatePortraitBase, portraitMaturity, archetypes } from '../../src/application/sustainability-portrait';
+import { withPortraitPotential } from '../../src/application/portrait-potential';
+const calculatePortrait: typeof calculatePortraitBase = (score, mapping, ids) => calculatePortraitBase(withPortraitPotential(loadCanonicalConfig().config, score), mapping, ids);
+import { selectPortraitSubtype } from '../../src/application/portrait-subtype';
+for (const example of ['golden-original', 'paired-golden-03', 'paired-low-credit-golden-01'] as const) for (const width of [1440, 390]) test('portrait ' + example + ' with accessible disclosure at ' + width + 'px', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width, height: 1000 });
+  const fixture = goldenCases[example === 'paired-golden-03' ? 2 : 0]!;
+  const answers = Object.fromEntries(fixture.answers.map(a => [a.question_id, a.answer === null ? '' : String(a.answer)]));
+  // Explicit review variation of the approved Golden01, not the owner's saved snapshot.
+  if (example === 'paired-low-credit-golden-01') {
+    answers['U-009'] = 'Yes';
+
+  }
+  const expected = calculatePortrait(scoreAssessment(loadCanonicalConfig().config, fixture.profile, answers), portraitMapping)!;
+  const pair = selectPortraitSubtype(expected);
+  if (example === 'paired-golden-03') expect(pair?.definition.subtype_id).toBe('A-CO-ME');
+  if (example === 'paired-low-credit-golden-01') { expect(expected.name).toBe('Anchor'); expect(pair).not.toBeNull(); expect(pair!.second.mean).toBeLessThan(.5); }
+  const session = { version: 3, configVersion: catalog.version, phase: 'review', inputMethod: 'manual', activeId: 'U-001', progress: 4,
+    profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
+      companySize: fixture.profile.employee_band.replace(/\s*-\s*/g, ' - '), country: fixture.profile.country, location: fixture.profile.company_location,
+      targetMarket: fixture.profile.target_market_region.join(';'), targetBuyer: fixture.profile.target_buyer, businessGoal: fixture.profile.business_goal, notes: '' }, answers, skipped: [] };
+  let providerPosts = 0;
+  page.on('request', r => { if (r.url().includes('/api/assessment-recommendations') && r.method() === 'POST') providerPosts++; });
+  await page.addInitScript(s => sessionStorage.setItem('capstone.assessment.ui-preview.v1', JSON.stringify(s)), session);
+  await page.goto('/results');
+  const portrait = page.locator('.portrait-card');
+  await expect(portrait).toHaveAttribute('data-portrait', expected.name);
+  if (pair) {
+    await expect(portrait).toHaveAttribute('data-subtype', pair.definition.subtype_id);
+    await expect(portrait.getByRole('heading', { level: 3, name: pair.definition.name, exact: true })).toHaveText(pair.definition.name);
+    await expect(portrait.getByLabel('Leading approach families')).toContainText('Commit · Anchor');
+    await expect(portrait.getByLabel('Leading approach families')).toContainText('Measure · Chronicler');
+    await expect(portrait.locator('.portrait-role-art')).toHaveAttribute('src', '/portraits/roles/' + pair.definition.artwork.split('/').at(-1));
+    for (const item of [{ name: pair.definition.name, value: pair.combined }, { name: archetypes[pair.first.id], value: pair.first.mean! }, { name: archetypes[pair.second.id], value: pair.second.mean! }]) {
+      const maturity = portraitMaturity(item.value);
+      const group = portrait.getByRole('group', { name: new RegExp(item.name + ' approach development: ' + maturity.label) });
+      await expect(group).toBeVisible();
+      await expect(group.locator('[data-filled="true"]')).toHaveCount(maturity.dots);
+      await expect(group.locator('.portrait-maturity-dots > span')).toHaveCount(3);
+    }
+    await portrait.locator('.portrait-role-art').scrollIntoViewIfNeeded();
+    await expect.poll(() => portrait.locator('.portrait-role-art').evaluate(el => (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0)).toBe(true);
+  } else {
+    await expect(portrait.getByRole('heading', { level: 2 })).toHaveText(expected.name);
+    await expect(portrait.getByLabel('Leading approach families')).toHaveCount(0);
+  }
+
+  await expect(portrait.getByText('Loading existing actual-answer Levers…')).toHaveCount(0);
+  await expect(portrait).toContainText('Input basis: unknown');
+  const chart = portrait.getByRole('img', { name: /Approach profile/ });
+  await expect(chart).toBeVisible();
+  await expect(chart.locator('[data-portrait-shape="filled"]')).toHaveCount(1);
+  for (const family of expected.families) {
+    await expect(chart).toHaveAccessibleName(new RegExp(family.id + ': ' + Math.round(family.mean! * 100) + '%', 'i'));
+    const marker = chart.locator('[data-family="' + family.id + '"] circle');
+    const radius = await marker.evaluate(el => Math.hypot(Number(el.getAttribute('cx')) - 180, Number(el.getAttribute('cy')) - 170));
+    expect(radius / 103).toBeCloseTo(family.mean!, 8);
+  }
+  const polygon = await chart.locator('[data-portrait-shape="filled"]').getAttribute('points');
+  const vertices = polygon!.split(' ').map(pair => pair.split(',').map(Number));
+  for (let i = 0; i < vertices.length; i++) expect(Math.hypot(vertices[i]![0]! - 180, vertices[i]![1]! - 170) / 103).toBeCloseTo(expected.families[i]!.mean!, 8);
+  const saved = await page.evaluate(() => sessionStorage.getItem('capstone.assessment.ui-preview.v1'));
+  const disclosure = portrait.getByText('Why this archetype?', { exact: false }).first();
+  await disclosure.focus(); await page.keyboard.press('Enter');
+  await expect(portrait.getByText(/Beta interpretation rules:/)).toBeVisible();
+  await expect(portrait.getByText(/there is no one-to-one mapping/)).toBeVisible();
+  await expect(portrait.getByText(/Tags are fixed before your answers/)).toBeVisible();
+  await expect(portrait.getByText(/Numeric interpretation deferred/)).toContainText(expected.excludedNumeric.length + ' items');
+  expect((await new AxeBuilder({ page }).include('.portrait-card').analyze()).violations).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await disclosure.click();
+  const before = await portrait.innerText();
+  const levers = page.getByRole('region', { name: 'Explore your improvement levers' });
+  await expect(levers.getByRole('slider')).toHaveCount(5);
+  await levers.getByRole('slider').first().focus(); await page.keyboard.press('End');
+  await expect(levers.getByRole('slider').first()).toHaveAttribute('aria-valuetext', 'Yes');
+  expect(await portrait.innerText()).toBe(before);
+  expect(await page.evaluate(() => sessionStorage.getItem('capstone.assessment.ui-preview.v1'))).toBe(saved);
+  expect(providerPosts).toBe(0);
+  await portrait.scrollIntoViewIfNeeded();
+  // Hide only surrounding sticky navigation during the card-only capture; assertions above use the actual UI.
+  await page.locator('.portrait-section').screenshot({ path: testInfo.outputPath('portrait-' + example + '-' + width + '.png'), style: '.stage-navigation, .results-navigation { visibility: hidden !important; }' });
+  // Reuse this Golden assessment, omitting Commit answers to check missing chart evidence.
+  const incompleteAnswers = { ...answers };
+  for (const row of portraitMapping.rows.filter(row => row.family === 'commit')) delete incompleteAnswers[row.question_id];
+  const partialContext = await page.context().browser()!.newContext({ viewport: { width, height: 1000 } });
+  const partialPage = await partialContext.newPage();
+  await partialPage.addInitScript(s => sessionStorage.setItem('capstone.assessment.ui-preview.v1', JSON.stringify(s)), { ...session, answers: incompleteAnswers });
+  await partialPage.goto(page.url());
+  const partialChart = partialPage.locator('.portrait-chart');
+  await expect(partialChart.getByRole('img')).toHaveAccessibleName(/Commit: insufficient evidence/);
+  await expect(partialChart.locator('[data-portrait-shape="filled"]')).toHaveCount(0);
+  await expect(partialChart.locator('[data-family="commit"] circle')).toHaveCount(0);
+  await expect(partialChart.locator('[data-family="commit"]')).toContainText('—');
+  await expect(partialChart).toContainText('Gaps mean no eligible answers, not zero.');
+  await expect(partialPage.locator('.portrait-card [data-family="commit"][data-pair-rank]')).toHaveCount(0);
+  await partialContext.close();
+
+});
