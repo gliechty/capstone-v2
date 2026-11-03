@@ -924,3 +924,28 @@ for (const example of ['golden-original', 'paired-golden-03', 'paired-low-credit
   await partialContext.close();
 
 });
+
+test("PDF download preserves the saved assessment, HTML option and retryable failure", async ({page}, testInfo) => {
+ const {syntheticSession} = await import("../../src/features/preview/fixtures");
+ const session = {...syntheticSession(catalog.version), progress:4};
+ await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ await page.goto("/results");
+ const button=page.getByRole("button",{name:"Download PDF",exact:true});
+ await expect(button).toBeVisible();
+ const before=await page.evaluate(()=>sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
+ await page.route("**/api/assessment-report-pdf",r=>r.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:"PDF generation failed. Please retry, or download the HTML report. Your assessment is unchanged."})}));
+ await button.click();await expect(page.getByRole("status").filter({hasText:"PDF generation failed"})).toBeVisible();
+ await page.unroute("**/api/assessment-report-pdf");
+ const event=page.waitForEvent("download");
+ await button.click();const download=await event;
+ expect(download.suggestedFilename()).toBe("mosaic-assessment-report.pdf");
+ await download.saveAs(testInfo.outputPath("assessment.pdf"));
+ const stream=await download.createReadStream();const chunks:Buffer[]=[];
+ for await(const chunk of stream!)chunks.push(Buffer.from(chunk));
+ expect(Buffer.concat(chunks).subarray(0,5).toString()).toBe("%PDF-");
+ await expect(page.getByRole("button",{name:"Download assessment report",exact:true})).toBeEnabled();
+ expect(await page.evaluate(()=>sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(before);
+ await page.setViewportSize({width:390,height:844});
+ await expect(button).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});

@@ -23,6 +23,7 @@ test("report cannot trigger generation and links retain their destinations", asy
   render(<ResultsPage />);
   const report = screen.getByRole("button", { name: "Download assessment report" });
   await waitFor(()=>expect(report).toBeDisabled());
-  expect(screen.getByText(/HTML with print-to-PDF support/)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Download PDF" })).toBeDisabled();
+  expect(screen.getByText(/Choose PDF for a ready-to-share report/)).toBeInTheDocument();
   for (const link of screen.getAllByRole("link")) expect(["/#top", "/assessment", "#results-main", "#sources", "#summary", "#gaps", "#actions"]).toContain(link.getAttribute("href"));
 });

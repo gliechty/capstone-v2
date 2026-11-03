@@ -22,7 +22,7 @@ export function ReportDownload({catalog,view,scenario,disabled=false}:{catalog:A
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
 
  const [busy,setBusy]=useState(false),[message,setMessage]=useState("");
- async function download(){
+ async function download(format: "html" | "pdf" = "html"){
   if(busy||disabled)return;setBusy(true);setMessage("");
   try {
    const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));
@@ -32,6 +32,29 @@ export function ReportDownload({catalog,view,scenario,disabled=false}:{catalog:A
    const scenarioKey=JSON.stringify(scenario);
    if(scenario && (input.configVersion!==scenario.input.configVersion || JSON.stringify(input.answers)!==JSON.stringify(scenario.input.answers) || Object.entries(scenario.input.context).some(([key,value])=>JSON.stringify(input.context[key as keyof typeof input.context])!==JSON.stringify(value))))throw new Error("Assessment changed. Reload your levers before downloading.");
 
+   if (format === "pdf") {
+    const id = await browserInputHash(identity);
+    const recommendations = view.result?.identity.inputId === id
+     ? { inputId: id, content: view.result.content } : undefined;
+    const response = await fetch("/api/assessment-report-pdf", {
+     method: "POST", headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({ session, recommendations, scenarioAnswers: scenario?.answers }),
+     signal: AbortSignal.timeout(45000),
+    });
+    if (!response.ok) {
+     const failure = await response.json().catch(() => null) as { error?: string } | null;
+     throw new Error(failure?.error ?? "PDF generation failed. Please retry, or download HTML.");
+    }
+    const blob = await response.blob();
+    const current = store.load().state;
+    if (!mounted.current || JSON.stringify(latest.current) !== scenarioKey || !current ||
+     inputIdentityText(recommendationRequestFromSession(current)) !== identity)
+     throw new Error("Assessment or scenario changed. Download again for the current values.");
+    const url = URL.createObjectURL(blob), link = document.createElement("a");
+    link.href = url; link.download = scenario ? "mosaic-assessment-with-levers.pdf" : "mosaic-assessment-report.pdf";
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setMessage("PDF report downloaded."); return;
+   }
    const score=await requestAssessmentScore({configVersion:input.configVersion,context:input.context,answers:input.answers},AbortSignal.timeout(15000));
    const assets = await loadReportAssets(score);
    const priority = await requestImprovementLevers({configVersion:input.configVersion,context:input.context,answers:input.answers},AbortSignal.timeout(15000)).catch(()=>null);
@@ -51,8 +74,8 @@ export function ReportDownload({catalog,view,scenario,disabled=false}:{catalog:A
    const url=URL.createObjectURL(new Blob([assessmentReport(session,score,content,undefined,appendix,{assets,levers:priority?.levers})],{type:"text/html;charset=utf-8"}));
    const a=document.createElement('a');a.href=url;a.download=scenario?'mosaic-assessment-with-levers.html':'mosaic-assessment-report.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
    setMessage("Report downloaded. Open it and use Print → Save as PDF if needed.");
-  } catch(error){setMessage(error instanceof Error?error.message:"Report unavailable. Retry after reviewing your answers.");}
+  } catch(error){setMessage(error instanceof Error?(error.name==="TimeoutError" ? "PDF generation timed out. Please retry, or download HTML." : error.message):"Report unavailable. Retry after reviewing your answers.");}
   finally {setBusy(false);}
  }
- return <div className="mt-4"><button className={scenario?"button-primary":"button-secondary"} disabled={disabled || busy || view.code==="no_assessment"} onClick={()=>void download()}>{busy?"Preparing report…":scenario?"Download report with hypothetical levers":"Download assessment report"}</button><p className="text-small mt-2" role="status">{message||"Includes current scores and answers; available even if AI fails. HTML with print-to-PDF support."}</p></div>;
+ return <div className="mt-4"><div className="flex flex-wrap gap-3"><button className="button-primary" disabled={disabled || busy || view.code==="no_assessment"} onClick={()=>void download("pdf")}>{busy?"Preparing report...":scenario?"Download PDF with hypothetical levers":"Download PDF"}</button><button className={scenario?"button-primary":"button-secondary"} disabled={disabled || busy || view.code==="no_assessment"} onClick={()=>void download()}>{busy?"Preparing report…":scenario?"Download report with hypothetical levers":"Download assessment report"}</button></div><p className="text-small mt-2" role="status">{message||"Includes current scores and answers; available even if AI fails. Choose PDF for a ready-to-share report, or the original HTML download."}</p></div>;
 }

@@ -43,3 +43,97 @@ test("scenario report appends Golden hypothetical answers and combined scores wi
  expect(report).toContain("Implementation may require time, expenditure and expertise; these are not estimated.");
  expect(session.answers).toEqual(answers);
 });
+
+import { createHash } from "node:crypto";
+import { vi, afterEach } from "vitest";
+import { assessmentCatalog } from "../../src/application/assessment-catalog";
+import { constructPdfReport } from "../../src/application/pdf-report";
+import { recommendationRequestFromSession } from "../../src/application/recommendations/request";
+import { inputIdentityText } from "../../src/application/recommendations/identity";
+import * as pdfRenderer from "../../src/adapters/report-pdf";
+import { POST as pdfPost } from "../../src/app/api/assessment-report-pdf/route";
+const pdfSession = () => syntheticSession(assessmentCatalog(config).version);
+const pdfRequest = (body: unknown, origin = "http://localhost:3107") => new Request("http://localhost:3107/api/assessment-report-pdf", {
+ method: "POST", headers: { "Content-Type": "application/json", origin }, body: JSON.stringify(body),
+});
+afterEach(() => vi.restoreAllMocks());
+test("PDF constructs only the installed report, embeds assets and rejects stale recommendation identity", async () => {
+ const session = pdfSession();
+ const inputId = createHash("sha256").update(inputIdentityText(recommendationRequestFromSession(session))).digest("hex");
+ const result = await constructPdfReport(config, { session, recommendations: { inputId, content: validTestContent() } });
+ expect(result.html).toContain("data:font/ttf;base64,");
+ expect(result.html).toContain("data:image/svg+xml;base64,");
+ expect(result.html).toContain(validTestContent().executive_summary);
+ expect(result.html).toContain('id="portrait"');
+ expect(result.html).not.toContain('id="hypothetical-levers"');
+ await expect(constructPdfReport(config, {session, html:"<script>evil()</script>"})).rejects.toThrow();
+ await expect(constructPdfReport(config, {session, url:"http://169.254.169.254"})).rejects.toThrow();
+ await expect(constructPdfReport(config, {session, recommendations:{inputId:"0".repeat(64),content:validTestContent()}})).rejects.toThrow(/no longer match/);
+});
+test("PDF endpoint rejects cross-origin, oversized and arbitrary requests before rendering", async () => {
+ const render = vi.spyOn(pdfRenderer, "renderReportPdf");
+ expect((await pdfPost(pdfRequest({session:pdfSession()}, "https://elsewhere.example"))).status).toBe(403);
+ expect((await pdfPost(pdfRequest({html:"<h1>Arbitrary</h1>"}))).status).toBe(400);
+ expect((await pdfPost(pdfRequest({url:"file:///etc/passwd"}))).status).toBe(400);
+ expect((await pdfPost(pdfRequest({session:pdfSession(), score:{rawOverall:100}}))).status).toBe(400);
+ expect((await pdfPost(pdfRequest({data:"x".repeat(600001)}))).status).toBe(413);
+ expect(render).not.toHaveBeenCalled();
+});
+test("PDF job admission rejects concurrent work and releases after failure for retry", async () => {
+ const release = pdfRenderer.acquirePdfJob()!;
+ expect((await pdfPost(pdfRequest({session:pdfSession()}))).status).toBe(503);
+ release();
+ const render = vi.spyOn(pdfRenderer, "renderReportPdf").mockRejectedValueOnce(new Error("private detail"))
+  .mockResolvedValueOnce(Buffer.from("%PDF-test"));
+ const failed = await pdfPost(pdfRequest({session:pdfSession()}));
+ expect(failed.status).toBe(503);expect(await failed.text()).toContain("Please retry");
+ const retry = await pdfPost(pdfRequest({session:pdfSession()}));
+ expect(retry.status).toBe(200);expect(retry.headers.get("content-type")).toBe("application/pdf");
+ expect(retry.headers.get("cache-control")).toBe("no-store");
+ expect(render).toHaveBeenCalledTimes(2);
+});
+test("PDF scenarios retain actual answers and reject invented or out-of-range Levers", async () => {
+ const session = pdfSession();
+ const {selectImprovementLevers} = await import("../../src/application/improvement-levers");
+ const request = recommendationRequestFromSession(session);
+ const {computeAssessment} = await import("../../src/application/score-request");
+ const actual = computeAssessment(config,{configVersion:request.configVersion,context:request.context,answers:request.answers});
+ const lever = selectImprovementLevers(config,actual).levers[0]!;
+ const before = JSON.stringify(session);
+ const result = await constructPdfReport(config,{session,scenarioAnswers:{[lever.id]:lever.best}});
+ expect(result.html).toContain("The actual assessment and recommendations above are unchanged");
+ expect(result.html).toContain('id="hypothetical-levers"');
+ expect(JSON.stringify(session)).toBe(before);
+ await expect(constructPdfReport(config,{session,scenarioAnswers:{"fake":"100"}})).rejects.toThrow();
+ await expect(constructPdfReport(config,{session,scenarioAnswers:{[lever.id]:"not an answer"}})).rejects.toThrow();
+});
+
+import { chromium, type BrowserServer } from "playwright-core";
+test("PDF renderer blocks resource requests, disables scripts and kills its browser after success or failure", async () => {
+ const route = vi.fn(), evaluate = vi.fn().mockResolvedValue(undefined), pdf = vi.fn().mockResolvedValue(Buffer.from("%PDF-"));
+ const page = {setDefaultTimeout:vi.fn(),setContent:vi.fn(),evaluate,pdf};
+ const context = {route,newPage:vi.fn().mockResolvedValue(page)};
+ vi.spyOn(chromium,"connect").mockResolvedValue({newContext:vi.fn().mockResolvedValue(context)} as never);
+ const kill = vi.fn().mockResolvedValue(undefined);
+ vi.spyOn(chromium,"launchServer").mockResolvedValue({wsEndpoint:()=>"ws://test",kill} as unknown as BrowserServer);
+ await pdfRenderer.renderReportPdf("<html>internal test report</html>");
+ const abort=vi.fn();await route.mock.calls[0]![1]({abort});
+ expect(abort).toHaveBeenCalledWith("blockedbyclient");
+ expect(kill).toHaveBeenCalledTimes(1);
+ expect(pdf).toHaveBeenCalledWith(expect.objectContaining({preferCSSPageSize:true,printBackground:true}));
+ evaluate.mockRejectedValueOnce(new Error("font failure"));
+ await expect(pdfRenderer.renderReportPdf("<html>internal test report</html>")).rejects.toThrow("font failure");
+ expect(kill).toHaveBeenCalledTimes(2);
+});
+test("PDF render deadline kills a stuck owned browser", async () => {
+ vi.useFakeTimers();
+ const kill=vi.fn().mockResolvedValue(undefined);
+ vi.spyOn(chromium,"launchServer").mockResolvedValue({wsEndpoint:()=>"ws://test",kill} as unknown as BrowserServer);
+ vi.spyOn(chromium,"connect").mockReturnValue(new Promise(()=>{}));
+ try {
+  const promise=pdfRenderer.renderReportPdf("internal test");
+  const rejected=expect(promise).rejects.toThrow("timed out");
+  await vi.advanceTimersByTimeAsync(20001);await rejected;
+  expect(kill).toHaveBeenCalledOnce();
+ } finally {vi.useRealTimers();}
+});
