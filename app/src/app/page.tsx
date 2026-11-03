@@ -58,11 +58,11 @@ export default function LandingPage() {
             </div>
             <div className="relative flex min-h-64 flex-col items-center justify-center border-t border-line bg-[#faf8f3] text-center md:border-t-0 md:border-l">
               <div className="absolute inset-0">
-              <video controls preload="metadata" playsInline poster="/media/mosaic-explainer-poster.jpg" aria-label="MOSAIC explainer film, 90 seconds" className="h-full w-full object-contain">
-                <source src="/media/mosaic-explainer-720p.mp4" type="video/mp4" media="(max-width: 639px)" />
-                <source src="/media/mosaic-explainer-1080p.mp4" type="video/mp4" />
-                <track kind="captions" srcLang="en" label="English" src="/media/mosaic-explainer.en.vtt" default />
-                Your browser cannot play this video. <a href="/media/mosaic-explainer-720p.mp4">Download the MOSAIC explainer</a>.
+              <video controls preload="metadata" playsInline poster="/media/mosaic-explainer-poster.jpg" aria-label="MOSAIC explainer film, 92 seconds" className="h-full w-full object-contain">
+                <source src="/media/mosaic-explainer-narrated-2026-11-03-1080p.mp4" type="video/mp4" media="(max-width: 639px)" />
+                <source src="/media/mosaic-explainer-narrated-2026-11-03-1080p.mp4" type="video/mp4" />
+                <track kind="captions" srcLang="en" label="English" src="/media/mosaic-explainer-narrated-2026-11-03.en.vtt" default />
+                Your browser cannot play this video. <a href="/media/mosaic-explainer-narrated-2026-11-03-1080p.mp4">Download the MOSAIC explainer</a>.
               </video>
               </div>
             </div>
