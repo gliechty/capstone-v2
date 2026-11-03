@@ -1,4 +1,4 @@
-/** Homepage copy: supplied MOSAIC pack, with current verification limitations and owner-approved temporary affiliation text. */
+/** Homepage copy: approved MOSAIC identity and owner-supplied content handoff. */
 export const landingCopy = {
   "metadata": {
     "title": "MOSAIC · context-weighted sustainability assessment",
@@ -15,54 +15,33 @@ export const landingCopy = {
     "research": "The research"
   },
   "hero": {
-    "attribution": "MOSAIC · Multi-Organizational Synthesis for Adaptive Indicator Context",
-    "headingFirstLine": "The Pieces",
-    "headingSecondLine": "that Matter",
-    "description": "What matters to your business, your market, and your buyers? A research-led approach to help small and medium enterprises make sense of sustainability expectations.",
-    "primaryCta": "Take the Assessment",
-    "secondaryCta": "Explore the approach",
+    "attribution": "A sustainability navigator for small and medium enterprises",
+    "headingFirstLine": "Sustainability depends.",
+    "headingSecondLine": "Find the pieces that matter to you.",
+    "description": "Understand your business’s reported practices, explore priorities in context, and see where your next steps could lead.",
+    "primaryCta": "Start your assessment",
+    "secondaryCta": "Explore your results",
     "availability": "Explore the questionnaire and deterministic scores, with AI recommendations and evidence references for review.",
     "illustrationLeft": "Small businesses",
     "illustrationRight": "Buyer expectations",
     "subtitle": "Context-weighted sustainability assessment synthesized from standards and frameworks."
   },
   "demo": {
-    "label": "A look inside",
-    "headingFirstLine": "See the approach",
-    "headingSecondLine": "in practice.",
-    "description": "Watch a 90-second introduction to the assessment and how to interpret its outputs. English captions are available.",
+    "label": "MOSAIC, in a nutshell",
+    "headingFirstLine": "Different businesses.",
+    "headingSecondLine": "Different contexts.",
+    "description": "A clearer place to start. Watch the narrated overview of MOSAIC, with English captions.",
     "caption": "90 seconds · narrated · captions available",
     "limitation": "Reconfiguring the method for a new document collection is proposed, not an available upload feature."
-  },
-  "context": {
-    "label": "01 / The context",
-    "headingFirstLine": "Many expectations.",
-    "headingSecondLine": "Where to begin?",
-    "intro": "For small and medium enterprises, sustainability can be difficult to interpret. Standards, regulations, and buyer requirements ask different things of a business, and those priorities change over time.",
-    "body": "Understanding which information, disclosures, and operational improvements matter can help a business prepare for procurement conversations. The starting point is context."
-  },
-  "approach": {
-    "label": "02 / Our approach",
-    "heading": "A clearer connection between your business and what matters.",
-    "description": "The MOSAIC approach considers sustainability in relation to industry, market, buyer, and business goal. It is designed to support procurement readiness, rather than define one universal sustainability score.",
-    "firstHeading": "Start with context",
-    "firstBody": "Understand the business and the sustainability expectations relevant to its commercial setting.",
-    "secondHeading": "Make the method visible",
-    "secondBody": "Keep questions, benchmarks, and weighting traceable to explicit configuration and source material.",
-    "thirdHeading": "Connect insight to action",
-    "thirdBody": "The assessment pairs traceable scores with recommendations and evidence references for your review."
   },
   "research": {
     "label": "03 / Research & verification",
     "headingFirstLine": "Grounded in research.",
     "headingSecondLine": "Open to scrutiny.",
     "intro": "Developed by students in Columbia University’s M.S. in Sustainability Management.",
-    "methodHeading": "Methodology & source basis",
-    "methodBody": "MOSAIC keeps its questions, answer scales, benchmarks, contextual weighting, and source documents as explicit, versioned configuration. Scores follow fixed rules and are kept separate from the AI-written recommendations. Weights represent expected relevance, not calibrated statistical probabilities.",
     "verificationHeading": "What has been verified?",
-    "verificationBody": "Five historical assessment cases provide regression references for the scoring engine. Calculation traces and automated checks verify the implemented rules; documented differences and evidence limitations remain. These checks are not independent assurance of sustainability performance.",
+    "verificationBody": "The research reports external-rater comparisons, robustness checks and a separate 50-firm re-reading. It finds support for Capstone’s category structure and graded answer scales, while identifying gains from different item weights. These are author-reported research findings, not certification of this app. Separately, MOSAIC’s five historical Golden cases and calculation traces check implementation consistency; they do not verify company performance.",
     "limitationsHeading": "Limitations & interpretation",
-    "limitationsBody": "Relevance depends on the source base and commercial context. This is not a universal sustainability rating or a guarantee of procurement eligibility. Scores use self-reported answers. AI recommendations may contain unsupported claims; review their cited evidence. Citation membership alone does not establish that a source supports a claim. New document collections shown in the film are proposed, not an available upload feature.",
     "expansion": "Multi-Organizational Synthesis for Adaptive Indicator Context",
     "methodName": "Atomic Indicator Synthesis"
   },
