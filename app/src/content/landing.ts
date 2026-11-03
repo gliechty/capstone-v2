@@ -15,6 +15,7 @@ export const landingCopy = {
     "research": "The research"
   },
   "hero": {
+    "identity": "MOSAIC - Measuring Organizational Sustainability Across Industries and Contexts",
     "attribution": "A sustainability navigator for small and medium enterprises",
     "headingFirstLine": "Sustainability depends.",
     "headingSecondLine": "Find the pieces that matter to you.",

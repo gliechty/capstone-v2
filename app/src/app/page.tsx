@@ -35,7 +35,7 @@ export default function LandingPage() {
       <main id="main-content" tabIndex={-1}>
         <section className="page-container grid items-center gap-8 pb-section pt-12 md:grid-cols-[1.35fr_1fr] md:pt-16" aria-labelledby="hero-heading">
           <div className="intro-enter">
-            <p className="section-label">MOSAIC — {landingCopy.footer.expansion}<br /><em className="font-normal">{landingCopy.hero.attribution}</em></p>
+            <p className="section-label">{landingCopy.hero.identity}<br /><em className="font-normal">{landingCopy.hero.attribution}</em></p>
             <hgroup><h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}</h1><p className="mt-4 max-w-copy text-subheading italic">{landingCopy.hero.headingSecondLine}</p></hgroup>
             <p className="mt-6 max-w-copy text-muted">{landingCopy.hero.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
