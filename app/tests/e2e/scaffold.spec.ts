@@ -12,19 +12,23 @@ for (const viewport of [
     page.on("pageerror", (error) => errors.push(error.message));
     const response = await page.goto("/");
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("The Piecesthat Matter");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sustainability depends.");
     await expect(page).toHaveTitle("MOSAIC · context-weighted sustainability assessment");
-    await expect(page.getByRole("link", { name: "Take the Assessment" }).first()).toHaveAttribute("href", "/assessment");
+    await expect(page.getByRole("link", { name: "Start your assessment" }).first()).toHaveAttribute("href", "/assessment");
     await expect(page.getByLabel("MOSAIC explainer film, 92 seconds", { exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     // Audit the content hidden in disclosures as well as the initial view.
-    await page.getByText("What has been verified?", { exact: true }).click();
-    await page.getByText("Limitations & interpretation", { exact: true }).click();
+    for (const summary of await page.locator("main details > summary").all()) {
+      await summary.focus();
+      await page.keyboard.press("Enter");
+    }
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    await page.getByText("What has been verified?", { exact: true }).click();
-    await page.getByText("Limitations & interpretation", { exact: true }).click();
+    for (const summary of await page.locator("main details > summary").all()) {
+      await summary.focus();
+      await page.keyboard.press("Space");
+    }
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: testInfo.outputPath(`landing-${viewport.name}.png`), fullPage: true, animations: "disabled" });
     expect(errors).toEqual([]);
@@ -41,17 +45,17 @@ test("keyboard users can skip navigation, follow anchors and open research discl
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Take the Assessment" }).first()).toBeFocused();
+  await expect(page.getByRole("link", { name: "Start your assessment" }).first()).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: /Explore the approach/ })).toBeFocused();
+  await expect(page.getByRole("link", { name: /Explore your results/ })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#approach$/);
+  await expect(page).toHaveURL(/#outputs$/);
   const disclosure = page.getByText("What has been verified?", { exact: true });
   await disclosure.focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByText(/Five historical assessment cases/)).toBeVisible();
+  await expect(page.getByText(/The research reports external-rater comparisons/)).toBeVisible();
   await page.keyboard.press("Space");
-  await expect(page.getByText(/Five historical assessment cases/)).toBeHidden();
+  await expect(page.getByText(/The research reports external-rater comparisons/)).toBeHidden();
 });
 
 test("reduced motion removes entrance animation and smooth scrolling", async ({ page }) => {
@@ -67,7 +71,7 @@ test("normal motion is brief and UI tokens reach the rendered controls", async (
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   expect(await page.locator(".intro-enter").evaluate((el) => getComputedStyle(el).animationDuration)).toBe("0.22s");
-  expect(await page.getByRole("link", { name: "Take the Assessment" }).first().evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
+  expect(await page.getByRole("link", { name: "Start your assessment" }).first().evaluate((el) => getComputedStyle(el).borderRadius)).toBe("10px");
 });
 
 test("unknown routes return an actual not-found response", async ({ request }) => {
@@ -79,7 +83,7 @@ for (const width of [1440, 390, 320]) {
   test("sticky header keeps anchor targets visible at " + width + "px", async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await page.goto("/");
-    for (const target of ["context", "approach", "research"]) {
+    for (const target of ["context", "outputs", "approach", "research"]) {
       await page.locator('header a[href="#' + target + '"]').click();
       await expect.poll(async () => {
         const header = await page.locator("header").boundingBox();

@@ -3,6 +3,9 @@ import Image from "next/image";
 import "../styles/landing-brand.css";
 import { LandingHeader } from "../components/landing-header";
 import { landingCopy } from "../content/landing";
+import { LandingScreenshot } from "../components/landing-screenshot";
+import { LandingDisclosure } from "../components/landing-disclosure";
+import { originExplanation, resultsExplanation, resultCards, methods, researchExplanations } from "../content/landing-details";
 
 function ContextIllustration() {
   return (
@@ -23,6 +26,7 @@ export default function LandingPage() {
         </a>
         <nav aria-label={landingCopy.navigation.label} className="flex flex-wrap gap-x-6">
           <a className="nav-link" href="#context">{landingCopy.navigation.context}</a>
+          <a className="nav-link" href="#outputs">Your results</a>
           <a className="nav-link" href="#approach">{landingCopy.navigation.approach}</a>
           <a className="nav-link" href="#research">{landingCopy.navigation.research}</a>
         </nav>
@@ -31,13 +35,13 @@ export default function LandingPage() {
       <main id="main-content" tabIndex={-1}>
         <section className="page-container grid items-center gap-8 pb-section pt-12 md:grid-cols-[1.35fr_1fr] md:pt-16" aria-labelledby="hero-heading">
           <div className="intro-enter">
-            <p className="section-label">{landingCopy.hero.attribution}</p>
-            <h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}<br />{landingCopy.hero.headingSecondLine}</h1>
+            <p className="section-label">MOSAIC — {landingCopy.footer.expansion}<br /><em className="font-normal">{landingCopy.hero.attribution}</em></p>
+            <hgroup><h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}</h1><p className="mt-4 max-w-copy text-subheading italic">{landingCopy.hero.headingSecondLine}</p></hgroup>
             <p className="mt-6 max-w-copy text-muted">{landingCopy.hero.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link className="button-primary" href="/assessment" aria-describedby="assessment-availability">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
               </Link>
-              <a href="#approach" className="text-link">{landingCopy.hero.secondaryCta}<span className="ml-2" aria-hidden="true">↓</span></a>
+              <a href="#outputs" className="text-link">{landingCopy.hero.secondaryCta}<span className="ml-2" aria-hidden="true">↓</span></a>
             </div>
             <p id="assessment-availability" className="mt-3 text-small text-muted">{landingCopy.hero.availability}</p>
           </div>
@@ -70,66 +74,58 @@ export default function LandingPage() {
         </section>
 
         <section id="context" className="border-y border-line bg-muted-surface py-section" aria-labelledby="context-heading">
-          <div className="page-container grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-            <div>
-              <span className="section-label">{landingCopy.context.label}</span>
-              <h2 id="context-heading" className="text-heading">{landingCopy.context.headingFirstLine}<br />{landingCopy.context.headingSecondLine}</h2>
+          <div className="page-container">
+            <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
+              <div><span className="section-label">01 / The context behind MOSAIC</span><h2 id="context-heading" className="text-heading">One global ambition.<br />Many local realities.</h2></div>
+              <div className="max-w-copy"><p>MOSAIC began as a Columbia M.S. in Sustainability Management capstone project for the <a className="text-link landing-inline-link" href="https://conservationen.see.org.cn/">Society of Entrepreneurs and Ecology (S.E.E.)</a>, with a brief to create a global sustainability rating system for small and medium enterprises.</p><p className="mt-6 text-muted">A universal checklist can lose the detail that makes an assessment meaningful. What matters varies across industries, markets and business circumstances.</p><p className="mt-6 text-muted">The design response is a configurable assessment: structured questions and fixed scoring rules, supported by AI-assisted source preparation and evidence-informed recommendations.</p></div>
             </div>
-            <div className="max-w-copy">
-              <p>{landingCopy.context.intro}</p>
-              <p className="mt-6 text-muted">{landingCopy.context.body}</p>
+            <div className="mt-8"><LandingDisclosure explanation={originExplanation} /></div>
+          </div>
+        </section>
+
+        <section id="outputs" className="page-container py-section" aria-labelledby="outputs-heading">
+          <span className="section-label">02 / What you receive</span>
+          <h2 id="outputs-heading" className="text-heading">A score is the beginning.</h2>
+          <p className="mt-6 max-w-copy text-muted">Explore your reported sustainability practices from several perspectives.</p><p className="mt-3 text-small text-muted">Screenshots from the real app using an illustrative fictional-company assessment. Select an image to enlarge it. Close the preview or press Escape to return.</p>
+          <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {resultCards.map(card => <article className="border-t border-line pt-6" key={card.title}>
+              <LandingScreenshot title={card.title} screenshot={card.screenshot} alt={card.alt} /><Image src={"/portraits/" + card.icon} alt="" width={32} height={32} />
+              <h3 className="mt-4 text-subheading">{card.title}</h3><p className="mt-3 text-muted">{card.text}</p>
+            </article>)}
+          </div>
+          <div className="mt-8"><LandingDisclosure explanation={resultsExplanation} /></div>
+        </section>
+
+        <section id="approach" className="border-y border-line bg-muted-surface py-section" aria-labelledby="approach-heading">
+          <div className="page-container">
+            <span className="section-label">03 / How the method works</span>
+            <div className="grid gap-6 md:grid-cols-2 md:gap-16"><h2 id="approach-heading" className="text-heading">AI where it helps.<br />Explicit rules where it counts.</h2><p className="max-w-copy text-muted">Prepared source material becomes a structured assessment. Your answers are scored by code. Selected evidence helps a small model suggest next steps.</p></div>
+            <div className="mt-12 space-y-8">
+              {methods.map((method, index) => <article id={method.id} className="landing-method" key={method.id}>
+                <div className="flex items-start gap-4"><Image src={"/portraits/" + method.icon} alt="" width={32} height={32} /><div><span className="text-small text-accent" aria-hidden="true">0{index + 1}</span><h3 className="mt-2 text-subheading">{method.title}</h3><p className="mt-3 max-w-copy text-muted">{method.description}</p></div></div>
+                <div className="mt-6"><LandingDisclosure explanation={method.explanation} headingLevel={4} /></div>
+              </article>)}
             </div>
           </div>
         </section>
 
-        <section id="approach" className="page-container py-section" aria-labelledby="approach-heading">
-          <span className="section-label">{landingCopy.approach.label}</span>
-          <div className="grid gap-6 md:grid-cols-2 md:gap-16">
-            <h2 id="approach-heading" className="text-heading">{landingCopy.approach.heading}</h2>
-            <p className="max-w-copy text-muted">{landingCopy.approach.description}</p>
+        <section id="research" className="page-container py-section" aria-labelledby="research-heading">
+          <span className="section-label">04 / Research behind the work</span>
+          <h2 id="research-heading" className="text-heading">Explore the work.<br />Inspect the evidence.</h2>
+          <p className="mt-6 max-w-copy text-muted">Separate the assessment’s foundations from complementary research and calculator development.</p>
+          <div className="mt-8 grid items-start gap-8 md:grid-cols-2">
+            {researchExplanations.map(research => <article key={research.title}><h3 className="text-subheading">{research.title}</h3><p className="mt-4 mb-6 text-muted">{research.description}</p><LandingDisclosure explanation={research.explanation} headingLevel={4} /></article>)}
           </div>
-          <ol className="mt-12 grid gap-8 md:grid-cols-3">
-            <li className="border-t border-line-strong pt-6">
-              <span className="text-small text-accent" aria-hidden="true">01</span>
-              <h3 className="mt-4 text-subheading">{landingCopy.approach.firstHeading}</h3>
-              <p className="mt-4 text-muted">{landingCopy.approach.firstBody}</p>
-            </li>
-            <li className="border-t border-line-strong pt-6">
-              <span className="text-small text-accent" aria-hidden="true">02</span>
-              <h3 className="mt-4 text-subheading">{landingCopy.approach.secondHeading}</h3>
-              <p className="mt-4 text-muted">{landingCopy.approach.secondBody}</p>
-            </li>
-            <li className="border-t border-line-strong pt-6">
-              <span className="text-small text-accent" aria-hidden="true">03</span>
-              <h3 className="mt-4 text-subheading">{landingCopy.approach.thirdHeading}</h3>
-              <p className="mt-4 text-muted">{landingCopy.approach.thirdBody}</p>
-            </li>
-          </ol>
+          <div className="mt-8">
+            <details className="research-detail landing-disclosure"><summary>{landingCopy.research.verificationHeading}</summary><div className="landing-detail-body"><p>{landingCopy.research.verificationBody}</p></div></details>
+            <details className="research-detail landing-disclosure"><summary>{landingCopy.research.limitationsHeading}</summary><div className="landing-detail-body"><p>The authors compare ratings of listed companies, not verified outcomes for SMEs. They report extraction noise (κ = 0.62–0.76), A-share-derived factor weights transferred across markets, and no validation against subsequent firm outcomes. Their intensity-proportion workbook still uses the prior weighting method. MOSAIC’s scores and AI advice remain separate from assurance; historical factors and benchmarks have geography, year and source limits.</p></div></details>
+          </div>
         </section>
 
-        <section id="research" className="border-t border-line py-section" aria-labelledby="research-heading">
-          <div className="page-container grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-            <div>
-              <span className="section-label">{landingCopy.research.label}</span>
-              <h2 id="research-heading" className="text-heading">{landingCopy.research.headingFirstLine}<br />{landingCopy.research.headingSecondLine}</h2>
-              <p className="mt-6 max-w-copy text-muted">{landingCopy.research.intro}</p>
-            </div>
-            <div>
-              <details className="research-detail" open>
-                <summary>{landingCopy.research.methodHeading}</summary>
-                <p>{landingCopy.research.methodBody}</p>
-              </details>
-              <details className="research-detail">
-                <summary>{landingCopy.research.verificationHeading}</summary>
-                <p>{landingCopy.research.verificationBody}</p>
-              </details>
-              <details className="research-detail">
-                <summary>{landingCopy.research.limitationsHeading}</summary>
-                <p>{landingCopy.research.limitationsBody}</p>
-              </details>
-            </div>
-          </div>
+        <section className="border-t border-line bg-muted-surface py-section" aria-labelledby="closing-heading">
+          <div className="page-container"><span className="section-label">Your context. Your next steps.</span><h2 id="closing-heading" className="text-heading">The pieces that matter.</h2><p className="mt-6 text-muted">Start with what you know. Explore where to focus.</p><Link className="button-primary mt-8" href="/assessment">Start your sustainability assessment <span aria-hidden="true">↗</span></Link><p className="mt-6 max-w-copy text-small text-muted">{landingCopy.footer.credit} {landingCopy.footer.scope}</p></div>
         </section>
+
       </main>
 
       <footer className="border-t border-line py-8">

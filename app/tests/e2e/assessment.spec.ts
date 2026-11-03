@@ -44,7 +44,7 @@ for (const width of [1440, 390]) {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/");
-    await page.getByRole("link", { name: "Take the Assessment" }).first().click();
+    await page.getByRole("link", { name: "Start your assessment" }).first().click();
     await expect(page).toHaveURL(/\/assessment$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Tell us about your business.");
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
