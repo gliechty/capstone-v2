@@ -3,6 +3,7 @@ services:
   app:
     image: ${APP_IMAGE:?Set the verified immutable application image}
     restart: unless-stopped
+    init: true # Reap Chromium descendants after bounded PDF jobs.
     env_file:
       - /opt/mosaic-app/credential.env
       - /opt/mosaic-app/operating.env
