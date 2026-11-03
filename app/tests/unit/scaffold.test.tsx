@@ -21,7 +21,7 @@ test("assessment remains linked and the supplied video is available", () => {
   const cta = screen.getAllByRole("link", { name: "Take the Assessment" })[0];
   expect(cta).toHaveAttribute("href", "/assessment");
   expect(cta).toHaveAccessibleDescription(/questionnaire and deterministic scores/);
-  expect(screen.getByLabelText("MOSAIC explainer film, 90 seconds")).toBeVisible();
+  expect(screen.getByLabelText("MOSAIC explainer film, 92 seconds")).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 });
 
@@ -29,7 +29,7 @@ test("landing links resolve to sections or the assessment route", () => {
   render(<LandingPage />);
   for (const link of screen.getAllByRole("link")) {
     const href = link.getAttribute("href");
-    if (href === "/assessment" || href === "/media/mosaic-explainer-720p.mp4") continue;
+    if (href === "/assessment" || href === "/media/mosaic-explainer-narrated-2026-11-03-1080p.mp4") continue;
     expect(href).toMatch(/^#[a-z-]+$/);
     expect(document.getElementById(href!.slice(1))).not.toBeNull();
   }

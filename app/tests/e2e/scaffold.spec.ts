@@ -15,7 +15,7 @@ for (const viewport of [
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("The Piecesthat Matter");
     await expect(page).toHaveTitle("MOSAIC · context-weighted sustainability assessment");
     await expect(page.getByRole("link", { name: "Take the Assessment" }).first()).toHaveAttribute("href", "/assessment");
-    await expect(page.getByLabel("MOSAIC explainer film, 90 seconds", { exact: true })).toBeVisible();
+    await expect(page.getByLabel("MOSAIC explainer film, 92 seconds", { exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
