@@ -1,3 +1,6 @@
+## Delivery protocol routing — 2026-11-04
+Use AGENTS.md's Current delivery policy for proportional verification and concise reporting; it supersedes historical blanket gate/effort wording in this plan. This file owns scope/status/dependencies, not release diaries. Detailed evidence belongs in EXECUTION_PLAN.md. The PDF/Results release is complete per owner report; do not reopen it to adopt these documentation changes. No new feature, deployment or Build Checklist update is authorized by this entry.
+
 ## Targeted report/Results corrections LIVE - 2026-11-04
 Owner-authorized feature aef097113b27408f7b6fc67ce3862dacf51fb9a5 pushed codex/report-pdf; PR17 merged main47ee72c07eb02872d20a1de3a7416c580176853f. Exact merged-source release mosaic-699b545c9b8748466021 deployed through existing process; live image sha256:4c1d725015ff4740f334479123f19bf7515c7c34033f2cf6e53eac50443520aa healthy at https://preview.flowagentai.website. Approved report design/scoring/PDF runtime unchanged. Report dropdown, matching-insight gates, same-tab restoration, opaque navigation and combined-flow copy correction now live. Broader milestones remain open; prior pending-publication entries below are historical.
 Evidence and measured effort in EXECUTION_PLAN.md; publication of these closeout records does not change deployed runtime.
