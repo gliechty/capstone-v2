@@ -1,0 +1,31 @@
+Read a MOSAIC result (about 84 seconds). Fictional demo business, real MOSAIC app footage.
+
+Here's a MOSAIC result for a fictional food business.
+
+It starts with context: industry, size, markets, buyers and goals. That decides which questions are asked.
+
+The owner answers in plain terms: yes or no, or a figure they already know.
+
+Results open with two overall scores: raw, and weighted for this industry.
+
+Beside them, coverage shows how much was answered.
+
+Four category scores show where the business stands.
+
+The archetype reads the same answers another way. This business is the Mediator: engagement first, then commitments.
+
+“Why this archetype?” shows how it was worked out.
+
+Optional AI recommendations then name the gaps worth attention.
+
+Each gap lists the references it drew on, so you can check whether it fits.
+
+Levers ask “what if?” Change one answer, watch the scores move, then put it back.
+
+It doesn't predict costs, savings or real-world results.
+
+The report downloads as a web page you can print to PDF.
+
+MOSAIC. The pieces that matter.
+
+On-screen text: Fictional demo business · real app. Self-reported results. Not a certification.

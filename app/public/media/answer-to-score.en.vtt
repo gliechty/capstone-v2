@@ -1,0 +1,219 @@
+WEBVTT
+
+NOTE Cues sit near the top (line:4%) so they don't cover on-screen labels.
+
+1a-1
+00:00:00.500 --> 00:00:03.870 line:4% align:center
+Every MOSAIC score can be followed from start to finish.
+
+1b-1
+00:00:04.220 --> 00:00:05.820 line:4% align:center
+Let’s follow one answer.
+
+1c-1
+00:00:06.700 --> 00:00:09.060 line:4% align:center
+MOSAIC uses three layers of weighting.
+
+1d-1
+00:00:09.300 --> 00:00:12.143 line:4% align:center
+First: how strongly a topic is represented in
+
+1d-2
+00:00:12.143 --> 00:00:13.470 line:4% align:center
+the source documents.
+
+1e-1
+00:00:13.460 --> 00:00:16.533 line:4% align:center
+Second: how relevant that question is to this
+
+1e-2
+00:00:16.533 --> 00:00:17.830 line:4% align:center
+business’s context.
+
+1f-1
+00:00:18.140 --> 00:00:20.748 line:4% align:center
+Third: how much its category contributes to the
+
+1f-2
+00:00:20.748 --> 00:00:22.580 line:4% align:center
+overall result for this industry.
+
+1g-1
+00:00:23.180 --> 00:00:25.227 line:4% align:center
+The system sets all three from its
+
+1g-2
+00:00:25.227 --> 00:00:26.070 line:4% align:center
+configuration.
+
+2a-1
+00:00:26.810 --> 00:00:29.290 line:4% align:center
+Take a fictional food business in Peru.
+
+2b-1
+00:00:30.250 --> 00:00:32.870 line:4% align:center
+It’s asked: What percentage of your waste is
+
+2b-2
+00:00:32.870 --> 00:00:34.240 line:4% align:center
+diverted from landfill?
+
+2c-1
+00:00:34.480 --> 00:00:36.320 line:4% align:center
+The answer is fifty percent.
+
+3a-1
+00:00:37.070 --> 00:00:40.055 line:4% align:center
+First, the answer becomes credit, from zero to
+
+3a-2
+00:00:40.055 --> 00:00:43.560 line:4% align:center
+one hundred. Here, fifty percent becomes fifty points.
+
+3b-1
+00:00:43.680 --> 00:00:46.574 line:4% align:center
+Other numerical questions use their configured
+
+3b-2
+00:00:46.574 --> 00:00:49.279 line:4% align:center
+benchmarks; choice questions use predefined
+
+3b-3
+00:00:49.279 --> 00:00:50.160 line:4% align:center
+answer scales.
+
+4a-1
+00:00:50.880 --> 00:00:53.795 line:4% align:center
+Layer one, the base weight, is four point oh
+
+4a-2
+00:00:53.795 --> 00:00:56.975 line:4% align:center
+eight: set by how widely and how often the topic
+
+4a-3
+00:00:56.975 --> 00:00:59.360 line:4% align:center
+appears across the source documents.
+
+4b-1
+00:01:00.010 --> 00:01:03.212 line:4% align:center
+Layer two, the context multiplier, comes from
+
+4b-2
+00:01:03.212 --> 00:01:06.130 line:4% align:center
+rules that match the business’s industry,
+
+4b-3
+00:01:06.130 --> 00:01:07.980 line:4% align:center
+markets, buyers and goals.
+
+4c-1
+00:01:08.240 --> 00:01:11.062 line:4% align:center
+In this example, the applicable context
+
+4c-2
+00:01:11.062 --> 00:01:13.450 line:4% align:center
+multiplier is one point one five.
+
+4d-1
+00:01:13.620 --> 00:01:16.441 line:4% align:center
+The current configured rules increase importance
+
+4d-2
+00:01:16.441 --> 00:01:17.440 line:4% align:center
+where they apply.
+
+5a-1
+00:01:18.470 --> 00:01:20.800 line:4% align:center
+Credit times the adjusted weight gives two
+
+5a-2
+00:01:20.800 --> 00:01:23.462 line:4% align:center
+hundred and thirty-four point six points, out of
+
+5a-3
+00:01:23.462 --> 00:01:26.180 line:4% align:center
+a possible four hundred and sixty-nine point two.
+
+5b-1
+00:01:26.640 --> 00:01:29.817 line:4% align:center
+A question left blank drops out of the possible
+
+5b-2
+00:01:29.817 --> 00:01:32.250 line:4% align:center
+total, rather than counting as zero.
+
+6a-1
+00:01:33.120 --> 00:01:35.715 line:4% align:center
+Within each category, earned points are divided
+
+6a-2
+00:01:35.715 --> 00:01:38.200 line:4% align:center
+by possible points to produce its percentage.
+
+6b-1
+00:01:38.640 --> 00:01:41.879 line:4% align:center
+Adding earned points across all categories, then
+
+6b-2
+00:01:41.879 --> 00:01:44.781 line:4% align:center
+dividing by their combined possible points,
+
+6b-3
+00:01:44.781 --> 00:01:46.670 line:4% align:center
+gives the raw overall score.
+
+6c-1
+00:01:47.210 --> 00:01:49.758 line:4% align:center
+The first two layers shape both this raw score
+
+6c-2
+00:01:49.758 --> 00:01:51.530 line:4% align:center
+and the industry-weighted score.
+
+7a-1
+00:01:52.350 --> 00:01:55.266 line:4% align:center
+Layer three, the category weight, applies after
+
+7a-2
+00:01:55.266 --> 00:01:57.996 line:4% align:center
+the category percentages are calculated, and
+
+7a-3
+00:01:57.996 --> 00:02:00.230 line:4% align:center
+only to the industry-weighted score.
+
+7b-1
+00:02:00.570 --> 00:02:03.666 line:4% align:center
+For food and agro-processing, Resources carries
+
+7b-2
+00:02:03.666 --> 00:02:06.565 line:4% align:center
+approximately forty-nine percent, Governance
+
+7b-3
+00:02:06.565 --> 00:02:09.990 line:4% align:center
+thirty-one, and People and Community about ten each.
+
+7c-1
+00:02:10.260 --> 00:02:12.512 line:4% align:center
+Multiplied and added together, they give the
+
+7c-2
+00:02:12.512 --> 00:02:13.740 line:4% align:center
+industry-weighted score.
+
+8a-1
+00:02:14.500 --> 00:02:16.823 line:4% align:center
+Under the same configuration and business
+
+8a-2
+00:02:16.823 --> 00:02:19.430 line:4% align:center
+context, the same answers always give the same
+
+8a-3
+00:02:19.430 --> 00:02:20.450 line:4% align:center
+calculated scores.
+
+9a-1
+00:02:21.500 --> 00:02:24.430 line:4% align:center
+MOSAIC. The pieces that matter.
