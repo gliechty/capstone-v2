@@ -1,0 +1,53 @@
+Follow one answer through the score (about 2.5 minutes). Illustrative animation; the business is fictional.
+
+Every MOSAIC score can be followed from start to finish.
+
+Let’s follow one answer.
+
+MOSAIC uses three layers of weighting.
+
+First: how strongly a topic is represented in the source documents.
+
+Second: how relevant that question is to this business’s context.
+
+Third: how much its category contributes to the overall result for this industry.
+
+The system sets all three from its configuration.
+
+Take a fictional food business in Peru.
+
+It’s asked: What percentage of your waste is diverted from landfill?
+
+The answer is fifty percent.
+
+First, the answer becomes credit, from zero to one hundred. Here, fifty percent becomes fifty points.
+
+Other numerical questions use their configured benchmarks; choice questions use predefined answer scales.
+
+Layer one, the base weight, is four point oh eight: set by how widely and how often the topic appears across the source documents.
+
+Layer two, the context multiplier, comes from rules that match the business’s industry, markets, buyers and goals.
+
+In this example, the applicable context multiplier is one point one five.
+
+The current configured rules increase importance where they apply.
+
+Credit times the adjusted weight gives two hundred and thirty-four point six points, out of a possible four hundred and sixty-nine point two.
+
+A question left blank drops out of the possible total, rather than counting as zero.
+
+Within each category, earned points are divided by possible points to produce its percentage.
+
+Adding earned points across all categories, then dividing by their combined possible points, gives the raw overall score.
+
+The first two layers shape both this raw score and the industry-weighted score.
+
+Layer three, the category weight, applies after the category percentages are calculated, and only to the industry-weighted score.
+
+For food and agro-processing, Resources carries approximately forty-nine percent, Governance thirty-one, and People and Community about ten each.
+
+Multiplied and added together, they give the industry-weighted score.
+
+Under the same configuration and business context, the same answers always give the same calculated scores.
+
+MOSAIC. The pieces that matter.

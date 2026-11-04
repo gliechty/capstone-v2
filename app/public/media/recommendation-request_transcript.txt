@@ -1,0 +1,51 @@
+See what the recommendation model receives (about 3 minutes). Illustrative animation; the business is fictional and the recommendation shown is a saved result.
+
+Scores tell a business where it stands. Recommendations suggest what to do next.
+
+So what does the AI actually see when it writes them?
+
+For recommendations, the application first calculates the scores. The model receives those results; it doesn’t calculate them.
+
+The application builds one request, in code, with four parts:
+
+context, answers and scores, selected evidence, and instructions.
+
+First, the context of our fictional food business in Peru. Then its answers, and the scores calculated from them.
+
+Next, the evidence.
+
+Without reference material, an AI model relies on patterns learned during training. It can produce convincing answers that contain mistakes or invented details.
+
+MOSAIC uses retrieval-augmented generation, or RAG. Think of it as giving the model a reference pack before asking it to write.
+
+The application selects passages from MOSAIC’s knowledge base using rules that match the business’s context and relevant topics. It sends those passages alongside the business’s answers and calculated scores.
+
+The model is instructed to use that evidence and cite its sources. This is intended to reduce unsupported claims and makes the advice easier to check, although it doesn’t guarantee accuracy.
+
+Because the selection follows rules, it can be inspected and repeated.
+
+Keeping the reference pack focused controls processing costs. A separate review is needed to check whether the selection leaves out important guidance.
+
+Last, the instructions.
+
+Start from the business’s actual answers, then the evidence, and use the scores to set priorities.
+
+Keep every recommendation realistic for a company of this size.
+
+Don’t introduce laws, standards or numeric thresholds unless the retrieved evidence supports them, and cite the source for each recommendation.
+
+The model returns a structured result: a short summary, up to five recommendations, and up to three key gaps.
+
+Here’s one, from a saved result for this business: put in place basic waste and packaging measurement.
+
+It starts from what the business reported: waste isn’t tracked, and packaging isn’t yet eco-friendly. And it names its source.
+
+Then the checks.
+
+Automated checks test the expected structure and source references. Assessing whether the evidence supports the advice requires a separate quality review.
+
+MOSAIC controls the calculation, the evidence selection and the request. The model supplies the interpretation.
+
+The same inputs, configuration and knowledge-base version produce the same evidence selection and request construction. The wording of the advice can vary; the scores beneath it don’t.
+
+MOSAIC. The pieces that matter.
