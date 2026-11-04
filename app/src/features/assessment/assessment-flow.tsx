@@ -313,7 +313,7 @@ function Review() {
     <span className="section-label">Review / Your answers</span>
     <StageHeading>Review your answers.</StageHeading>
     <p className="mt-4">{questions.length - missing.length} answered · {missing.length} unanswered questions.</p>
-    <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence and require human review.</p>
+    <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence.</p>
     <p className="mt-3 text-small">This action calculates scores and requests AI recommendations from the configured provider. Your business context, answers and source excerpts are sent for generation.</p>
     {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
     {legacySkipped.length > 0 && <div className="storage-warning mt-4"><p>These previously skipped questions still contain saved answers from the older Skip behavior. Revisit each one and choose Skip to clear it, or confirm your answer. Original saved values have been preserved for your review.</p><ul>{legacySkipped.map(q => <li key={q.id}><button className="text-link" onClick={() => dispatch({type:"jump",id:q.id})}>{q.id}: {q.title}</button></li>)}</ul></div>}

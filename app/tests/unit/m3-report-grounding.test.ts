@@ -52,7 +52,9 @@ import { recommendationRequestFromSession } from "../../src/application/recommen
 import { inputIdentityText } from "../../src/application/recommendations/identity";
 import * as pdfRenderer from "../../src/adapters/report-pdf";
 import { POST as pdfPost } from "../../src/app/api/assessment-report-pdf/route";
-const pdfSession = () => syntheticSession(assessmentCatalog(config).version);
+import { POST as htmlPost } from "../../src/app/api/assessment-report-html/route";
+const recommendationsFor = (session: Session) => ({inputId:createHash("sha256").update(inputIdentityText(recommendationRequestFromSession(session))).digest("hex"),content:validTestContent()});
+const pdfSession = () => syntheticSession(assessmentCatalog(config).version) as Session;
 const pdfRequest = (body: unknown, origin = "http://localhost:3107") => new Request("http://localhost:3107/api/assessment-report-pdf", {
  method: "POST", headers: { "Content-Type": "application/json", origin }, body: JSON.stringify(body),
 });
@@ -81,13 +83,13 @@ test("PDF endpoint rejects cross-origin, oversized and arbitrary requests before
 });
 test("PDF job admission rejects concurrent work and releases after failure for retry", async () => {
  const release = pdfRenderer.acquirePdfJob()!;
- expect((await pdfPost(pdfRequest({session:pdfSession()}))).status).toBe(503);
+ expect((await pdfPost(pdfRequest({session:pdfSession(),recommendations:recommendationsFor(pdfSession())}))).status).toBe(503);
  release();
  const render = vi.spyOn(pdfRenderer, "renderReportPdf").mockRejectedValueOnce(new Error("private detail"))
   .mockResolvedValueOnce(Buffer.from("%PDF-test"));
- const failed = await pdfPost(pdfRequest({session:pdfSession()}));
+ const failed = await pdfPost(pdfRequest({session:pdfSession(),recommendations:recommendationsFor(pdfSession())}));
  expect(failed.status).toBe(503);expect(await failed.text()).toContain("Please retry");
- const retry = await pdfPost(pdfRequest({session:pdfSession()}));
+ const retry = await pdfPost(pdfRequest({session:pdfSession(),recommendations:recommendationsFor(pdfSession())}));
  expect(retry.status).toBe(200);expect(retry.headers.get("content-type")).toBe("application/pdf");
  expect(retry.headers.get("cache-control")).toBe("no-store");
  expect(render).toHaveBeenCalledTimes(2);
@@ -100,12 +102,12 @@ test("PDF scenarios retain actual answers and reject invented or out-of-range Le
  const actual = computeAssessment(config,{configVersion:request.configVersion,context:request.context,answers:request.answers});
  const lever = selectImprovementLevers(config,actual).levers[0]!;
  const before = JSON.stringify(session);
- const result = await constructPdfReport(config,{session,scenarioAnswers:{[lever.id]:lever.best}});
+ const result = await constructPdfReport(config,{session,recommendations:recommendationsFor(session),scenarioAnswers:{[lever.id]:lever.best}});
  expect(result.html).toContain("The actual assessment and recommendations above are unchanged");
  expect(result.html).toContain('id="hypothetical-levers"');
  expect(JSON.stringify(session)).toBe(before);
- await expect(constructPdfReport(config,{session,scenarioAnswers:{"fake":"100"}})).rejects.toThrow();
- await expect(constructPdfReport(config,{session,scenarioAnswers:{[lever.id]:"not an answer"}})).rejects.toThrow();
+ await expect(constructPdfReport(config,{session,recommendations:recommendationsFor(session),scenarioAnswers:{"fake":"100"}})).rejects.toThrow();
+ await expect(constructPdfReport(config,{session,recommendations:recommendationsFor(session),scenarioAnswers:{[lever.id]:"not an answer"}})).rejects.toThrow();
 });
 
 import { chromium, type BrowserServer } from "playwright-core";
@@ -136,4 +138,21 @@ test("PDF render deadline kills a stuck owned browser", async () => {
   await vi.advanceTimersByTimeAsync(20001);await rejected;
   expect(kill).toHaveBeenCalledOnce();
  } finally {vi.useRealTimers();}
+});
+
+test("both report endpoints require matching nonempty insights without rendering partial exports", async () => {
+ const session=pdfSession();const recommendations=recommendationsFor(session);
+ const render=vi.spyOn(pdfRenderer,"renderReportPdf").mockResolvedValue(Buffer.from("%PDF-test"));
+ for(const endpoint of [pdfPost,htmlPost]) {
+  expect((await endpoint(pdfRequest({session}))).status).toBe(409);
+  expect((await endpoint(pdfRequest({session,recommendations:{...recommendations,inputId:"0".repeat(64)}}))).status).toBe(409);
+  for(const field of ["key_gaps","priority_recommendations"])expect((await endpoint(pdfRequest({session,recommendations:{...recommendations,content:{...recommendations.content,[field]:[]}}}))).status).toBe(409);
+ }
+ expect(render).not.toHaveBeenCalled();
+ const response=await htmlPost(pdfRequest({session,recommendations}));
+ expect(response.status).toBe(200);expect(response.headers.get("content-type")).toContain("text/html");
+ expect(response.headers.get("content-disposition")).toContain(".html");
+ expect(await response.text()).toContain(recommendations.content.executive_summary);
+ expect((await htmlPost(pdfRequest({session,recommendations},"https://elsewhere.example"))).status).toBe(403);
+ expect((await htmlPost(pdfRequest({url:"file:///etc/passwd"}))).status).toBe(400);
 });

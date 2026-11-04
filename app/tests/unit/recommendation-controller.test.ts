@@ -65,3 +65,20 @@ test("budget denial preserves existing matching recommendations",async()=>{
  await t.controller.generate();expect(t.views.at(-1)?.code).toBe("budget_exhausted");expect(t.views.at(-1)?.result).toBe(previous);
  t.edit();await t.controller.refresh();expect(t.views.at(-1)?.result).toBeUndefined();t.controller.dispose();
 });
+
+import { recommendationStorage, RECOMMENDATION_RESULT_KEY } from "../../src/adapters/recommendation-storage";
+test("successful insights restore only for matching input and configuration; damaged storage fails closed",async()=>{
+ const t=await setup();await t.controller.generate();const success=t.views.at(-1)!;
+ const map=new Map<string,string>();const saved=recommendationStorage({getItem:k=>map.get(k)??null,setItem:(k,v)=>{map.set(k,v);}});
+ expect(saved.save(success)).toBe(true);
+ let current=structuredClone(input),status=configuration;const views:RecommendationView[]=[];
+ const generate=vi.fn();
+ const controller=createRecommendationController({read:()=>current,status:async()=>status,generate,hash:async s=>createHash("sha256").update(s).digest("hex"),publish:v=>views.push(v),saved});
+ await controller.refresh();expect(views.at(-1)?.phase).toBe("available");expect(generate).not.toHaveBeenCalled();
+ current={...input,notes:"Changed context"};await controller.refresh();expect(views.at(-1)?.result).toBeUndefined();
+ current=input;await controller.refresh();expect(views.at(-1)?.phase).toBe("available");
+ status={...configuration,promptVersion:"changed",fingerprint:"changed"};await controller.refresh(true);expect(views.at(-1)?.result).toBeUndefined();
+ map.set(RECOMMENDATION_RESULT_KEY,'{"result":{"status":"available"}}');expect(saved.load()).toBeNull();
+ expect(recommendationStorage({getItem:()=>{throw Error("blocked");},setItem:()=>{throw Error("full");}}).save(success)).toBe(false);
+ controller.dispose();t.controller.dispose();
+});

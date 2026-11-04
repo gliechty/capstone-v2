@@ -11,8 +11,8 @@ for (const width of [1440, 390, 320]) {
     const response = await page.goto("/results");
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle("Assessment results | Capstone");
-    await expect(page.getByText("Calculated scores · Optional AI recommendations", { exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Download assessment report" })).toBeDisabled();
+    await expect(page.getByText("Calculated scores · Optional AI recommendations", { exact: true })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Download report" })).toBeDisabled();
     await expect(page.getByRole("heading", { name: "Scores unavailable" })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.evaluate(() => document.fonts.ready);

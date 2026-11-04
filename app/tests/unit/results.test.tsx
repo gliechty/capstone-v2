@@ -14,16 +14,17 @@ test("results preserve the narrative hierarchy and show truthful not-generated s
   expect(screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent)).toEqual([
     "Calculated overall scores", "Executive summary", "Key gaps — unavailable", "Recommended actions — unavailable", "Evidence & sources", "Explore your improvement levers",
   ]);
-  expect(screen.getByRole("complementary", { name: "Results limitations" })).toHaveTextContent("require explicit generation");
+  expect(screen.queryByRole("complementary", { name: "Results limitations" })).not.toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Generate recommendations" })).toBeDisabled();
   expect(screen.getByText(/No AI recommendation evidence/)).not.toBeVisible();
 });
 
 test("report cannot trigger generation and links retain their destinations", async () => {
   render(<ResultsPage />);
-  const report = screen.getByRole("button", { name: "Download assessment report" });
+  const report = screen.getByRole("button", { name: "Download report" });
   await waitFor(()=>expect(report).toBeDisabled());
-  expect(screen.getByRole("button", { name: "Download PDF" })).toBeDisabled();
-  expect(screen.getByText(/Choose PDF for a ready-to-share report/)).toBeInTheDocument();
-  for (const link of screen.getAllByRole("link")) expect(["/#top", "/assessment", "#results-main", "#sources", "#summary", "#gaps", "#actions"]).toContain(link.getAttribute("href"));
+  expect(screen.queryByRole("button", { name: "Download PDF" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("combobox", {name:"Format"})).not.toBeInTheDocument();
+  expect(screen.getByText(/Generate successful recommendations for this assessment/)).toBeInTheDocument();
+  for (const link of screen.getAllByRole("link")) expect(["/#top", "/assessment", "#results-main", "#sources", "#summary", "#gaps", "#actions", "#recommendation-generation"]).toContain(link.getAttribute("href"));
 });

@@ -1,4 +1,5 @@
 "use client";
+import { recommendationStorage } from "../../adapters/recommendation-storage";
 import { RecommendationViewContext } from "./recommendation-view-context";
 import { ImprovementLevers } from "./improvement-levers";
 import { ReportDownload } from "./report-download";
@@ -25,7 +26,7 @@ export function Recommendations({ catalog, children }: { catalog: AssessmentCata
       return state && ["questions", "review", "boundary"].includes(state.phase) ? recommendationRequestFromSession(state) : null;
     };
     const attempts = recommendationAttempt({ getItem: key => window.sessionStorage.getItem(key), setItem: (key, value) => window.sessionStorage.setItem(key, value) });
-    const controller = createRecommendationController({ read, status: recommendationStatus,
+    const controller = createRecommendationController({ read, saved: recommendationStorage({getItem:key=>window.sessionStorage.getItem(key),setItem:(key,value)=>window.sessionStorage.setItem(key,value)}), status: recommendationStatus,
       generate: async (input, configuration, signal) => {
         const id = await browserInputHash(inputIdentityText(input));
         if (signal.aborted) throw new Error("Request interrupted before dispatch");

@@ -296,3 +296,14 @@
   .portrait-pair { grid-template-columns: 1fr; gap: var(--space-3); }
   .portrait-personal { font-size: 1rem; line-height: 1.55; }
 }
+
+/* One opaque sticky surface follows the actual stage height at every breakpoint. */
+.results-navigation-stack { position: sticky; top: 0; z-index: 10; background: var(--surface); margin-top: .5rem; }
+.results-navigation-stack .stage-navigation { position: static; margin: 0; }
+.results-navigation-stack .results-navigation { position: static; margin-top: 0; }
+#recommendation-generation { scroll-margin-top: 12rem; }
+.report-download { border: 0; padding: 0; min-width: 0; }
+ .report-format-picker { position: relative; width: fit-content; }
+.report-format-options { position: absolute; top: calc(100% + .25rem); left: 0; z-index: 20; min-width: 100%; padding: .25rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--surface); box-shadow: 0 .25rem .75rem rgb(0 0 0 / .12); }
+.report-format-options button { display: block; width: 100%; min-height: var(--control-height); padding: .5rem 1rem; text-align: left; border-radius: .25rem; }
+.report-format-options button:hover, .report-format-options button:focus-visible { background: var(--accent-soft); }

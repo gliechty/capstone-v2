@@ -32,6 +32,8 @@ export async function constructPdfReport(config: CanonicalConfig, raw: unknown) 
  const inputId = createHash("sha256").update(inputIdentityText(input)).digest("hex");
  if (request.recommendations && request.recommendations.inputId !== inputId)
   throw new ReportInputError("Recommendations no longer match this assessment. Reload Results and retry.");
+ if (!request.recommendations || !request.recommendations.content.key_gaps.length || !request.recommendations.content.priority_recommendations.length)
+  throw new ReportInputError("Generate successful Key Gaps and Recommended Actions for this assessment in Results before downloading.");
  const scoreInput = { configVersion: input.configVersion, context: input.context, answers: input.answers };
  const actual = computeAssessment(config, scoreInput);
  const score = withPortraitPotential(config, actual);

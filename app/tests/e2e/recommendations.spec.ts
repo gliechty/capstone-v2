@@ -25,7 +25,7 @@ const result = (raw: typeof input) => ({ status: "available", configuration, con
   identity: { inputId: createHash("sha256").update(inputIdentityText(raw)).digest("hex"), configVersion: config.version, methodVersion: score.methodVersion, policyVersion: recommendationPolicy.version, promptVersion: PROMPT_VERSION, provider: { id: "openai", model: settings.model, settings } } });
 test("explicit generation, duplicate suppression, validated display, notes invalidation and refresh", async ({ page }) => {
   let posts = 0; let release!: () => void;
-  await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), session);
+  await page.addInitScript(s => { if(!sessionStorage.getItem("capstone.assessment.ui-preview.v1")) sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)); }, session);
   await page.route("**/api/assessment-recommendations", async route => {
     if (route.request().method() === "GET") return route.fulfill({ json: configuration });
     posts++; await new Promise<void>(resolve => { release = resolve; });
@@ -63,6 +63,10 @@ test("cancelled and stale responses cannot replace deterministic results; failur
   await expect(page.getByText("Review the observed practice", { exact: true })).toHaveCount(0);
   failing = true; await page.getByRole("button", { name: "Retry recommendations" }).click();
   await expect(page.getByText(/Provider quota is exhausted/)).toBeVisible();
+  const report=page.getByRole("group",{name:"Download assessment report",exact:true}).first();
+  await expect(report.getByRole("button")).toBeDisabled();
+  await expect(report.getByRole("group",{name:"Report file format"})).toHaveCount(0);
+  await expect(report.getByRole("button")).toBeDisabled();
   await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
 });
 test("ordinary browser server is offline and enforces request origin", async ({ request, baseURL }) => {
@@ -252,4 +256,50 @@ for (const fixture of goldenCases) test(fixture.case_id + ": archived recommenda
  await expect(page.locator(".score-values")).toContainText(computed.rawOverall!.toFixed(1));
  expect(posts).toBe(1);expect(goldenExpected(fixture)).toEqual(historical);
  console.log(fixture.case_id+": PASS; "+parsed.content.priority_recommendations.length+" actions, "+parsed.content.key_gaps.length+" gaps, "+citations.length+" citations ("+grouped.length+" bibliography entries); unchanged historical prose and authoritative computed score displayed.");
+});
+
+for(const width of [1440,390])test("report formats, matching refresh restoration and continuous Results navigation "+width,async({page},testInfo)=>{
+ await page.setViewportSize({width,height:900});
+ await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ let posts=0;
+ await page.route("**/api/assessment-recommendations",route=>{
+  if(route.request().method()==="GET")return route.fulfill({json:configuration});
+  posts++;return route.fulfill({json:result(route.request().postDataJSON())});
+ });
+ await page.goto("/results");
+ const group=page.getByRole("group",{name:"Download assessment report",exact:true}).first();
+ const button=group.getByRole("button",{name:"Download report"});
+ await expect(group.getByRole("combobox")).toHaveCount(0);await expect(button).toBeDisabled();
+ await expect(group.getByRole("group",{name:"Report file format"})).toHaveCount(0);
+ await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();await expect(button).toBeEnabled();
+ await page.reload();await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toBeVisible();expect(posts).toBe(1);
+ await expect(button).toBeEnabled();
+ let downloads=0;page.on("download",()=>downloads++);
+ await button.click();await expect(group.getByRole("button",{name:"PDF",exact:true})).toBeVisible();
+ await page.locator("#results-title").click();await expect(button).toHaveAttribute("aria-expanded","false");expect(downloads).toBe(0);
+ await button.focus();await page.keyboard.press("Enter");await page.keyboard.press("Tab");
+ await expect(group.getByRole("button",{name:"PDF",exact:true})).toBeFocused();
+ await page.keyboard.press("Escape");await expect(button).toBeFocused();await expect(button).toHaveAttribute("aria-expanded","false");expect(downloads).toBe(0);
+ const buttonX=(await button.boundingBox())!.x;expect(Math.abs(buttonX-(await group.boundingBox())!.x)).toBeLessThanOrEqual(1);
+ await button.click();await page.screenshot({path:testInfo.outputPath("download-menu-"+width+".png")});
+ await page.route("**/api/assessment-report-html",route=>route.fulfill({status:503,json:{error:"Please retry."}}));
+ await group.getByRole("button",{name:"HTML",exact:true}).click();await expect(group.getByRole("status")).toHaveText("HTML report could not be downloaded. Please retry.");
+ await page.unroute("**/api/assessment-report-html");
+ const pending=page.waitForEvent("download");await button.click();await group.getByRole("button",{name:"HTML",exact:true}).click();const download=await pending;
+ expect(download.suggestedFilename()).toBe("mosaic-assessment-report.html");
+ const body=readFileSync((await download.path())!,"utf8");expect(body).toContain(validTestContent().executive_summary);expect(body).toContain("Controlled test gap.");
+ await expect(group.getByRole("status")).toHaveText("HTML report downloaded.");
+ await button.click();await expect(group.getByRole("status")).not.toContainText("HTML report downloaded");await page.keyboard.press("Escape");
+ for(const scroll of [0,600,1400]){
+  await page.evaluate(y=>window.scrollTo(0,y),scroll);
+  await expect.poll(()=>page.evaluate(()=>{const upper=document.querySelector(".stage-navigation")!.getBoundingClientRect();const lower=document.querySelector(".results-navigation")!.getBoundingClientRect();return Math.abs(lower.top-upper.bottom);})).toBeLessThanOrEqual(1);
+  expect(await page.locator(".results-navigation-stack").evaluate(el=>getComputedStyle(el).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+  await page.screenshot({path:testInfo.outputPath("report-navigation-"+width+"-"+scroll+".png")});
+ }
+ if(width<640)await page.locator(".results-mobile-nav summary").click();
+ await page.getByRole("navigation",{name:"Results sections"}).filter({visible:true}).getByRole("link",{name:"Key Gaps"}).click();
+ await expect.poll(()=>page.evaluate(()=>document.querySelector("#gaps")!.getBoundingClientRect().top-document.querySelector(".results-navigation-stack")!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
+ await page.evaluate(()=>{const key="capstone.assessment.ui-preview.v1";const value=JSON.parse(sessionStorage.getItem(key)!);value.answers["U-001"]="Yes";sessionStorage.setItem(key,JSON.stringify(value));window.dispatchEvent(new Event("capstone:assessment-session-changed"));});
+ await expect(button).toBeDisabled();await page.reload();await expect(button).toBeDisabled();expect(posts).toBe(1);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
