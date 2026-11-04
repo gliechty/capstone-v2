@@ -1,3 +1,8 @@
+## Current efficiency lesson — 2026-11-04
+AGENTS.md's Current delivery policy is authoritative over older mandatory full-gate and reporting instructions in this file. Keep this file for reusable lessons and the approved test register; put detailed release evidence only in EXECUTION_PLAN.md.
+The reported PDF/Results release took 32m35s. The log shows constrained dependency/build work, repeated unchanged PDF runtime qualification and verification-script corrections; exact time attribution and coding tokens/energy were not measured. Use change-impact-based checks and existing harnesses. Investigate cache reuse only in a separately authorized bounded task; no assumed cache cause or infrastructure change.
+Preserve the combined score-and-recommendations action, matching-insight restoration and stale-output checks. Test-only spend restrictions must not change the SME journey; reconcile affected copy with behavior.
+
 ## Targeted report/Results corrections LIVE - 2026-11-04
 Owner-authorized feature aef097113b27408f7b6fc67ce3862dacf51fb9a5 pushed codex/report-pdf; PR17 merged main47ee72c07eb02872d20a1de3a7416c580176853f. Exact merged-source release mosaic-699b545c9b8748466021 deployed through existing process; live image sha256:4c1d725015ff4740f334479123f19bf7515c7c34033f2cf6e53eac50443520aa healthy at https://preview.flowagentai.website. Approved report design/scoring/PDF runtime unchanged. Report dropdown, matching-insight gates, same-tab restoration, opaque navigation and combined-flow copy correction now live. Broader milestones remain open; prior pending-publication entries below are historical.
 Evidence and measured effort in EXECUTION_PLAN.md; publication of these closeout records does not change deployed runtime.
