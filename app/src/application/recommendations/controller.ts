@@ -4,6 +4,7 @@ import type { RecommendationResult } from "./service";
 import { inputIdentityText } from "./identity";
 export type RecommendationView = { phase: "idle" | "loading" | "available" | "unavailable"; code: string; configuration: ProviderStatus | null;
   result?: Extract<RecommendationResult, { status: "available" | "test_only" }>;
+  storageWarning?: string;
   diagnostics?: { totalMs: number; providerMs: number; timeoutStage?: string; headersMs?: number; bodyMs?: number; issues: string[] }; };
 export function createRecommendationController(ports: {
   read: () => RecommendationRequest | null;
@@ -11,7 +12,14 @@ export function createRecommendationController(ports: {
   generate: (input: RecommendationRequest, configuration: ProviderStatus, signal: AbortSignal) => Promise<RecommendationResult & { configuration?: ProviderStatus }>;
   hash: (value: string) => Promise<string>;
   publish: (view: RecommendationView) => void;
+  saved?: {load: () => Pick<RecommendationView,"result"|"configuration"> | null; save: (value: Pick<RecommendationView,"result"|"configuration"> | null) => boolean};
 }) {
+  function matches(result: NonNullable<RecommendationView["result"]>, status: ProviderStatus, expectedId: string) {
+    const id = result.identity;
+    return !(id.inputId !== expectedId || id.configVersion !== status.configVersion || id.methodVersion !== status.methodVersion || id.promptVersion !== status.promptVersion || id.policyVersion !== status.policyVersion ||
+        id.provider.id !== status.settings?.provider || id.provider.model !== status.settings.model ||
+        id.provider.settings?.reasoning !== status.settings.reasoning || id.provider.settings?.timeoutMs !== status.settings.timeoutMs || id.provider.settings?.maxOutputTokens !== status.settings.maxOutputTokens);
+  }
   let revision = 0; let disposed = false; let busy = false;
   let current = ""; let config: ProviderStatus | null = null;
   let controller: AbortController | null = null;
@@ -34,6 +42,14 @@ export function createRecommendationController(ports: {
       if (disposed || version !== revision || checkedInput !== key()) return;
       if (config && JSON.stringify(config) !== JSON.stringify(status)) invalidate("configuration_changed");
       config = status;
+      if (ports.saved && view.phase === "idle" && view.code === "not_generated") {
+        const saved = ports.saved?.load();
+        const expectedId = await ports.hash(checkedInput);
+        if (disposed || checkedInput !== key() || version !== revision) return;
+        if (saved?.result && saved.configuration?.fingerprint === status.fingerprint && saved.configuration.sessionVersion === status.sessionVersion && saved.configuration.ready === status.ready && saved.configuration.code === status.code && matches(saved.result,status,expectedId)) {
+          publish({phase:"available",code:"available",configuration:status,result:saved.result}); return;
+        }
+      }
       publish({ ...view, configuration: config, code: !config.ready ? config.code : view.code });
     } catch { if (!disposed && version === revision) { config = null; invalidate("configuration_unavailable"); } }
   }
@@ -41,6 +57,7 @@ export function createRecommendationController(ports: {
     if (disposed || busy) return;
     const input = read(); if (!input) { invalidate("no_assessment"); return; }
     const previousResult = current === inputIdentityText(input) ? view.result : undefined;
+    ports.saved?.save(null);
     current = inputIdentityText(input); busy = true;
     const version = ++revision; controller = new AbortController(); const signal = controller.signal;
     const fresh = () => !disposed && !signal.aborted && version === revision && current === key();
@@ -57,13 +74,11 @@ export function createRecommendationController(ports: {
         publish({ phase: "unavailable", code: "configuration_changed", configuration: after }); return;
       }
       if (result.status !== "available") { publish({ phase: "unavailable", code: result.status === "unavailable" ? result.code : "invalid_output", configuration: status, result: previousResult, diagnostics: result.status === "unavailable" && result.metrics ? { totalMs: result.metrics.totalMs, providerMs: result.metrics.providerMs, timeoutStage: result.metrics.timeoutStage, headersMs: result.metrics.providerDiagnostic?.headersMs, bodyMs: result.metrics.providerDiagnostic?.bodyMs, issues: result.issues?.map(issue => issue.code) ?? [] } : undefined }); return; }
-      const id = result.identity;
-      if (id.inputId !== expectedId || id.configVersion !== status.configVersion || id.methodVersion !== status.methodVersion || id.promptVersion !== status.promptVersion || id.policyVersion !== status.policyVersion ||
-        id.provider.id !== status.settings?.provider || id.provider.model !== status.settings.model ||
-        id.provider.settings?.reasoning !== status.settings.reasoning || id.provider.settings?.timeoutMs !== status.settings.timeoutMs || id.provider.settings?.maxOutputTokens !== status.settings.maxOutputTokens) {
+      if (!matches(result, status, expectedId)) {
         publish({ phase: "unavailable", code: "stale_response", configuration: status }); return;
       }
-      publish({ phase: "available", code: "available", result, configuration: status });
+      const stored = ports.saved?.save({result,configuration:status});
+      publish({ phase: "available", code: "available", result, configuration: status, storageWarning: stored === false ? "Recommendations are available, but could not be saved in this tab. Refreshing may lose them." : undefined });
     } catch (error) { if (fresh()) publish({ phase: "unavailable", code: error instanceof Error && error.message === "generation_client_timeout" ? "client_timeout" : "provider_failure", configuration: config }); }
     finally { if (version === revision) { busy = false; if (!fresh()) invalidate("not_generated"); } }
   }

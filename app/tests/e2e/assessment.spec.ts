@@ -1,3 +1,4 @@
+import { mockSuccessfulRecommendations } from "../helpers/recommendation-fixture";
 import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { createElement } from "react";
@@ -703,8 +704,14 @@ test("levers use approved Golden ranking, combined scenario, keyboard and reset 
   const marker=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-035 scenario value"})}).locator(".lever-actual-marker");
   await expect(marker).toHaveText("Actual");
   await page.screenshot({path:testInfo.outputPath("levers-desktop-feedback.png")});
+  await mockSuccessfulRecommendations(page);
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
+  await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();
+  await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toBeVisible();
+
   const downloadEvent=page.waitForEvent("download");
-  await section.getByRole("button",{name:"Download report with hypothetical levers"}).filter({visible:true}).click();
+  await section.getByRole("button",{name:"Download report"}).filter({visible:true}).click();
+  await section.getByRole("button",{name:"HTML",exact:true}).click();
   const download=await downloadEvent;
   const stream=await download.createReadStream();let report="";
   for await(const chunk of stream!)report+=chunk.toString();
@@ -733,7 +740,7 @@ test("levers use approved Golden ranking, combined scenario, keyboard and reset 
   await page.screenshot({path:testInfo.outputPath("levers-mobile-sticky.png")});
   await page.reload();
   await expect(section.getByRole("slider").first()).toHaveAttribute("aria-valuetext", "No");
-  expect(providerPosts).toBe(0);
+  expect(providerPosts).toBe(1);
 });
 
 test("levers percentage entry preserves exact actual value and reset", async ({ page }) => {
@@ -929,21 +936,26 @@ test("PDF download preserves the saved assessment, HTML option and retryable fai
  const {syntheticSession} = await import("../../src/features/preview/fixtures");
  const session = {...syntheticSession(catalog.version), progress:4};
  await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ await mockSuccessfulRecommendations(page);
  await page.goto("/results");
- const button=page.getByRole("button",{name:"Download PDF",exact:true});
+ await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();
+ await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toBeVisible();
+ const button=page.getByRole("button",{name:"Download report",exact:true}).first();
  await expect(button).toBeVisible();
  const before=await page.evaluate(()=>sessionStorage.getItem("capstone.assessment.ui-preview.v1"));
  await page.route("**/api/assessment-report-pdf",r=>r.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:"PDF generation failed. Please retry, or download the HTML report. Your assessment is unchanged."})}));
- await button.click();await expect(page.getByRole("status").filter({hasText:"PDF generation failed"})).toBeVisible();
+ await button.click();await page.getByRole("button",{name:"PDF",exact:true}).click();await expect(page.getByRole("status").filter({hasText:"PDF generation failed"})).toBeVisible();
  await page.unroute("**/api/assessment-report-pdf");
  const event=page.waitForEvent("download");
- await button.click();const download=await event;
+ await button.click();await page.getByRole("button",{name:"PDF",exact:true}).click();const download=await event;
  expect(download.suggestedFilename()).toBe("mosaic-assessment-report.pdf");
  await download.saveAs(testInfo.outputPath("assessment.pdf"));
  const stream=await download.createReadStream();const chunks:Buffer[]=[];
  for await(const chunk of stream!)chunks.push(Buffer.from(chunk));
  expect(Buffer.concat(chunks).subarray(0,5).toString()).toBe("%PDF-");
- await expect(page.getByRole("button",{name:"Download assessment report",exact:true})).toBeEnabled();
+ await expect(page.getByRole("status").filter({hasText:"PDF report downloaded."})).toBeVisible();
+ await expect(page.getByText(/Print.*Save as PDF/)).toHaveCount(0);
+ await expect(page.getByRole("button",{name:"Download report",exact:true}).first()).toBeEnabled();
  expect(await page.evaluate(()=>sessionStorage.getItem("capstone.assessment.ui-preview.v1"))).toBe(before);
  await page.setViewportSize({width:390,height:844});
  await expect(button).toBeVisible();
