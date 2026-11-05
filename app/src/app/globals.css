@@ -89,11 +89,15 @@
     text-underline-offset: var(--space-1);
     transition: color var(--motion-duration) var(--motion-easing);
   }
+  .landing-header .nav-link { border-radius: .5rem; padding-inline: .65rem; }
+  .landing-header .nav-link[href="#context"] { --section-tile: 134 96 127; }
+  .landing-header .nav-link[href="#outputs"] { --section-tile: 76 106 154; }
+  .landing-header .nav-link[href="#approach"] { --section-tile: 126 156 110; }
+  .landing-header .nav-link[href="#research"] { --section-tile: 180 102 74; }
   .landing-header .nav-link[aria-current="location"] {
-    color: var(--accent-text);
-    background: var(--surface-raised);
-    box-shadow: inset 0 -3px 0 var(--accent-text);
-    border-radius: .25rem;
+    color: var(--text);
+    background: rgb(var(--section-tile) / 20%);
+    text-decoration: none;
   }
   .nav-link:hover { color: var(--accent-text); text-decoration-line: underline; }
   .text-link {
