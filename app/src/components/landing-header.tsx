@@ -8,7 +8,21 @@ export function LandingHeader({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const header = ref.current;
-    const closeOnLink = (event: MouseEvent) => { if ((event.target as HTMLElement).closest("nav a")) setOpen(false); };
+    const closeOnLink = (event: MouseEvent) => {
+      const link = (event.target as HTMLElement).closest<HTMLAnchorElement>("nav a");
+      if (!link) return;
+      setOpen(false);
+      if (!open || !menu.current?.offsetParent) return;
+      const target = document.getElementById(link.hash.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      requestAnimationFrame(() => {
+        if (!header?.isConnected) return;
+        document.documentElement.style.setProperty("--landing-header-height", (header?.getBoundingClientRect().height ?? 0) + "px");
+        target.scrollIntoView({block:"start",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
+        history.pushState(null, "", link.hash);
+      });
+    };
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape" && open) { setOpen(false); menu.current?.focus(); } };
     header?.addEventListener("click", closeOnLink);
     header?.addEventListener("keydown", escape);
