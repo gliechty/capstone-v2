@@ -502,7 +502,14 @@ for (const width of [320, 390]) test("mobile card track stays with a centered ca
   const context = await browser.newContext({ viewport: { width, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: "reduce" });
   const page = await context.newPage();
   await start(page);
-  await page.locator(".question-card").evaluate(el => el.scrollIntoView({ block: "center" }));
+  const centered = await page.locator(".active-question-region").evaluate(el => {
+    const r=el.getBoundingClientRect(), top=document.querySelector(".stage-navigation")!.getBoundingClientRect().bottom+12;
+    return {actual:r.top,expected:top+Math.max(0,(innerHeight-12-top-r.height)/2)};
+  });
+  expect(Math.abs(centered.actual-centered.expected)).toBeLessThan(3);
+  const stages=page.getByRole("navigation",{name:"Assessment stages"}).getByRole("button");
+  await expect(stages).toHaveCount(5);
+  for(const stage of await stages.all()) {const r=(await stage.boundingBox())!;expect(r.x).toBeGreaterThanOrEqual(0);expect(r.x+r.width).toBeLessThanOrEqual(width);expect(r.height).toBeGreaterThanOrEqual(44);}
   const surface = page.getByRole("button", { name: "Explore question track" });
   const box = (await surface.boundingBox())!;
   expect(box.width).toBeGreaterThanOrEqual(44);

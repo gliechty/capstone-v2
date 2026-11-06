@@ -1,3 +1,6 @@
+## Approved M13 package checks — owner 2026-11-06
+Reuse assessment.spec.ts phone/desktop accessibility, navigation, reduced-motion and input checks; update the existing centering expectation to observe automatic positioning. Owner handoff explicitly authorizes focused menu/disclosure/image zoom, stepper, short/long card checks and retained matching fictional recommendation screenshots. No paid calls, scoring benchmarks, PDF-runtime qualification or full audit. Scoped type/lint and one exact merged-source production build, then affected live smoke. Release evidence belongs in EXECUTION_PLAN.md.
+
 ## Current efficiency lesson — 2026-11-04
 AGENTS.md's Current delivery policy is authoritative over older mandatory full-gate and reporting instructions in this file. Keep this file for reusable lessons and the approved test register; put detailed release evidence only in EXECUTION_PLAN.md.
 The reported PDF/Results release took 32m35s. The log shows constrained dependency/build work, repeated unchanged PDF runtime qualification and verification-script corrections; exact time attribution and coding tokens/energy were not measured. Use change-impact-based checks and existing harnesses. Investigate cache reuse only in a separately authorized bounded task; no assumed cache cause or infrastructure change.

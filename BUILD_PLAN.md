@@ -1,3 +1,6 @@
+## Approved M13 package — owner 2026-11-06
+Implement the owner's twelve-batch MOSAIC_APPROVED_M13_HANDOFF.md exactly and deploy through the existing release process. This is a scoped delivery within M13.1/.3/.5/.6, with a focused M13.7 check; it does not close those broader milestones. Approved UI/copy implemented and focused local checks passed; publication/live deployment pending; owner-approved bounded space recovery completed. Preserve rejected proposals and all rollback material. Canonical evidence and release status: EXECUTION_PLAN.md.
+
 ## Delivery protocol routing — 2026-11-04
 Use AGENTS.md's Current delivery policy for proportional verification and concise reporting; it supersedes historical blanket gate/effort wording in this plan. This file owns scope/status/dependencies, not release diaries. Detailed evidence belongs in EXECUTION_PLAN.md. The PDF/Results release is complete per owner report; do not reopen it to adopt these documentation changes. No new feature, deployment or Build Checklist update is authorized by this entry.
 

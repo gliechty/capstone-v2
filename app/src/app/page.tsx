@@ -24,32 +24,28 @@ export default function LandingPage() {
           <Image src="/brand/mosaic-mark-straight.svg" alt="" width={28} height={28} />
           <Image src="/brand/mosaic-wordmark.svg" alt="" width={94} height={20} />
         </a>
-        <nav aria-label={landingCopy.navigation.label} className="flex flex-wrap gap-x-6">
+        <nav id="landing-navigation" aria-label={landingCopy.navigation.label} className="flex flex-wrap gap-x-6">
           <a className="nav-link" href="#context">{landingCopy.navigation.context}</a>
-          <a className="nav-link" href="#outputs">Your results</a>
+          <a className="nav-link" href="#outputs">What you receive</a>
           <a className="nav-link" href="#approach">{landingCopy.navigation.approach}</a>
           <a className="nav-link" href="#research">{landingCopy.navigation.research}</a>
         </nav>
       </LandingHeader>
 
       <main id="main-content" tabIndex={-1}>
-        <section className="page-container grid items-center gap-8 pb-section pt-12 md:grid-cols-[1.35fr_1fr] md:pt-16" aria-labelledby="hero-heading">
+        <section className="landing-hero page-container grid items-center gap-8 pb-section pt-12 md:grid-cols-[1.35fr_1fr] md:pt-16" aria-labelledby="hero-heading">
           <div className="intro-enter">
             <p className="section-label">{landingCopy.hero.identity}<br /><em className="font-normal">{landingCopy.hero.attribution}</em></p>
             <hgroup><h1 id="hero-heading" className="max-w-copy text-display">{landingCopy.hero.headingFirstLine}</h1><p className="mt-4 max-w-copy text-subheading italic">{landingCopy.hero.headingSecondLine}</p></hgroup>
             <p className="mt-6 max-w-copy text-muted">{landingCopy.hero.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-              <Link className="button-primary" href="/assessment" aria-describedby="assessment-availability">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
+              <Link className="button-primary" href="/assessment">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
               </Link>
               <a href="#outputs" className="text-link">{landingCopy.hero.secondaryCta}<span className="ml-2" aria-hidden="true">↓</span></a>
             </div>
-            <p id="assessment-availability" className="mt-3 text-small text-muted">{landingCopy.hero.availability}</p>
           </div>
-          <figure className="mx-auto w-full max-w-md text-foreground">
+          <figure className="landing-hero-art mx-auto w-full max-w-md text-foreground">
             <ContextIllustration />
-            <figcaption className="flex justify-between border-t border-line pt-4 text-small text-muted">
-              <span>{landingCopy.hero.illustrationLeft}</span><span>{landingCopy.hero.illustrationRight}</span>
-            </figcaption>
           </figure>
         </section>
 
@@ -77,7 +73,7 @@ export default function LandingPage() {
           <div className="page-container">
             <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
               <div><span className="section-label">01 / The context behind MOSAIC</span><h2 id="context-heading" className="text-heading">One global ambition.<br />Many local realities.</h2></div>
-              <div className="max-w-copy"><p>MOSAIC began as a Columbia M.S. in Sustainability Management capstone project for the <a className="text-link landing-inline-link" href="https://conservationen.see.org.cn/">Society of Entrepreneurs and Ecology (S.E.E.)</a>, with a brief to create a global sustainability rating system for small and medium enterprises.</p><p className="mt-6 text-muted">A universal checklist can lose the detail that makes an assessment meaningful. What matters varies across industries, markets and business circumstances.</p><p className="mt-6 text-muted">The design response is a configurable assessment: structured questions and fixed scoring rules, supported by AI-assisted source preparation and evidence-informed recommendations.</p></div>
+              <div className="max-w-copy"><p>Small businesses face reporting frameworks, buyer questionnaires and local expectations that don’t always ask for the same things. What matters varies by industry, market and business.</p><p className="mt-6 text-muted">MOSAIC draws on these sources to select relevant questions, score your answers and recommend next steps for your business.</p><p className="mt-6 text-muted">MOSAIC began as a Columbia M.S. in Sustainability Management capstone project for the <a className="text-link landing-inline-link" href="https://conservationen.see.org.cn/">Society of Entrepreneurs and Ecology (S.E.E.)</a>, with a brief to create a global sustainability rating system for small and medium enterprises.</p></div>
             </div>
             <div className="mt-8"><LandingDisclosure explanation={originExplanation} /></div>
           </div>
@@ -86,7 +82,7 @@ export default function LandingPage() {
         <section id="outputs" className="page-container py-section" aria-labelledby="outputs-heading">
           <span className="section-label">02 / What you receive</span>
           <h2 id="outputs-heading" className="text-heading">A score is the beginning.</h2>
-          <p className="mt-6 max-w-copy text-muted">Explore your reported sustainability practices from several perspectives.</p><p className="mt-3 text-small text-muted">Screenshots from the real app using an illustrative fictional-company assessment. Select an image to enlarge it. Close the preview or press Escape to return.</p>
+          <p className="mt-6 max-w-copy text-muted">Complete the assessment and explore your scores, approach, and next steps.</p><p className="mt-3 text-small text-muted">Examples from the real app, using a fictional company. Select an image to enlarge it.</p>
           <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {resultCards.map(card => <article className="border-t border-line pt-6" key={card.title}>
               <LandingScreenshot title={card.title} screenshot={card.screenshot} alt={card.alt} /><Image src={"/portraits/" + card.icon} alt="" width={32} height={32} />
@@ -94,12 +90,13 @@ export default function LandingPage() {
             </article>)}
           </div>
           <div className="mt-8"><LandingDisclosure explanation={resultsExplanation} /></div>
+          <Link className="button-primary mt-8" href="/assessment">Start your assessment <span aria-hidden="true">↗</span></Link>
         </section>
 
         <section id="approach" className="border-y border-line bg-muted-surface py-section" aria-labelledby="approach-heading">
           <div className="page-container">
             <span className="section-label">03 / How the method works</span>
-            <div className="grid gap-6 md:grid-cols-2 md:gap-16"><h2 id="approach-heading" className="text-heading">AI where it helps.<br />Explicit rules where it counts.</h2><p className="max-w-copy text-muted">Prepared source material becomes a structured assessment. Your answers are scored by code. Selected evidence helps a small model suggest next steps.</p></div>
+            <div className="grid gap-6 md:grid-cols-2 md:gap-16"><h2 id="approach-heading" className="text-heading">AI where it helps.<br />Explicit rules where it counts.</h2><p className="max-w-copy text-muted">Standards and buyer requirements are turned into questions before you start. Fixed rules score your answers. AI uses your results and selected source passages to recommend next steps.</p></div>
             <div className="mt-12 space-y-8">
               {methods.map((method, index) => <article id={method.id} className="landing-method" key={method.id}>
                 <div className="flex items-start gap-4"><Image src={"/portraits/" + method.icon} alt="" width={32} height={32} /><div><span className="text-small text-accent" aria-hidden="true">0{index + 1}</span><h3 className="mt-2 text-subheading">{method.title}</h3><p className="mt-3 max-w-copy text-muted">{method.description}</p></div></div>
@@ -112,7 +109,7 @@ export default function LandingPage() {
         <section id="research" className="page-container py-section" aria-labelledby="research-heading">
           <span className="section-label">04 / Research behind the work</span>
           <h2 id="research-heading" className="text-heading">Explore the work.<br />Inspect the evidence.</h2>
-          <p className="mt-6 max-w-copy text-muted">Separate the assessment’s foundations from complementary research and calculator development.</p>
+          <p className="mt-6 max-w-copy text-muted">Explore the origins and subsequent 3rd-party research behind MOSAIC</p>
           <div className="mt-8 grid items-start gap-8 md:grid-cols-2">
             {researchExplanations.map(research => <article key={research.title}><h3 className="text-subheading">{research.title}</h3><p className="mt-4 mb-6 text-muted">{research.description}</p><LandingDisclosure explanation={research.explanation} headingLevel={4} /></article>)}
           </div>
@@ -123,7 +120,7 @@ export default function LandingPage() {
         </section>
 
         <section className="border-t border-line bg-muted-surface py-section" aria-labelledby="closing-heading">
-          <div className="page-container"><span className="section-label">Your context. Your next steps.</span><h2 id="closing-heading" className="text-heading">The pieces that matter.</h2><p className="mt-6 text-muted">Start with what you know. Explore where to focus.</p><Link className="button-primary mt-8" href="/assessment">Start your sustainability assessment <span aria-hidden="true">↗</span></Link><p className="mt-6 max-w-copy text-small text-muted">{landingCopy.footer.credit} {landingCopy.footer.scope}</p></div>
+          <div className="page-container"><span className="section-label">Your context. Your next steps.</span><h2 id="closing-heading" className="text-heading">The pieces that matter.</h2><p className="mt-6 text-muted">Start with what you know. Explore where to focus.</p><Link className="button-primary mt-8" href="/assessment">Start your assessment <span aria-hidden="true">↗</span></Link><p className="mt-6 max-w-copy text-small text-muted">{landingCopy.footer.credit} {landingCopy.footer.scope}</p></div>
         </section>
 
       </main>

@@ -7,7 +7,7 @@ import type { Question } from "../../application/assessment-catalog";
 export type QuestionId = string;
 
 export const profileFields = [
-  { key: "companyName", label: "Company name", hint: "Use an example business for this preview.", required: true },
+  { key: "companyName", label: "Company name", hint: "", required: true },
   { key: "industry", label: "Industry", hint: "Choose the industry used for this assessment.", required: true },
   { key: "subindustry", label: "Subindustry", hint: "Optional: add a more specific activity.", required: false },
   { key: "companySize", label: "Company size", hint: "Choose the employee band that describes your company.", required: true },

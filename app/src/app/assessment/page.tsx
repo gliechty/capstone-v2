@@ -4,7 +4,7 @@ import { AssessmentFlow } from "../../features/assessment/assessment-flow";
 import { assessmentCatalog } from "../../application/assessment-catalog";
 import { loadCanonicalConfig } from "../../adapters/config-repository";
 export const metadata: Metadata = {
-  title: "Assessment preview | Capstone",
+  title: "Assessment · MOSAIC",
   description: "Business setup, canonical questionnaire and deterministic assessment scoring.",
 };
 export default function AssessmentPage() {
