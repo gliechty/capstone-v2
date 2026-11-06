@@ -246,8 +246,44 @@ function Questionnaire() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useLayoutEffect(() => {
     const heading = headingRef.current;
+    const grid = heading?.closest<HTMLElement>(".assessment-grid");
+    if (grid) grid.style.paddingTop = "0px";
     heading?.focus({ preventScroll: true });
-    heading?.closest(".question-region")?.scrollIntoView({ block: "start", behavior: "instant" });
+    const center = () => {
+      const card = heading?.closest(".active-question-region");
+      if (!card) return;
+      // The stepper can cross its sticky threshold during this scroll. Settle
+      // against its actual position rather than assuming it was already pinned.
+      for (let pass = 0; pass < 8; pass++) {
+        const viewport = window.visualViewport;
+        const top = Math.max(viewport?.offsetTop ?? 0, document.querySelector(".stage-navigation")?.getBoundingClientRect().bottom ?? 0) + 12;
+        const bottom = (viewport?.offsetTop ?? 0) + (viewport?.height ?? window.innerHeight) - 12;
+        const bounds = card.getBoundingClientRect();
+        const target = top + Math.max(0, (bottom - top - bounds.height) / 2);
+        if (Math.abs(bounds.top - target) < 1) break;
+        // At the top of a short page there is no upward scroll available.
+        // Supply only the missing space, rather than a fixed desktop gap.
+        if (window.scrollY === 0 && bounds.top < target && grid) {
+          grid.style.paddingTop = `${parseFloat(grid.style.paddingTop || "0") + target - bounds.top}px`;
+          continue;
+        }
+        const before = window.scrollY;
+        window.scrollBy({ top: bounds.top - target, behavior: "instant" });
+        if (before === window.scrollY) break;
+      }
+    };
+    center();
+    // Recompute after scrolling has pinned the sticky stepper to its final position.
+    const frame = requestAnimationFrame(center);
+    let disposed = false;
+    void document.fonts.ready.then(() => { if (!disposed && document.activeElement === heading) center(); });
+    const resize = () => {
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && active.matches("input, textarea, select")) active.scrollIntoView({block:"nearest",behavior:"instant"});
+      else center();
+    };
+    window.visualViewport?.addEventListener("resize", resize);
+    return () => { disposed = true; cancelAnimationFrame(frame); window.visualViewport?.removeEventListener("resize", resize); };
   }, [question.id]);
   return <div className="assessment-grid" data-first-question={index === 0}>
     <Progress />
@@ -313,8 +349,8 @@ function Review() {
     <span className="section-label">Review / Your answers</span>
     <StageHeading>Review your answers.</StageHeading>
     <p className="mt-4">{questions.length - missing.length} answered · {missing.length} unanswered questions.</p>
-    <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence.</p>
-    <p className="mt-3 text-small">This action calculates scores and requests AI recommendations from the configured provider. Your business context, answers and source excerpts are sent for generation.</p>
+    <details className="review-missing-note mt-2 text-small"><summary>What missing answers do</summary><p className="text-muted">Missing answers stay missing; they are never treated as zero. Scores use the available answers. Coverage shows how much of the assessment you supplied.</p></details>
+    <p className="mt-3 text-small">Your business context, answers and selected source passages are sent to AI to generate recommendations.</p>
     {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
     {legacySkipped.length > 0 && <div className="storage-warning mt-4"><p>These previously skipped questions still contain saved answers from the older Skip behavior. Revisit each one and choose Skip to clear it, or confirm your answer. Original saved values have been preserved for your review.</p><ul>{legacySkipped.map(q => <li key={q.id}><button className="text-link" onClick={() => dispatch({type:"jump",id:q.id})}>{q.id}: {q.title}</button></li>)}</ul></div>}
     {message && <p role="alert">{message}</p>}

@@ -1,9 +1,19 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function LandingHeader({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
+  const menu = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const header = ref.current;
+    const closeOnLink = (event: MouseEvent) => { if ((event.target as HTMLElement).closest("nav a")) setOpen(false); };
+    const escape = (event: KeyboardEvent) => { if (event.key === "Escape" && open) { setOpen(false); menu.current?.focus(); } };
+    header?.addEventListener("click", closeOnLink);
+    header?.addEventListener("keydown", escape);
+    return () => { header?.removeEventListener("click", closeOnLink); header?.removeEventListener("keydown", escape); };
+  }, [open]);
   useEffect(() => {
     const header = ref.current;
     if (!header || typeof ResizeObserver === "undefined") return;
@@ -43,7 +53,10 @@ export function LandingHeader({ children }: { children: ReactNode }) {
       document.documentElement.style.removeProperty("--landing-header-height");
     };
   }, []);
-  return <header ref={ref} className="landing-header">
-    <div className="page-container flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-6">{children}</div>
+  return <header ref={ref} className="landing-header" data-menu-open={open}>
+    <div className="page-container flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-6">
+      <button ref={menu} type="button" className="landing-menu-button" aria-label="Section menu" aria-expanded={open} aria-controls="landing-navigation" onClick={() => setOpen(!open)}><span aria-hidden="true">☰</span></button>
+      {children}
+    </div>
   </header>;
 }

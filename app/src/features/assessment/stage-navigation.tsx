@@ -2,7 +2,7 @@
 import { useEffect, useState, useReducer, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import type { Session, Action } from "./model";
-import { createAssessmentModel } from "./model";
+import { createAssessmentModel, unanswered } from "./model";
 import { catalogProfileErrors } from "./assessment-context";
 import { selectedQuestions, type AssessmentCatalog } from "../../application/assessment-catalog";
 import { browserSession, watchAssessmentSession } from "../../adapters/assessment-session";
@@ -18,11 +18,13 @@ export function StageNavigation({session,catalog,onStage,results=false}:{session
   {name:"Results",phase:"results",action:"results" as const,enabled:valid && session.progress === 4 && !session.skipped.some(id=>session.answers[id]?.trim())},
  ];
  const current=results?"results":session.phase;
+ const questions=selectedQuestions(catalog,session.profile);
+ const missing=unanswered(session,questions).length;
  return <nav aria-label="Assessment stages" className="stage-navigation">{stages.map((s,i)=>{
   const state = current === s.phase ? "current" : !s.enabled ? "locked" : reached > i ? "completed" : "available";
   return <button key={s.phase} type="button" className="button-secondary" aria-label={`${i+1}. ${s.name}`} aria-describedby={"stage-"+s.phase+"-state"} data-state={state} aria-current={state === "current" ? "step" : undefined} disabled={!s.enabled}
    title={state === "locked" ? s.phase === "results" ? "Review answers and choose Generate score and recommendations first" : "Complete the preceding stage first" : undefined}
-   onClick={()=>onStage(s.action)}><span>{i+1}. {s.name}</span><small id={"stage-"+s.phase+"-state"}>{state}</small></button>;
+   onClick={()=>onStage(s.action)}><span>{i+1}. {s.name}</span><small id={"stage-"+s.phase+"-state"}>{s.phase === "questions" && s.enabled && missing > 0 ? `${questions.length-missing}/${questions.length} answered` : state}</small></button>;
  })}</nav>;
 
 }

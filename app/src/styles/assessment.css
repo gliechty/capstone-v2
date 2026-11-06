@@ -260,6 +260,18 @@ html:has(.stage-navigation) { scroll-padding-top: 4.5rem; }
 /* M7.5: capture rail gestures without scrolling the surrounding page. */
 .mobile-rail-surface { touch-action: none; user-select: none; }
 
+/* Approved M13 mobile flow: retain five stages and natural-height cards. */
+@media (max-width: 40rem) {
+  .stage-navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .2rem; overflow: visible; padding-block: .25rem; }
+  .stage-navigation button { min-width: 0; min-height: 48px; padding: .25rem .1rem; font-size: .72rem; line-height: 1.2; text-align: center; }
+  .stage-navigation small { font-size: .625rem; line-height: 1.25; margin-top: .2rem; text-transform: none; }
+  .assessment-setup { padding-top: .5rem; }
+  .assessment-setup .stage-heading { margin-top: .5rem; }
+  .assessment-setup > .mt-6 { margin-top: 1rem; }
+  .assessment-setup > .mt-8 { margin-top: 1.25rem; }
+  .assessment-grid { padding-bottom: 20svh; }
+}
+
 /* Keep intrinsic field/label widths from expanding the mobile card beneath its rail. */
 @media (max-width: 63.999rem) {
   .question-stage { grid-template-columns: minmax(0, 1fr); }
