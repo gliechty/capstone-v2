@@ -11,6 +11,19 @@ export const goldenCases: GoldenCase[] = readdirSync(root + "sme_cases").filter(
 export function goldenExpected(fixture: GoldenCase) {
   return JSON.parse(readFileSync(root + "expected_outputs/" + fixture.case_id + "_expected.json", "utf8"));
 }
+// Original IDs in immutable BUILD_PACK/04_CONFIG/clean/MetricBenchmarks.csv.
+// Historical captures must replay their original routing, while current-runtime
+// parity checks below continue to receive the corrected configuration unchanged.
+export function historicalBenchmarkConfig(config: CanonicalConfig): CanonicalConfig {
+  const trainingIds: Record<string, string> = {
+    "Business / Export Services": "labor_training_hours_bus",
+    "Manufacturing (Industrial / Components)": "labor_training_hours_manuf",
+    "Construction / Materials": "labor_training_hours_const",
+    "Food & Agro-processing": "labor_training_hours_food",
+  };
+  return { ...config, MetricBenchmarks: config.MetricBenchmarks.map(row => row.metric_id === "labor_training_hours"
+    ? { ...row, metric_id: trainingIds[row.benchmark_group_value] ?? row.metric_id } : row) };
+}
 // Test-only replay of the preserved, inspected AssessmentScoring object. Never
 // bundled into the application. No network/storage capabilities enter the VM.
 export function legacyScorer(config: CanonicalConfig, fixture: GoldenCase, fullPrecision = false) {

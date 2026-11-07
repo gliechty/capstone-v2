@@ -1,5 +1,11 @@
 # Canonical document identity migration
 
+## Runtime training-routing correction — 2026-11-07
+
+The owner-authorized runtime derivative `capstone-v1-training-routing-2` consolidates the five training metric IDs under `labor_training_hours`. Industry rows, normalization methods, all numeric parameters and inherited notes remain unchanged. QuestionBank M-024 and inactive M-025 already reference the shared ID; no question reference change is needed. Benchmark identities remain `(metric_id, benchmark_group_type, benchmark_group_value)`; validation and resolver precedence are unchanged. Manifest checksum/version and portrait mapping's top-level compatible config version advance together; QuestionBank hash, portrait assignments and their original question-bank provenance remain unchanged.
+
+The CSV Build Pack and historical Golden captures remain immutable evidence. `tools/migrate-config.ps1` deliberately recreates the initial migration, not this corrected derivative: do not use it to overwrite the current runtime snapshot. Historical comparisons must distinguish original source routing from corrected runtime routing; original captured scores are not new expected scores. See EXECUTION_PLAN.md for the targeted before/after audit and affected scores. Existing config/session/recommendation version checks reject the old version after a future deployment; no session migration or validation relaxation is included.
+
 This is an explicitly authorized v2 identity reconciliation, not an edit to the immutable Build Pack. The clean CSV exports remain evidence. Versioned runtime JSON lives under app/config/capstone-v1. The migration script is tools/migrate-config.ps1; run it from PowerShell 7 only when deliberately regenerating this initial snapshot.
 
 ## Investigation and decisions

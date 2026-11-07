@@ -1,7 +1,7 @@
 import { isDeepStrictEqual } from "node:util";
 import type { CanonicalConfig } from "../../src/domain/config/types";
 import { METHOD_VERSION, scoreAssessment, type AssessmentScore } from "../../src/domain/scoring/score-assessment";
-import { goldenExpected, legacyScorer, type GoldenCase } from "./legacy-scoring";
+import { goldenExpected, historicalBenchmarkConfig, legacyScorer, type GoldenCase } from "./legacy-scoring";
 
 // Test-only evidence, ordered by dependency stage. No expectation comes from v2.
 export const stages = ["selection", "benchmark", "normalization", "base weight", "multiplier", "question points", "category weight", "category totals", "category score", "overall"] as const;
@@ -38,7 +38,7 @@ export function compareGolden(config: CanonicalConfig, fixture: GoldenCase,
   actual: AssessmentScore = scoreAssessment(config, fixture.profile, goldenAnswers(fixture))): Comparison {
   const capture = goldenExpected(fixture);
   const expected = capture.scoring;
-  const legacy = legacyScorer(config, fixture);
+  const legacy = legacyScorer(historicalBenchmarkConfig(config), fixture);
   const precise = legacyScorer(config, fixture, true);
   const historicalRows = legacy.getAllAnsweredQuestionDebug() as Record<string, unknown>[];
   const preciseRows = precise.getAllAnsweredQuestionDebug() as Record<string, unknown>[];
@@ -79,7 +79,7 @@ export function compareGolden(config: CanonicalConfig, fixture: GoldenCase,
     }
     if (!ref) continue;
     const question = config.QuestionBank.find(r => r.question_id === q.id)!;
-    add(c, "benchmark", q.id, "resolved record", ["boolean", "categorical"].includes(question.response_type) ? null : legacy.getMetric(question), q.normalization.benchmark);
+    add(c, "benchmark", q.id, "resolved record", ["boolean", "categorical"].includes(question.response_type) ? null : precise.getMetric(question), q.normalization.benchmark);
     add(c, "normalization", q.id, "method", ref.normalization_method, q.normalization.method);
     add(c, "normalization", q.id, "score", ref.normalized_score, q.normalization.value, true);
     add(c, "base weight", q.id, "weight", ref.base_weight, q.baseWeight);
@@ -117,7 +117,7 @@ export function compareGolden(config: CanonicalConfig, fixture: GoldenCase,
     // Historical weights are an isolated capture oracle, never runtime authority.
     const weights = config.CategoryWeights.map(w => w.industry !== fixture.profile.industry ? w : { ...w,
       ...Object.fromEntries(expected.weighted_overall.breakdown.map((r: { category: string; weight: number }) => [r.category.toLowerCase() + "_weight", String(r.weight)])) });
-    const historicalWeights = legacyScorer({ ...config, CategoryWeights: weights }, fixture);
+    const historicalWeights = legacyScorer({ ...historicalBenchmarkConfig(config), CategoryWeights: weights }, fixture);
     add(h, "category weight", "assessment", "captured weights", expected.category_weights, historicalWeights.getCategoryWeights());
     add(h, "category score", "assessment", "weighted breakdown", expected.weighted_category_breakdown, historicalWeights.getWeightedCategoryBreakdown());
     add(h, "overall", "weighted", "score", expected.weighted_overall.weighted_score, historicalWeights.getWeightedOverallScore().weighted_score);

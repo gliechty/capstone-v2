@@ -91,7 +91,10 @@ test("levers rank approved Golden answers by real weighted gain, include numeric
   const combined = { ...answers, "U-034": "Yes", "U-035": "8" };
   const scenario = scoreAssessment(config, fixture.profile, combined);
   expect(scenario.categories.find(c => c.category === "Community")!.percent).toBeGreaterThan(baseline.categories.find(c => c.category === "Community")!.percent!);
-  sameNumber(scenario.weightedOverall!, 30.41997828024284);
+  // Existing scenario total plus the approved M-024 routing correction:
+  // 1 hour, weight3.97, People denominator2334.5 and category weight0.1457.
+  const trainingCorrection = (100 / 64 - 100 / 40) * 3.97 / 2334.5 * 100 * 0.1457;
+  sameNumber(scenario.weightedOverall!, 30.41997828024284 + trainingCorrection);
   expect(JSON.stringify(answers)).toBe(before);
   expect(selectImprovementLevers(config, scoreAssessment(config, fixture.profile, {})).levers).toEqual([]);
   expect(selectImprovementLevers(config, scoreAssessment(config, fixture.profile, { "U-034": "Yes" })).levers).toEqual([]);
