@@ -1,3 +1,6 @@
+## Approved dependency security checks — owner 2026-11-07
+Upgrade only Next16.4.5, matching Next lint plugin and Zod4.6.7 plus required lockfile entries. Reuse saved typecheck/lint, score-request, hosted-boundary, recommendation-validation/controller, session-freshness and Results unit checks; existing combined-flow/failure/refresh/report-format browser checks. Production audit and one exact-source release build; representative hosted retained-response restoration/HTML/PDF download with all generation transport intercepted. No paid calls, new validation rules, new fixtures, full scoring benchmark or repeated PDF runtime qualification. Preserve rollback material; detailed evidence in EXECUTION_PLAN.md.
+
 ## Approved M13 package checks — owner 2026-11-06
 Reuse assessment.spec.ts phone/desktop accessibility, navigation, reduced-motion and input checks; update the existing centering expectation to observe automatic positioning. Owner handoff explicitly authorizes focused menu/disclosure/image zoom, stepper, short/long card checks and retained matching fictional recommendation screenshots. No paid calls, scoring benchmarks, PDF-runtime qualification or full audit. Scoped type/lint and one exact merged-source production build, then affected live smoke. Release evidence belongs in EXECUTION_PLAN.md.
 
