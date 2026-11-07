@@ -1,3 +1,6 @@
+## Industry benchmark routing — release authorized, owner 2026-11-07
+Owner accepts the training-ID correction and authorizes scoped commit/push/normal PR merge/deployment from codex/training-benchmark-routing, excluding API MVP work. Reuse passing verification; only the necessary production build and focused live smoke remain. Owner accepts fresh assessments with the existing incompatible-version warning; no session migration. Preserve rollback material, threshold values, normalization, proxy choices, AnswerScales and multipliers. Build Checklist F64 records this bounded routing correction separately from broader unfinished M14 methodology. Score effects and release evidence: EXECUTION_PLAN.md.
+
 ## Approved M13 package — owner 2026-11-06
 Implement the owner's twelve-batch MOSAIC_APPROVED_M13_HANDOFF.md exactly and deploy through the existing release process. This is a scoped delivery within M13.1/.3/.5/.6, with a focused M13.7 check; it does not close those broader milestones. Approved UI/copy and the final mobile anchor correction are live through PR23/PR24, runtime main d98e3f9 and release mosaic-1faa92d13e7a2bfb0cf3; focused local/live checks passed. Build Checklist rows57/59/61/62/63 accurately retain broader incomplete status. Preserve rejected proposals and all rollback material. Canonical evidence and release status: EXECUTION_PLAN.md.
 

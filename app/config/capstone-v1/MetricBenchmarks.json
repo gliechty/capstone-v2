@@ -784,7 +784,7 @@
     "active": "TRUE"
   },
   {
-    "metric_id": "labor_training_hours_bus",
+    "metric_id": "labor_training_hours",
     "metric_name": "Avg training hours per employee/year",
     "benchmark_group_type": "industry",
     "benchmark_group_value": "Business / Export Services",
@@ -800,7 +800,7 @@
     "active": "TRUE"
   },
   {
-    "metric_id": "labor_training_hours_manuf",
+    "metric_id": "labor_training_hours",
     "metric_name": "Avg training hours per employee/year",
     "benchmark_group_type": "industry",
     "benchmark_group_value": "Manufacturing (Industrial / Components)",
@@ -816,7 +816,7 @@
     "active": "TRUE"
   },
   {
-    "metric_id": "labor_training_hours_const",
+    "metric_id": "labor_training_hours",
     "metric_name": "Avg training hours per employee/year",
     "benchmark_group_type": "industry",
     "benchmark_group_value": "Construction / Materials",
@@ -832,7 +832,7 @@
     "active": "TRUE"
   },
   {
-    "metric_id": "labor_training_hours_food",
+    "metric_id": "labor_training_hours",
     "metric_name": "Avg training hours per employee/year",
     "benchmark_group_type": "industry",
     "benchmark_group_value": "Food & Agro-processing",

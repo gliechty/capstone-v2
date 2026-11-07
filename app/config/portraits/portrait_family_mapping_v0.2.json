@@ -1,6 +1,6 @@
 {
   "mappingVersion": "0.2",
-  "configVersion": "capstone-v1-migrated-1",
+  "configVersion": "capstone-v1-training-routing-2",
   "questionBankHash": "5b837f5833ca6953c64804bda689a2d181c5c151f3209118baad4cd1643d1484",
   "ruleVersion": "portrait-beta-1",
   "strengthFloor": 0.5,
