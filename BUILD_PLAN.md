@@ -1,3 +1,6 @@
+## Report generation timestamp — authorized 2026-11-07
+One current export-generation timestamp for PDF/HTML on every download; remove separate assessment date. Current owner chat supersedes conflicting checklist submission-date note. Preserve saved inputs/insights, validation, rollback and API MVP separation; no paid calls. Focused checks and existing-process deployment authorized. Evidence: EXECUTION_PLAN.md.
+
 ## Industry benchmark routing — LIVE 2026-11-07
 PR28/8912447 deployed as mosaic-c8066648ac8a0a9a9eda; build and focused live smoke passed, rollback retained. F64 updated; broader M14 remains open. Release evidence: EXECUTION_PLAN.md. Historical authorization: owner accepts the training-ID correction and authorizes scoped commit/push/normal PR merge/deployment from codex/training-benchmark-routing, excluding API MVP work. Reuse passing verification; only the necessary production build and focused live smoke remain. Owner accepts fresh assessments with the existing incompatible-version warning; no session migration. Preserve rollback material, threshold values, normalization, proxy choices, AnswerScales and multipliers. Build Checklist F64 records this bounded routing correction separately from broader unfinished M14 methodology. Score effects and release evidence: EXECUTION_PLAN.md.
 
