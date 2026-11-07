@@ -1,3 +1,4 @@
+import { unavailableMetricReason } from "../../src/application/calculator-mapping";
 import { describe, expect, it } from "vitest";
 import fixtures from "../fixtures/calculator-reference-v1.json";
 import { calculateDraft, initialCalculatorDraft, referenceFactors, type CalculatorDraft } from "../../src/application/calculator";
@@ -152,4 +153,12 @@ it("M4.5 transfers renewable total energy to U-026 using the existing mixed-ener
  expect(transferred.answers["U-026"]).toBe("10");
  d.activities[0]!.renewable="";
  expect(calculatorMappings(d,mappedQuestions).find(r=>r.questionId==="U-026")?.raw).toBeNull();
+});
+
+it("explains absent therm conversion without asking for an already entered renewable zero",()=>{
+ const d=draft(source("gas","5000","legacy-C15",{site:"",source:"gas therm",unit:"therm",renewable:"0"}));
+ const before=JSON.stringify(d);
+ expect(unavailableMetricReason("renewable",d)).toContain("Energy conversion is unavailable for gas therm");
+ expect(unavailableMetricReason("renewable",d)).not.toContain("Enter the known portion");
+ expect(result(d).renewableEnergyShare).toBeNull();expect(JSON.stringify(d)).toBe(before);
 });

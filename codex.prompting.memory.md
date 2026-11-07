@@ -1,3 +1,6 @@
+## Approved Monday targeted QA checks — owner 2026-11-07
+D1–D7 only: reuse Claude MONDAY_TARGETED_QA evidence/profiles; focused UI/server percent100/week168 boundaries, unchanged valid scores, display-only precision and units, blank facility labels, missing-conversion message. Reuse calculator/assessment/scoring/Lever tests; bounded regression assertions authorized for these defects. Focused desktop/phone affected views, existing fixtures only, no paid calls, timestamps/deferred notes/API MVP excluded.
+
 ## Approved report timestamp checks — owner 2026-11-07
 Minimal shared PDF/HTML timestamp correction. Reuse m3-report-grounding checks; focused repeat-export regression uses existing session/content at mocked October/December clock times, asserts one fresh generation stamp, no assessment/submission stamp and unchanged inputs/no-store. Scoped lint/type checks, one exact-source release build, representative live PDF/HTML download and affected cover inspection with existing retained fictional data, no paid calls or full PDF-runtime requalification.
 

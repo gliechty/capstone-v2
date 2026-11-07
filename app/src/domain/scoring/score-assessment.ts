@@ -1,3 +1,4 @@
+import { numericInputLimit } from "./numeric-input-limit";
 import type { CalculationTrace } from "./calculation-trace";
 import type { CanonicalConfig, MetricBenchmarksRecord, QuestionBankRecord } from "../config/types";
 import { selectQuestions, type SelectionProfile } from "../selection/select-questions";
@@ -42,6 +43,8 @@ export function normalizeAnswer(config: CanonicalConfig, question: QuestionBankR
   const x = finite(Number(raw), question.question_id);
   if (question.response_type === "percent" && x > 100) throw new ScoringError(question.question_id + ": percentage must be between 0 and 100");
   const metric = resolveBenchmark(config, question, industry);
+  const limit = numericInputLimit(question.response_type, metric.unit);
+  if (limit !== undefined && x > limit) throw new ScoringError(question.question_id + (limit === 100 ? ": percentage must be between 0 and 100" : ": weekly working hours must be between 0 and 168"));
   // Empty optional parameters have v1's Number("") = 0 semantics. Required
   // denominators are checked explicitly; malformed decimals never become defaults.
   const p1 = metric.param_1 === "" ? 0 : decimal(metric.param_1, "param_1");

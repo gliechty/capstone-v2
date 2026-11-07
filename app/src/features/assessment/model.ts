@@ -1,3 +1,4 @@
+import { numericInputLimit } from "../../domain/scoring/numeric-input-limit";
 import { z } from "zod";
 import { listedCountry } from "../../application/countries";
 import { calculatorMappings, calculatorTransferSchema, type CalculatorTransfer } from "../../application/calculator-mapping";
@@ -47,7 +48,8 @@ export function answerError(question: Question, raw = ""): string | undefined {
   if ("options" in question) return question.options.some((option) => option === value) ? undefined : "Choose one of the listed answers.";
   if (question.kind === "text") return undefined;
   if (!/^\d+(\.\d+)?$/.test(value) || !Number.isFinite(Number(value))) return "Enter a non-negative number, or skip if unknown.";
-  if (question.kind === "percent" && Number(value) > 100) return "Enter a percentage from 0 to 100.";
+  const limit = numericInputLimit(question.kind, question.unit);
+  if (limit !== undefined && Number(value) > limit) return limit === 100 ? "Enter a percentage from 0 to 100." : "Enter weekly working hours from 0 to 168.";
   return undefined;
 }
 export type Session = {
