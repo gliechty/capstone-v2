@@ -1,5 +1,5 @@
-## Monday targeted QA — authorized 2026-11-07
-Implement confirmed D1–D7 from MONDAY_TARGETED_QA: Lever labels, physical input limits, presentation precision/units, optional-site labels and missing-conversion explanation. Preserve scoring/config/full precision/Lever mechanics; timestamps, deferred notes and API MVP excluded. Focused verification and existing-process deployment authorized; canonical evidence EXECUTION_PLAN.md.
+## Monday targeted QA — LIVE 2026-11-07
+PR31/becc8aa deployed as mosaic-efa0448e0830696ed450; focused live checks pass and rollback retained. F62/F63 updated with broader milestones open. Delivered confirmed D1–D7 from MONDAY_TARGETED_QA: Lever labels, physical input limits, presentation precision/units, optional-site labels and missing-conversion explanation. Preserve scoring/config/full precision/Lever mechanics; timestamps, deferred notes and API MVP excluded. Focused verification and existing-process deployment authorized; canonical evidence EXECUTION_PLAN.md.
 
 ## Report generation timestamp — authorized 2026-11-07
 One current export-generation timestamp for PDF/HTML on every download; remove separate assessment date. Current owner chat supersedes conflicting checklist submission-date note. Preserve saved inputs/insights, validation, rollback and API MVP separation; no paid calls. Focused checks and existing-process deployment authorized. Evidence: EXECUTION_PLAN.md.
