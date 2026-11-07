@@ -156,3 +156,29 @@ test("both report endpoints require matching nonempty insights without rendering
  expect((await htmlPost(pdfRequest({session,recommendations},"https://elsewhere.example"))).status).toBe(403);
  expect((await htmlPost(pdfRequest({url:"file:///etc/passwd"}))).status).toBe(400);
 });
+
+// Both formats share fresh export metadata; saved assessment/insights stay unchanged.
+test("PDF and HTML repeat exports use one current generation timestamp without changing saved inputs", async () => {
+ const session=pdfSession(), body={session,recommendations:recommendationsFor(session)};
+ const before=JSON.stringify(body);
+ const render=vi.spyOn(pdfRenderer,"renderReportPdf").mockResolvedValue(Buffer.from("%PDF-test"));
+ vi.useFakeTimers({toFake:["Date"]});
+ try {
+  for(const stamp of ["2026-10-15T08:30:00.000Z","2026-12-15T14:45:00.000Z"]) {
+   vi.setSystemTime(new Date(stamp));
+   for(const endpoint of [pdfPost,htmlPost]) {
+    const response=await endpoint(pdfRequest(body));
+    expect(response.status).toBe(200);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    const html=endpoint===pdfPost?render.mock.calls.at(-1)![0]:await response.text();
+    expect(html.match(/Report generated:/g)).toHaveLength(1);
+    expect(html.match(/class="generated-date"/g)).toHaveLength(1);
+    expect(html).toContain("Report generated: "+stamp);
+    expect(html).not.toContain("Assessment date:");
+    expect(html).not.toContain("Submission date:");
+    if(stamp.startsWith("2026-12"))expect(html).not.toContain("2026-10-15T08:30:00.000Z");
+   }
+  }
+  expect(JSON.stringify(body)).toBe(before);
+ } finally {vi.useRealTimers();}
+});

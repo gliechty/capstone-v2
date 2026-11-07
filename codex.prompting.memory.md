@@ -1,3 +1,6 @@
+## Approved report timestamp checks — owner 2026-11-07
+Minimal shared PDF/HTML timestamp correction. Reuse m3-report-grounding checks; focused repeat-export regression uses existing session/content at mocked October/December clock times, asserts one fresh generation stamp, no assessment/submission stamp and unchanged inputs/no-store. Scoped lint/type checks, one exact-source release build, representative live PDF/HTML download and affected cover inspection with existing retained fictional data, no paid calls or full PDF-runtime requalification.
+
 ## Approved industry benchmark routing audit — owner 2026-11-07
 Local training-ID consolidation only, existing industry thresholds45/64/55/55/40. Owner authorizes targeted numeric/percent lookup audit across all five industries, training/turnover resolution assertions, configuration shared-ID validation and before/after score comparisons using existing Golden assessments. Reuse config-selection/scoring/trace checks and typecheck; add focused routing regression checks, no new demonstration fixtures, provider calls, deployment or broader M14 methodology changes. Preserve immutable Build Pack and historical Golden captures; report intentional score differences rather than rewriting historical expected results. Canonical evidence in EXECUTION_PLAN.md.
 
