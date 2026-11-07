@@ -1,4 +1,6 @@
 "use client";
+import { displayAnswer } from "../../application/display-value";
+
 
 import Link from "next/link";
 import { CountryPicker } from "./country-picker";
@@ -368,7 +370,7 @@ function Review() {
       {questions.map((question, i) => (!missingOnly || missing.some(item => item.id === question.id)) && <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>
         <p className="text-small">{progressLabel(session, question)}</p>
-        {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
+        {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {displayAnswer(session.answers[question.id]!, question.unit)}</p>}
       </li>)}
     </ul>
     {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}

@@ -1,3 +1,4 @@
+import { displayNumber, sourceLabel } from "./display-value";
 import { z } from "zod";
 import { calculateDraft, calculatorStorageSchema, type CalculatorDraft } from "./calculator";
 import type { Question } from "./assessment-catalog";
@@ -53,19 +54,21 @@ export function calculatorMappings(draft: CalculatorDraft, questions: readonly Q
   });
 }
 
-export const displayCalculatorNumber = (value: number | null) => value === null ? "Unknown" : new Intl.NumberFormat("en", { maximumSignificantDigits: 10 }).format(value);
+export const displayCalculatorNumber = (value: number | null, unit = "") => value === null ? "Unknown" : displayNumber(value, unit);
 export function unavailableMetricReason(kind: string, draft: CalculatorDraft): string {
  const { result } = calculateDraft(draft);
  if (!result) return "Calculate valid inputs first.";
  if (["renewable", "renewableElectricity"].includes(kind)) {
   const sources = result.traces.filter(t => kind === "renewableElectricity" ? t.kind === "electricity" : ["electricity", "gas", "fuel", "heat", "mileage"].includes(t.kind));
+  const unavailable = sources.filter(t => t.quantity !== null && t.energy === null);
+  if (unavailable.length) return "Energy conversion is unavailable for " + unavailable.map(sourceLabel).join(", ") + ". Renewable total-energy share cannot be calculated with these units; entering a renewable portion does not resolve the missing conversion.";
   const missing = sources.filter(t => t.renewable === null);
-  return missing.length ? "Renewable portion is unknown for " + missing.map(t => t.site + " / " + t.source).join(", ") + ". Enter the known portion or 0 if confirmed none." : "Complete energy coverage and known energy quantities/conversions with a positive total are needed; missing or zero totals do not define a percentage.";
+  return missing.length ? "Renewable portion is unknown for " + missing.map(sourceLabel).join(", ") + ". Enter the known portion or 0 if confirmed none." : "Complete energy coverage and known energy quantities/conversions with a positive total are needed; missing or zero totals do not define a percentage.";
  }
  if (["diversion", "hazardous"].includes(kind)) {
   const field = kind === "diversion" ? "diverted" : "hazardous";
   const missing = result.traces.filter(t => t.kind === "waste" && t[field] === null);
-  return missing.length ? (kind === "diversion" ? "Diverted" : "Hazardous") + " portion is unknown for " + missing.map(t => t.site + " / " + t.source).join(", ") + ". Enter the known portion or 0 if confirmed none." : "Complete waste coverage and known quantities with a positive waste total are needed for this percentage.";
+  return missing.length ? (kind === "diversion" ? "Diverted" : "Hazardous") + " portion is unknown for " + missing.map(sourceLabel).join(", ") + ". Enter the known portion or 0 if confirmed none." : "Complete waste coverage and known quantities with a positive waste total are needed for this percentage.";
  }
  const quantity = kind === "carbon" ? result.combinedEmissions : result.totals[kind === "withdrawal" ? "water" : kind as "energy" | "water" | "waste"];
  if (quantity?.value === null) return "Complete " + (kind === "carbon" ? "Scope 1 and Scope 2" : kind === "withdrawal" ? "water" : kind) + " coverage and missing source quantities or factors before transfer. No zero is substituted.";

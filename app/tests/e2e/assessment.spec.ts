@@ -751,6 +751,7 @@ test("levers use approved Golden ranking, combined scenario, keyboard and reset 
 });
 
 test("levers percentage entry preserves exact actual value and reset", async ({ page }) => {
+  await page.route("**/api/assessment-recommendations", route => route.request().method() === "POST" ? route.abort() : route.continue());
   const fixture = goldenCases[0]!;
   const session = { version: 3, configVersion: catalog.version, phase: "review", inputMethod: "manual", activeId: "U-001", progress: 4,
     profile: { companyName: fixture.profile.company_name, industry: fixture.profile.industry, subindustry: fixture.profile.subindustry,
@@ -761,21 +762,22 @@ test("levers percentage entry preserves exact actual value and reset", async ({ 
   await page.goto("/results");
   const section = page.getByRole("region", { name: "Explore your improvement levers" });
   const value = section.getByRole("textbox", { name: "U-026 scenario value" });
-  await expect(value).toHaveValue("12.3456789");
+  await expect(value).toHaveValue("12.35");
   const slider = section.getByRole("slider", { name: /What percentage of your energy/ });
   await slider.focus(); await page.keyboard.press("ArrowRight");
-  await expect(value).toHaveValue("13.3456789");
+  await expect(value).toHaveValue("13.35");
+  await expect(slider).toHaveValue("13.3456789");
   await value.fill("15.123456789");
-  await expect(slider).toHaveAttribute("aria-valuetext", "15.123456789 %");
+  await expect(slider).toHaveAttribute("aria-valuetext", "15.12 %");
   const card=section.locator(".lever-card").filter({has:page.getByRole("textbox",{name:"U-026 scenario value"})});
   const beforeMarker=await card.locator(".lever-track").getAttribute("style");
   await value.fill("5");
-  await expect(card.getByText("Lower than actual",{exact:false})).toBeVisible();
+  await expect(card.getByText("Lower than actual",{exact:false})).toHaveCount(0);
   expect((await card.locator(".lever-track").getAttribute("style"))?.split(";")[0]).toBe(beforeMarker?.split(";")[0]);
   await value.fill("101");
   await expect(section.getByRole("alert").first()).toContainText("0 to 100");
   await section.getByRole("button", { name: "Reset to actual answers" }).click();
-  await expect(value).toHaveValue("12.3456789");
+  await expect(value).toHaveValue("12.35");
   expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("capstone.assessment.ui-preview.v1")!).answers)).toEqual(session.answers);
 });
 

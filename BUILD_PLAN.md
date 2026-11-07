@@ -1,3 +1,6 @@
+## Monday targeted QA — authorized 2026-11-07
+Implement confirmed D1–D7 from MONDAY_TARGETED_QA: Lever labels, physical input limits, presentation precision/units, optional-site labels and missing-conversion explanation. Preserve scoring/config/full precision/Lever mechanics; timestamps, deferred notes and API MVP excluded. Focused verification and existing-process deployment authorized; canonical evidence EXECUTION_PLAN.md.
+
 ## Report generation timestamp — authorized 2026-11-07
 One current export-generation timestamp for PDF/HTML on every download; remove separate assessment date. Current owner chat supersedes conflicting checklist submission-date note. Preserve saved inputs/insights, validation, rollback and API MVP separation; no paid calls. Focused checks and existing-process deployment authorized. Evidence: EXECUTION_PLAN.md.
 

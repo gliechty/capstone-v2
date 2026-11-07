@@ -1,3 +1,4 @@
+import { displayAnswer } from "../../application/display-value";
 import type { ScoreSummary } from "../../application/score-summary";
 const display = (value: number | null) => value === null ? "Not scored" : value.toFixed(2);
 // Presentation only: every operand, score and contribution is emitted by the engine.
@@ -15,7 +16,7 @@ export function ScoreExplanation({ score }: { score: ScoreSummary }) {
           <details className="trace-question">
             <summary>{row.question_text}<span className="block text-small text-muted">{row.category} · {row.status === "scored" ? "Scored" : "Unanswered — not scored"}</span></summary>
             <div className="trace-body">
-              <p className="break-words">Your answer: {row.raw_answer.trim() ? row.raw_answer : "No answer"}</p>
+              <p className="break-words">Your answer: {row.raw_answer.trim() ? displayAnswer(row.raw_answer, row.response_type === "percent" ? "%" : row.status === "scored" ? row.benchmark?.record.unit : "") : "No answer"}</p>
               {row.status === "missing" ? <p className="mt-3">This question has no normalized score and contributes no earned or possible points.</p> : <>
                 <dl className="trace-values">
                   <div><dt>Normalized score</dt><dd>{display(row.normalized_score)} / 100</dd></div>

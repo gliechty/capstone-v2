@@ -1,4 +1,7 @@
 "use client";
+import { flushSync } from "react-dom";
+import { displayAnswer } from "../../application/display-value";
+
 import { useEffect, useMemo, useReducer, useState, type CSSProperties, type KeyboardEvent } from "react";
 import type { AssessmentCatalog } from "../../application/assessment-catalog";
 import { selectedQuestions } from "../../application/assessment-catalog";
@@ -81,6 +84,7 @@ function LeverExplorer({ data, input, catalog, recommendationView }: { data: Loa
   const { baseline, levers } = data;
   const initial = useMemo(() => Object.fromEntries(levers.map(l => [l.id, l.actual])), [levers]);
   const [values, setValues] = useState(initial);
+  const [editing, setEditing] = useState<string | null>(null);
   const [retry, retryScore] = useReducer((n: number) => n + 1, 0);
   const [view, publish] = useReducer((_v: { key: string; score?: ScoreSummary; error?: string }, v: { key: string; score?: ScoreSummary; error?: string }) => v, { key: "", score: baseline });
   const identity = JSON.stringify(values);
@@ -131,12 +135,12 @@ function LeverExplorer({ data, input, catalog, recommendationView }: { data: Loa
       const before = position(actualValue), after = position(Number.isFinite(sliderValue) ? sliderValue : actualValue);
       return <article className="lever-card" key={lever.id}>
         <h3 id={"lever-title-" + lever.id} className="lever-question">{lever.title}</h3>
-        <p className="lever-selected">Actual: {lever.actual} {lever.unit} → Scenario: <strong>{values[lever.id] || "Not entered"} {lever.unit}</strong>{after < before && <span className="lever-direction"> · Lower than actual</span>}</p>
+        <p className="lever-selected">Actual: {displayAnswer(lever.actual, lever.unit)} → Scenario: <strong>{values[lever.id] ? displayAnswer(values[lever.id]!, lever.unit) : "Not entered"}</strong></p>
         <div className="lever-track" style={{ "--actual": before + "%", "--change-start": Math.min(before, after) + "%", "--change-width": Math.abs(after - before) + "%" } as CSSProperties}>
         <div className="lever-track-base" aria-hidden="true"/><div className="lever-track-change" aria-hidden="true"/>
         <span className="lever-actual-marker" aria-hidden="true">Actual</span>
         <input type="range" className="lever-slider" aria-labelledby={"lever-title-" + lever.id}
-          aria-describedby={"lever-help-" + lever.id} aria-valuetext={values[lever.id] + (lever.unit ? " " + lever.unit : "")}
+          aria-describedby={"lever-help-" + lever.id} aria-valuetext={displayAnswer(values[lever.id]!, lever.unit)}
           min={isDiscrete ? 0 : lever.min} max={categorical ? lever.options.length : isDiscrete ? lever.options.length - 1 : lever.max}
           step="any" value={Number.isFinite(sliderValue) ? sliderValue : lever.min}
           onKeyDown={event => keyMove(event, lever)}
@@ -150,7 +154,7 @@ function LeverExplorer({ data, input, catalog, recommendationView }: { data: Loa
           <label className="lever-value-label">Scenario value ({lever.unit})
             <input className="field-control" inputMode="decimal" type="text" maxLength={2000}
               aria-label={lever.id + " scenario value"} aria-invalid={Boolean(errors[index])} aria-describedby={errors[index] ? "lever-error-" + lever.id : undefined}
-              value={values[lever.id]} onChange={event => update(lever.id, event.target.value)} />
+              value={editing === lever.id ? values[lever.id] : displayAnswer(values[lever.id]!, lever.unit, false)} onFocus={event => { flushSync(() => setEditing(lever.id)); event.currentTarget.select(); }} onBlur={() => setEditing(null)} onChange={event => update(lever.id, event.target.value)} />
           </label>}
         {errors[index] && <p role="alert" id={"lever-error-" + lever.id}>{errors[index]}</p>}
         <details className="lever-mapping"><summary>Keyboard help and technical details</summary>
@@ -158,7 +162,7 @@ function LeverExplorer({ data, input, catalog, recommendationView }: { data: Loa
         <p>{lever.category} · Potential weighted gain: {delta(lever.weightedGain)} points</p>
           <p>{lever.id}{lever.metricId && " · " + lever.metricId} · {lever.method}</p>
           {lever.benchmark && <p className="text-small">Benchmark: {lever.benchmark}</p>}
-          <p>Best-scoring answer: {lever.best} {lever.unit}. Independent raw overall gain: {delta(lever.rawGain)} points.</p>
+          <p>Best-scoring answer: {displayAnswer(lever.best, lever.unit)}. Independent raw overall gain: {delta(lever.rawGain)} points.</p>
           <ul>{lever.categoryGains.map(c => <li key={c.category}>{c.category}: {c.gain === null ? "Not scored" : delta(c.gain) + " points"}</li>)}</ul>
           {lever.note && <p className="mt-3">{lever.note}</p>}
         </details>

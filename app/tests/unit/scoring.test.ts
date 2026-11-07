@@ -57,12 +57,13 @@ test("normalization boundary/error cases never repair invalid config or round in
   const q = { ...config.QuestionBank[0]!, response_type: "numeric", metric_id: "test" };
   const metric = { ...config.MetricBenchmarks[0]!, metric_id: "test", unit: "percent", normalization_method: "exponential_decay", param_1: "10", param_2: "2", param_3: "", max_value: "100", benchmark_group_type: "global", active: "TRUE" };
   const normalized = (raw: string, patch = {}) => normalizeAnswer({ ...config, MetricBenchmarks: [{ ...metric, ...patch }] }, q, raw, profile.industry)!.value;
+  for (const method of ["identity_percent", "inverse_percentage", "linear_cap", "inverse_linear_cap"]) expect(() => normalized("500", {normalization_method:method})).toThrow(/percentage/);
   expect(normalized("10")).toBe(100);
   sameNumber(normalized("20"), Math.exp(-0.2) * 100);
-  expect(normalized("500", { normalization_method: "identity_percent" })).toBe(100);
-  expect(normalized("500", { normalization_method: "inverse_percentage" })).toBe(0);
-  expect(normalized("500", { normalization_method: "linear_cap" })).toBe(100);
-  expect(normalized("500", { normalization_method: "inverse_linear_cap" })).toBe(0);
+  expect(normalized("100", { normalization_method: "identity_percent" })).toBe(100);
+  expect(normalized("100", { normalization_method: "inverse_percentage" })).toBe(0);
+  expect(normalized("100", { normalization_method: "linear_cap" })).toBe(100);
+  expect(normalized("100", { normalization_method: "inverse_linear_cap" })).toBe(0);
   for (const [raw, expected] of [["1", 100], ["2", 75], ["3", 50], ["4", 0]]) expect(normalized(raw as string, { normalization_method: "banded", param_1: "1", param_2: "2", param_3: "3" })).toBe(expected);
   for (const patch of [{ normalization_method: "linear_cap", param_1: "0" }, { normalization_method: "gaussian", param_2: "0" }, { param_1: "NaN" }, { normalization_method: "invented" }]) expect(() => normalized("1", patch)).toThrow();
   expect(normalizeAnswer(config, config.QuestionBank[0]!, " YES ", profile.industry)!.value).toBe(100);
