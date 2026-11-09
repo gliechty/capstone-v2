@@ -970,3 +970,67 @@ test("PDF download preserves the saved assessment, HTML option and retryable fai
  await expect(button).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
+
+for(const width of [1440,390])test('Quick prototype preserves shared answers and Full flow at '+width+'px',async({page},testInfo)=>{
+ await page.setViewportSize({width,height:1000});
+ let paidRequests=0;
+ await page.route('**/api/assessment-recommendations',async route=>{paidRequests++;await route.abort();});
+ await start(page); // existing Full Setup -> Data Input -> Questions journey
+ const first=questions[0]!;
+ await page.getByRole('radio',{name:'Yes',exact:true}).check();
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.goto('/');await page.getByRole('link',{name:'Start quick assessment',exact:true}).click();
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Tell us about your business.');
+ await page.getByRole('button',{name:'Continue to Quick questions'}).click();
+ await expect(page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:/Data Input/})).toHaveCount(0);
+ await expect(page.getByText('Quick assessment',{exact:true})).toBeVisible();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).assessmentProfile?.questionIds.length)).toBe(20);
+ const quick=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));
+ expect(quick.assessmentProfile.questionIds).toHaveLength(20);
+ const numeric=quick.assessmentProfile.questionIds.indexOf('U-018');expect(numeric).toBeGreaterThanOrEqual(0);
+ await jump(page,numeric);
+ await page.locator('#answer').fill('4');
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:/^3\. Review$/}).click();
+ await expect(page.getByRole('button',{name:'All answers (20)',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'View Quick subset scores',exact:true}).click();
+ await page.getByRole('button',{name:'View Quick subset scores anyway',exact:true}).click();
+ await expect(page).toHaveURL(/\/quick-results$/);
+ await expect(page.getByRole('heading',{name:'Quick assessment results',exact:true})).toBeVisible();
+ await expect(page.getByText(/of 20 Quick questions answered/)).toBeVisible();
+ await expect(page.getByText(/not directly comparable with Full assessment scores/)).toBeVisible();
+ expect(paidRequests).toBe(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.screenshot({path:testInfo.outputPath('quick-results.png'),fullPage:true});
+ await page.reload();await expect(page.getByText(/of 20 Quick questions answered/)).toBeVisible();
+ await page.getByRole('button',{name:'Continue to Full assessment',exact:true}).click();
+ await expect(page).toHaveURL(/\/assessment$/);
+ await expect(page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:/Data Input/})).toBeVisible();
+ const full=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));
+ expect(full.assessmentProfile).toBeUndefined();expect(full.answers[first.id]).toBe('Yes');expect(full.answers['U-018']).toBe('4');
+ await page.getByRole('button',{name:/^4\. Review$/}).click();
+ await expect(page.getByRole('button',{name:'All answers ('+questions.length+')',exact:true})).toBeVisible();
+ expect(paidRequests).toBe(0);
+});
+
+test('Quick skipped answer and questionnaire progress survive refresh on mobile',async({page})=>{
+ await page.setViewportSize({width:390,height:1000});let paid=0;
+ await page.route('**/api/assessment-recommendations',async route=>{paid++;await route.abort();});
+ await page.goto('/assessment/quick');await fillSetup(page);
+ await page.getByRole('button',{name:'Continue to Quick questions'}).click();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).assessmentProfile?.questionIds.length)).toBe(20);
+ const initial=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));
+ await jump(page,initial.assessmentProfile.questionIds.indexOf('U-018'));
+ await page.locator('#answer').fill('4');await page.getByRole('button',{name:'Skip',exact:true}).click();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).skipped)).toContain('U-018');
+ const before=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));
+ expect(before.answers).not.toHaveProperty('U-018');
+ await page.reload();await expect(page.getByRole('navigation',{name:'Assessment stages'}).getByRole('button',{name:'2. Questions',exact:true})).toBeVisible();
+ const after=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!));
+ expect(after.assessmentProfile).toEqual(before.assessmentProfile);expect(after.phase).toBe('questions');expect(after.activeId).toBe(before.activeId);expect(after.progress).toBe(before.progress);expect(after.skipped).toEqual(before.skipped);expect(after.answers).toEqual(before.answers);
+ await page.getByRole('button',{name:'3. Review',exact:true}).click();
+ await expect(page.getByText('0 answered · 20 unanswered questions.',{exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'View Quick subset scores',exact:true}).click();await page.getByRole('button',{name:'View Quick subset scores anyway',exact:true}).click();
+ await expect(page.getByText('0 of 20 Quick questions answered · 20 unanswered in Quick.',{exact:true})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(paid).toBe(0);
+});

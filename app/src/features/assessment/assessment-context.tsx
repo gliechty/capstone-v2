@@ -20,7 +20,7 @@ export function catalogProfileErrors(catalog: AssessmentCatalog, profile: Profil
 type Envelope = { session: Session; ready: boolean; restoreWarning: string | null; saveWarning: string | null };
 type ProviderAction = Action | { type: "restore"; session: Session; warning: string | null } | { type: "save-status"; warning: string | null };
 const AssessmentContext = createContext<(Envelope & { dispatch: Dispatch<Action>; questions: readonly Question[]; catalog: AssessmentCatalog; startCalculator: (draft: CalculatorDraft, questionIds: string[], confirmed: boolean, saveCalculator: () => string | null) => string | null }) | null>(null);
-export function AssessmentProvider({ children, catalog }: { children: ReactNode; catalog: AssessmentCatalog }) {
+export function AssessmentProvider({ children, catalog, quick=false }: { children: ReactNode; catalog: AssessmentCatalog; quick?:boolean }) {
   const model = useMemo(() => createAssessmentModel(catalog.version, profile => selectedQuestions(catalog, profile), profile => catalogProfileErrors(catalog, profile)), [catalog]);
   const storage = useMemo(() => browserSession(model.sessionSchema), [model]);
   function reducer(state: Envelope, action: ProviderAction): Envelope {
@@ -31,8 +31,11 @@ export function AssessmentProvider({ children, catalog }: { children: ReactNode;
   const [state, dispatch] = useReducer(reducer, undefined, () => ({ session: model.initialSession(), ready: false, restoreWarning: null, saveWarning: null }));
   useEffect(() => {
     const restored = storage.load();
-    dispatch({ type: "restore", session: restored.state ?? model.initialSession(), warning: restored.warning });
-  }, [storage, model]);
+    let session=restored.state ?? model.initialSession();
+    if(quick && !session.assessmentProfile)session=model.assessmentReducer(session,{type:"quick-setup"});
+    if(!quick && session.assessmentProfile)session=model.assessmentReducer(session,{type:"continue-full"});
+    dispatch({ type: "restore", session, warning: restored.warning });
+  }, [storage, model, quick]);
   useEffect(() => {
     if (!state.ready) return;
     dispatch({ type: "save-status", warning: storage.save(state.session) });

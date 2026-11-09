@@ -1,3 +1,9 @@
+## M8 live-demo release authorized2026-11-09
+Owner accepts Quick for tonight’s live demo and authorizes scoped commit/push/merge/deploy plus documentation closeout. Preserve live image/config/rollback; exclude unmerged API/chatbot work. Reuse passing checks; exact merged-source production build and focused unpaid live smoke only. Evidence EXECUTION_PLAN.md.
+
+## M8.1 — Local Quick prototype ready for owner review2026-11-09
+Owner accepts the existing proportional20 selection and provisionally accepts its effort tags for this prototype. Checkpoint da243d4 preserves all experiments before implementation. Implement Setup→Quick questions (skip Data Input), separate labeled subset scores, shared-answer continuation to Full and backward-compatible absent metadata=Full. Scores-only Quick Results approved; Quick portraits/recommendations/Levers/reports deferred to explicit methodology decisions and accessed via Full. No deduplication, retagging, additional selection experiments, admin/custom modes, paid calls, merge or deployment. Evidence: EXECUTION_PLAN.md.
+
 ## M8.0 — Quick-assessment preprocessing experiment (2026-11-09)
 Owner authorizes isolated answer_effort annotation and five-Golden-SME questionnaire comparison only. Baseline2955a392; branch codex/m8-preprocessing. Original bank, production schema/selection/scoring/portraits and live app unchanged. Separate experimental schema/provenance; no Quick scores. M8.0 pending owner review; M8.1 unstarted. Canonical evidence: EXECUTION_PLAN.md.
 

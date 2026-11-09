@@ -1,3 +1,9 @@
+## Quick pre-release evidence gaps — owner2026-11-09
+Reuse passing Full entry/continuation, five-Golden selection and desktop/mobile Results evidence. Authorized gap-only execution: five saved Golden answer-set Quick results cases in quick-assessment.test.ts; one mobile Skip plus questionnaire refresh/progress/zero-answer Results case in assessment.spec.ts. No rebuild, broad rerun, paid calls or deployment.
+
+## Approved Quick prototype checks — owner2026-11-09
+Saved quick-assessment.test.ts covers five-Golden accepted selections/determinism, backward-compatible Full sessions, Quick→Full answer preservation, selected-only score denominators and no excluded-question input. Reuse assessment/config-selection/scoring/golden-matrix tests for Full regression. Two focused existing assessment.spec.ts browser journeys cover Full entry, Quick Setup bypass/count/simple number/partial scores/reload/Full continuation at1440 and390; block/count recommendation requests. Scoped type/lint/local build authorized. No paid calls or deployment.
+
 ## Approved M8.0 further comparison — owner2026-11-09
 Offline twenty.mjs: verify unchanged Full/eligible IDs/order, exactly20 unique eligible questions per Golden SME, minimum2 per category where available and supply bounds; reuse original multiplier/selection functions. No model calls, answers, scoring, app/build or deployment checks.
 
