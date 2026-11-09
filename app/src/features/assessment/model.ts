@@ -1,3 +1,4 @@
+import { suggestedRegion } from "../../application/country-regions";
 import { numericInputLimit } from "../../domain/scoring/numeric-input-limit";
 import { z } from "zod";
 import { listedCountry } from "../../application/countries";
@@ -142,7 +143,7 @@ export function createAssessmentModel(version: string, select: (profile: Profile
         const questionIds = [...new Set([...(sameDraft ? state.calculatorTransfer!.questionIds : []), ...mappings.map(row => row.questionId)])];
         return { ...state, answers, skipped: state.skipped.filter(id => !questionIds.includes(id)), calculatorTransfer: { draft: action.draft, questionIds } };
       }
-      case "profile": return { ...(action.field === "companyName" || action.field === "industry" || action.field === "location" || action.field === "country" ? invalidateTransfer(state) : state), profile: { ...state.profile, [action.field]: action.value }, phase: "setup", ...(state.assessmentProfile?{assessmentProfile:{...state.assessmentProfile,questionIds:[]},progress:0}:{}) };
+      case "profile": return { ...(action.field === "companyName" || action.field === "industry" || action.field === "location" || action.field === "country" ? invalidateTransfer(state) : state), profile: { ...state.profile, [action.field]: action.value, ...(action.field === "country" && action.value !== state.profile.country ? { location: suggestedRegion(action.value) ?? "" } : {}) }, phase: "setup", ...(state.assessmentProfile?{assessmentProfile:{...state.assessmentProfile,questionIds:[]},progress:0}:{}) };
       case "edit-setup": return { ...state, phase: "setup" };
       case "method": return state.assessmentProfile || Object.keys(validateProfile(state.profile)).length ? state : { ...state, phase: "method", progress: Math.max(state.progress ?? 0, 1) };
       case "start": {

@@ -24,7 +24,7 @@ async function fillSetup(page: Page, overrides: Record<string, string> = {}) {
   const values = { companyName: "Example workshop", country: "China", ...profile, targetBuyer: "Enterprise", businessGoal: "Prepare for procurement questionnaires", ...overrides };
   for (const [name, value] of Object.entries(values)) {
     const field = page.locator('[name="' + name + '"]');
-    if (name === "targetMarket") { for (const market of value.split(";")) await page.getByRole("checkbox", { name: market, exact: true }).check(); }
+    if (name === "targetMarket") { await page.getByRole("button", { name: "Choose target markets", exact: true }).click(); for (const market of value.split(";")) await page.getByRole("checkbox", { name: market, exact: true }).check(); await page.keyboard.press("Escape"); }
     else if (name === "country") { await field.fill(value); await page.getByRole("option",{name:value,exact:true}).click(); }
     else if (name !== "companyName") await field.selectOption(value);
     else await field.fill(value);
@@ -382,26 +382,31 @@ test("50-question navigator fixture fits every position without collapsed scroll
 });
 
 for (const width of [1440, 390]) {
-  test("controlled setup and two ordered market chips at " + width, async ({ page }, testInfo) => {
+  test("controlled setup and compact ordered markets at " + width, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/assessment");
     await expect(page.getByRole("textbox")).toHaveCount(3);
     await expect(page.getByRole("textbox", { name: "Additional Context / Requirements (optional)", exact: true })).toBeVisible();
     await expect(page.getByRole("combobox")).toHaveCount(6);
     await fillSetup(page);
+    await page.getByRole("button", { name: "Choose target markets", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("checkbox", { name: "North America", exact: true })).toBeFocused();
     await page.getByRole("checkbox", { name: "UK", exact: true }).focus();
     await page.keyboard.press("Space");
-    await expect(page.getByText("Primary: EU", { exact: true })).toBeVisible();
-    await expect(page.getByText("Secondary: UK", { exact: true })).toBeVisible();
+    await expect(page.getByRole("status").filter({hasText:"Primary: EU"})).toBeVisible();
+    await expect(page.getByRole("status").filter({hasText:"Secondary: UK"})).toBeVisible();
     await expect(page.getByRole("checkbox", { name: "APAC", exact: true })).toBeDisabled();
     await page.reload();
     await expect(page.getByRole("combobox", { name: /^Company size/ })).toHaveValue("251 - 500");
     await expect(page.getByRole("combobox", { name: /^Target buyer/ })).toHaveValue("Enterprise");
-    await expect(page.getByText("Secondary: UK", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Remove EU", exact: true }).click();
-    await expect(page.getByText("Primary: UK", { exact: true })).toBeVisible();
+    await expect(page.getByRole("status").filter({hasText:"Secondary: UK"})).toBeVisible();
+    await page.getByRole("button", { name: "Choose target markets", exact: true }).click();
+    await page.getByRole("checkbox", { name: "EU", exact: true }).uncheck();
+    await expect(page.getByRole("status").filter({hasText:"Primary: UK"})).toBeVisible();
     await page.getByRole("checkbox", { name: "APAC", exact: true }).check();
-    await expect(page.getByText("Secondary: APAC", { exact: true })).toBeVisible();
+    await expect(page.getByRole("status").filter({hasText:"Secondary: APAC"})).toBeVisible();
     await expect(page.getByRole("checkbox", { name: "EU", exact: true })).toBeDisabled();
     if (width > 1024) {
       const buyer = await page.locator("#profile-targetBuyer").boundingBox();
@@ -411,10 +416,27 @@ for (const width of [1440, 390]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.screenshot({ path: testInfo.outputPath("controlled-setup.png"), fullPage: true });
-    await page.getByRole("button", { name: "Remove UK", exact: true }).click();
-    await page.getByRole("button", { name: "Remove APAC", exact: true }).click();
+    await page.keyboard.press("Escape");
+    const country=page.locator('[name="country"]'), region=page.locator('[name="location"]');
+    const storedMarkets=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).profile.targetMarket);
+    await country.fill('Australia');await country.press('ArrowDown');await country.press('Enter');
+    await expect(region).toHaveValue('Oceania');
+    await region.selectOption('APAC');await page.reload();await expect(region).toHaveValue('APAC');
+    await expect(country).toHaveValue('Australia');
+    await country.fill('United Kingdom');await page.getByRole('option',{name:'United Kingdom',exact:true}).click();await expect(region).toHaveValue('UK');
+    await country.fill('France');await page.getByRole('option',{name:'France',exact:true}).click();await expect(region).toHaveValue('');
+    await expect(page.getByText('No suggested region for this country. Please select your region.',{exact:true})).toBeVisible();
+    await region.selectOption('EU');await page.reload();await expect(region).toHaveValue('EU');
+    await country.fill('');await expect(region).toHaveValue('');await country.press('Escape');await region.selectOption('APAC');
+    expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('capstone.assessment.ui-preview.v1')!).profile.targetMarket)).toBe(storedMarkets);
+    await page.getByRole('button',{name:'Choose target markets',exact:true}).click();
+    await page.getByRole("checkbox", { name: "UK", exact: true }).uncheck();
+    await page.getByRole("checkbox", { name: "APAC", exact: true }).uncheck();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", { name: "Choose target markets", exact: true })).toBeFocused();
+    await expect(page.getByRole("group", {name:"Target market choices",exact:true})).toHaveCount(0);
     await page.getByRole("button", { name: "Continue to input method" }).click();
-    await expect(page.getByRole("checkbox", { name: "North America", exact: true })).toBeFocused();
+    await expect(page.getByRole("button", { name: "Choose target markets", exact: true })).toBeFocused();
     await expect(page.getByRole("group", { name: /^Target markets/ })).toHaveAttribute("aria-invalid", "true");
   });
 }
