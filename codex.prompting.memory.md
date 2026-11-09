@@ -1,3 +1,6 @@
+## Authorized USD-only revenue verification2026-11-10
+Extend existing calculator browser journey with absent currency dropdown, saved7million CNY preserved across refresh and typing a replacement, blank USD entry, explicit replacement resets currencyUSD/scaleunits and retains existing calculator transfer flow. Reuse25 calculator unit cases incl CNY-without-FX/therm example; scoped lint/type and necessary exact-source production build, focused same live journey. No paid calls/new fixtures/API work.
+
 ## Accepted M4.5 release verification — owner2026-11-09
 Reuse passing25 calculator cases (including supplied Beijing therm/zero-renewable example), scoped lint/type/domain and local save-recovery/period/transfer journey. Necessary production build from exact merged source, focused existing calculator.spec.ts Data Input journey live (isolated browser storage, no recommendations), health and rollback identity check. No paid calls, unrelated checks, API/chatbot or dependency changes.
 

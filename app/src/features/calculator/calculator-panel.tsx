@@ -68,7 +68,7 @@ function GeographyPicker({ value, onChange, path }: { value: string; onChange: (
     {value && <button type="button" className="text-link text-small" onClick={() => select("")}>Clear geography selection</button>}
   </div>;
 }
-const fieldNames: Record<string, string> = { site: "Facility/location", source: "Source name", quantity: "Quantity", unit: "Unit", factorId: "Reference factor", geography: "Electricity geography", renewable: "Renewable portion", diverted: "Diverted portion", hazardous: "Hazardous portion", kind: "Activity", evidence: "Evidence reference", periodStart: "Period start", periodEnd: "Period end", referenceAcknowledged: "Historical-factor acknowledgement", "revenue.amount": "Same-period revenue", "revenue.currency": "Revenue currency", "revenue.scale": "Revenue scale" };
+const fieldNames: Record<string, string> = { site: "Facility/location", source: "Source name", quantity: "Quantity", unit: "Unit", factorId: "Reference factor", geography: "Electricity geography", renewable: "Renewable portion", diverted: "Diverted portion", hazardous: "Hazardous portion", kind: "Activity", evidence: "Evidence reference", periodStart: "Period start", periodEnd: "Period end", referenceAcknowledged: "Historical-factor acknowledgement", "revenue.amount": "Annual revenue (USD)", "revenue.currency": "Revenue currency", "revenue.scale": "Revenue scale" };
 function issueLabel(path: string, draft: CalculatorDraft) {
   const parts = path.split(".");
   if (parts[0] === "activities") { const index = Number(parts[1]); const source = draft.activities[index]; return "Source " + (index + 1) + (source?.source ? " (“" + source.source + "”)" : "") + ": " + (fieldNames[parts[2]!] ?? "source entry"); }
@@ -78,6 +78,7 @@ function issueLabel(path: string, draft: CalculatorDraft) {
 export function CalculatorPanel() {
   const { dispatch: assessmentDispatch, session, questions } = useAssessment();
   const eligible = calculatorEligible(session.profile.country);
+  const [replacementUsd, setReplacementUsd] = useState("");
   const [collapsed, setCollapsed] = useState<string[]>([]);
   const [state, dispatch] = useReducer(reducer, { ...initialCalculatorSession(), ready: false, warning: null, showErrors: false });
   const firstSave = useRef(true);
@@ -146,9 +147,12 @@ export function CalculatorPanel() {
         <div className="grid gap-4 md:grid-cols-2">
           <Field path="periodStart" label="Period start"><input className="field-control" type="date" value={draft.periodStart} onChange={e => edit({ ...draft, periodStart: e.target.value })} /></Field>
           <Field path="periodEnd" label="Period end"><input className="field-control" type="date" value={draft.periodEnd} onChange={e => edit({ ...draft, periodEnd: e.target.value })} /></Field>
-          <Field path="revenue.amount" label="Same-period revenue" hint="Optional. Zero or unknown revenue leaves intensity unavailable; absolute quantities remain available."><input className="field-control" inputMode="decimal" placeholder="Optional revenue amount" maxLength={80} value={draft.revenue.amount} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, amount: e.target.value } })} /></Field>
-          <Field path="revenue.currency" label="Revenue currency"><select className="field-control" value={draft.revenue.currency} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, currency: e.target.value as CalculatorDraft["revenue"]["currency"] } })}><option value="USD">USD</option><option value="CNY">CNY</option><option value="other">Other</option></select></Field>
-          <Field path="revenue.scale" label="Revenue scale"><select className="field-control" value={draft.revenue.scale} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, scale: e.target.value as "units" | "millions" } })}><option value="units">Currency units</option><option value="millions">Millions of currency units</option></select></Field>
+          <div className="md:col-span-2">
+            <p className="text-small text-muted">Enter revenue in USD for the same annual reporting period. If your accounts use another currency, convert the amount using a documented rate appropriate to that reporting period before entering it here. This calculator does not convert currencies. Revenue is optional; without USD revenue, absolute quantities and available percentages can still be used.</p>
+            {draft.revenue.currency !== "USD" && <p className="mt-3 text-small" role="status">Saved revenue retained: {draft.revenue.amount || "Not entered"} {draft.revenue.scale === "millions" ? "million " : ""}{draft.revenue.currency === "CNY" ? "CNY" : "(other currency)"}. It has not been converted or relabeled as USD. Enter a converted USD amount below and explicitly replace it to enable USD intensities.</p>}
+          </div>
+          <Field path="revenue.amount" label="Annual revenue (USD)" hint="Optional. Use revenue for the same period and business boundary. Zero or unknown revenue leaves intensity unavailable; absolute quantities remain available."><input className="field-control" inputMode="decimal" placeholder="Optional USD amount" maxLength={80} value={draft.revenue.currency === "USD" ? draft.revenue.amount : replacementUsd} onChange={e => draft.revenue.currency === "USD" ? edit({ ...draft, revenue: { ...draft.revenue, amount: e.target.value } }) : setReplacementUsd(e.target.value)} /></Field>
+          {draft.revenue.currency === "USD" ? <Field path="revenue.scale" label="Revenue scale"><select className="field-control" value={draft.revenue.scale} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, scale: e.target.value as "units" | "millions" } })}><option value="units">USD</option><option value="millions">Millions of USD</option></select></Field> : <div><p className="text-small text-muted">Enter the full USD amount, not millions. Your saved non-USD entry stays unchanged until you replace it.</p><button type="button" className="button-secondary mt-3" disabled={!replacementUsd.trim()} onClick={() => { edit({ ...draft, revenue: { amount: replacementUsd, currency: "USD", scale: "units" } }); setReplacementUsd(""); }}>Replace saved revenue with this USD amount</button></div>}
         </div>
         {draft.activities.map((a,index) => <fieldset key={a.id} className={"mt-6 rounded-lg border border-line border-l-4 p-4 md:p-6 " + (a.kind === "water" ? "border-l-people" : a.kind === "waste" ? "border-l-resources" : "border-l-accent")}>
           <legend className="field-label">Source {index + 1}</legend>
