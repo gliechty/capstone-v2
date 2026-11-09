@@ -1,3 +1,6 @@
+## M4.5 accepted and deployed2026-11-10
+Annual-period inline feedback, documented therm→kWh conversion, successful-save warning recovery and USD-only revenue entry are live. Saved CNY amounts/currency/scale retained until explicit USD replacement; no FX rate assumed. PR41/d91f0b3 and PR42/61ff575; release mosaic-c45c1e5eb7468d276bd6. Focused25 unit/static/local checks, production build and live calculator smoke passed. Emissions factors/scoring unchanged; no paid calls/API work. Prior live/configuration retained with exact rollback in EXECUTION_PLAN.md. M4.5 complete; deferred methodology and internal notes unchanged.
+
 ## M4.5 owner follow-up: therm units and save-warning recovery2026-11-09
 Local authorized extension adds NIST-documented EC therm→kWh conversion and clears stale warnings after successful saves. Existing emissions factors, scoring formulas and prior date-validation changes preserved. The previously missing energy/U-026 outputs now resolve for the supplied Beijing example; blank renewable inputs remain unknown. No deployment, paid calls or API/chatbot changes. Focused evidence and local review status in EXECUTION_PLAN.md.
 
