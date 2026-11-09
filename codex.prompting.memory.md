@@ -1,3 +1,6 @@
+## Approved Quick live-demo release checks — owner2026-11-09
+Reuse passing93 unit/3 browser/type/lint/local-build evidence. Authorized exact merged-source production build, reused-runtime package/Chromium compatibility verification, and saved1440px Quick prototype browser journey against live URL (direct Full entry, Quick count/results/reload, Continue Full retaining answers). Recommendation requests blocked/count0; no paid calls, unrelated checks or API/chatbot work. Build uses bounded executable tmpfs after first noexec mount failure, then immutable verified current runtime; existing Compose/Caddy promotion and preserved rollback checkpoint. Evidence EXECUTION_PLAN.md.
+
 ## Quick pre-release evidence gaps — owner2026-11-09
 Reuse passing Full entry/continuation, five-Golden selection and desktop/mobile Results evidence. Authorized gap-only execution: five saved Golden answer-set Quick results cases in quick-assessment.test.ts; one mobile Skip plus questionnaire refresh/progress/zero-answer Results case in assessment.spec.ts. No rebuild, broad rerun, paid calls or deployment.
 
