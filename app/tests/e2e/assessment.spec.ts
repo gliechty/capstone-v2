@@ -388,7 +388,28 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole("textbox")).toHaveCount(3);
     await expect(page.getByRole("textbox", { name: "Additional Context / Requirements (optional)", exact: true })).toBeVisible();
     await expect(page.getByRole("combobox")).toHaveCount(6);
+    async function alignedControls() {
+      if(width<768)return;
+      for(const [left,right] of [['companyName','industry'],['subindustry','companySize'],['country','location'],['targetMarket','targetBuyer'],['businessGoal','notes']]) {
+        const a=await page.locator('[name="'+left+'"]').boundingBox(),b=await page.locator('[name="'+right+'"]').boundingBox();
+        expect(Math.abs(a!.y-b!.y)).toBeLessThan(1);
+      }
+    }
+    await alignedControls();
+    const help=page.getByRole('button',{name:'Country information',exact:true});
+    await help.focus();await help.press('Enter');
+    await expect(page.getByText(/The current calculator is enabled for China only/)).toBeVisible();
+    await help.press('Escape');await expect(help).toBeFocused();await expect(help).toHaveAttribute('aria-expanded','false');
+    await help.click();await page.locator('[name="companyName"]').click();await expect(help).toHaveAttribute('aria-expanded','false');
+    await expect(page.locator('[name="companyName"]')).toHaveAttribute('placeholder','Enter company name');
+    expect(await page.locator('[name="companyName"]').evaluate(el=>getComputedStyle(el,'::placeholder').color)).toBe('rgba(0, 0, 0, 0)');
+    await page.getByRole('button',{name:'Continue to input method',exact:true}).click();
+    await expect(page.locator('#profile-companyName-error')).toBeVisible();
+    await expect(page.getByText('Company name',{exact:false}).first()).toBeVisible();
     await fillSetup(page);
+    await alignedControls();
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+    await page.screenshot({path:testInfo.outputPath('aligned-setup.png'),fullPage:true});
     await page.getByRole("button", { name: "Choose target markets", exact: true }).focus();
     await page.keyboard.press("Enter");
     await page.keyboard.press("Tab");
@@ -437,7 +458,8 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole("group", {name:"Target market choices",exact:true})).toHaveCount(0);
     await page.getByRole("button", { name: "Continue to input method" }).click();
     await expect(page.getByRole("button", { name: "Choose target markets", exact: true })).toBeFocused();
-    await expect(page.getByRole("group", { name: /^Target markets/ })).toHaveAttribute("aria-invalid", "true");
+    await expect(page.getByRole("group", { name: /^Target markets/ })).toContainText("Please enter target market.");
+    await expect(page.locator("#profile-targetMarket-error")).toBeVisible();
   });
 }
 test("old count/free-text sessions are rejected visibly", async ({ page }) => {
