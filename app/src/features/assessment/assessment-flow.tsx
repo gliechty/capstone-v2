@@ -5,6 +5,7 @@ import { displayAnswer } from "../../application/display-value";
 
 
 import Link from "next/link";
+import { FieldHelp } from "./field-help";
 import { MarketPicker } from "./market-picker";
 import { CountryPicker } from "./country-picker";
 import Image from "next/image";
@@ -30,6 +31,19 @@ function StageHeading({ children }: { children: string }) {
   useEffect(() => { ref.current?.focus(); }, []);
   return <h1 ref={ref} tabIndex={-1} className="stage-heading text-heading">{children}</h1>;
 }
+
+const setupPrompts: Partial<Record<ProfileKey, string>> = {
+  companyName: "Enter company name", industry: "Choose an industry", subindustry: "Add a specific activity",
+  companySize: "Choose an employee band", location: "Choose a region", targetBuyer: "Choose a buyer type",
+  businessGoal: "Choose a business goal", notes: "Add business context or buyer requirements",
+};
+const setupHelp: Partial<Record<ProfileKey, string>> = {
+  country: "Select a country from the search results. The current calculator is enabled for China only and uses the China reference workbook. Other countries can use manual data entry.",
+  location: "This is your business's home region, not its target sales markets. Country selection may suggest a region; you can change it.",
+  targetMarket: "Choose up to two regions. Your first choice is primary; your second is secondary. Uncheck a selected market to remove it.",
+  businessGoal: "Examples: attract new investors or prepare for procurement screening.",
+  notes: "Add relevant business context or buyer requirements, up to 1,000 characters.",
+};
 
 function Setup() {
   const { session, dispatch, catalog } = useAssessment();
@@ -69,38 +83,43 @@ function Setup() {
       <p className="mt-4 text-muted">Enter your business context. Fields marked required must be completed; subindustry and additional context are optional.</p>
       <form className="mt-8" noValidate onSubmit={submit}><fieldset disabled={selecting}>
         {submitted && Object.keys(errors).length > 0 && <p role="alert" className="form-error mb-6">Please check the highlighted fields before continuing.</p>}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="context-grid">
           {profileFields.map((field) => {
             const error = submitted ? errors[field.key] : undefined;
             const id = "profile-" + field.key;
-            if (field.key === "targetMarket") return <fieldset key={field.key} className="market-field" aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")} aria-invalid={Boolean(error)}>
-              <legend className="field-label">Target markets <span className="text-small font-normal text-muted">(required)</span></legend>
-              <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
+            const help = setupHelp[field.key];
+            const describedBy = [help ? id + "-hint" : "", error ? id + "-error" : ""].filter(Boolean).join(" ");
+            if (field.key === "targetMarket") return <div key={field.key} role="group" className="context-field market-field" aria-labelledby={id + "-label"} aria-describedby={describedBy}>
+              <div className="context-field-heading"><span id={id + "-label"} className="field-label">Target markets <span className="text-small font-normal text-muted">(required)</span></span>
+                <FieldHelp id={id + "-hint"} label="Target markets">{help!}</FieldHelp></div>
               <MarketPicker value={session.profile.targetMarket} options={catalog.setupOptions.targetMarket}
-                onChange={value => dispatch({ type: "profile", field: "targetMarket", value })}
-                describedBy={id + "-hint" + (error ? " " + id + "-error" : "")} />
-              {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
-            </fieldset>;
-            return <div key={field.key}>
-              <label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
-              <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              {field.key === "country" ? <CountryPicker onPendingChange={setCountrySearchPending} id={id} value={session.profile.country ?? ""} onChange={value => dispatch({ type: "profile", field: "country", value })} describedBy={id + "-hint" + (error ? " " + id + "-error" : "")} invalid={Boolean(error)} /> : field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4}
+                onChange={value => dispatch({ type: "profile", field: "targetMarket", value })} describedBy={describedBy} />
+              <div className="context-field-feedback">{error && <p id={id + "-error"} className="form-error">{error}</p>}</div>
+            </div>;
+            return <div key={field.key} className="context-field">
+              <div className="context-field-heading"><label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
+                {help && <FieldHelp id={id + "-hint"} label={field.label}>{help}</FieldHelp>}</div>
+              <div>
+              {field.key === "country" ? <CountryPicker onPendingChange={setCountrySearchPending} id={id} value={session.profile.country ?? ""} onChange={value => dispatch({ type: "profile", field: "country", value })} describedBy={describedBy} invalid={Boolean(error)} /> : field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4} placeholder={setupPrompts[field.key]}
                 maxLength={NOTES_MAX_LENGTH} value={session.profile.notes} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: "notes", value: event.target.value })} />
                 : field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
                 required value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: field.key, value: event.target.value })}>
-                <option value="">Choose one</option>
+                <option value="">{setupPrompts[field.key] ?? "Choose one"}</option>
                 {catalog.setupOptions[field.key].map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
-              </select> : <input id={id} name={field.key} className="field-control" type="text"
+              </select> : <input id={id} name={field.key} className="field-control" type="text" placeholder={setupPrompts[field.key]}
                 autoComplete={field.key === "companyName" ? "organization" : "off"} required={field.required} maxLength={200}
                 value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: field.key as ProfileKey, value: event.target.value })} />}
+              </div>
+              <div className="context-field-feedback">
               {field.key === "location" && session.profile.country && <p className="mt-2 text-small text-muted" role="status">{suggestedRegion(session.profile.country) ? "Suggested region: " + suggestedRegion(session.profile.country) + ". You can change it." : "No suggested region for this country. Please select your region."}</p>}
               {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
+              </div>
             </div>;
           })}
         </div>
