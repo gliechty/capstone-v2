@@ -1,3 +1,9 @@
+## M4.5 owner follow-up: therm units and save-warning recovery2026-11-09
+Local authorized extension adds NIST-documented EC therm→kWh conversion and clears stale warnings after successful saves. Existing emissions factors, scoring formulas and prior date-validation changes preserved. The previously missing energy/U-026 outputs now resolve for the supplied Beijing example; blank renewable inputs remain unknown. No deployment, paid calls or API/chatbot changes. Focused evidence and local review status in EXECUTION_PLAN.md.
+
+## M4.5 calculator period feedback — LOCAL REVIEW2026-11-09
+UI-only red date feedback and annual guidance implemented using existing eligibility; reversed/too-long/partial cases and valid correction covered.25 existing unit checks, scoped lint/type and focused calculator browser journey pass. No methodology/factor/transfer/session changes; deferred calculator notes unchanged. Isolated codex/m4-5-period-feedback from013a214; uncommitted, no deployment/paid calls. Pending owner review; evidence EXECUTION_PLAN.md.
+
 ## M13.6 field alignment/helper cleanup — LIVE2026-11-09
 Paired desktop fields align; mobile stacks cleanly. Disposable prompts use placeholders/empty select prompts, enduring guidance uses accessible info controls, persistent labels/errors retained. PR39 merged d47c951; deployed mosaic-f072e821be4cc2b04f39. Scoped lint/type, four local and three live browser cases passed; production build/health passed. Behavior/configuration and Quick/Full answers preserved; no paid calls or API/chatbot work. Prior context image/configuration retained; exact rollback in EXECUTION_PLAN.md. F62 remains open for deferred warning and broader polish. Documentation-only closeout, no rebuild/redeployment.
 

@@ -1,3 +1,12 @@
+## Accepted M4.5 release verification — owner2026-11-09
+Reuse passing25 calculator cases (including supplied Beijing therm/zero-renewable example), scoped lint/type/domain and local save-recovery/period/transfer journey. Necessary production build from exact merged source, focused existing calculator.spec.ts Data Input journey live (isolated browser storage, no recommendations), health and rollback identity check. No paid calls, unrelated checks, API/chatbot or dependency changes.
+
+## Authorized therm/save-warning focused checks — owner2026-11-09
+Use supplied Beijing example: electricity20000kWh/renewable4000, gas3000therm/renewable0 (also300 and blank), LPG2000litres/renewable0, water300000m3, waste30000kg/diverted2400/hazardous1000, USD revenue1000000. Assert energy/U-026/intensity mapping, original emissions unchanged and blank remains unknown. Replace obsolete missing-therm expectation, preserve other reference checks. Extend existing offline browser journey with failed-save then successful-save warning recovery; no new fixture project, paid calls or deployment.
+
+## M4.5 period-feedback verification — owner2026-11-09
+Checklist row27 expressly requests reversed/too-long/partial feedback, valid annual recalculation/transfer recovery and independent unknown renewable handling. Extend existing calculator.spec.ts review/correction fixture with these assertions; reuse calculator.test.ts existing mappings/precision/partial-period checks. Scoped lint/type; local browser only with offline flag, no paid calls or new fixtures.
+
 ## Approved M13.6 alignment/helper checks — owner2026-11-09
 Reuse controlled setup desktop/mobile cases and Quick→Full cases. Add only changed-presentation checks: paired input top alignment before/after values, persistent labels/errors, empty-state placeholder/focus behavior, help Enter/Escape/touch/click/blur and accessibility/no overflow. Existing selection/removal/order/refresh/country behavior reused. Scoped lint/type, necessary exact-source production build and focused live cases; no paid calls/full audit/deferred work. No scoring changes; reuse prior47 unit evidence.
 
