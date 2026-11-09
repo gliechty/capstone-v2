@@ -19,7 +19,7 @@ describe("accepted M4.1 numerical references through calculator boundary",()=>{
   same(r.totals.scope1.value,"electricity-and-stationary-gas","scope1"); same(r.combinedEmissions.value,"electricity-and-stationary-gas","scope1_plus_2"); same(r.intensities.carbon,"electricity-and-stationary-gas","carbon_intensity"); same(r.intensities.energy,"electricity-and-stationary-gas","energy_intensity");
  });
  it("uses fuel emission factors, not energy factors",()=>{const r=result(draft(source("fuel","100","legacy-C7"),source("fuel","100","legacy-C8",{id:"petrol",source:"petrol"})));same(r.totals.scope1.value,"vehicle-fuel-factor-correction","vehicle_scope1_subtotal");same(r.totals.energy.value,"vehicle-fuel-factor-correction","fuel_energy");});
- it("keeps absent therm energy unknown",()=>{const r=result(draft(source("gas","100","legacy-C14",{unit:"m3"}),source("gas","10","legacy-C15",{id:"boiler2",source:"boiler2",unit:"therm"})));same(r.totals.scope1.value,"gas-unit-specific-factors","gas_scope1_subtotal");same(r.totals.energy.knownSubtotal,"gas-unit-specific-factors","known_energy_subtotal");same(r.totals.energy.value,"gas-unit-specific-factors","total_energy");});
+ it("adds documented therm energy to the unchanged legacy gas reference",()=>{const r=result(draft(source("gas","100","legacy-C14",{unit:"m3"}),source("gas","10","legacy-C15",{id:"boiler2",source:"boiler2",unit:"therm"})));same(r.totals.scope1.value,"gas-unit-specific-factors","gas_scope1_subtotal");const total=expected("gas-unit-specific-factors","known_energy_subtotal")!+10*105506000/3600000; expect(r.totals.energy.knownSubtotal).toBeCloseTo(total,10); expect(r.totals.energy.value).toBeCloseTo(total,10);});
  it.each([
   ["mileage","1000","legacy-C57","vehicle-distance-km","vehicle_scope1"],
   ["refrigerant","2","legacy-C45","refrigerant-reference","refrigerant_scope1"],
@@ -155,10 +155,30 @@ it("M4.5 transfers renewable total energy to U-026 using the existing mixed-ener
  expect(calculatorMappings(d,mappedQuestions).find(r=>r.questionId==="U-026")?.raw).toBeNull();
 });
 
-it("explains absent therm conversion without asking for an already entered renewable zero",()=>{
- const d=draft(source("gas","5000","legacy-C15",{site:"",source:"gas therm",unit:"therm",renewable:"0"}));
- const before=JSON.stringify(d);
- expect(unavailableMetricReason("renewable",d)).toContain("Energy conversion is unavailable for gas therm");
- expect(unavailableMetricReason("renewable",d)).not.toContain("Enter the known portion");
- expect(result(d).renewableEnergyShare).toBeNull();expect(JSON.stringify(d)).toBe(before);
+it("converts the owner Beijing therm example without changing emissions or unknown handling",()=>{
+ const d=draft(source("electricity","20000","legacy-C20",{renewable:"4000"}),source("gas","3000","legacy-C15",{unit:"therm",renewable:"0"}),source("fuel","2000","legacy-C9",{renewable:"0"}),source("water","300000"),source("waste","30000","",{diverted:"2400",hazardous:"1000"}));
+ d.revenue.amount="1000000";
+ const before=JSON.stringify(d); const r=result(d);
+ const gasKwh=3000*105506000/3600000; const total=20000+gasKwh+14200;
+ expect(r.totals.scope1.value).toBe(3000*5.29/1000+2000*1.56/1000);
+ expect(r.totals.scope2.value).toBe(12);
+ expect(r.combinedEmissions.value).toBeCloseTo(30.99,12);
+ expect(r.intensities.carbon).toBeCloseTo(0.00003099,14);
+ expect(r.totals.energy.value).toBeCloseTo(total,8);
+ expect(r.intensities.energy).toBeCloseTo(total/1000000,12);
+ expect(r.renewableEnergyShare).toBeCloseTo(4000/total*100,12);
+ expect(r.renewableElectricityShare).toBe(20);
+ expect(r.traces[1]!.renewable).toBe(0);
+ expect(r.traces[1]!.flags.join(' ')).toContain('NIST SP 811');
+ expect(Number(calculatorMappings(d,mappedQuestions).find(x=>x.questionId==='U-026')!.raw)).toBe(r.renewableEnergyShare);
+ expect(Number(calculatorMappings(d,mappedQuestions).find(x=>x.questionId==='I-062')!.raw)).toBe(r.intensities.energy);
+ expect(r.intensities.water).toBe(0.3); expect(r.intensities.waste).toBe(0.03);
+ expect(r.diversionShare).toBe(8); expect(r.hazardousShare).toBeCloseTo(1000/30000*100,12);
+ expect(JSON.stringify(d)).toBe(before);
+ d.activities[1]!.renewable="300";
+ expect(result(d).renewableEnergyShare).toBeCloseTo((4000+gasKwh/10)/total*100,12);
+ d.activities[1]!.renewable="";
+ expect(result(d).renewableEnergyShare).toBeNull();
+ expect(unavailableMetricReason('renewable',d)).toContain('Renewable portion is unknown');
+ expect(result(d).totals.energy.value).toBeCloseTo(total,8);
 });

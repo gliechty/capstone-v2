@@ -8,6 +8,7 @@ import { activityInCoverage, allowedFactorIds, calculatorUnits } from "../../dom
 
 import { useAssessment } from "../assessment/assessment-context";
 import { displayCalculatorNumber, unavailableMetricReason } from "../../application/calculator-mapping";
+import { periodFeedback } from "./period-feedback";
 import { MetricReview, CalculatorProvenance } from "./metric-review";
 
 type State = CalculatorSession & { ready: boolean; warning: string | null; showErrors: boolean };
@@ -101,12 +102,17 @@ export function CalculatorPanel() {
     if (!state.ready) return;
     if (firstSave.current) { firstSave.current = false; return; }
     const warning = browserCalculator.save({ draft: state.draft, method: state.method, reviewed: state.reviewed, lastReviewedDraft: state.lastReviewedDraft, priorReviewedDraft: state.priorReviewedDraft });
-    if (warning) dispatch({ type: "warning", warning });
+    dispatch({ type: "warning", warning });
   }, [state.ready, state.draft, state.method, state.reviewed, state.lastReviewedDraft, state.priorReviewedDraft]);
   const { draft } = state;
   const previousInputs = state.reviewed ? state.priorReviewedDraft : state.lastReviewedDraft;
   const outcome = calculateDraft(draft);
   const result = state.reviewed ? outcome.result : null;
+  const periodMessage = periodFeedback(draft.periodStart, draft.periodEnd);
+  const visibleIssues = [
+    ...outcome.issues.filter(issue => (state.showErrors || ((issue.path === "periodStart" || issue.path === "periodEnd") && Boolean(draft.periodStart && draft.periodEnd))) && !(periodMessage && issue.path === "periodEnd")),
+    ...(periodMessage ? [{ path: "periodEnd", message: periodMessage }] : []),
+  ];
   const edit = (next: CalculatorDraft) => { assessmentDispatch({ type: "calculator-invalidate" }); dispatch({ type: "edit", draft: next }); };
   const editSource = (index: number, patch: Partial<CalculatorDraft["activities"][number]>) => {
     const next = { ...draft.activities[index]!, ...patch };
@@ -119,7 +125,7 @@ export function CalculatorPanel() {
   const openErrors = () => setCollapsed(ids => ids.filter(id => !outcome.issues.some(issue => issue.path.startsWith("activities." + draft.activities.findIndex(a => a.id === id) + "."))));
   const saveCalculator = () => browserCalculator.save({ draft, method: state.method, reviewed: state.reviewed, lastReviewedDraft: state.lastReviewedDraft, priorReviewedDraft: state.priorReviewedDraft });
   if (!state.ready) return <p role="status">Restoring data input entries...</p>;
-  return <IssueContext.Provider value={state.showErrors ? outcome.issues : []}>
+  return <IssueContext.Provider value={visibleIssues}>
     {state.warning && <p className="form-error mt-4" role="alert">{state.warning}</p>}
     <CalculatorProvenance />
     <fieldset className="mt-8 grid gap-4">
@@ -136,6 +142,7 @@ export function CalculatorPanel() {
       <p className="mt-3 text-muted">Use one entry per physical source for the same reporting period and boundary. Choose fuel OR mileage, and measured OR calculated emissions for each source. Do not enter company totals alongside their site/source components. Blank means unknown; enter 0 only when confirmed. Use a dot for decimals and commas for thousands (12,000.5). Scope 3 is excluded.</p>
       {previousInputs && <details className="mt-3"><summary className="text-link">Earlier calculation snapshot (history)</summary><p className="text-small text-muted">Saved inputs from an earlier calculation; this is history, not a warning about the current values below.</p><ul>{previousInputs.activities.map(a => <li key={a.id}>{sourceLabel(a)}: {a.quantity || "Unknown"} {a.unit}</li>)}</ul></details>}
       <form id={fieldId("activities")} tabIndex={-1} className="mt-6" noValidate onSubmit={event => { event.preventDefault(); openErrors(); dispatch({ type: "calculate", valid: outcome.result !== null }); requestAnimationFrame(() => feedback.current?.focus()); }}>
+        <p className="mb-4 text-small text-muted">For answer transfer, use one complete annual reporting period, ending the day before the start-date anniversary. Totals can still be reviewed for other valid periods.</p>
         <div className="grid gap-4 md:grid-cols-2">
           <Field path="periodStart" label="Period start"><input className="field-control" type="date" value={draft.periodStart} onChange={e => edit({ ...draft, periodStart: e.target.value })} /></Field>
           <Field path="periodEnd" label="Period end"><input className="field-control" type="date" value={draft.periodEnd} onChange={e => edit({ ...draft, periodEnd: e.target.value })} /></Field>
