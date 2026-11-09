@@ -41,6 +41,7 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link className="button-primary" href="/assessment">{landingCopy.hero.primaryCta}<span aria-hidden="true">↗</span>
               </Link>
+              <Link className="button-secondary" href="/assessment/quick">Start quick assessment</Link>
               <a href="#outputs" className="text-link">{landingCopy.hero.secondaryCta}<span className="ml-2" aria-hidden="true">↓</span></a>
             </div>
           </div>

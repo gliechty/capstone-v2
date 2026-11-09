@@ -1,4 +1,5 @@
 "use client";
+import { quickRequest } from "./quick-request";
 import { displayAnswer } from "../../application/display-value";
 
 
@@ -31,17 +32,30 @@ function StageHeading({ children }: { children: string }) {
 function Setup() {
   const { session, dispatch, catalog } = useAssessment();
   const [submitted, setSubmitted] = useState(false);
+  const [selecting,setSelecting]=useState(false);
+  const [selectionError,setSelectionError]=useState("");
   const [countrySearchPending, setCountrySearchPending] = useState(false);
   const errors = catalogProfileErrors(catalog, session.profile);
   if (countrySearchPending) errors.country = "Choose a country from the search results, or clear this optional field.";
   const markets = marketValues(session.profile.targetMarket);
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitted(true);
     const first = profileFields.find((field) => errors[field.key]);
     if (first) {
       const control = first.key === "targetMarket" ? event.currentTarget.querySelector<HTMLInputElement>('[name="targetMarket"]') : event.currentTarget.elements.namedItem(first.key);
       if (control instanceof HTMLElement) control.focus();
+      return;
+    }
+    if(session.assessmentProfile){
+      setSelecting(true);setSelectionError("");
+      try{
+        const response=await fetch("/api/quick-assessment",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(quickRequest(session,"select"))});
+        const result=await response.json();
+        if(!response.ok || !Array.isArray(result.questionIds) || !result.questionIds.length)throw Error("Quick selection unavailable");
+        dispatch({type:"quick-selection",version:result.version,questionIds:result.questionIds});
+      }catch{setSelectionError("Quick questions could not be selected. Review your business context and try again.");}
+      finally{setSelecting(false);}
       return;
     }
     dispatch({ type: "method" });
@@ -51,7 +65,7 @@ function Setup() {
       <span className="section-label">01 / Business context</span>
       <StageHeading>Tell us about your business.</StageHeading>
       <p className="mt-4 text-muted">Enter your business context. Fields marked required must be completed; subindustry and additional context are optional.</p>
-      <form className="mt-8" noValidate onSubmit={submit}>
+      <form className="mt-8" noValidate onSubmit={submit}><fieldset disabled={selecting}>
         {submitted && Object.keys(errors).length > 0 && <p role="alert" className="form-error mb-6">Please check the highlighted fields before continuing.</p>}
         <div className="grid gap-6 md:grid-cols-2">
           {profileFields.map((field) => {
@@ -101,8 +115,8 @@ function Setup() {
             </div>;
           })}
         </div>
-        <button className="button-primary mt-8" type="submit">Continue to input method <span aria-hidden="true">→</span></button>
-      </form>
+        <button className="button-primary mt-8" type="submit">{selecting ? "Selecting questions…" : session.assessmentProfile ? "Continue to Quick questions" : "Continue to input method"} <span aria-hidden="true">→</span></button>
+      </fieldset>{selectionError && <p role="alert">{selectionError}</p>}</form>
     </section>
   );
 }
@@ -336,6 +350,13 @@ function Review() {
     if (sending.current || invalid || saveWarning) return;
     if (missing.length && !confirmPartial) { setConfirmPartial(true); return; }
     try {
+      if(session.assessmentProfile){
+        const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));
+        const next=model.assessmentReducer(session,{type:"generate"});
+        const warning=browserSession(model.sessionSchema).save(next);
+        if(warning || next.progress!==4){setMessage(warning??"Review your Quick answers first.");return;}
+        sending.current=true;dispatch({type:"generate"});router.push("/quick-results");return;
+      }
       const input = recommendationRequestFromSession(session);
       const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
       const next = model.assessmentReducer(session, { type: "generate" });
@@ -352,14 +373,14 @@ function Review() {
     <StageHeading>Review your answers.</StageHeading>
     <p className="mt-4">{questions.length - missing.length} answered · {missing.length} unanswered questions.</p>
     <details className="review-missing-note mt-2 text-small"><summary>What missing answers do</summary><p className="text-muted">Missing answers stay missing; they are never treated as zero. Scores use the available answers. Coverage shows how much of the assessment you supplied.</p></details>
-    <p className="mt-3 text-small">Your business context, answers and selected source passages are sent to AI to generate recommendations.</p>
+    <p className="mt-3 text-small">{session.assessmentProfile ? "Quick subset scores cover a smaller question set and are not directly comparable with Full. No AI request is made." : "Your business context, answers and selected source passages are sent to AI to generate recommendations."}</p>
     {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
     {legacySkipped.length > 0 && <div className="storage-warning mt-4"><p>These previously skipped questions still contain saved answers from the older Skip behavior. Revisit each one and choose Skip to clear it, or confirm your answer. Original saved values have been preserved for your review.</p><ul>{legacySkipped.map(q => <li key={q.id}><button className="text-link" onClick={() => dispatch({type:"jump",id:q.id})}>{q.id}: {q.title}</button></li>)}</ul></div>}
     {message && <p role="alert">{message}</p>}
     {confirmPartial ? <div className="preview-notice mt-6" role="group" aria-label="Confirm partial assessment">
-      <p role="status">{missing.length} questions are unanswered. Scores and recommendations will be based only on the available answers.</p>
-      <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations anyway</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
-    </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations</button>}
+      <p role="status">{missing.length} questions are unanswered. {session.assessmentProfile ? "Quick subset scores will use the available Quick answers." : "Scores and recommendations will be based only on the available answers."}</p>
+      <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>{session.assessmentProfile ? "View Quick subset scores anyway" : "Generate score and recommendations anyway"}</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
+    </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>{session.assessmentProfile ? "View Quick subset scores" : "Generate score and recommendations"}</button>}
     <CalculatorProvenance />
     <div className="review-filters mt-6" role="group" aria-label="Filter answer review">
       <button type="button" className="button-secondary" aria-pressed={!missingOnly} onClick={() => setMissingOnly(false)}>All answers ({questions.length})</button>
@@ -398,7 +419,12 @@ function Flow() {
       {ready && session.phase !== "setup" && <button className="text-link" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Edit business context</button>}
     </header>
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
-      {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push("/results");}else dispatch(action);}}/>}
+      {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push(session.assessmentProfile?"/quick-results":"/results");}else dispatch(action);}}/>}
+      {ready && session.assessmentProfile && <div className="preview-notice mb-4"><p><strong>Quick assessment</strong>{session.assessmentProfile.questionIds.length ? ` · ${session.assessmentProfile.questionIds.length} questions` : " · question count follows business Setup"}</p><p>Shared answers are retained when you continue to Full.</p><button className="button-secondary mt-3" onClick={()=>{
+        const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));
+        const warning=browserSession(model.sessionSchema).save(model.assessmentReducer(session,{type:"continue-full"}));
+        if(!warning)router.push("/assessment");
+      }}>Continue to Full assessment</button></div>}
       <details className="assessment-context-note text-small"><summary>About this assessment</summary>
         <p>{saveWarning ? "Progress cannot currently be saved in this tab." : "Your progress is saved in this tab."} Answer what you know; you can revisit missing answers.</p>
         <p>Scores use the answers you provide. This is a research assessment, not certification.</p>
@@ -415,6 +441,6 @@ function Flow() {
     </main>
   </>;
 }
-export function AssessmentFlow({ catalog }: { catalog: AssessmentCatalog }) {
-  return <AssessmentProvider catalog={catalog}><Flow /></AssessmentProvider>;
+export function AssessmentFlow({ catalog, quick=false }: { catalog: AssessmentCatalog; quick?:boolean }) {
+  return <AssessmentProvider catalog={catalog} quick={quick}><Flow /></AssessmentProvider>;
 }

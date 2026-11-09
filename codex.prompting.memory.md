@@ -1,3 +1,15 @@
+## Quick pre-release evidence gaps — owner2026-11-09
+Reuse passing Full entry/continuation, five-Golden selection and desktop/mobile Results evidence. Authorized gap-only execution: five saved Golden answer-set Quick results cases in quick-assessment.test.ts; one mobile Skip plus questionnaire refresh/progress/zero-answer Results case in assessment.spec.ts. No rebuild, broad rerun, paid calls or deployment.
+
+## Approved Quick prototype checks — owner2026-11-09
+Saved quick-assessment.test.ts covers five-Golden accepted selections/determinism, backward-compatible Full sessions, Quick→Full answer preservation, selected-only score denominators and no excluded-question input. Reuse assessment/config-selection/scoring/golden-matrix tests for Full regression. Two focused existing assessment.spec.ts browser journeys cover Full entry, Quick Setup bypass/count/simple number/partial scores/reload/Full continuation at1440 and390; block/count recommendation requests. Scoped type/lint/local build authorized. No paid calls or deployment.
+
+## Approved M8.0 further comparison — owner2026-11-09
+Offline twenty.mjs: verify unchanged Full/eligible IDs/order, exactly20 unique eligible questions per Golden SME, minimum2 per category where available and supply bounds; reuse original multiplier/selection functions. No model calls, answers, scoring, app/build or deployment checks.
+
+## Approved M8.0 experiment checks — owner2026-11-09
+Only isolated experiments/m8.0-v1: prepare.mjs/compare.mjs verify original CSV byte restoration after appended field removal, JSON fields/values/order, reused schema extension, unchanged Full selection against all five existing Golden exact-ID/order oracles, unchanged selector/archetype mapping. No scoring benchmark, browser/build, deployment or factor-provider calls. Paid classify.mjs is separate and requires the explicit M8.0 USD0.30/two-request allowance (approved); never run during validation.
+
 ## Approved Monday targeted QA checks — owner 2026-11-07
 D1–D7 only: reuse Claude MONDAY_TARGETED_QA evidence/profiles; focused UI/server percent100/week168 boundaries, unchanged valid scores, display-only precision and units, blank facility labels, missing-conversion message. Reuse calculator/assessment/scoring/Lever tests; bounded regression assertions authorized for these defects. Focused desktop/phone affected views, existing fixtures only, no paid calls, timestamps/deferred notes/API MVP excluded.
 
