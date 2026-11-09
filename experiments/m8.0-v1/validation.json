@@ -1,0 +1,42 @@
+{
+  "validated_at": "2026-11-09T04:41:04.889Z",
+  "original_rows": 161,
+  "original_columns": 25,
+  "experimental_columns": 26,
+  "csv_removal_byte_identical": true,
+  "json_original_fields_order_values_identical": true,
+  "schema_validation": "Existing QuestionBankSchema.extend(answer_effort enum), all rows pass; emitted machine-readable JSON Schema equals validator projection. Original finite-decimal refinement retained in executable validator.",
+  "golden_applicability_exact_ids_and_order": [
+    {
+      "case_id": "GOLDEN_01_MANUFACTURING",
+      "count": 56,
+      "passed": true
+    },
+    {
+      "case_id": "GOLDEN_02_FOOD_AGRO",
+      "count": 55,
+      "passed": true
+    },
+    {
+      "case_id": "GOLDEN_03_BUSINESS_EXPORT",
+      "count": 63,
+      "passed": true
+    },
+    {
+      "case_id": "GOLDEN_04_CONSTRUCTION",
+      "count": 64,
+      "passed": true
+    },
+    {
+      "case_id": "GOLDEN_05_CONSUMER_GOODS",
+      "count": 52,
+      "passed": true
+    }
+  ],
+  "selector_unchanged": true,
+  "archetype_mapping_unchanged": true,
+  "scoring_executed": false,
+  "review_sample_count": 43,
+  "model_proposal_count": 161,
+  "owner_review": "pending"
+}

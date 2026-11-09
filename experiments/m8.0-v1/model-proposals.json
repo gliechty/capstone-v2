@@ -1,0 +1,1131 @@
+{
+  "assignments": [
+    {
+      "question_id": "U-001",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Company typically knows whether a written policy exists.",
+      "assumptions": "Policy existence is current and internal to own operations.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-002",
+      "answer_effort": "record_lookup",
+      "rationale": "Requires checking whether data-quality reviews are documented or routinely performed.",
+      "assumptions": "Respondent can consult internal reporting practices.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-003",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Usually known if a grievance or whistleblower channel exists.",
+      "assumptions": "Formal mechanism is company-wide, not ad hoc.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-004",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Publishing a report is generally known by management.",
+      "assumptions": "Includes any external sustainability summary or ESG report.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-005",
+      "answer_effort": "direct_knowledge",
+      "rationale": "A company target is usually known by management.",
+      "assumptions": "Target refers to any stated emissions-reduction goal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-006",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Due diligence approach is typically known by management.",
+      "assumptions": "Question asks about having an approach, not its results.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-014",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Supplier selection criteria are usually known internally.",
+      "assumptions": "Environmental criteria may be informal or formal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-007",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Supplier engagement on environmental issues is usually known by managers.",
+      "assumptions": "Covers any ongoing engagement, not only formal programs.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-008",
+      "answer_effort": "record_lookup",
+      "rationale": "Documentation status requires checking records or reporting files.",
+      "assumptions": "Looking for documented compilation and checking procedures.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-009",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Supplier code of conduct existence is generally known internally.",
+      "assumptions": "Applies to suppliers broadly, not only key suppliers.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-010",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Public anti-corruption commitment is usually known by management.",
+      "assumptions": "Includes any formal public statement or policy.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-011",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Environmental policy scope is usually known by management.",
+      "assumptions": "Scope refers to written policy coverage, if any.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-012",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Policy coverage for downstream impacts is usually known internally.",
+      "assumptions": "Downstream impacts means customers or distributors.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-013",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Business-model transition planning is generally known by management.",
+      "assumptions": "Any documented transition plan counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-015",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Target setting is typically known by management.",
+      "assumptions": "Targets must be specific and measurable.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-016",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Employee grievance mechanism existence is usually known internally.",
+      "assumptions": "Mechanism is accessible to employees.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-017",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Human-rights commitment is usually known by management.",
+      "assumptions": "Commitment may be policy or public statement.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-018",
+      "answer_effort": "record_lookup",
+      "rationale": "Training frequency is normally found in training records.",
+      "assumptions": "Use documented training count for the year.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-019",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Written labour-rights policy existence is usually known internally.",
+      "assumptions": "Policy covers all employees.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-020",
+      "answer_effort": "record_lookup",
+      "rationale": "Average weekly hours usually come from payroll or time records.",
+      "assumptions": "Use typical full-time employee hours, not all staff.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-021",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires computing voluntary leavers over the last 12 months as a percentage.",
+      "assumptions": "Use employee headcount or average workforce denominator.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-022",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Climate-risk assessment status is typically known by management.",
+      "assumptions": "Any assessment of relevant climate risks counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-023",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Knowing whether Scope 1 emissions are measured is usually straightforward.",
+      "assumptions": "Estimate or measurement both count.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-024",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Scope 2 measurement status is usually known by management.",
+      "assumptions": "Includes estimated or calculated Scope 2 emissions.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-025",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Tracking total energy consumption is usually known internally.",
+      "assumptions": "Any routine tracking counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-026",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating renewable energy share from energy source data.",
+      "assumptions": "Use total energy purchased and renewable portion.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-027",
+      "answer_effort": "record_lookup",
+      "rationale": "Identifying impacted suppliers normally requires reviewing supplier assessments.",
+      "assumptions": "Refers to identified significant impacts, not all suppliers.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-028",
+      "answer_effort": "direct_knowledge",
+      "rationale": "A plan to reduce hazardous materials is generally known by management.",
+      "assumptions": "Plan may be formal or informal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-029",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Whether water use is tracked is usually known internally.",
+      "assumptions": "Tracking may be partial or full.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-030",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Whether total waste is tracked is usually known internally.",
+      "assumptions": "Tracking may be partial or full.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-031",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating waste diverted as a percentage of total waste by mass.",
+      "assumptions": "Use landfill-diverted waste and total waste mass.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-032",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating hazardous waste share from waste composition data.",
+      "assumptions": "Use hazardous waste mass over total waste mass.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-033",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Community programme existence is usually known by management.",
+      "assumptions": "Includes supporting or running a formal programme.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-034",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Inclusive procurement practices are usually known internally.",
+      "assumptions": "Any support for women-owned businesses counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-035",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires averaging supported volunteer hours per employee over the year.",
+      "assumptions": "Use total volunteer hours divided by employee count.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "U-036",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating community investment as a percentage of pre-tax profit.",
+      "assumptions": "Use last year's pre-tax profit and donations/investments.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-001",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Customer data policy existence is usually known by management.",
+      "assumptions": "Policies cover collection, use, and protection.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-002",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Security vulnerability management approach is usually known internally.",
+      "assumptions": "Approach may be informal or formal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-003",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Certified animal-welfare standards are usually known by management.",
+      "assumptions": "Refers to third-party certified standards, if any.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-004",
+      "answer_effort": "record_lookup",
+      "rationale": "Incident counts are normally retrieved from safety records.",
+      "assumptions": "Use recorded incidents in the past year.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-005",
+      "answer_effort": "record_lookup",
+      "rationale": "Tracking legal-loss amounts requires consulting records or legal reports.",
+      "assumptions": "Only applicable if such proceedings occurred.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-006",
+      "answer_effort": "record_lookup",
+      "rationale": "Audit non-conformance rates are normally found in audit records or reports.",
+      "assumptions": "Use existing audit reporting, not recalculation from raw findings.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-007",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Regular cyber training is generally known by management.",
+      "assumptions": "Regular means periodic, not one-off.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-008",
+      "answer_effort": "record_lookup",
+      "rationale": "Survival or health rates require operational records or monitoring data.",
+      "assumptions": "Use documented animal or species monitoring results.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-009",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Primary GHG data collection practice is usually known internally.",
+      "assumptions": "Primary means directly measured data.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-010",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Primary GHG data collection practice is usually known internally.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-011",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Primary GHG data collection practice is usually known internally.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-012",
+      "answer_effort": "record_lookup",
+      "rationale": "Data-quality assessment level is usually documented in GHG reporting files.",
+      "assumptions": "Assessments may be formal or informal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-013",
+      "answer_effort": "record_lookup",
+      "rationale": "Data-quality assessment level is usually documented in GHG reporting files.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-014",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Having EPDs is generally known by management.",
+      "assumptions": "Question asks whether any products have EPDs.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-015",
+      "answer_effort": "record_lookup",
+      "rationale": "Gender representation requires consulting HR or workforce records.",
+      "assumptions": "Tracking means a recorded workforce metric exists.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-016",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Survey cadence is usually known by management.",
+      "assumptions": "Regular means recurring employee-engagement surveys.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-017",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires computing women-held senior-management share from headcounts.",
+      "assumptions": "Use women positions divided by total positions.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-018",
+      "answer_effort": "record_lookup",
+      "rationale": "Diversity metrics are usually obtained from HR records or reports.",
+      "assumptions": "Metrics may be tracked for some or all workforce.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-019",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Training provision is usually known by management.",
+      "assumptions": "Training is relevant to construction environmental rules.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-020",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating total turnover rate from exits and workforce size.",
+      "assumptions": "Use total exits over a 12-month denominator.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-021",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Use of environmentally focused design principles is usually known internally.",
+      "assumptions": "Includes green-building or eco-design practices.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-022",
+      "answer_effort": "record_lookup",
+      "rationale": "GMO content share requires product composition or sourcing records.",
+      "assumptions": "Use total product share, not just one product line.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-023",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Biodiversity management approach is usually known by operations managers.",
+      "assumptions": "Includes escape-prevention or similar practices.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-024",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Restricted-chemicals list existence is usually known internally.",
+      "assumptions": "List may be in procurement or manufacturing controls.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-025",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Air pollution monitoring practice is usually known by management.",
+      "assumptions": "Monitoring may be partial or full.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-026",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Land-management practices are generally known by operations staff.",
+      "assumptions": "Includes cover crops or similar sequestration practices.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-027",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Product-level GHG targets are usually known by management.",
+      "assumptions": "Targets may be set for some product lines.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-028",
+      "answer_effort": "record_lookup",
+      "rationale": "Certified-input share requires supplier certification records and purchase data.",
+      "assumptions": "Use wood-fibre purchases only.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-029",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Land-management practice adoption is usually known internally.",
+      "assumptions": "Includes conservation tillage or cover crops.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-030",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating renewable raw-material share from sourcing records.",
+      "assumptions": "Use total raw materials by mass or spend consistently.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-031",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Soil-management plan existence is usually known by management.",
+      "assumptions": "Plan applies to farming or agricultural operations.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-032",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Revenue from remanufacturing is typically known by management.",
+      "assumptions": "Any remanufactured-product revenue counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-033",
+      "answer_effort": "record_lookup",
+      "rationale": "LCA completion requires checking project or product documentation.",
+      "assumptions": "Question asks whether any LCA was conducted.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-034",
+      "answer_effort": "record_lookup",
+      "rationale": "Biological assets value or volume requires operational or accounting records.",
+      "assumptions": "Question expects a documented total, not an estimate.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-035",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Compliance with animal-welfare laws is generally known internally.",
+      "assumptions": "Refers to current legal compliance status.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-036",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Input-stream management adoption is usually known by manufacturing staff.",
+      "assumptions": "Includes controlling chemical recipes or reagents.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-037",
+      "answer_effort": "record_lookup",
+      "rationale": "Published NOx and particulate data requires checking product documentation or disclosures.",
+      "assumptions": "Applies to relevant product lines only.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-038",
+      "answer_effort": "record_lookup",
+      "rationale": "Flood-risk site counts require reviewing site location and risk records.",
+      "assumptions": "Use identified construction sites or controlled lots.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-039",
+      "answer_effort": "record_lookup",
+      "rationale": "Climate risk-exposure analysis status is typically documented in assessments.",
+      "assumptions": "Any formal or internal analysis counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-040",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Scope 1 agricultural emissions reporting status is usually known internally.",
+      "assumptions": "Includes livestock, manure, fertilizer, and on-farm fuel.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-041",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Scope 2 reporting status is usually known by management.",
+      "assumptions": "Includes purchased energy for production or processing.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-042",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Certified biomass sourcing is usually known by procurement managers.",
+      "assumptions": "Third-party sustainability certification is the key criterion.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-043",
+      "answer_effort": "record_lookup",
+      "rationale": "Order backlog reporting requires consulting sales or project records.",
+      "assumptions": "Backlog relates to green-building or renewable-energy projects.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-044",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Site-selection and design process is usually known internally.",
+      "assumptions": "Question asks about formal process existence.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-045",
+      "answer_effort": "record_lookup",
+      "rationale": "Total land area usually comes from land-use or farm/forest records.",
+      "assumptions": "Use managed or affected area in hectares.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-046",
+      "answer_effort": "record_lookup",
+      "rationale": "Certified wood-fibre share requires procurement and certification records.",
+      "assumptions": "Use recognised standards like FSC or PEFC.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-047",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Identifying soil-health threats is generally known by agricultural managers.",
+      "assumptions": "Includes main threats relevant to operations.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-048",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Take-back programme status is usually known by management.",
+      "assumptions": "Includes programmes for remanufacturing or recycling.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-049",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Product testing practice is usually known internally.",
+      "assumptions": "Covers finished-product laboratory testing for restricted substances.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-050",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Climate-risk strategy maturity is usually known by management.",
+      "assumptions": "Applies to physical and financial climate risks.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-051",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Land-use change emissions tracking is usually known by management.",
+      "assumptions": "Question asks whether tracking or reporting exists.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-052",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing combined Scope 1 and 2 emissions by revenue.",
+      "assumptions": "Use annual emissions and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-053",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing combined Scope 1 and 2 emissions by revenue.",
+      "assumptions": "Use annual emissions and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-054",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing combined Scope 1 and 2 emissions by revenue.",
+      "assumptions": "Use annual emissions and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-055",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing combined Scope 1 and 2 emissions by revenue.",
+      "assumptions": "Use annual emissions and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-056",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing combined Scope 1 and 2 emissions by revenue.",
+      "assumptions": "Use annual emissions and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-057",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating renewable energy percentage from total energy consumption.",
+      "assumptions": "Use total energy and renewable-energy share.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-058",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual energy consumption by annual revenue.",
+      "assumptions": "Use annual energy and revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-059",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual energy consumption by annual revenue.",
+      "assumptions": "Use annual energy and revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-060",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual energy consumption by annual revenue.",
+      "assumptions": "Use annual energy and revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-061",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual energy consumption by annual revenue.",
+      "assumptions": "Use annual energy and revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-062",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual energy consumption by annual revenue.",
+      "assumptions": "Use annual energy and revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-063",
+      "answer_effort": "record_lookup",
+      "rationale": "Permit non-compliance incidents are normally retrieved from compliance records.",
+      "assumptions": "Use incidents recorded in the past year.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-064",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating revenue share from qualifying products.",
+      "assumptions": "Use revenue from relevant products over total revenue.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-065",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual water withdrawal by annual revenue.",
+      "assumptions": "Use annual withdrawal and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-066",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual water withdrawal by annual revenue.",
+      "assumptions": "Use annual withdrawal and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-067",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual water withdrawal by annual revenue.",
+      "assumptions": "Use annual withdrawal and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-068",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual water withdrawal by annual revenue.",
+      "assumptions": "Use annual withdrawal and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-069",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual water withdrawal by annual revenue.",
+      "assumptions": "Use annual withdrawal and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-070",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating diverted waste as a percentage of total waste generated.",
+      "assumptions": "Use recovered waste over total waste at manufacturing facilities.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-071",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual waste generated by annual revenue.",
+      "assumptions": "Use annual waste and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-072",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual waste generated by annual revenue.",
+      "assumptions": "Use annual waste and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-073",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual waste generated by annual revenue.",
+      "assumptions": "Use annual waste and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-074",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual waste generated by annual revenue.",
+      "assumptions": "Use annual waste and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-075",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires dividing annual waste generated by annual revenue.",
+      "assumptions": "Use annual waste and annual revenue in stated units.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-076",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Stakeholder engagement practice is usually known by project managers.",
+      "assumptions": "Engagement is part of planning or site-selection due diligence.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-077",
+      "answer_effort": "record_lookup",
+      "rationale": "Identified product health concerns usually require reviewing assessments or incidents.",
+      "assumptions": "Includes nutritional or health concerns already addressed.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-078",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Infrastructure adequacy assessment is usually known by site-selection staff.",
+      "assumptions": "Covers electricity, water, and wastewater adequacy.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "I-079",
+      "answer_effort": "record_lookup",
+      "rationale": "Revenue share from health-marketed products requires sales categorization records.",
+      "assumptions": "Use product revenue classification.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-1",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Customer-data policy maturity is usually known internally.",
+      "assumptions": "Policies cover collection, use, and protection.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-2",
+      "answer_effort": "record_lookup",
+      "rationale": "Revenue share for safety-instruction products requires product-revenue records.",
+      "assumptions": "Uses tracked revenue from qualifying products.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-3",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Workplace safety management system status is usually known by management.",
+      "assumptions": "System should cover all sites and worksites.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-4",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Risk-assessment practice is usually known by operations managers.",
+      "assumptions": "Question asks whether assessments are done for all processes.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-5",
+      "answer_effort": "record_lookup",
+      "rationale": "Water withdrawal by source requires utility and meter records.",
+      "assumptions": "Use total withdrawal broken down by source.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "IM-6",
+      "answer_effort": "record_lookup",
+      "rationale": "Water withdrawal by source requires utility and meter records.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-001",
+      "answer_effort": "record_lookup",
+      "rationale": "Verification status typically requires checking assurance reports.",
+      "assumptions": "Use current independent assurance status for Scope 1 and 2.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-002",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Mechanisms to prevent unfair practices are generally known by management.",
+      "assumptions": "Includes policies, controls, or training mechanisms.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-003",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Board size disclosure is usually known from governance reporting.",
+      "assumptions": "Question asks whether total director count is disclosed.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-004",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Board size disclosure is usually known from governance reporting.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-005",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Public risk disclosure is usually known by management.",
+      "assumptions": "Material sustainability-related risks are publicly disclosed.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-006",
+      "answer_effort": "record_lookup",
+      "rationale": "Assurance-provider report publication requires checking disclosure documents.",
+      "assumptions": "Look for report attached to emissions disclosure.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-007",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Timely tax payment practice is generally known by management.",
+      "assumptions": "Applies to all applicable taxes, levies, and duties.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-008",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Whistleblowing policy existence is usually known internally.",
+      "assumptions": "Policy may be informal or formal.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-009",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Whistleblowing policy existence is usually known internally.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-010",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Framework-aligned ESG reporting is usually known by management.",
+      "assumptions": "Recognised framework means GRI, ISSB, SASB or similar.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-011",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Public reporting of business operations is usually known by management.",
+      "assumptions": "Includes a publicly available report.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-012",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Identifying cash-flow risks is generally known by management.",
+      "assumptions": "Sustainability risks may be financial or operational.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-013",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Identifying finance-access risks is generally known by management.",
+      "assumptions": "Includes risks affecting investment or lending access.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-014",
+      "answer_effort": "record_lookup",
+      "rationale": "Progress against commitments is usually tracked in internal plans or reports.",
+      "assumptions": "Question asks for progress tracking status, not performance.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-015",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Written sustainable sourcing procedures are usually known internally.",
+      "assumptions": "Procedures concern supplier inputs.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-016",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Anti-corruption policy existence is usually known by management.",
+      "assumptions": "Policy may range from basic to advanced.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-017",
+      "answer_effort": "record_lookup",
+      "rationale": "Incentives require reviewing compensation or HR records.",
+      "assumptions": "Applies to board or senior leadership compensation.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-018",
+      "answer_effort": "record_lookup",
+      "rationale": "Complaint counts are normally retrieved from privacy or legal records.",
+      "assumptions": "Use substantiated complaints in the past year.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-019",
+      "answer_effort": "record_lookup",
+      "rationale": "Complaint counts are normally retrieved from privacy or legal records.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-020",
+      "answer_effort": "record_lookup",
+      "rationale": "Disclosure of accounting policies requires checking public filings or reports.",
+      "assumptions": "Question asks whether a public document exists.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-021",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Climate-risk identification status is generally known by management.",
+      "assumptions": "Risks may be physical or transitional.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-022",
+      "answer_effort": "record_lookup",
+      "rationale": "Progress tracking against targets is usually documented in reporting systems.",
+      "assumptions": "If no targets exist, respondent may skip as instructed.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-023",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating sustainably sourced materials as a share of input spend.",
+      "assumptions": "Use estimated spend on qualifying inputs over total input spend.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-024",
+      "answer_effort": "record_lookup",
+      "rationale": "Average training hours are usually retrieved from HR training records.",
+      "assumptions": "Use annual per-employee average from records.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-025",
+      "answer_effort": "record_lookup",
+      "rationale": "Average training hours are usually retrieved from HR training records.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-026",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Risk assessment and mitigation activity is usually known by management.",
+      "assumptions": "Question covers both assessment and response steps.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-027",
+      "answer_effort": "direct_knowledge",
+      "rationale": "High-risk supplier identification is usually known internally.",
+      "assumptions": "Refers to child or forced labour risk.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-028",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating injuries per 100 employees from incident and workforce data.",
+      "assumptions": "Use annual recordable injuries and employee base.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-029",
+      "answer_effort": "record_lookup",
+      "rationale": "Incident recording requires reviewing labour-compliance records.",
+      "assumptions": "Use recorded incidents in operations or supply chain.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-030",
+      "answer_effort": "record_lookup",
+      "rationale": "Incident recording requires reviewing labour-compliance records.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-031",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating the worker share covered by agreements.",
+      "assumptions": "Use covered workers divided by total workers.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-032",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Value-chain risk identification is usually known by management.",
+      "assumptions": "Refers to child-labour or forced-labour risks.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-033",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Transition-pathway planning is usually known by management.",
+      "assumptions": "Plan addresses compatibility with 1.5°C pathway.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-034",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Transition-pathway planning is usually known by management.",
+      "assumptions": "Duplicate of prior question; classify the same way.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-035",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Materiality explanation is usually known by management.",
+      "assumptions": "Any stated explanation counts.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-036",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Reducing non-renewable materials is usually known by operations staff.",
+      "assumptions": "Question asks whether the company actively does this.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-037",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Packaging choice is usually known by management.",
+      "assumptions": "Includes eco-friendly or biodegradable packaging.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-038",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Disclosure of sustainability-related R&D spend is usually known internally.",
+      "assumptions": "Question asks whether spending is disclosed.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-039",
+      "answer_effort": "direct_knowledge",
+      "rationale": "Advanced water-treatment system adoption is usually known by management.",
+      "assumptions": "Includes zero-liquid-discharge or similar systems.",
+      "confidence": "high"
+    },
+    {
+      "question_id": "M-040",
+      "answer_effort": "calculation_aggregation",
+      "rationale": "Requires calculating sourced-material share from procurement data.",
+      "assumptions": "Use spend or volume share from small-scale or micro enterprises.",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+[
+  {
+    "question_id": "U-018",
+    "assignment": "direct_knowledge",
+    "reason": "Training frequency is an ordinary recurring business fact, not a request to total employee attendance or training hours.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "56104b291cbd9f17b9890e97c162070bbdd86a86c39afcefdab383cbb263e29a"
+  },
+  {
+    "question_id": "U-020",
+    "assignment": "direct_knowledge",
+    "reason": "Typical weekly hours for a full-time employee are normally known from standard schedules; variable overtime may require records.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "17fea41861c0081fbad1485b8bf388621e527485985166424c75fd02af5b9cf8"
+  },
+  {
+    "question_id": "I-005",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether losses are tracked, not their monetary value; a manager normally knows the business tracking practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "d9eb150eb0a6869cdf277c0784ef269521a86fe163acc80cdf3adb623f5b5e50"
+  },
+  {
+    "question_id": "I-006",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether audit rates are reported, not to calculate the rate; assume management knows its food-safety reporting practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "87599601c8d9d5c4db9b042bb676ff19abd8f4fd456b0b2cf50e40f93b6ef8ee"
+  },
+  {
+    "question_id": "I-008",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether animal health is tracked, not for a rate; operational management normally knows the monitoring practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "8c154408d498f23cfa670c9392e184db0c9410e8b0d170d0c4f4cfb31539504a"
+  },
+  {
+    "question_id": "I-015",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether workforce representation is tracked, not for employee counts or percentages.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "fc29a167dd65440d1158657852e253f925405d0ea4c852c1a9177ab048b49c34"
+  },
+  {
+    "question_id": "I-018",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether diversity metrics are tracked, not for calculated metrics.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "749233d7174f57a0016c25c85b5fdfc780562c516c6938d00b82502e800a88e3"
+  },
+  {
+    "question_id": "I-033",
+    "assignment": "direct_knowledge",
+    "reason": "Commissioning an LCA for any product is usually known to an informed owner; producing an LCA would be different work.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "37964728043897822102a7ae9c125be1c1ff347418a01470a8b2a5540217156d"
+  },
+  {
+    "question_id": "I-039",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether a risk-exposure analysis was carried out; management generally knows whether it commissioned one.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "fedf0d96d77abfcfda8aa083d1daedcb3e275a0fb01e4302ff3dbee37fb3462b"
+  },
+  {
+    "question_id": "M-001",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether emissions receive third-party verification, not for emissions totals; assume manager knows verification scope.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "a54f2a4a4620d8a054c035955d60e951bc3c1d1ca169d8e7507ca57c16c2da47"
+  },
+  {
+    "question_id": "M-014",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether progress is tracked, not to quantify progress; management normally knows its tracking practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "de6e1b9c28e3fe50af270594549c3d6cd0fc0d9601f45e635ad36999d22f999e"
+  },
+  {
+    "question_id": "M-022",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether target progress is tracked/reported; no numeric progress must be supplied. Existing skip wording preserved.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "34ceaa8cb18514d6602161008c623665e285f98521460696c8252c2434eb27ea"
+  },
+  {
+    "question_id": "M-029",
+    "assignment": "direct_knowledge",
+    "reason": "Asks whether incidents are recorded; no incident count or investigation required to answer tracking practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "c6f125c244151ad8a2384e7d095809e4be61e7542fd2908291d5d740248777d7"
+  },
+  {
+    "question_id": "M-030",
+    "assignment": "direct_knowledge",
+    "reason": "Inactive duplicate retained; same practice-existence reasoning as M-029.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "aaccadd6853c118943ffa60780ff1e22934ed28664af82f95ee549c17ed5d553"
+  },
+  {
+    "question_id": "I-028",
+    "assignment": "calculation_aggregation",
+    "reason": "A certified share across wood-fibre purchases normally combines certification and purchase quantities; no ready percentage assumed.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "4a4fdbd6efcbe3ef69609f854df6212b3e766d7c8fde09f0f24e53a939cbd9d7"
+  },
+  {
+    "question_id": "I-046",
+    "assignment": "calculation_aggregation",
+    "reason": "Inactive certified wood-fibre share likewise normally combines purchase records; preserve inactive status.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "1f43ab3bb0b0bbd4d06c90238cf64b995184dad371a6efc7aba42b7689dcdf41"
+  },
+  {
+    "question_id": "M-024",
+    "assignment": "calculation_aggregation",
+    "reason": "Annual average training hours per employee normally aggregates training hours and workforce records.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "7b63c65b2982fded0b2bbed00a435a29c872747ee66cb9662cfd8228e8908cde"
+  },
+  {
+    "question_id": "M-025",
+    "assignment": "calculation_aggregation",
+    "reason": "Inactive duplicate of annual per-employee training average; same aggregation work.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "c4761f4c866b36e7080af9de7fea87b0842554ee0de5d6f0fa64632a774644f5"
+  },
+  {
+    "question_id": "I-009",
+    "assignment": "record_lookup",
+    "reason": "Primary versus secondary data provenance across controlled processes often requires asking the GHG reporting specialist.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "d70b2908ea3ec2be8bad0892f05d1e1bc0dd3d9ce25337fa84b8c76e3e25f3bb"
+  },
+  {
+    "question_id": "I-010",
+    "assignment": "record_lookup",
+    "reason": "Identical data-provenance wording as I-009; same specialist/records requirement.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "fabba133c44c8c684bbd8c2d83456eefc583885accb4ca66ec88a7c47ec59540"
+  },
+  {
+    "question_id": "I-011",
+    "assignment": "record_lookup",
+    "reason": "Inactive duplicate retained with the same data-provenance effort as I-009 and I-010.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "4e931a54880d4c9f1884c18a91e10853456a98db62a24954dbb937d56f4511a2"
+  },
+  {
+    "question_id": "I-035",
+    "assignment": "record_lookup",
+    "reason": "Confirming compliance with all applicable animal-welfare requirements normally requires compliance records or responsible staff.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "68a6834a60a220d938748dcbaef0caa68c449e42ac63df3ac1e41aadb2a01ea7"
+  },
+  {
+    "question_id": "M-007",
+    "assignment": "record_lookup",
+    "reason": "Ensuring all taxes, levies and duties were timely normally requires finance records or confirmation from finance.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "e73c5db04531041e6cf8bce11c5be7812b2f1a87e08006e0f15906faa9fd0c12"
+  },
+  {
+    "question_id": "I-022",
+    "assignment": "needs_review",
+    "reason": "Percentage of products does not specify count, sales, mass or product-line denominator; lookup versus aggregation remains unresolved.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "3898f3ee0b5ab80100967f1ed444c9298762541bdce0b0823165cbe8ff58b234"
+  },
+  {
+    "question_id": "I-030",
+    "assignment": "needs_review",
+    "reason": "Renewable-resource share lacks a mass/spend/volume denominator; do not silently choose one for an effort classification.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "bebb3bb04d71d8ee859abf91689315d3f20e0e33090e565dc3c326372f608ef1"
+  },
+  {
+    "question_id": "IM-5",
+    "assignment": "needs_review",
+    "reason": "Wording requests total water broken down by several sources but response type is scalar numeric; answering task is unclear.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "bc4b108165abf4a8c393354382df468399b94b382aff05b6c3c27d2fba1973bb"
+  },
+  {
+    "question_id": "IM-6",
+    "assignment": "needs_review",
+    "reason": "Same breakdown-versus-single-number ambiguity as IM-5; preserve original wording and type.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "792b13b0791fd58ba1286fd3616d2c08e62990ac935f95c9142ca77c50a79164"
+  },
+  {
+    "question_id": "M-040",
+    "assignment": "needs_review",
+    "reason": "Share sourced from small/micro enterprises lacks a spend/volume/count basis; model assumed a basis not specified.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "0d60da13de468a12795ec2e7087a886b4684ea7fabac8ec0ab8a22b2d059cb3d"
+  },
+  {
+    "question_id": "U-001",
+    "assignment": "direct_knowledge",
+    "reason": "Governance boolean sample: existence of the business environmental policy is ordinary management knowledge.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "25c94835c4045a5efa29eab02f327010ce8781e00ab76b203450d881e240f5d2"
+  },
+  {
+    "question_id": "U-002",
+    "assignment": "record_lookup",
+    "reason": "Governance categorical sample: confirming data-quality review across reporting often requires responsible staff; retained with respondent-role caveat.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "5d29049d0f50c5de9c9d20a9de9ef9e4f260092e75b06fe0d82ddde96a7a026c"
+  },
+  {
+    "question_id": "M-018",
+    "assignment": "record_lookup",
+    "reason": "Governance numeric sample: substantiated annual privacy complaints should be retrieved from complaint records.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "70dd7fa811cb69c028ae63d79b9cae107faf8099f622692e784263651ee08208"
+  },
+  {
+    "question_id": "M-023",
+    "assignment": "calculation_aggregation",
+    "reason": "Governance percent sample: estimated spend share still combines qualifying and total input spend.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "45878d2ab81770e01801d2960ff637aa0a2844b5cb3bc88392ad38d29a1bc01b"
+  },
+  {
+    "question_id": "U-019",
+    "assignment": "direct_knowledge",
+    "reason": "People boolean sample: labour policy existence is ordinarily known to management.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "8998a914989e90a87279e8c9fd518ae5e5a5b0e81601985ca984a942529b1efc"
+  },
+  {
+    "question_id": "U-021",
+    "assignment": "calculation_aggregation",
+    "reason": "People percent sample: annual voluntary exits divided by the workforce requires aggregation, without choosing a new denominator rule.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "4accc981a5e46c8201b82f51ee96ff8a445111736301890776f4ec8ed927112b"
+  },
+  {
+    "question_id": "I-016",
+    "assignment": "direct_knowledge",
+    "reason": "People categorical sample: recurring employee survey practice is ordinarily known.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "3409179d8896a90b8a53bbc2673de72d6b1d34cbeee88cfb4665e806c7cfeb39"
+  },
+  {
+    "question_id": "U-025",
+    "assignment": "direct_knowledge",
+    "reason": "Resources boolean sample: knowing whether energy is tracked differs from totaling energy use.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "f72852857ebb20e609bbb6f8344e5630c4925299f0904b1ef9161a5b4c181f8f"
+  },
+  {
+    "question_id": "U-023",
+    "assignment": "direct_knowledge",
+    "reason": "Resources categorical sample: question asks whether Scope 1 is measured, not for a calculated emissions total.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "6e9afc56de796c256bd86fb8ed7ff3a966d64f4bfdc433ab5e7dfb4335e134de"
+  },
+  {
+    "question_id": "I-052",
+    "assignment": "calculation_aggregation",
+    "reason": "Resources numeric sample: emissions divided by revenue requires factor-based totals and a ratio.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "acf875521db2d18b28c6faf97693abf9e3d65558be858fce11d226f371021d54"
+  },
+  {
+    "question_id": "U-031",
+    "assignment": "calculation_aggregation",
+    "reason": "Resources percent sample: diverted waste mass over total waste mass requires combining records.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "320d915f5aa63cbe25ee720dbe53a8eea02f89d2a7b63941a59f94f6b8239be3"
+  },
+  {
+    "question_id": "U-033",
+    "assignment": "direct_knowledge",
+    "reason": "Community boolean sample: running or supporting a formal programme is ordinary management knowledge.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "183690b6a7c7f57ca0ad26e571640d741a316e56d48ddb065128341065290b4d"
+  },
+  {
+    "question_id": "I-076",
+    "assignment": "direct_knowledge",
+    "reason": "Community categorical sample: engagement as part of site planning is a known operating practice.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "9c068d136b80acc5dda1f0e6e6d911fe55b7b8daca9077bee90d3c3bf27c0daf"
+  },
+  {
+    "question_id": "U-035",
+    "assignment": "calculation_aggregation",
+    "reason": "Community numeric sample: annual volunteer hours per employee requires aggregation and division.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "a4fbfd3f0a0607cd9ac457075e82fe22e2ae29aafd2050ed5db4db5bc0b8d080"
+  },
+  {
+    "question_id": "U-036",
+    "assignment": "calculation_aggregation",
+    "reason": "Community percent sample: community investment divided by pre-tax profit requires finance figures and calculation.",
+    "reviewed_at": "2026-11-09T04:37:49.345Z",
+    "question_content_hash": "af6f7e44ab33ca050739f640afa9bce167dcf0be39dabe819b2d44dfd169e24d"
+  }
+]

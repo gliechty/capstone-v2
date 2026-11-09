@@ -1,3 +1,6 @@
+## Approved M8.0 experiment checks — owner2026-11-09
+Only isolated experiments/m8.0-v1: prepare.mjs/compare.mjs verify original CSV byte restoration after appended field removal, JSON fields/values/order, reused schema extension, unchanged Full selection against all five existing Golden exact-ID/order oracles, unchanged selector/archetype mapping. No scoring benchmark, browser/build, deployment or factor-provider calls. Paid classify.mjs is separate and requires the explicit M8.0 USD0.30/two-request allowance (approved); never run during validation.
+
 ## Approved Monday targeted QA checks — owner 2026-11-07
 D1–D7 only: reuse Claude MONDAY_TARGETED_QA evidence/profiles; focused UI/server percent100/week168 boundaries, unchanged valid scores, display-only precision and units, blank facility labels, missing-conversion message. Reuse calculator/assessment/scoring/Lever tests; bounded regression assertions authorized for these defects. Focused desktop/phone affected views, existing fixtures only, no paid calls, timestamps/deferred notes/API MVP excluded.
 
