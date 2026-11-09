@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-11-09T05:10:01.394Z",
+  "source_experiment_commit": "2d4b9f49137a55d0018ac1ff2421ca5b5f084068",
+  "effort_tags_sha256": "cc493eda07932a840c5e37e7afbd35f94645e405eca031da84c60b68fc6f85c0",
+  "scoring_module_sha256": "53036606dca56117d8af65759567036645394f48ccebbc9807004ff0c99f9fd5",
+  "multiplier_rules_sha256": "4d6a7ea252e37497c9479b2132b6f8dd86f17ac4783bb3e042f20c9a8f41ac79",
+  "checks": "All five Full selections and eligible direct-knowledge IDs/order match saved experiment. Exactly20 unique eligible questions each; min2 per category where available; category counts within supply. Ranking uses unchanged resolveMultiplier; no answers or scoreAssessment calls.",
+  "family_constraints": false,
+  "paid_calls": 0,
+  "status": "pending owner review; M8.1 unstarted"
+}

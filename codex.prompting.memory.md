@@ -1,3 +1,6 @@
+## Approved M8.0 further comparison — owner2026-11-09
+Offline twenty.mjs: verify unchanged Full/eligible IDs/order, exactly20 unique eligible questions per Golden SME, minimum2 per category where available and supply bounds; reuse original multiplier/selection functions. No model calls, answers, scoring, app/build or deployment checks.
+
 ## Approved M8.0 experiment checks — owner2026-11-09
 Only isolated experiments/m8.0-v1: prepare.mjs/compare.mjs verify original CSV byte restoration after appended field removal, JSON fields/values/order, reused schema extension, unchanged Full selection against all five existing Golden exact-ID/order oracles, unchanged selector/archetype mapping. No scoring benchmark, browser/build, deployment or factor-provider calls. Paid classify.mjs is separate and requires the explicit M8.0 USD0.30/two-request allowance (approved); never run during validation.
 
