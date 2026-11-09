@@ -12,6 +12,20 @@ test("Data Input calculator preserves review, corrections, manual answers across
  await page.goto("/assessment");
  await page.getByRole("radio",{name:/Use emissions calculator/}).check();
  await page.getByLabel("Period start",{exact:true}).fill("2025-01-01");await page.getByLabel("Period end",{exact:true}).fill("2025-12-31");
+ await expect(page.getByRole("combobox",{name:"Revenue currency",exact:true})).toHaveCount(0);
+ // Preserve the owner's historical CNY amount/scale; conversion requires explicit replacement.
+ await page.evaluate(key=>{const saved=JSON.parse(sessionStorage.getItem(key)!);saved.draft.revenue={amount:"7",currency:"CNY",scale:"millions"};sessionStorage.setItem(key,JSON.stringify(saved));},CALCULATOR_KEY);
+ await page.reload();
+ await expect(page.getByRole("status").filter({hasText:"Saved revenue retained:"})).toContainText("7 million CNY");
+ await expect(page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true})).toHaveValue("");
+ await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("1000000");
+ expect(await page.evaluate(key=>JSON.parse(sessionStorage.getItem(key)!).draft.revenue,CALCULATOR_KEY)).toEqual({amount:"7",currency:"CNY",scale:"millions"});
+ await page.reload();
+ await expect(page.getByRole("status").filter({hasText:"Saved revenue retained:"})).toContainText("7 million CNY");
+ await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("1000000");
+ await page.getByRole("button",{name:"Replace saved revenue with this USD amount",exact:true}).click();
+ expect(await page.evaluate(key=>JSON.parse(sessionStorage.getItem(key)!).draft.revenue,CALCULATOR_KEY)).toEqual({amount:"1000000",currency:"USD",scale:"units"});
+ await expect(page.getByText(/Saved revenue retained:/)).toHaveCount(0);
  await page.getByRole("button",{name:"Add source",exact:true}).click();
  await page.getByRole("textbox",{name:"Facility/location (optional)",exact:true}).fill("A");await page.getByRole("textbox",{name:"Source name",exact:true}).fill("electricity-A");
  await page.getByRole("textbox",{name:"Quantity",exact:true}).first().fill("10000");
@@ -20,13 +34,13 @@ test("Data Input calculator preserves review, corrections, manual answers across
  expect(await page.evaluate(key=>JSON.parse(sessionStorage.getItem(key)!).draft.activities[0].factorId,CALCULATOR_KEY)).toBe("legacy-C19");
  await expect(page.getByText(/Applied factor:/)).toContainText("0.5703");
  await page.getByRole("combobox",{name:"Scope 1 sources",exact:true}).selectOption("none");await page.getByRole("combobox",{name:"Scope 2 sources",exact:true}).selectOption("complete");await page.getByRole("combobox",{name:"Energy sources",exact:true}).selectOption("complete");await page.getByRole("checkbox",{name:/I understand these/}).check();
- await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100000");
+ await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("100000");
  // A temporary save failure must clear after the next successful save.
  await page.evaluate(()=>{ const original=Storage.prototype.setItem; Object.assign(window,{restoreCalculatorStorage:()=>{Storage.prototype.setItem=original;}}); Storage.prototype.setItem=function(key,value){if(key==="mosaic.calculator.reference.v1") throw new DOMException("Storage blocked","QuotaExceededError"); original.call(this,key,value);}; });
- await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100001");
+ await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("100001");
  await expect(page.getByText("Calculator entries could not be saved. Keep this page open; refresh may lose your changes.",{exact:true})).toBeVisible();
  await page.evaluate(()=>{(window as unknown as {restoreCalculatorStorage:()=>void}).restoreCalculatorStorage();});
- await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100000");
+ await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("100000");
  await expect(page.getByText("Calculator entries could not be saved. Keep this page open; refresh may lose your changes.",{exact:true})).toHaveCount(0);
  expect(await page.evaluate(key=>JSON.parse(sessionStorage.getItem(key)!).draft.revenue.amount,CALCULATOR_KEY)).toBe("100000");
  const end = page.getByLabel("Period end",{exact:true});
@@ -140,7 +154,7 @@ test("M4.5 equivalent manual and calculator inputs reach the same real determini
     await page.getByRole("combobox",{name:"Scope 1 sources",exact:true}).selectOption("none");
     for(const name of ["Scope 2 sources","Energy sources"])await page.getByRole("combobox",{name,exact:true}).selectOption("complete");
     await page.getByRole("checkbox",{name:/I understand these/}).check();
-    await page.getByRole("textbox",{name:"Same-period revenue",exact:true}).fill("100000");
+    await page.getByRole("textbox",{name:"Annual revenue (USD)",exact:true}).fill("100000");
     await page.getByRole("button",{name:"Calculate for review"}).click();
     await page.getByRole("checkbox",{name:/I confirm the selected values/}).check();
     await page.getByRole("button",{name:"Use selected values and start questionnaire",exact:true}).click();
