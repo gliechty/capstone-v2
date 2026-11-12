@@ -1,3 +1,6 @@
+## Authorized attribution checks2026-11-12
+Scoped type/lint; existing landing desktop/mobile accessibility checks plus footer keyboard navigation, authorship credit/metadata/structured-data, sitemap/robots and private-route noindex assertions. Necessary exact-merged production build and same focused public-page live smoke/header checks. No scoring/PDF/AI verification needed; no paid calls.
+
 ## Authorized USD-only revenue verification2026-11-10
 Extend existing calculator browser journey with absent currency dropdown, saved7million CNY preserved across refresh and typing a replacement, blank USD entry, explicit replacement resets currencyUSD/scaleunits and retains existing calculator transfer flow. Reuse25 calculator unit cases incl CNY-without-FX/therm example; scoped lint/type and necessary exact-source production build, focused same live journey. No paid calls/new fixtures/API work.
 
