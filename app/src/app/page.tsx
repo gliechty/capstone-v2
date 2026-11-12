@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import "../styles/landing-brand.css";
@@ -6,6 +7,13 @@ import { landingCopy } from "../content/landing";
 import { LandingScreenshot } from "../components/landing-screenshot";
 import { LandingDisclosure } from "../components/landing-disclosure";
 import { originExplanation, resultsExplanation, resultCards, methods, researchExplanations } from "../content/landing-details";
+
+export const metadata: Metadata = {
+  description: "MOSAIC sustainability assessment for small and medium enterprises. Application design and development by Guy Liechty, building on Columbia/S.E.E. capstone team research.",
+  authors: [{ name: "Guy Liechty", url: "/about/guy-liechty" }],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+};
 
 function ContextIllustration() {
   return (
@@ -130,6 +138,7 @@ export default function LandingPage() {
         <div className="page-container flex flex-wrap items-center justify-between gap-6 text-small text-muted">
           <p><span className="font-semibold text-foreground">{landingCopy.navigation.brand}</span>{landingCopy.footer.tagline}</p>
           <p>{landingCopy.footer.attribution}</p>
+          <p>MOSAIC application design and development by <Link className="nav-link" href="/about/guy-liechty">Guy Liechty</Link>.</p>
           <a href="#main-content" className="nav-link">{landingCopy.footer.backToTop}</a>
         </div>
       </footer>

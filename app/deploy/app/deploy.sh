@@ -47,6 +47,7 @@ s,n=re.subn(r'reverse_proxy 172\.[0-9.]+:3000', 'reverse_proxy '+sys.argv[1]+':3
 assert n==1
 p.write_text(s)
 PY
+python3 /opt/mosaic-app/releases/"$release"/app/deploy/app/public-indexing.py
 caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 systemctl reload caddy
 printf 'Deployed %s %s\n' "$release" "$image"

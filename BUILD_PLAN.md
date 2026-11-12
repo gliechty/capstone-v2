@@ -1,3 +1,6 @@
+## M13.1 personal attribution — scoped release2026-11-12
+Owner-authorized Guy Liechty footer credit, dedicated authorship page and search metadata preserve existing Columbia/S.E.E./team credit. Public landing/authorship are indexable; assessment/results/preview/API remain excluded. No scoring, calculator, session or API/chatbot changes. Deployment/rollback evidence in EXECUTION_PLAN.md; broader affiliation/document-sharing decisions remain open.
+
 ## M4.5 accepted and deployed2026-11-10
 Annual-period inline feedback, documented therm→kWh conversion, successful-save warning recovery and USD-only revenue entry are live. Saved CNY amounts/currency/scale retained until explicit USD replacement; no FX rate assumed. PR41/d91f0b3 and PR42/61ff575; release mosaic-c45c1e5eb7468d276bd6. Focused25 unit/static/local checks, production build and live calculator smoke passed. Emissions factors/scoring unchanged; no paid calls/API work. Prior live/configuration retained with exact rollback in EXECUTION_PLAN.md. M4.5 complete; deferred methodology and internal notes unchanged.
 

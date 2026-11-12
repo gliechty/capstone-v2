@@ -99,3 +99,31 @@ for (const width of [1440, 390, 320]) {
     expect(heading!.y).toBeGreaterThanOrEqual(header!.height);
   });
 }
+
+for (const width of [1440, 390]) {
+  test(`authorship and search metadata at ${width}`, async ({ page, request }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://preview.flowagentai.website');
+    const credit = page.getByRole('link', { name: 'Guy Liechty', exact: true });
+    await credit.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveTitle('Guy Liechty — Building MOSAIC');
+    // Inspect a fresh document as a crawler would, after checking keyboard navigation.
+    await page.reload();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Guy Liechty — Building MOSAIC');
+    await expect(page.getByText(/original student team’s research/)).toBeVisible();
+    await expect(page.getByText('Columbia Climate School · SEE', { exact: true })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+    expect(JSON.parse(await page.locator('script[type="application/ld+json"]').innerText()).mainEntity.name).toBe('Guy Liechty');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await page.goto('/assessment');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+    const sitemap = await request.get('/sitemap.xml');
+    expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(2);
+    expect(await sitemap.text()).toContain('/about/guy-liechty');
+    expect(await (await request.get('/robots.txt')).text()).toContain('Disallow: /api/');
+  });
+}
