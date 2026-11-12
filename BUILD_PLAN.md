@@ -1,3 +1,6 @@
+## M13.1 attribution delivered2026-11-12
+Guy Liechty footer/authorship/search metadata live in PR44/fdad176, release mosaic-005630594d2641320f45. Existing institutional/team credit preserved. Type/lint, focused local checks, production build and live desktop/mobile/header smoke passed. Rollback and unchanged-dependency advisory findings recorded in EXECUTION_PLAN.md; checklist row57 updated, broader affiliation/document-sharing work remains open. No paid calls/API work.
+
 ## M13.1 personal attribution — scoped release2026-11-12
 Owner-authorized Guy Liechty footer credit, dedicated authorship page and search metadata preserve existing Columbia/S.E.E./team credit. Public landing/authorship are indexable; assessment/results/preview/API remain excluded. No scoring, calculator, session or API/chatbot changes. Deployment/rollback evidence in EXECUTION_PLAN.md; broader affiliation/document-sharing decisions remain open.
 
