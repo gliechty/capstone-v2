@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const profile = {
   "@context": "https://schema.org",
   "@type": "ProfilePage", url, name: title,
-  mainEntity: { "@type": "Person", "@id": url + "#person", name: "Guy Liechty", url, description: "Application design and development for MOSAIC." },
+  mainEntity: { "@type": "Person", "@id": url + "#person", name: "Guy Liechty", url, sameAs: ["https://www.linkedin.com/in/guy-liechty/", "https://github.com/gliechty"], description: "Application design and development for MOSAIC." },
 };
 export default function AuthorshipPage() {
   return <div className="mosaic-landing">
@@ -28,6 +28,7 @@ export default function AuthorshipPage() {
         <h1 className="text-heading">Guy Liechty — Building MOSAIC</h1>
         <p className="mt-6 text-subheading">MOSAIC application design and development by Guy Liechty.</p>
         <p className="mt-6 text-muted">My work brings the project’s sustainability assessment into a working web application: business-context setup, questionnaire flows, deterministic scoring, recommendation and report delivery, and an accessible interface for small and medium enterprises.</p>
+        <nav className="mt-6 flex flex-wrap gap-6" aria-label="Guy Liechty profiles"><a className="nav-link" href="https://www.linkedin.com/in/guy-liechty/">LinkedIn</a><a className="nav-link" href="https://github.com/gliechty">GitHub</a></nav>
         <h2 className="mt-12 text-subheading">Built on a shared research foundation</h2>
         <p className="mt-6 text-muted">MOSAIC began as a Columbia University M.S. in Sustainability Management capstone project for the Society of Entrepreneurs and Ecology (S.E.E.). The original student team’s research, assessment methodology and calculator work are part of that foundation.</p>
         <p className="mt-6 text-muted">This application credit describes Guy Liechty’s design and development contribution. It does not claim sole authorship of the team’s research, methodology, calculator or source materials, or institutional endorsement.</p>

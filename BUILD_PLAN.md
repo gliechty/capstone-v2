@@ -1,3 +1,6 @@
+## M13.1 profile links preserved in source2026-11-12
+Already-live LinkedIn/GitHub navigation and Person.sameAs synchronized from server into codex/profile-links-sync for owner-authorized merge. Live mosaic-3649a37927df5bc1d1d2 unchanged; existing desktop/mobile verification reused. No rebuild/redeployment/API work. Release/rollback details in EXECUTION_PLAN.md; broader attribution/affiliation scope unchanged.
+
 ## M13.1 attribution delivered2026-11-12
 Guy Liechty footer/authorship/search metadata live in PR44/fdad176, release mosaic-005630594d2641320f45. Existing institutional/team credit preserved. Type/lint, focused local checks, production build and live desktop/mobile/header smoke passed. Rollback and unchanged-dependency advisory findings recorded in EXECUTION_PLAN.md; checklist row57 updated, broader affiliation/document-sharing work remains open. No paid calls/API work.
 
