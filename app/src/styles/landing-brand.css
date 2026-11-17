@@ -1,3 +1,58 @@
 /* Homepage inherits the shared MOSAIC palette; no layout/type overrides. */
 .mosaic-landing { color: var(--text); background: var(--surface); }
 .mosaic-landing a.button-primary:hover { background: var(--accent-hover); }
+
+/* Content hierarchy uses the shared MOSAIC tokens and native disclosures. */
+.mosaic-landing .landing-detail-body { max-width: 76ch; padding-bottom: var(--space-6); overflow-wrap: anywhere; }
+.mosaic-landing .landing-detail-block + .landing-detail-block { margin-top: var(--space-8); }
+.mosaic-landing .landing-detail-body p { padding-bottom: 0; margin-top: var(--space-4); }
+.mosaic-landing .landing-detail-body ul { list-style: disc; padding-left: var(--space-6); color: var(--text-muted); }
+.mosaic-landing .landing-detail-body li { margin-top: var(--space-3); }
+.mosaic-landing .landing-detail-body h4 { font-weight: var(--weight-semibold); line-height: var(--leading-heading); }
+.mosaic-landing .landing-formula { white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space-4); margin-top: var(--space-4); background: var(--surface); border-left: 3px solid var(--accent); font-size: var(--font-size-small); }
+.mosaic-landing .landing-planned-media { margin-top: var(--space-8); padding: var(--space-6); border: var(--border-width) dashed var(--border-strong); border-radius: var(--corner-panel); background: var(--surface-raised); }
+.mosaic-landing .landing-method { padding: var(--space-6); background: var(--surface-raised); border: var(--border-width) solid var(--border); border-radius: var(--corner-panel); }
+.mosaic-landing .landing-disclosure summary { min-height: var(--control-height); }
+@media (max-width: 600px) { .mosaic-landing .landing-method, .mosaic-landing .landing-planned-media { padding: var(--space-4); } }
+
+/* Paragraph links must wrap as text, without standalone-control height. */
+.mosaic-landing .landing-inline-link { display: inline; min-height: 0; }
+.mosaic-landing .landing-screenshot { display: block; position: relative; aspect-ratio: 16 / 10; overflow: hidden; margin-bottom: var(--space-6); border: 1px solid var(--border); border-radius: var(--corner-panel); background: var(--surface); }
+.mosaic-landing .landing-screenshot img { position: absolute; width: 180%; max-width: none; height: auto; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.mosaic-landing .landing-screenshot:hover { border-color: var(--accent); }
+.mosaic-landing .landing-source-links li { overflow-wrap: anywhere; }
+
+/* Same native-dialog behavior and shared tokens as Results source dialogs. */
+.mosaic-landing .landing-screenshot { width: 100%; cursor: zoom-in; }
+.mosaic-landing .landing-image-dialog { width: min(90rem, calc(100vw - 2rem)); max-height: 92dvh; overflow: auto; margin: auto; padding: clamp(1rem, 2vw, 2rem); background: var(--surface-raised); color: var(--text); border: 1px solid var(--border); border-radius: var(--corner-panel); }
+.mosaic-landing .landing-image-dialog::backdrop { background: rgb(0 0 0 / .45); }
+.mosaic-landing .landing-image-dialog-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); }
+.mosaic-landing .landing-image-dialog-header h2 { flex: 1 1 14rem; }
+.mosaic-landing .landing-image-full { display: block; width: 100%; height: auto; max-height: 70dvh; object-fit: contain; }
+
+.landing-menu-button { display: none; }
+.mosaic-landing .landing-disclosure summary { display: flex; align-items: baseline; gap: .65rem; list-style: none; }
+.mosaic-landing .landing-disclosure summary::-webkit-details-marker { display: none; }
+.mosaic-landing .landing-disclosure summary::before { content: "▸"; flex: 0 0 .75rem; }
+.mosaic-landing .landing-disclosure[open] > summary::before { content: "▾"; }
+.landing-media-label { display: inline-block; margin-left: .75rem; font-size: .8rem; font-weight: normal; color: var(--text-muted); }
+.mosaic-landing .landing-detail-heading { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+.mosaic-landing .landing-detail-body h4 { font-size: 1rem; }
+.mosaic-landing .landing-detail-body figure + .landing-detail-block { margin-top: var(--space-8); }
+.mosaic-landing .landing-image-dialog { overflow: hidden; }
+.landing-image-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+.landing-image-pan { overflow: auto; max-height: 60dvh; overscroll-behavior: contain; }
+.mosaic-landing .landing-image-full { max-width: none; max-height: none; }
+@media (min-width: 768px) { .landing-hero-art { align-self: center; transform: translateY(-1rem); } }
+@media (max-width: 640px) {
+  .landing-header > div { padding-block: .625rem; gap: .5rem; }
+  .landing-header > div > a { order: 0; }
+  .landing-menu-button { display: grid; place-items: center; order: 1; min-width: 44px; min-height: 44px; font-size: 1.6rem; }
+  .landing-header nav { order: 2; flex-basis: 100%; }
+  .landing-header[data-menu-open="false"] nav { display: none; }
+  .landing-header nav a { min-height: 44px; }
+  .landing-hero { padding-top: 1.25rem; padding-bottom: 2rem; gap: 1.5rem; }
+  .landing-hero h1 { margin-top: .75rem; }
+  .landing-hero h1 + p { margin-top: 1rem; }
+  .mosaic-landing .landing-image-dialog { width: calc(100vw - 1rem); padding: .75rem; }
+}

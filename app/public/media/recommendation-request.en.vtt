@@ -1,0 +1,263 @@
+WEBVTT
+
+NOTE Cues sit near the top (line:4%) so they don't cover on-screen labels.
+
+1a-1
+00:00:00.500 --> 00:00:02.801 line:4% align:center
+Scores tell a business where it stands.
+
+1a-2
+00:00:02.801 --> 00:00:05.160 line:4% align:center
+Recommendations suggest what to do next.
+
+1b-1
+00:00:05.570 --> 00:00:08.750 line:4% align:center
+So what does the AI actually see when it writes them?
+
+2a-1
+00:00:09.460 --> 00:00:11.936 line:4% align:center
+For recommendations, the application first
+
+2a-2
+00:00:11.936 --> 00:00:14.707 line:4% align:center
+calculates the scores. The model receives those
+
+2a-3
+00:00:14.707 --> 00:00:16.770 line:4% align:center
+results; it doesn’t calculate them.
+
+2b-1
+00:00:17.150 --> 00:00:20.032 line:4% align:center
+The application builds one request, in code,
+
+2b-2
+00:00:20.032 --> 00:00:21.080 line:4% align:center
+with four parts:
+
+2c-1
+00:00:21.240 --> 00:00:25.198 line:4% align:center
+context, answers and scores, selected evidence,
+
+2c-2
+00:00:25.198 --> 00:00:26.630 line:4% align:center
+and instructions.
+
+3a-1
+00:00:27.310 --> 00:00:29.980 line:4% align:center
+First, the context of our fictional food
+
+3a-2
+00:00:29.980 --> 00:00:32.851 line:4% align:center
+business in Peru. Then its answers, and the
+
+3a-3
+00:00:32.851 --> 00:00:34.720 line:4% align:center
+scores calculated from them.
+
+4a-1
+00:00:35.590 --> 00:00:36.820 line:4% align:center
+Next, the evidence.
+
+4b-1
+00:00:37.050 --> 00:00:40.074 line:4% align:center
+Without reference material, an AI model relies
+
+4b-2
+00:00:40.074 --> 00:00:42.900 line:4% align:center
+on patterns learned during training. It can
+
+4b-3
+00:00:42.900 --> 00:00:46.055 line:4% align:center
+produce convincing answers that contain mistakes
+
+4b-4
+00:00:46.055 --> 00:00:47.370 line:4% align:center
+or invented details.
+
+4c-1
+00:00:47.960 --> 00:00:51.430 line:4% align:center
+MOSAIC uses retrieval-augmented generation, or
+
+4c-2
+00:00:51.430 --> 00:00:55.051 line:4% align:center
+RAG. Think of it as giving the model a reference
+
+4c-3
+00:00:55.051 --> 00:00:57.390 line:4% align:center
+pack before asking it to write.
+
+4d-1
+00:00:57.720 --> 00:01:00.525 line:4% align:center
+The application selects passages from MOSAIC’s
+
+4d-2
+00:01:00.525 --> 00:01:03.025 line:4% align:center
+knowledge base using rules that match the
+
+4d-3
+00:01:03.025 --> 00:01:05.952 line:4% align:center
+business’s context and relevant topics. It sends
+
+4d-4
+00:01:05.952 --> 00:01:08.818 line:4% align:center
+those passages alongside the business’s answers
+
+4d-5
+00:01:08.818 --> 00:01:10.160 line:4% align:center
+and calculated scores.
+
+4e-1
+00:01:10.280 --> 00:01:13.186 line:4% align:center
+The model is instructed to use that evidence and
+
+4e-2
+00:01:13.186 --> 00:01:15.849 line:4% align:center
+cite its sources. This is intended to reduce
+
+4e-3
+00:01:15.849 --> 00:01:18.634 line:4% align:center
+unsupported claims and makes the advice easier
+
+4e-4
+00:01:18.634 --> 00:01:21.600 line:4% align:center
+to check, although it doesn’t guarantee accuracy.
+
+4f-1
+00:01:21.810 --> 00:01:26.057 line:4% align:center
+Because the selection follows rules, it can be
+
+4f-2
+00:01:26.057 --> 00:01:28.180 line:4% align:center
+inspected and repeated.
+
+4g-1
+00:01:28.330 --> 00:01:31.023 line:4% align:center
+Keeping the reference pack focused controls
+
+4g-2
+00:01:31.023 --> 00:01:34.028 line:4% align:center
+processing costs. A separate review is needed to
+
+4g-3
+00:01:34.028 --> 00:01:37.660 line:4% align:center
+check whether the selection leaves out important guidance.
+
+5a-1
+00:01:38.560 --> 00:01:40.460 line:4% align:center
+Last, the instructions.
+
+5b-1
+00:01:40.610 --> 00:01:43.413 line:4% align:center
+Start from the business’s actual answers, then
+
+5b-2
+00:01:43.413 --> 00:01:46.520 line:4% align:center
+the evidence, and use the scores to set priorities.
+
+5c-1
+00:01:46.770 --> 00:01:49.375 line:4% align:center
+Keep every recommendation realistic for a
+
+5c-2
+00:01:49.375 --> 00:01:50.710 line:4% align:center
+company of this size.
+
+5d-1
+00:01:51.080 --> 00:01:53.669 line:4% align:center
+Don’t introduce laws, standards or numeric
+
+5d-2
+00:01:53.669 --> 00:01:56.135 line:4% align:center
+thresholds unless the retrieved evidence
+
+5d-3
+00:01:56.135 --> 00:01:58.785 line:4% align:center
+supports them, and cite the source for each
+
+5d-4
+00:01:58.785 --> 00:01:59.710 line:4% align:center
+recommendation.
+
+6a-1
+00:02:00.390 --> 00:02:03.176 line:4% align:center
+The model returns a structured result: a short
+
+6a-2
+00:02:03.176 --> 00:02:05.962 line:4% align:center
+summary, up to five recommendations, and up to
+
+6a-3
+00:02:05.962 --> 00:02:06.870 line:4% align:center
+three key gaps.
+
+6b-1
+00:02:07.170 --> 00:02:09.491 line:4% align:center
+Here’s one, from a saved result for this
+
+6b-2
+00:02:09.491 --> 00:02:13.030 line:4% align:center
+business: put in place basic waste and packaging measurement.
+
+6c-1
+00:02:13.280 --> 00:02:16.392 line:4% align:center
+It starts from what the business reported: waste
+
+6c-2
+00:02:16.392 --> 00:02:18.856 line:4% align:center
+isn’t tracked, and packaging isn’t yet
+
+6c-3
+00:02:18.856 --> 00:02:21.320 line:4% align:center
+eco-friendly. And it names its source.
+
+7a-1
+00:02:21.970 --> 00:02:23.070 line:4% align:center
+Then the checks.
+
+7b-1
+00:02:23.260 --> 00:02:26.038 line:4% align:center
+Automated checks test the expected structure and
+
+7b-2
+00:02:26.038 --> 00:02:28.354 line:4% align:center
+source references. Assessing whether the
+
+7b-3
+00:02:28.354 --> 00:02:31.132 line:4% align:center
+evidence supports the advice requires a separate
+
+7b-4
+00:02:31.132 --> 00:02:32.000 line:4% align:center
+quality review.
+
+8a-1
+00:02:33.320 --> 00:02:36.206 line:4% align:center
+MOSAIC controls the calculation, the evidence
+
+8a-2
+00:02:36.206 --> 00:02:39.092 line:4% align:center
+selection and the request. The model supplies
+
+8a-3
+00:02:39.092 --> 00:02:40.310 line:4% align:center
+the interpretation.
+
+8b-1
+00:02:40.730 --> 00:02:42.851 line:4% align:center
+The same inputs, configuration and
+
+8b-2
+00:02:42.851 --> 00:02:45.845 line:4% align:center
+knowledge-base version produce the same evidence
+
+8b-3
+00:02:45.845 --> 00:02:48.776 line:4% align:center
+selection and request construction. The wording
+
+8b-4
+00:02:48.776 --> 00:02:52.020 line:4% align:center
+of the advice can vary; the scores beneath it don’t.
+
+9a-1
+00:02:52.980 --> 00:02:55.460 line:4% align:center
+MOSAIC. The pieces that matter.

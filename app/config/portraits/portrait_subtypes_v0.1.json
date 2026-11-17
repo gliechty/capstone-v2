@@ -1,0 +1,373 @@
+{
+  "_status": "Supplied v0.1 pairs; metadata reconciled to owner authorization 2026-11-02. Supplied pair IDs, names and artwork unchanged. Subtitles adapted to describe observed answers without implying connected practices. Original JSON and CSV retained as comparison evidence; runtime JSON is authoritative.",
+  "subtype_rule_version": "0.1",
+  "requires_portrait_rule_version": "portrait-beta-1",
+  "families": {
+    "commit": {
+      "label": "Commit",
+      "archetype": "Anchor",
+      "noun": "commitments"
+    },
+    "measure": {
+      "label": "Measure",
+      "archetype": "Chronicler",
+      "noun": "measurement"
+    },
+    "plan": {
+      "label": "Plan",
+      "archetype": "Navigator",
+      "noun": "planning"
+    },
+    "do": {
+      "label": "Do",
+      "archetype": "Steward",
+      "noun": "practice"
+    },
+    "engage": {
+      "label": "Engage",
+      "archetype": "Partner",
+      "noun": "engagement"
+    }
+  },
+  "rules": {
+    "select": "two highest readable families (existing readability rule)",
+    "both_at_or_above": "existing mapping strengthFloor (approved beta 0.5); both readable families qualify",
+    "if_second_below_floor": "show the single archetype exactly as version 1.0",
+    "ties": "existing tie order: higher pct, more answered, then commit, measure, plan, do, engage",
+    "shared_lead_note": "when the top two percentages are equal, show 'Shared lead'",
+    "explorer_and_portrait_in_progress": "unchanged, never get a subtype",
+    "next_step": "unchanged: weakest readable family; existing Lever is the only recommended action",
+    "deferred": [
+      "near-tie margin",
+      "balance threshold"
+    ]
+  },
+  "templates": {
+    "subtitle": "{Noun1} lead(s), supported by {noun2}.",
+    "why": "{Family1} is the strongest readable family in your current answers ({pct1}%), and {Family2} is second ({pct2}%).",
+    "shared_lead": "Shared lead: {Family1} and {Family2} are equal ({pct}%).",
+    "footer": "From current answers, not verified business behavior."
+  },
+  "subtypes": [
+    {
+      "subtype_id": "A-CO-ME",
+      "strongest_family": "commit",
+      "second_family": "measure",
+      "primary_archetype_id": "arch-anchor",
+      "primary_archetype_label": "Anchor",
+      "name": "The Scribe",
+      "plain_subtitle": "Your answers emphasize commitments, followed by measurement.",
+      "artwork": "svg/roles/role-scribe.svg",
+      "family_icons": [
+        "svg/families/arch-anchor-small.svg",
+        "svg/families/arch-chronicler-small.svg"
+      ],
+      "naming_note_reviewer_only": "Puts things in writing and keeps them on record.",
+      "readability_check": "Slightly old-fashioned; widely known."
+    },
+    {
+      "subtype_id": "A-CO-PL",
+      "strongest_family": "commit",
+      "second_family": "plan",
+      "primary_archetype_id": "arch-anchor",
+      "primary_archetype_label": "Anchor",
+      "name": "The Founder",
+      "plain_subtitle": "Your answers emphasize commitments, followed by planning.",
+      "artwork": "svg/roles/role-founder.svg",
+      "family_icons": [
+        "svg/families/arch-anchor-small.svg",
+        "svg/families/arch-navigator-small.svg"
+      ],
+      "naming_note_reviewer_only": "Sets out principles and a direction.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-CO-DO",
+      "strongest_family": "commit",
+      "second_family": "do",
+      "primary_archetype_id": "arch-anchor",
+      "primary_archetype_label": "Anchor",
+      "name": "The Guardian",
+      "plain_subtitle": "Your answers emphasize commitments, followed by practice.",
+      "artwork": "svg/roles/role-guardian.svg",
+      "family_icons": [
+        "svg/families/arch-anchor-small.svg",
+        "svg/families/arch-steward-small.svg"
+      ],
+      "naming_note_reviewer_only": "Holds to principles and looks after the work.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-CO-EN",
+      "strongest_family": "commit",
+      "second_family": "engage",
+      "primary_archetype_id": "arch-anchor",
+      "primary_archetype_label": "Anchor",
+      "name": "The Ambassador",
+      "plain_subtitle": "Your answers emphasize commitments, followed by engagement.",
+      "artwork": "svg/roles/role-ambassador.svg",
+      "family_icons": [
+        "svg/families/arch-anchor-small.svg",
+        "svg/families/arch-partner-small.svg"
+      ],
+      "naming_note_reviewer_only": "Stands for stated principles in front of others.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-ME-CO",
+      "strongest_family": "measure",
+      "second_family": "commit",
+      "primary_archetype_id": "arch-chronicler",
+      "primary_archetype_label": "Chronicler",
+      "name": "The Bookkeeper",
+      "plain_subtitle": "Your answers emphasize measurement, followed by commitments.",
+      "artwork": "svg/roles/role-bookkeeper.svg",
+      "family_icons": [
+        "svg/families/arch-chronicler-small.svg",
+        "svg/families/arch-anchor-small.svg"
+      ],
+      "naming_note_reviewer_only": "Keeps careful books under set rules.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-ME-PL",
+      "strongest_family": "measure",
+      "second_family": "plan",
+      "primary_archetype_id": "arch-chronicler",
+      "primary_archetype_label": "Chronicler",
+      "name": "The Surveyor",
+      "plain_subtitle": "Your answers emphasize measurement, followed by planning.",
+      "artwork": "svg/roles/role-surveyor.svg",
+      "family_icons": [
+        "svg/families/arch-chronicler-small.svg",
+        "svg/families/arch-navigator-small.svg"
+      ],
+      "naming_note_reviewer_only": "Measures the ground before anything is planned.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-ME-DO",
+      "strongest_family": "measure",
+      "second_family": "do",
+      "primary_archetype_id": "arch-chronicler",
+      "primary_archetype_label": "Chronicler",
+      "name": "The Engineer",
+      "plain_subtitle": "Your answers emphasize measurement, followed by practice.",
+      "artwork": "svg/roles/role-engineer.svg",
+      "family_icons": [
+        "svg/families/arch-chronicler-small.svg",
+        "svg/families/arch-steward-small.svg"
+      ],
+      "naming_note_reviewer_only": "Measures, then makes things work.",
+      "readability_check": "Could read as the engineering industry."
+    },
+    {
+      "subtype_id": "A-ME-EN",
+      "strongest_family": "measure",
+      "second_family": "engage",
+      "primary_archetype_id": "arch-chronicler",
+      "primary_archetype_label": "Chronicler",
+      "name": "The Treasurer",
+      "plain_subtitle": "Your answers emphasize measurement, followed by engagement.",
+      "artwork": "svg/roles/role-treasurer.svg",
+      "family_icons": [
+        "svg/families/arch-chronicler-small.svg",
+        "svg/families/arch-partner-small.svg"
+      ],
+      "naming_note_reviewer_only": "Keeps the accounts for a group of people.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-PL-CO",
+      "strongest_family": "plan",
+      "second_family": "commit",
+      "primary_archetype_id": "arch-navigator",
+      "primary_archetype_label": "Navigator",
+      "name": "The Architect",
+      "plain_subtitle": "Your answers emphasize planning, followed by commitments.",
+      "artwork": "svg/roles/role-architect.svg",
+      "family_icons": [
+        "svg/families/arch-navigator-small.svg",
+        "svg/families/arch-anchor-small.svg"
+      ],
+      "naming_note_reviewer_only": "Draws plans on firm principles.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-PL-ME",
+      "strongest_family": "plan",
+      "second_family": "measure",
+      "primary_archetype_id": "arch-navigator",
+      "primary_archetype_label": "Navigator",
+      "name": "The Mapmaker",
+      "plain_subtitle": "Your answers emphasize planning, followed by measurement.",
+      "artwork": "svg/roles/role-mapmaker.svg",
+      "family_icons": [
+        "svg/families/arch-navigator-small.svg",
+        "svg/families/arch-chronicler-small.svg"
+      ],
+      "naming_note_reviewer_only": "Charts the way from measurements.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-PL-DO",
+      "strongest_family": "plan",
+      "second_family": "do",
+      "primary_archetype_id": "arch-navigator",
+      "primary_archetype_label": "Navigator",
+      "name": "The Coach",
+      "plain_subtitle": "Your answers emphasize planning, followed by practice.",
+      "artwork": "svg/roles/role-coach.svg",
+      "family_icons": [
+        "svg/families/arch-navigator-small.svg",
+        "svg/families/arch-steward-small.svg"
+      ],
+      "naming_note_reviewer_only": "Makes the game plan and runs the practice.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-PL-EN",
+      "strongest_family": "plan",
+      "second_family": "engage",
+      "primary_archetype_id": "arch-navigator",
+      "primary_archetype_label": "Navigator",
+      "name": "The Guide",
+      "plain_subtitle": "Your answers emphasize planning, followed by engagement.",
+      "artwork": "svg/roles/role-guide.svg",
+      "family_icons": [
+        "svg/families/arch-navigator-small.svg",
+        "svg/families/arch-partner-small.svg"
+      ],
+      "naming_note_reviewer_only": "Knows the route and leads others along it.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-DO-CO",
+      "strongest_family": "do",
+      "second_family": "commit",
+      "primary_archetype_id": "arch-steward",
+      "primary_archetype_label": "Steward",
+      "name": "The Artisan",
+      "plain_subtitle": "Your answers emphasize practice, followed by commitments.",
+      "artwork": "svg/roles/role-artisan.svg",
+      "family_icons": [
+        "svg/families/arch-steward-small.svg",
+        "svg/families/arch-anchor-small.svg"
+      ],
+      "naming_note_reviewer_only": "Skilled hands working to a standard.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-DO-ME",
+      "strongest_family": "do",
+      "second_family": "measure",
+      "primary_archetype_id": "arch-steward",
+      "primary_archetype_label": "Steward",
+      "name": "The Technician",
+      "plain_subtitle": "Your answers emphasize practice, followed by measurement.",
+      "artwork": "svg/roles/role-technician.svg",
+      "family_icons": [
+        "svg/families/arch-steward-small.svg",
+        "svg/families/arch-chronicler-small.svg"
+      ],
+      "naming_note_reviewer_only": "Hands-on work, checked by measurement.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-DO-PL",
+      "strongest_family": "do",
+      "second_family": "plan",
+      "primary_archetype_id": "arch-steward",
+      "primary_archetype_label": "Steward",
+      "name": "The Pilot",
+      "plain_subtitle": "Your answers emphasize practice, followed by planning.",
+      "artwork": "svg/roles/role-pilot.svg",
+      "family_icons": [
+        "svg/families/arch-steward-small.svg",
+        "svg/families/arch-navigator-small.svg"
+      ],
+      "naming_note_reviewer_only": "Hands on the controls, following a flight plan.",
+      "readability_check": "Close in meaning to the Navigator; could read as aviation."
+    },
+    {
+      "subtype_id": "A-DO-EN",
+      "strongest_family": "do",
+      "second_family": "engage",
+      "primary_archetype_id": "arch-steward",
+      "primary_archetype_label": "Steward",
+      "name": "The Neighbor",
+      "plain_subtitle": "Your answers emphasize practice, followed by engagement.",
+      "artwork": "svg/roles/role-neighbor.svg",
+      "family_icons": [
+        "svg/families/arch-steward-small.svg",
+        "svg/families/arch-partner-small.svg"
+      ],
+      "naming_note_reviewer_only": "Does the work and helps the people nearby.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-EN-CO",
+      "strongest_family": "engage",
+      "second_family": "commit",
+      "primary_archetype_id": "arch-partner",
+      "primary_archetype_label": "Partner",
+      "name": "The Mediator",
+      "plain_subtitle": "Your answers emphasize engagement, followed by commitments.",
+      "artwork": "svg/roles/role-mediator.svg",
+      "family_icons": [
+        "svg/families/arch-partner-small.svg",
+        "svg/families/arch-anchor-small.svg"
+      ],
+      "naming_note_reviewer_only": "Brings people together under agreed rules.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-EN-ME",
+      "strongest_family": "engage",
+      "second_family": "measure",
+      "primary_archetype_id": "arch-partner",
+      "primary_archetype_label": "Partner",
+      "name": "The Coordinator",
+      "plain_subtitle": "Your answers emphasize engagement, followed by measurement.",
+      "artwork": "svg/roles/role-coordinator.svg",
+      "family_icons": [
+        "svg/families/arch-partner-small.svg",
+        "svg/families/arch-chronicler-small.svg"
+      ],
+      "naming_note_reviewer_only": "Works across people and keeps track.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-EN-PL",
+      "strongest_family": "engage",
+      "second_family": "plan",
+      "primary_archetype_id": "arch-partner",
+      "primary_archetype_label": "Partner",
+      "name": "The Organizer",
+      "plain_subtitle": "Your answers emphasize engagement, followed by planning.",
+      "artwork": "svg/roles/role-organizer.svg",
+      "family_icons": [
+        "svg/families/arch-partner-small.svg",
+        "svg/families/arch-navigator-small.svg"
+      ],
+      "naming_note_reviewer_only": "Brings people together around a plan.",
+      "readability_check": null
+    },
+    {
+      "subtype_id": "A-EN-DO",
+      "strongest_family": "engage",
+      "second_family": "do",
+      "primary_archetype_id": "arch-partner",
+      "primary_archetype_label": "Partner",
+      "name": "The Weaver",
+      "plain_subtitle": "Your answers emphasize engagement, followed by practice.",
+      "artwork": "svg/roles/role-weaver.svg",
+      "family_icons": [
+        "svg/families/arch-partner-small.svg",
+        "svg/families/arch-steward-small.svg"
+      ],
+      "naming_note_reviewer_only": "Many threads worked by hand into one cloth.",
+      "readability_check": "Kept as intuitive; could read as the textile industry."
+    }
+  ]
+}

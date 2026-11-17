@@ -1,0 +1,16 @@
+{
+  "version": "quick-proportional-1",
+  "targetCount": 20,
+  "minimumPerCategory": 2,
+  "effortVersion": "m8-effort-v1",
+  "eligibleEffort": "direct_knowledge",
+  "allocation": "constrained-proportional-largest-remainder",
+  "ranking": "base-weight-times-capped-profile-multiplier",
+  "questionTieBreak": "source-order",
+  "categoryTieBreak": [
+    "People",
+    "Governance",
+    "Community",
+    "Resources"
+  ]
+}

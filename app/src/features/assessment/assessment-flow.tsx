@@ -1,6 +1,12 @@
 "use client";
+import { suggestedRegion } from "../../application/country-regions";
+import { quickRequest } from "./quick-request";
+import { displayAnswer } from "../../application/display-value";
+
 
 import Link from "next/link";
+import { FieldHelp } from "./field-help";
+import { MarketPicker } from "./market-picker";
 import { CountryPicker } from "./country-picker";
 import Image from "next/image";
 import { CalculatorProvenance } from "../calculator/metric-review";
@@ -17,7 +23,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from "re
 import { MobileQuestionRail, ProgressNavigator } from "./progress-navigator";
 import { AssessmentProvider, useAssessment, catalogProfileErrors } from "./assessment-context";
 import { answerError, profileFields, progressLabel, unanswered, type ProfileKey } from "./model";
-import { marketValues, toggleMarket } from "../../application/assessment-setup";
+
 import type { AssessmentCatalog, Question } from "../../application/assessment-catalog";
 
 function StageHeading({ children }: { children: string }) {
@@ -26,20 +32,46 @@ function StageHeading({ children }: { children: string }) {
   return <h1 ref={ref} tabIndex={-1} className="stage-heading text-heading">{children}</h1>;
 }
 
+const setupPrompts: Partial<Record<ProfileKey, string>> = {
+  companyName: "Enter company name", industry: "Choose an industry", subindustry: "Add a specific activity",
+  companySize: "Choose an employee band", location: "Choose a region", targetBuyer: "Choose a buyer type",
+  businessGoal: "Choose a business goal", notes: "Add business context or buyer requirements",
+};
+const setupHelp: Partial<Record<ProfileKey, string>> = {
+  country: "Select a country from the search results. The current calculator is enabled for China only and uses the China reference workbook. Other countries can use manual data entry.",
+  location: "This is your business's home region, not its target sales markets. Country selection may suggest a region; you can change it.",
+  targetMarket: "Choose up to two regions. Your first choice is primary; your second is secondary. Uncheck a selected market to remove it.",
+  businessGoal: "Examples: attract new investors or prepare for procurement screening.",
+  notes: "Add relevant business context or buyer requirements, up to 1,000 characters.",
+};
+
 function Setup() {
   const { session, dispatch, catalog } = useAssessment();
   const [submitted, setSubmitted] = useState(false);
+  const [selecting,setSelecting]=useState(false);
+  const [selectionError,setSelectionError]=useState("");
   const [countrySearchPending, setCountrySearchPending] = useState(false);
   const errors = catalogProfileErrors(catalog, session.profile);
   if (countrySearchPending) errors.country = "Choose a country from the search results, or clear this optional field.";
-  const markets = marketValues(session.profile.targetMarket);
-  function submit(event: FormEvent<HTMLFormElement>) {
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitted(true);
     const first = profileFields.find((field) => errors[field.key]);
     if (first) {
       const control = first.key === "targetMarket" ? event.currentTarget.querySelector<HTMLInputElement>('[name="targetMarket"]') : event.currentTarget.elements.namedItem(first.key);
       if (control instanceof HTMLElement) control.focus();
+      return;
+    }
+    if(session.assessmentProfile){
+      setSelecting(true);setSelectionError("");
+      try{
+        const response=await fetch("/api/quick-assessment",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(quickRequest(session,"select"))});
+        const result=await response.json();
+        if(!response.ok || !Array.isArray(result.questionIds) || !result.questionIds.length)throw Error("Quick selection unavailable");
+        dispatch({type:"quick-selection",version:result.version,questionIds:result.questionIds});
+      }catch{setSelectionError("Quick questions could not be selected. Review your business context and try again.");}
+      finally{setSelecting(false);}
       return;
     }
     dispatch({ type: "method" });
@@ -49,58 +81,50 @@ function Setup() {
       <span className="section-label">01 / Business context</span>
       <StageHeading>Tell us about your business.</StageHeading>
       <p className="mt-4 text-muted">Enter your business context. Fields marked required must be completed; subindustry and additional context are optional.</p>
-      <form className="mt-8" noValidate onSubmit={submit}>
+      <form className="mt-8" noValidate onSubmit={submit}><fieldset disabled={selecting}>
         {submitted && Object.keys(errors).length > 0 && <p role="alert" className="form-error mb-6">Please check the highlighted fields before continuing.</p>}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="context-grid">
           {profileFields.map((field) => {
             const error = submitted ? errors[field.key] : undefined;
             const id = "profile-" + field.key;
-            if (field.key === "targetMarket") return <fieldset key={field.key} className="market-field" aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")} aria-invalid={Boolean(error)}>
-              <legend className="field-label">Target markets <span className="text-small font-normal text-muted">(required)</span></legend>
-              <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              <div className="market-choices">
-                {catalog.setupOptions.targetMarket.map(option => <label key={option.value} className="market-choice">
-                  <input type="checkbox" name="targetMarket" value={option.value} checked={markets.includes(option.value)}
-                    disabled={markets.length === 2 && !markets.includes(option.value)}
-                    onChange={() => dispatch({ type: "profile", field: "targetMarket", value: toggleMarket(session.profile.targetMarket, option.value) })} />
-                  <span>{option.label}</span>
-                </label>)}
-              </div>
-              <div className="mt-3 text-small" role="status" aria-live="polite">
-                {markets.length === 0 ? <p>No target markets selected.</p> : <ol className="grid gap-2">
-                  {markets.map((market, index) => <li key={market} className="flex items-center justify-between gap-2">
-                    <span>{index === 0 ? "Primary" : "Secondary"}: {market}</span>
-                    <button type="button" className="text-link" aria-label={"Remove " + market} onClick={() => dispatch({ type: "profile", field: "targetMarket", value: toggleMarket(session.profile.targetMarket, market) })}>Remove</button>
-                  </li>)}
-                </ol>}
-                {markets.length === 2 && <p className="mt-2 text-muted">Two markets selected. Deselect one to choose another.</p>}
-              </div>
-              {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
-            </fieldset>;
-            return <div key={field.key}>
-              <label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
-              <p id={id + "-hint"} className="mb-2 text-small text-muted">{field.hint}</p>
-              {field.key === "country" ? <CountryPicker onPendingChange={setCountrySearchPending} id={id} value={session.profile.country ?? ""} onChange={value => dispatch({ type: "profile", field: "country", value })} describedBy={id + "-hint" + (error ? " " + id + "-error" : "")} invalid={Boolean(error)} /> : field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4}
+            const help = setupHelp[field.key];
+            const describedBy = [help ? id + "-hint" : "", error ? id + "-error" : ""].filter(Boolean).join(" ");
+            if (field.key === "targetMarket") return <div key={field.key} role="group" className="context-field market-field" aria-labelledby={id + "-label"} aria-describedby={describedBy}>
+              <div className="context-field-heading"><span id={id + "-label"} className="field-label">Target markets <span className="text-small font-normal text-muted">(required)</span></span>
+                <FieldHelp id={id + "-hint"} label="Target markets">{help!}</FieldHelp></div>
+              <MarketPicker value={session.profile.targetMarket} options={catalog.setupOptions.targetMarket}
+                onChange={value => dispatch({ type: "profile", field: "targetMarket", value })} describedBy={describedBy} />
+              <div className="context-field-feedback">{error && <p id={id + "-error"} className="form-error">{error}</p>}</div>
+            </div>;
+            return <div key={field.key} className="context-field">
+              <div className="context-field-heading"><label htmlFor={id} className="field-label">{field.label} <span className="text-small font-normal text-muted">({field.required ? "required" : "optional"})</span></label>
+                {help && <FieldHelp id={id + "-hint"} label={field.label}>{help}</FieldHelp>}</div>
+              <div>
+              {field.key === "country" ? <CountryPicker onPendingChange={setCountrySearchPending} id={id} value={session.profile.country ?? ""} onChange={value => dispatch({ type: "profile", field: "country", value })} describedBy={describedBy} invalid={Boolean(error)} /> : field.key === "notes" ? <textarea id={id} name={field.key} className="field-control" rows={4} placeholder={setupPrompts[field.key]}
                 maxLength={NOTES_MAX_LENGTH} value={session.profile.notes} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: "notes", value: event.target.value })} />
                 : field.key !== "companyName" && field.key !== "subindustry" ? <select id={id} name={field.key} className="field-control"
                 required value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: field.key, value: event.target.value })}>
-                <option value="">Choose one</option>
+                <option value="">{setupPrompts[field.key] ?? "Choose one"}</option>
                 {catalog.setupOptions[field.key].map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
-              </select> : <input id={id} name={field.key} className="field-control" type="text"
+              </select> : <input id={id} name={field.key} className="field-control" type="text" placeholder={setupPrompts[field.key]}
                 autoComplete={field.key === "companyName" ? "organization" : "off"} required={field.required} maxLength={200}
                 value={session.profile[field.key] ?? ""} aria-invalid={Boolean(error)}
-                aria-describedby={id + "-hint" + (error ? " " + id + "-error" : "")}
+                aria-describedby={describedBy}
                 onChange={event => dispatch({ type: "profile", field: field.key as ProfileKey, value: event.target.value })} />}
+              </div>
+              <div className="context-field-feedback">
+              {field.key === "location" && session.profile.country && <p className="mt-2 text-small text-muted" role="status">{suggestedRegion(session.profile.country) ? "Suggested region: " + suggestedRegion(session.profile.country) + ". You can change it." : "No suggested region for this country. Please select your region."}</p>}
               {error && <p id={id + "-error"} className="form-error mt-2">{error}</p>}
+              </div>
             </div>;
           })}
         </div>
-        <button className="button-primary mt-8" type="submit">Continue to input method <span aria-hidden="true">→</span></button>
-      </form>
+        <button className="button-primary mt-8" type="submit">{selecting ? "Selecting questions…" : session.assessmentProfile ? "Continue to Quick questions" : "Continue to input method"} <span aria-hidden="true">→</span></button>
+      </fieldset>{selectionError && <p role="alert">{selectionError}</p>}</form>
     </section>
   );
 }
@@ -246,14 +270,56 @@ function Questionnaire() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useLayoutEffect(() => {
     const heading = headingRef.current;
+    const grid = heading?.closest<HTMLElement>(".assessment-grid");
+    if (grid) grid.style.paddingTop = "0px";
     heading?.focus({ preventScroll: true });
-    heading?.closest(".question-region")?.scrollIntoView({ block: "start", behavior: "instant" });
+    const center = () => {
+      const card = heading?.closest(".active-question-region");
+      if (!card) return;
+      // The stepper can cross its sticky threshold during this scroll. Settle
+      // against its actual position rather than assuming it was already pinned.
+      for (let pass = 0; pass < 8; pass++) {
+        const viewport = window.visualViewport;
+        const top = Math.max(viewport?.offsetTop ?? 0, document.querySelector(".stage-navigation")?.getBoundingClientRect().bottom ?? 0) + 12;
+        const bottom = (viewport?.offsetTop ?? 0) + (viewport?.height ?? window.innerHeight) - 12;
+        const bounds = card.getBoundingClientRect();
+        const target = top + Math.max(0, (bottom - top - bounds.height) / 2);
+        if (Math.abs(bounds.top - target) < 1) break;
+        // At the top of a short page there is no upward scroll available.
+        // Supply only the missing space, rather than a fixed desktop gap.
+        if (window.scrollY === 0 && bounds.top < target && grid) {
+          grid.style.paddingTop = `${parseFloat(grid.style.paddingTop || "0") + target - bounds.top}px`;
+          continue;
+        }
+        const before = window.scrollY;
+        window.scrollBy({ top: bounds.top - target, behavior: "instant" });
+        if (before === window.scrollY) break;
+      }
+    };
+    center();
+    // Recompute after scrolling has pinned the sticky stepper to its final position.
+    const frame = requestAnimationFrame(center);
+    let disposed = false;
+    void document.fonts.ready.then(() => { if (!disposed && document.activeElement === heading) center(); });
+    const resize = () => {
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && active.matches("input, textarea, select")) active.scrollIntoView({block:"nearest",behavior:"instant"});
+      else center();
+    };
+    window.visualViewport?.addEventListener("resize", resize);
+    return () => { disposed = true; cancelAnimationFrame(frame); window.visualViewport?.removeEventListener("resize", resize); };
   }, [question.id]);
   return <div className="assessment-grid" data-first-question={index === 0}>
     <Progress />
     <section className="question-region min-w-0" aria-label="Questionnaire">
       <div className="question-toolbar flex flex-wrap items-center justify-between gap-3 text-small">
-        <p>Question {index + 1} of {questions.length}</p>
+        <div className="progress-summary"><p>Question {index + 1} of {questions.length} · {questions.length - unanswered(session, questions).length} answered</p>
+          <details className="navigation-help"><summary>Navigation help</summary><div className="navigation-help-content">
+            <p>● Answered: an answer is saved. ○ Unanswered: no answer is saved. – Skipped: you explicitly chose Skip.</p>
+            <p>Skipped and unanswered questions both remain missing, not zero. Orange brackets mark your current question.</p>
+            <p>Hover or tap the rail to explore; use arrow keys to navigate and Enter to select.</p>
+          </div></details>
+        </div>
         <button type="button" className="text-link" onClick={() => dispatch({ type: "review" })}>Review all answers</button>
       </div>
       <div className="question-stage" key={question.id} data-category={question.category} data-direction={motion.direction} data-moving={motion.previous !== null}>
@@ -265,11 +331,11 @@ function Questionnaire() {
           <article className="question-card" key={question.id}>
             <p className="category-label">{question.category} <span className="font-normal">/ {question.id}</span></p>
             <h1 ref={headingRef} tabIndex={-1} className="question-heading mt-3">{question.title}</h1>
-            <p id="question-hint" className="mt-4 text-muted">{question.hint}</p>
+            <p id="question-hint" className={question.hint === "Answer for your business, or skip if unknown. Blank answers remain unanswered." ? "sr-only" : "mt-3 text-muted"}>{question.hint}</p>
             <AnswerForm question={question} />
           </article>
-          <Progress mobileCard />
         </div>
+        <Progress mobileCard />
         <AdjacentCard question={questions[index + 1]} position="next" />
       </div>
     </section>
@@ -281,6 +347,7 @@ function Review() {
   const router = useRouter();
   const sending = useRef(false);
   const [confirmPartial, setConfirmPartial] = useState(false);
+  const [missingOnly, setMissingOnly] = useState(false);
   const confirmButton = useRef<HTMLButtonElement>(null);
   useEffect(() => { if (confirmPartial) confirmButton.current?.focus(); }, [confirmPartial]);
   const [message, setMessage] = useState("");
@@ -291,6 +358,13 @@ function Review() {
     if (sending.current || invalid || saveWarning) return;
     if (missing.length && !confirmPartial) { setConfirmPartial(true); return; }
     try {
+      if(session.assessmentProfile){
+        const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));
+        const next=model.assessmentReducer(session,{type:"generate"});
+        const warning=browserSession(model.sessionSchema).save(next);
+        if(warning || next.progress!==4){setMessage(warning??"Review your Quick answers first.");return;}
+        sending.current=true;dispatch({type:"generate"});router.push("/quick-results");return;
+      }
       const input = recommendationRequestFromSession(session);
       const model = createAssessmentModel(catalog.version, p => selectedQuestions(catalog, p), p => catalogProfileErrors(catalog, p));
       const next = model.assessmentReducer(session, { type: "generate" });
@@ -306,21 +380,26 @@ function Review() {
     <span className="section-label">Review / Your answers</span>
     <StageHeading>Review your answers.</StageHeading>
     <p className="mt-4">{questions.length - missing.length} answered · {missing.length} unanswered questions.</p>
-    <p className="mt-2 text-muted">Missing answers stay missing; they are never treated as zero. Recommendations use your assessment and supplied evidence and require human review.</p>
-    <p className="mt-3 text-small">This action calculates scores and requests AI recommendations from the configured provider. Your business context, answers and source excerpts are sent for generation.</p>
+    <details className="review-missing-note mt-2 text-small"><summary>What missing answers do</summary><p className="text-muted">Missing answers stay missing; they are never treated as zero. Scores use the available answers. Coverage shows how much of the assessment you supplied.</p></details>
+    <p className="mt-3 text-small">{session.assessmentProfile ? "Quick subset scores cover a smaller question set and are not directly comparable with Full. No AI request is made." : "Your business context, answers and selected source passages are sent to AI to generate recommendations."}</p>
     {invalid && <p role="alert" className="mt-4">Correct or clear invalid answers before generating results.</p>}
     {legacySkipped.length > 0 && <div className="storage-warning mt-4"><p>These previously skipped questions still contain saved answers from the older Skip behavior. Revisit each one and choose Skip to clear it, or confirm your answer. Original saved values have been preserved for your review.</p><ul>{legacySkipped.map(q => <li key={q.id}><button className="text-link" onClick={() => dispatch({type:"jump",id:q.id})}>{q.id}: {q.title}</button></li>)}</ul></div>}
     {message && <p role="alert">{message}</p>}
     {confirmPartial ? <div className="preview-notice mt-6" role="group" aria-label="Confirm partial assessment">
-      <p role="status">{missing.length} questions are unanswered. Scores and recommendations will be based only on the available answers.</p>
-      <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations anyway</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
-    </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>Generate score and recommendations</button>}
+      <p role="status">{missing.length} questions are unanswered. {session.assessmentProfile ? "Quick subset scores will use the available Quick answers." : "Scores and recommendations will be based only on the available answers."}</p>
+      <div className="mt-4 flex flex-wrap gap-4"><button ref={confirmButton} type="button" className="button-primary" disabled={invalid || Boolean(saveWarning)} onClick={generate}>{session.assessmentProfile ? "View Quick subset scores anyway" : "Generate score and recommendations anyway"}</button><button type="button" className="button-secondary" onClick={() => setConfirmPartial(false)}>Keep reviewing</button></div>
+    </div> : <button type="button" className="button-primary mt-6" disabled={invalid || Boolean(saveWarning)} onClick={generate}>{session.assessmentProfile ? "View Quick subset scores" : "Generate score and recommendations"}</button>}
     <CalculatorProvenance />
+    <div className="review-filters mt-6" role="group" aria-label="Filter answer review">
+      <button type="button" className="button-secondary" aria-pressed={!missingOnly} onClick={() => setMissingOnly(false)}>All answers ({questions.length})</button>
+      <button type="button" className="button-secondary" aria-pressed={missingOnly} onClick={() => setMissingOnly(true)}>Skipped / unanswered ({missing.length})</button>
+    </div>
+    <p className="mt-3 text-small" role="status">{missingOnly ? missing.length + " skipped or unanswered questions. Select a question to revisit it." : "Showing all questions. Select a question to review or edit it."}</p>
     <ul className="my-8 grid gap-3">
-      {questions.map((question, i) => <li key={question.id} className="review-row">
+      {questions.map((question, i) => (!missingOnly || missing.some(item => item.id === question.id)) && <li key={question.id} className="review-row">
         <button type="button" className="text-link text-left" onClick={() => dispatch({ type: "jump", id: question.id })}>{i + 1}. {question.title}</button>
         <p className="text-small">{progressLabel(session, question)}</p>
-        {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {session.answers[question.id]}</p>}
+        {session.answers[question.id] && <p className="text-small text-muted break-words">Your entry: {displayAnswer(session.answers[question.id]!, question.unit)}</p>}
       </li>)}
     </ul>
     {missing.length > 0 && <button type="button" className="button-secondary" onClick={() => dispatch({ type: "review-missing" })}>Review missing answers</button>}
@@ -348,15 +427,19 @@ function Flow() {
       {ready && session.phase !== "setup" && <button className="text-link" type="button" onClick={() => dispatch({ type: "edit-setup" })}>Edit business context</button>}
     </header>
     <main id="assessment-main" tabIndex={-1} className="page-container pb-12">
-      <div className="preview-notice mb-6">
-        <p className="font-semibold">Business assessment</p>
-        <p className="text-small">Canonical questions and deterministic scores · Research build. Entries are saved in this browser tab. Opening results sends answers and selection context to this application’s server for calculation without server persistence. AI recommendations require an explicit generation request.</p>
-      </div>
-      {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push("/results");}else dispatch(action);}}/>}
+      {ready && <StageNavigation session={session} catalog={catalog} onStage={action=>{if(action==="results"){if(session.progress === 4 && !saveWarning)router.push(session.assessmentProfile?"/quick-results":"/results");}else dispatch(action);}}/>}
+      {ready && session.assessmentProfile && <div className="preview-notice mb-4"><p><strong>Quick assessment</strong>{session.assessmentProfile.questionIds.length ? ` · ${session.assessmentProfile.questionIds.length} questions` : " · question count follows business Setup"}</p><p>Shared answers are retained when you continue to Full.</p><button className="button-secondary mt-3" onClick={()=>{
+        const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));
+        const warning=browserSession(model.sessionSchema).save(model.assessmentReducer(session,{type:"continue-full"}));
+        if(!warning)router.push("/assessment");
+      }}>Continue to Full assessment</button></div>}
+      <details className="assessment-context-note text-small"><summary>About this assessment</summary>
+        <p>{saveWarning ? "Progress cannot currently be saved in this tab." : "Your progress is saved in this tab."} Answer what you know; you can revisit missing answers.</p>
+        <p>Scores use the answers you provide. This is a research assessment, not certification.</p>
+      </details>
       {restoreWarning && <p role="alert" className="storage-warning mb-4">{restoreWarning}</p>}
       {saveWarning && <p role="alert" className="storage-warning mb-4">{saveWarning}</p>}
       {!ready ? <p role="status">Restoring this tab’s assessment…</p> : <>
-        <p className="mb-4 text-small text-muted">{saveWarning ? "Session saving unavailable." : "Session saving enabled for this tab."}</p>
         {session.phase === "setup" && <Setup />}
         {session.phase === "method" && <InputMethod />}
         {session.phase === "questions" && <Questionnaire />}
@@ -366,6 +449,6 @@ function Flow() {
     </main>
   </>;
 }
-export function AssessmentFlow({ catalog }: { catalog: AssessmentCatalog }) {
-  return <AssessmentProvider catalog={catalog}><Flow /></AssessmentProvider>;
+export function AssessmentFlow({ catalog, quick=false }: { catalog: AssessmentCatalog; quick?:boolean }) {
+  return <AssessmentProvider catalog={catalog} quick={quick}><Flow /></AssessmentProvider>;
 }

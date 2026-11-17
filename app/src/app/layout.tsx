@@ -14,6 +14,7 @@ const manrope = localFont({
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
+  metadataBase: new URL("https://preview.flowagentai.website"),
   title: landingCopy.metadata.title,
   description: landingCopy.metadata.description,
   robots: { index: false, follow: false },

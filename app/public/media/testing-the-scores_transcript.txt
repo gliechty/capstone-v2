@@ -1,0 +1,49 @@
+Testing the scores (about 3 minutes 20 seconds). Research by Alan H. Chan and Hanrui Li. Figures are from their report of 25 September 2026; the company ranking and example answers shown are illustrative.
+
+Can a scoring method like MOSAIC's be checked against the real world?
+
+Alan H. Chan and Hanrui Li, two researchers at Columbia University, tested it from the bottom up.
+
+Instead of asking businesses to fill in a questionnaire, they started with what companies had already published.
+
+An AI model read each company's own sustainability report and answered a fixed set of questions. The set was built on MOSAIC's question bank, with extra questions for each market and industry.
+
+They scored about fifteen hundred companies listed in mainland China, almost twenty-five hundred in Hong Kong, and around eight hundred in the European Union.
+
+The rating comparisons described here focus on mainland China and Hong Kong.
+
+Then they asked a simple question. Do these scores put companies in roughly the same order as professional ESG raters do?
+
+In mainland China, they compared against two independent Chinese raters. In Hong Kong, they compared against MSCI.
+
+No method matches perfectly. Even the two Chinese raters only partly agree with each other.
+
+A comparison using the MOSAIC scoring engine and its original base weights agreed with the first rater, on the mainland China comparison sample, almost as closely as the two raters agree with each other.
+
+Those base weights, which come from how often an indicator recurs across established frameworks, did better than simply weighting a question by how many companies report it.
+
+In a separate re-reading of fifty reports, using MOSAIC's graded answer scales produced closer agreement with external ratings than reducing answers to yes or no.
+
+The team also designed their own weighting, which gives greater weight to disclosures associated with third-party verification and measured quantities. It is not part of MOSAIC today.
+
+Their alternative weighting increased agreement with the external raters in the reported comparisons.
+
+In Hong Kong, agreement with MSCI was weaker for every method they tried.
+
+These results have limits, and the authors state them plainly.
+
+These were listed companies, not small businesses.
+
+The scores were compared with other ratings, not with what later happened to the companies.
+
+Two AI readings of the same reports agreed on most answers, but not all.
+
+Weights estimated in mainland China were carried over to Hong Kong without being re-estimated there.
+
+And the study tested MOSAIC's questions, weights and scoring. It did not test how MOSAIC builds its question bank, sets its configuration, or selects evidence for advice.
+
+These comparisons provide encouraging evidence for elements of the MOSAIC scoring design, particularly its base weights, category structure and graded answer scales. They also identify opportunities for improvement.
+
+They do not yet establish how well the current SME application predicts real-world sustainability performance. The authors recommend testing scores against subsequent company outcomes.
+
+MOSAIC. The pieces that matter.

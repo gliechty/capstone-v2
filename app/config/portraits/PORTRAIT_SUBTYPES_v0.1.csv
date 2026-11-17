@@ -1,0 +1,21 @@
+pair_id,strongest_family,second_family,primary_archetype,role_name,plain_subtitle,naming_note_reviewer_only,readability_check,status
+A-CO-ME,commit,measure,Anchor,The Scribe,"Commitments lead, supported by measurement.",Puts things in writing and keeps them on record.,Slightly old-fashioned; widely known.,proposal
+A-CO-PL,commit,plan,Anchor,The Founder,"Commitments lead, supported by planning.",Sets out principles and a direction.,,proposal
+A-CO-DO,commit,do,Anchor,The Guardian,"Commitments lead, supported by practice.",Holds to principles and looks after the work.,,proposal
+A-CO-EN,commit,engage,Anchor,The Ambassador,"Commitments lead, supported by engagement.",Stands for stated principles in front of others.,,proposal
+A-ME-CO,measure,commit,Chronicler,The Bookkeeper,"Measurement leads, supported by commitments.",Keeps careful books under set rules.,,proposal
+A-ME-PL,measure,plan,Chronicler,The Surveyor,"Measurement leads, supported by planning.",Measures the ground before anything is planned.,,proposal
+A-ME-DO,measure,do,Chronicler,The Engineer,"Measurement leads, supported by practice.","Measures, then makes things work.",Could read as the engineering industry.,proposal
+A-ME-EN,measure,engage,Chronicler,The Treasurer,"Measurement leads, supported by engagement.",Keeps the accounts for a group of people.,,proposal
+A-PL-CO,plan,commit,Navigator,The Architect,"Planning leads, supported by commitments.",Draws plans on firm principles.,,proposal
+A-PL-ME,plan,measure,Navigator,The Mapmaker,"Planning leads, supported by measurement.",Charts the way from measurements.,,proposal
+A-PL-DO,plan,do,Navigator,The Coach,"Planning leads, supported by practice.",Makes the game plan and runs the practice.,,proposal
+A-PL-EN,plan,engage,Navigator,The Guide,"Planning leads, supported by engagement.",Knows the route and leads others along it.,,proposal
+A-DO-CO,do,commit,Steward,The Artisan,"Practice leads, supported by commitments.",Skilled hands working to a standard.,,proposal
+A-DO-ME,do,measure,Steward,The Technician,"Practice leads, supported by measurement.","Hands-on work, checked by measurement.",,proposal
+A-DO-PL,do,plan,Steward,The Pilot,"Practice leads, supported by planning.","Hands on the controls, following a flight plan.",Close in meaning to the Navigator; could read as aviation.,proposal
+A-DO-EN,do,engage,Steward,The Neighbor,"Practice leads, supported by engagement.",Does the work and helps the people nearby.,,proposal
+A-EN-CO,engage,commit,Partner,The Mediator,"Engagement leads, supported by commitments.",Brings people together under agreed rules.,,proposal
+A-EN-ME,engage,measure,Partner,The Coordinator,"Engagement leads, supported by measurement.",Works across people and keeps track.,,proposal
+A-EN-PL,engage,plan,Partner,The Organizer,"Engagement leads, supported by planning.",Brings people together around a plan.,,proposal
+A-EN-DO,engage,do,Partner,The Weaver,"Engagement leads, supported by practice.",Many threads worked by hand into one cloth.,Kept as intuitive; could read as the textile industry.,proposal

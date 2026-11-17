@@ -1,3 +1,4 @@
+import { THERM_EC_TO_KWH, THERM_CONVERSION_SOURCE } from "./energy-units";
 import type { Activity, CalculatorInput, CalculatorResult, CalculationIssue, CoverageKey, Quantity, ReferenceFactor, SourceTrace } from "./types";
 
 const scope1Kinds = ["gas", "fuel", "mileage", "refrigerant", "process", "measured-scope1"];
@@ -35,6 +36,10 @@ function sourceTrace(a: Activity, factors: readonly ReferenceFactor[]): SourceTr
   } else if (factorRows[a.kind]) trace.flags.push("Emission factor not selected; emissions unavailable");
   if (a.kind === "measured-scope1") { trace.emissions = q; trace.expression = `${q} tCO2e (measured source)`; }
   if (a.kind === "electricity" || a.kind === "heat" || (a.kind === "gas" && a.unit === "kWh")) trace.energy = q * (a.unit === "MWh" ? 1000 : 1);
+  if (a.kind === "gas" && a.unit === "therm") {
+    trace.energy = q * THERM_EC_TO_KWH;
+    trace.flags.push(`Energy conversion: ${q} × ${THERM_EC_TO_KWH} kWh/therm; ${THERM_CONVERSION_SOURCE}`);
+  }
   const energyId = a.kind === "gas" && a.unit === "m3" ? "legacy-C64" : a.kind === "fuel" ? ({ "legacy-C7": "legacy-C65", "legacy-C8": "legacy-C66", "legacy-C9": "legacy-C67" } as Record<string, string>)[a.factorId] : undefined;
   if (energyId) {
     const energyFactor = factors.find(f => f.id === energyId);

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "minItems": 1,
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "question_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "question_text": {
+        "type": "string",
+        "minLength": 1
+      },
+      "question_type": {
+        "type": "string"
+      },
+      "industry_trigger": {
+        "type": "string"
+      },
+      "market_trigger": {
+        "type": "string"
+      },
+      "size_applicability": {
+        "type": "string",
+        "enum": [
+          "all",
+          "all smes",
+          "medium_plus",
+          "large"
+        ]
+      },
+      "framework_source": {
+        "type": "string"
+      },
+      "base_weight": {
+        "type": "string",
+        "pattern": "^-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$"
+      },
+      "priority": {
+        "type": "string",
+        "pattern": "^-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$"
+      },
+      "active": {
+        "type": "string",
+        "enum": [
+          "TRUE",
+          "FALSE"
+        ]
+      },
+      "tags": {
+        "type": "string"
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "People",
+          "Governance",
+          "Community",
+          "Resources"
+        ]
+      },
+      "subcategory": {
+        "type": "string"
+      },
+      "answer_scale_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "response_type": {
+        "type": "string",
+        "enum": [
+          "boolean",
+          "categorical",
+          "numeric",
+          "percent",
+          "text"
+        ]
+      },
+      "metric_id": {
+        "type": "string"
+      },
+      "rationale": {
+        "type": "string"
+      },
+      "cluster_id": {
+        "type": "string"
+      },
+      "weighting_basis": {
+        "type": "string"
+      },
+      "question_origin": {
+        "type": "string"
+      },
+      "cluster_progression_level": {
+        "type": "string"
+      },
+      "cluster_total_count": {
+        "anyOf": [
+          {
+            "type": "string",
+            "const": ""
+          },
+          {
+            "type": "string",
+            "pattern": "^-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$"
+          }
+        ]
+      },
+      "source_repetition_count": {
+        "anyOf": [
+          {
+            "type": "string",
+            "const": ""
+          },
+          {
+            "type": "string",
+            "pattern": "^-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$"
+          }
+        ]
+      },
+      "global_frequency_percent": {
+        "anyOf": [
+          {
+            "type": "string",
+            "const": ""
+          },
+          {
+            "type": "string",
+            "pattern": "^-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$"
+          }
+        ]
+      },
+      "base_weight_score": {
+        "type": "string"
+      },
+      "answer_effort": {
+        "type": "string",
+        "enum": [
+          "direct_knowledge",
+          "record_lookup",
+          "calculation_aggregation",
+          "needs_review"
+        ]
+      }
+    },
+    "required": [
+      "question_id",
+      "question_text",
+      "question_type",
+      "industry_trigger",
+      "market_trigger",
+      "size_applicability",
+      "framework_source",
+      "base_weight",
+      "priority",
+      "active",
+      "tags",
+      "category",
+      "subcategory",
+      "answer_scale_id",
+      "response_type",
+      "metric_id",
+      "rationale",
+      "cluster_id",
+      "weighting_basis",
+      "question_origin",
+      "cluster_progression_level",
+      "cluster_total_count",
+      "source_repetition_count",
+      "global_frequency_percent",
+      "base_weight_score",
+      "answer_effort"
+    ],
+    "additionalProperties": false
+  }
+}

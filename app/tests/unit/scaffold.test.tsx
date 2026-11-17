@@ -10,18 +10,18 @@ test("landing page exposes the required context, approach, demo and research sec
   render(<LandingPage />);
   expect(screen.getByRole("main")).toBeInTheDocument();
   expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-  expect(screen.getByRole("region", { name: /Many expectations/ })).toBeVisible();
-  expect(screen.getByRole("region", { name: /A clearer connection/ })).toBeVisible();
-  expect(screen.getByRole("region", { name: /See the approach/ })).toBeVisible();
-  expect(screen.getByRole("region", { name: /Grounded in research/ })).toBeVisible();
+  expect(screen.getByRole("region", { name: /One global ambition/ })).toBeVisible();
+  expect(screen.getByRole("region", { name: /AI where it helps/ })).toBeVisible();
+  expect(screen.getByRole("region", { name: /Different businesses/ })).toBeVisible();
+  expect(screen.getByRole("region", { name: /Explore the work/ })).toBeVisible();
 });
 
 test("assessment remains linked and the supplied video is available", () => {
   render(<LandingPage />);
-  const cta = screen.getAllByRole("link", { name: "Take the Assessment" })[0];
+  const cta = screen.getAllByRole("link", { name: "Start your assessment" })[0];
   expect(cta).toHaveAttribute("href", "/assessment");
   expect(cta).toHaveAccessibleDescription(/questionnaire and deterministic scores/);
-  expect(screen.getByLabelText("MOSAIC explainer film, 90 seconds")).toBeVisible();
+  expect(screen.getByLabelText("MOSAIC explainer film, 92 seconds")).toBeVisible();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
 });
 
@@ -29,7 +29,7 @@ test("landing links resolve to sections or the assessment route", () => {
   render(<LandingPage />);
   for (const link of screen.getAllByRole("link")) {
     const href = link.getAttribute("href");
-    if (href === "/assessment" || href === "/media/mosaic-explainer-720p.mp4") continue;
+    if (href?.startsWith("/screenshots/") || href === "/research/ESG_Rating_Team_Report.pdf" || /^https:\/\/drive\.google\.com\/file\/d\/[A-Za-z0-9_-]+\/view$/.test(href ?? "") || href === "https://conservationen.see.org.cn/" || href === "/assessment" || href === "/media/mosaic-explainer-narrated-2026-11-03-1080p.mp4") continue;
     expect(href).toMatch(/^#[a-z-]+$/);
     expect(document.getElementById(href!.slice(1))).not.toBeNull();
   }
@@ -39,6 +39,6 @@ test("demo immediately follows the hero before longer context and approach conte
   render(<LandingPage />);
   const sections = Array.from(screen.getByRole("main").children);
   expect(sections.map((section) => section.getAttribute("aria-labelledby"))).toEqual([
-    "hero-heading", "demo-heading", "context-heading", "approach-heading", "research-heading",
+    "hero-heading", "demo-heading", "context-heading", "outputs-heading", "approach-heading", "research-heading", "closing-heading",
   ]);
 });

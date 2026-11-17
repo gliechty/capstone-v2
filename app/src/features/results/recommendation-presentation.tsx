@@ -10,7 +10,7 @@ import { Bibliography, Information, Sources } from "./evidence-controls";
 const messages: Record<string, string> = {
   budget_exhausted: budgetLimitMessage,
   budget_unavailable: "The server spending control is unavailable. No generation was started.",
-  local_only: "Hosted generation is not configured. Scores and reports remain available.",
+  local_only: "Hosted generation is not configured. Deterministic scores remain available.",
   not_generated: "Recommendations have not been generated. Generation sends this assessment context, answers and retrieved source excerpts to the configured AI provider.",
   no_assessment: "Complete or restore an assessment in this tab before generating recommendations.",
   provider_not_configured: "Recommendation generation is disabled. Deterministic scores remain available.",
@@ -49,12 +49,13 @@ export function RecommendationPresentation({view,generate,cancel,children,synthe
     <section id="summary" tabIndex={-1} className="results-section summary-section" aria-labelledby="summary-heading">
       <span className="section-label">01 / Read the picture</span><h2 id="summary-heading" className="text-heading">Executive summary</h2>
       <div className="mt-6 flex flex-wrap gap-4">
-        <button ref={generateButton} className={content ? "button-secondary" : "button-primary"} disabled={view.phase === "loading" || !view.configuration?.ready || view.code === "no_assessment"} onClick={generate}>
+        <button id="recommendation-generation" ref={generateButton} className={content ? "button-secondary" : "button-primary"} disabled={view.phase === "loading" || !view.configuration?.ready || view.code === "no_assessment"} onClick={generate}>
           {content ? "Regenerate recommendations" : view.phase === "unavailable" || view.code === "cancelled" ? "Retry recommendations" : "Generate recommendations"}
         </button>
         {view.phase === "loading" && <button className="button-secondary" onClick={cancel}>Cancel generation</button>}
       </div>
       {view.phase === "loading" ? <RecommendationLoading/> : <p className="mt-4" role="status">{synthetic ? (content ? "Synthetic examples ready — not AI advice." : view.code === "cancelled" ? "Simulation cancelled locally. No provider request was made." : view.code === "interrupted" ? "Simulation interrupted. Retry explicitly; no provider request was made." : view.code === "not_generated" ? "Choose a scenario, then generate synthetic examples. No data leaves this preview." : messages[view.code] ?? "Simulated error. Retry explicitly; scores remain available.") : view.code === "budget_exhausted" ? budgetLimitMessage : content ? "Recommendations ready." : messages[view.code] ?? "Recommendations are unavailable. Review the assessment or retry explicitly; deterministic scores remain available."}</p>}
+      {view.storageWarning && <p role="status" className="mt-4">{view.storageWarning}</p>}
       {content && <p className="mt-6 results-prose">{content.executive_summary}</p>}
       {view.diagnostics && <Information label="Last generation failure details"><p>Failure code: {view.code}. Application time: {(view.diagnostics.totalMs / 1000).toFixed(2)} s; provider phase: {(view.diagnostics.providerMs / 1000).toFixed(2)} s.</p>
         {view.diagnostics.timeoutStage && <p>Deadline stage: {view.diagnostics.timeoutStage}.</p>}

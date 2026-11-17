@@ -1,0 +1,43 @@
+Follow one requirement into the question bank (about 2 minutes). Illustrative animation built from MOSAIC’s configuration files.
+
+MOSAIC’s question bank is built from requirements and guidance in source documents.
+
+Let’s follow one.
+
+This question comes from the CDP questionnaire for small and medium enterprises:
+
+Does your organization have an environmental policy that addresses environmental issues?
+
+This question, together with its follow-up options and guidance, identifies several distinct things:
+
+whether a policy exists, and whether it covers the company’s operations, suppliers, and downstream activities.
+
+Each one is recorded as an atomic indicator, small enough to answer on its own.
+
+Each keeps a source reference and a supporting excerpt.
+
+Then the same idea is looked for across the whole knowledge base.
+
+Related requirements about policies, targets and tracking are grouped together: twenty-three of them, from eleven of the forty-four source documents.
+
+Grouping means a business isn’t asked the same thing over and over, in different words.
+
+That recurrence sets the base weight.
+
+The weighting combines two signals: how widely the theme appears across documents, and how frequently it appears overall.
+
+Their relative ranks receive seventy-five and twenty-five percent respectively, then are scaled from one to five.
+
+Here, that gives three point eight six out of five.
+
+The group becomes plain questions.
+
+Does your company have a written environmental policy that applies to your own operations? And does it also cover suppliers, and customers?
+
+Each one gets an answer scale, a category, and a rule for who is asked. This one goes to every business, of every size.
+
+All of this is stored as configuration: readable settings the app uses in every assessment.
+
+Change the documents, and the questions and weights could be rebuilt the same way.
+
+MOSAIC. The pieces that matter.

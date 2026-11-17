@@ -28,11 +28,7 @@ export default function ResultsPage() {
       <Link href="/assessment" className="text-link">Return to assessment</Link>
     </header>
     <main id="results-main" tabIndex={-1} className="page-container results-page">
-      <aside className="preview-notice" aria-label="Results limitations">
-        <p className="font-semibold">Calculated scores · Optional AI recommendations</p>
-        <p className="text-small">Research assessment, not certification. Scores are calculated separately; AI recommendations require explicit generation and human review.</p>
-      </aside>
-      <ResultsGate catalog={catalog}><ResultsStages catalog={catalog}/><ResultsNavigation />
+      <ResultsGate catalog={catalog}><div className="results-navigation-stack"><ResultsStages catalog={catalog}/><ResultsNavigation /></div>
       <section aria-labelledby="results-title" className="results-section">
         <div className="results-heading">
           <div><span className="section-label">Results / Research assessment</span><h1 id="results-title" className="text-display">Your assessment results</h1></div>

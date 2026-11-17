@@ -1,0 +1,2003 @@
+[
+  {
+    "question_id": "U-001",
+    "question_text": "Does your company have a written environmental policy that applies to your own operations?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "policy",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-002",
+    "question_text": "Do you collect and review data on the quality of your sustainability-related information (e.g. checking accuracy of environmental data)?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "quality_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-003",
+    "question_text": "Does your company have a formal grievance or whistleblower mechanism that employees or stakeholders can use to report concerns?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "ethics_compliance",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-004",
+    "question_text": "Does your company publish a sustainability or ESG report (even informally, such as a summary for clients or stakeholders)?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "transparency",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-005",
+    "question_text": "Has your company set a target to reduce its greenhouse gas emissions?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "strategy",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-006",
+    "question_text": "Does your company use due diligence to identify negative sustainability impacts in your supply chain or operations?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "due_diligence",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "U-014",
+    "question_text": "Does your company consider environmental criteria when selecting or evaluating suppliers?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "procurement",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-007",
+    "question_text": "Does your company engage with your suppliers on environmental issues (e.g. energy, waste, emissions)?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "supplier_engagement",
+    "metric_id": "",
+    "options": [
+      "Don't engage",
+      "Informal engagement",
+      "Structured program"
+    ]
+  },
+  {
+    "question_id": "U-008",
+    "question_text": "Do you maintain documentation or records of how your environmental data (e.g. emissions, energy) is compiled and checked?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "documentation",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "U-009",
+    "question_text": "Does your company have a code of conduct or social-responsibility standards that you expect your suppliers to follow?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "supplier_management",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-010",
+    "question_text": "Has your company made a public commitment to fight corruption and bribery in all your business activities?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "anti_corruption",
+    "metric_id": "",
+    "options": [
+      "No policy",
+      "Informal",
+      "Formal"
+    ]
+  },
+  {
+    "question_id": "U-011",
+    "question_text": "Does your environmental policy also cover your relationships with suppliers and upstream activities?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "policy_scope",
+    "metric_id": "",
+    "options": [
+      "Not covered",
+      "Self only",
+      "Self + direct suppliers",
+      "Full value chain"
+    ]
+  },
+  {
+    "question_id": "U-012",
+    "question_text": "Does your environmental policy address how your products or services affect customers or distributors (downstream impacts)?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "policy_scope",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-013",
+    "question_text": "Does your company have a plan to transition its business model to be more low-carbon or sustainable?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "strategy",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "U-015",
+    "question_text": "Has your company set specific, measurable sustainability targets?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "strategy",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-016",
+    "question_text": "Does your company have a grievance mechanism that employees can use to raise workplace complaints or concerns?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "grievance_mechanism",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-017",
+    "question_text": "Has your company formally committed to respecting internationally recognised human rights standards (such as freedom from forced or child labour) across all your operations?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "human_rights",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-018",
+    "question_text": "How many times per year does your company provide health and safety training to employees?",
+    "response_type": "numeric",
+    "category": "People",
+    "subcategory": "health_safety",
+    "metric_id": "safety_training_frequency",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-019",
+    "question_text": "Does your company have a written policy that covers labour rights and fair working conditions for all employees?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "labor_rights",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-020",
+    "question_text": "On average, how many hours per week does a full-time employee at your company work?",
+    "response_type": "numeric",
+    "category": "People",
+    "subcategory": "working_conditions",
+    "metric_id": "working_hours",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-021",
+    "question_text": "What percentage of employees voluntarily left your company in the last 12 months?",
+    "response_type": "percent",
+    "category": "People",
+    "subcategory": "employee_retention",
+    "metric_id": "voluntary_turnover_rate",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-022",
+    "question_text": "Has your company assessed which climate-related risks (e.g. extreme weather, rising costs) could affect its business?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_risk",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-023",
+    "question_text": "Does your company measure or estimate greenhouse-gas emissions that come directly from your own operations  -  for example from company vehicles, boilers, or on-site processes (sometimes called Scope 1 emissions)?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-024",
+    "question_text": "Does your company measure or estimate greenhouse-gas emissions from the electricity or heat it purchases from external suppliers (sometimes called Scope 2 emissions)?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-025",
+    "question_text": "Does your company track its total energy consumption?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "energy_management",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-026",
+    "question_text": "What percentage of your energy comes from renewable sources? (Skip if unsure)",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy_management",
+    "metric_id": "MET_RE_SHARE",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-027",
+    "question_text": "Have you identified which of your suppliers face significant actual or potential negative environmental impacts?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "environmental_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-028",
+    "question_text": "Does your company have a plan to reduce the use of non-renewable or hazardous materials in its products or processes?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "resource_efficiency",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "U-029",
+    "question_text": "Does your company track the total volume of water it uses or withdraws?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-030",
+    "question_text": "Does your company track the total amount of waste it generates?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-031",
+    "question_text": "What percentage of your waste is diverted from landfill (recycled, reused, composted) by mass? Skip if unsure",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_diverted_percent",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-032",
+    "question_text": "What percentage of your total waste is hazardous by mass? (Skip if unsure)",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "hazardous_waste_percent",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-033",
+    "question_text": "Does your company run or support a formal community investment, philanthropy, or local-impact programme?",
+    "response_type": "boolean",
+    "category": "Community",
+    "subcategory": "community_program",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "U-034",
+    "question_text": "Does your company support women-owned businesses or promote inclusive procurement in its supplier relationships?",
+    "response_type": "categorical",
+    "category": "Community",
+    "subcategory": "inclusive_procurement",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "U-035",
+    "question_text": "How many employee volunteer hours did your company support in the last year, on average, per employee?",
+    "response_type": "numeric",
+    "category": "Community",
+    "subcategory": "volunteering",
+    "metric_id": "employee_volunteer_hours",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "U-036",
+    "question_text": "What percentage of pre-tax profit did your company donate or invest in community initiatives last year?",
+    "response_type": "percent",
+    "category": "Community",
+    "subcategory": "community_investment",
+    "metric_id": "pretax_profit_donated",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-001",
+    "question_text": "Does your company have policies covering targeted advertising and how customer data is used for marketing?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "data_privacy",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-002",
+    "question_text": "Does your company have an approach to identifying and managing information-security vulnerabilities?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_security",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "I-003",
+    "question_text": "Does your company hold third-party certified animal-welfare standards for its operations?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "animal_welfare",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-004",
+    "question_text": "How many process-safety or transport incidents has your company recorded in the past year?",
+    "response_type": "numeric",
+    "category": "Governance",
+    "subcategory": "operational_safety",
+    "metric_id": "process_safety_incidents",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-005",
+    "question_text": "Do you track monetary losses from legal proceedings related to false or deceptive advertising? (Skip if not applicable)",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "advertising_integrity",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-006",
+    "question_text": "Does your company report the rate of major non-conformances found during food-safety audits (for example those conducted to internationally recognised standards)?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "food_safety",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-007",
+    "question_text": "Does your company provide employees with regular training on data security and cyber risks?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_security",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "I-008",
+    "question_text": "Does your company track the survival or health rate of farmed animals or aquatic species in your operations?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "animal_welfare",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-009",
+    "question_text": "Does your company collect primary (directly measured) data for processes under its ownership or control for GHG reporting?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_collection",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-010",
+    "question_text": "Does your company collect primary (directly measured) data for processes under its ownership or control for GHG reporting?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_collection",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-011",
+    "question_text": "Does your company collect primary (directly measured) data for processes under its ownership or control for GHG reporting?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_collection",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-012",
+    "question_text": "Does your company assess the quality of activity data and emission factors used for GHG reporting?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_quality",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "I-013",
+    "question_text": "Does your company assess the quality of activity data and emission factors used for GHG reporting?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_quality",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "I-014",
+    "question_text": "Does your company provide Environmental Product Declarations (EPDs) for any of its products?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "lifecycle_impact",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-015",
+    "question_text": "Does your company track gender representation across all levels of management and the wider workforce?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "diversity_inclusion",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-016",
+    "question_text": "Does your company conduct regular employee-engagement surveys?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "employee_engagement",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "I-017",
+    "question_text": "What percentage of executive and senior management positions are held by women?",
+    "response_type": "percent",
+    "category": "People",
+    "subcategory": "diversity_inclusion",
+    "metric_id": "gender_representation_mgmt",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-018",
+    "question_text": "Does your company track diversity and inclusion metrics (e.g. gender, ethnicity) for its construction-sector workforce?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "diversity_inclusion",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-019",
+    "question_text": "Does your company provide employees with training on environmental regulations and clean-up procedures relevant to construction?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "training",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-020",
+    "question_text": "What was your total (voluntary + involuntary) employee turnover rate (%) in the last 12 months?",
+    "response_type": "percent",
+    "category": "People",
+    "subcategory": "employee_retention",
+    "metric_id": "MET_TURNOVER",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-021",
+    "question_text": "Does your company use environmentally-focused design principles (e.g. green-building standards, eco-design) when designing products or structures?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "lifecycle_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-022",
+    "question_text": "What % of your products contain genetically modified organisms (GMOs)?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "gmo_management",
+    "metric_id": "gmo_share_pct",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-023",
+    "question_text": "Do your farming or aquaculture operations follow a biodiversity or ecosystem-management approach (e.g. preventing escapes of farmed species)?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "biodiversity",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-024",
+    "question_text": "Does your company maintain a list of chemicals or substances that are restricted or banned from use in your products or manufacturing processes?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "chemicals_management",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-025",
+    "question_text": "Does your company monitor air pollution emissions from your operations - such as smoke, dust, nitrogen oxides, or other particulates?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "air_quality",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-026",
+    "question_text": "Does your company use cover crops or other carbon-sequestration practices on its agricultural land?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "land_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-027",
+    "question_text": "Has your company set product-level GHG-reduction targets for your apparel or consumer-goods range?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "targets",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-028",
+    "question_text": "What percentage of the wood-fibre materials you purchase originates from certified forestlands?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "wood_supply_chain",
+    "metric_id": "certified_inputs_pct",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-029",
+    "question_text": "Does your company use land-management practices (e.g. conservation tillage, cover crops) to improve soil carbon or reduce emissions?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "land_management",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-030",
+    "question_text": "What percentage of your raw materials are sourced from renewable resources?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "materials",
+    "metric_id": "recycled_input_content",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-031",
+    "question_text": "Does your company have a soil-management plan for its farming or agricultural operations?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "soil_health",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-032",
+    "question_text": "Does your company generate revenue from remanufactured products or remanufacturing services?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "circular_economy",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-033",
+    "question_text": "Has your company conducted a Life-Cycle Assessment (LCA) - a formal study of the environmental impact of a product from raw materials to end-of-life - for any of its products or construction materials?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "lifecycle_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-034",
+    "question_text": "What is the total value or volume of your biological assets (e.g. crops, livestock, fish stocks)?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "agriculture",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-035",
+    "question_text": "Does your company comply with all applicable animal-welfare laws and regulations?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "biodiversity",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-036",
+    "question_text": "Does your company implement input-stream management (controlling chemical recipes/reagents) in its manufacturing?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "chemicals_management",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-037",
+    "question_text": "For products such as diesel engines or industrial equipment, do you publish NOx and particulate-matter performance data?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "product_sustainability",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-038",
+    "question_text": "Has your company identified how many of its construction sites or controlled lots are in flood-risk zones?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_risk",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-039",
+    "question_text": "Has your company carried out a climate-change risk-exposure analysis for your operations or project pipeline?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_risk",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "I-040",
+    "question_text": "Does your company report direct (Scope 1) GHG emissions from agricultural activities (livestock, manure, fertiliser, on-farm fuel)?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-041",
+    "question_text": "Does your company report indirect GHG emissions from purchased energy used in food production or processing (Scope 2)?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-042",
+    "question_text": "Does your company source biomass renewable energy from materials certified to third-party sustainability standards (e.g. FSC, RSB)?",
+    "response_type": "boolean",
+    "category": "Resources",
+    "subcategory": "materials",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "I-043",
+    "question_text": "Does your company report its order backlog from renewable-energy or green-building projects?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "business_mix",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-044",
+    "question_text": "Does your company have a formal process for integrating environmental considerations into site selection and site design?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "environmental_management",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-045",
+    "question_text": "What is the total land area used or affected by your agricultural or forestry operations (hectares)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "land_management",
+    "metric_id": "managed_land_hectares",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-046",
+    "question_text": "What percentage of the wood-fibre raw materials you procure is certified to a recognised standard (FSC, PEFC)?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "sustainable_sourcing",
+    "metric_id": "certified_inputs_pct",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-047",
+    "question_text": "Has your company identified the main threats to soil health in your agricultural activities?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "soil_health",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-048",
+    "question_text": "Does your company operate take-back programmes to collect end-of-life products for remanufacturing or recycling?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "circular_economy",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "I-049",
+    "question_text": "Does your company conduct laboratory testing on finished products to check for restricted or harmful substances?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "product_safety",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "I-050",
+    "question_text": "Does your company have a documented strategy for managing physical and financial climate risks across construction projects?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_risk",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "I-051",
+    "question_text": "Does your company track or report CO2 emissions linked to land-use change from your agricultural inputs  -  for example from converting forest or grassland to farmland?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-052",
+    "question_text": "What is your total Scope 1 and Scope 2 greenhouse-gas emissions divided by annual revenue (tCO2e/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "carbon_intensity_bus",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-053",
+    "question_text": "What is your total Scope 1 and Scope 2 greenhouse-gas emissions divided by annual revenue (tCO2e/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "carbon_intensity_cg",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-054",
+    "question_text": "What is your total Scope 1 and Scope 2 greenhouse-gas emissions divided by annual revenue (tCO2e/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "carbon_intensity_const",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-055",
+    "question_text": "What is your total Scope 1 and Scope 2 greenhouse-gas emissions divided by annual revenue (tCO2e/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "carbon_intensity_food",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-056",
+    "question_text": "What is your total Scope 1 and Scope 2 greenhouse-gas emissions divided by annual revenue (tCO2e/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "emissions",
+    "metric_id": "carbon_intensity_manuf",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-057",
+    "question_text": "What percentage of your total energy consumption comes from renewable sources?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "MET_RE_SHARE",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-058",
+    "question_text": "What is your total annual energy consumption divided by annual revenue (kWh/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "energy_intensity_bus",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-059",
+    "question_text": "What is your total annual energy consumption divided by annual revenue (kWh/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "energy_intensity_cg",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-060",
+    "question_text": "What is your total annual energy consumption divided by annual revenue (kWh/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "energy_intensity_const",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-061",
+    "question_text": "What is your total annual energy consumption divided by annual revenue (kWh/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "energy_intensity_food",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-062",
+    "question_text": "What is your total annual energy consumption divided by annual revenue (kWh/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "energy",
+    "metric_id": "energy_intensity_manuf",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-063",
+    "question_text": "How many environmental permit non-compliance incidents has your company recorded in the past year?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "environmental_compliance",
+    "metric_id": "open_violations",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-064",
+    "question_text": "What share of revenue comes from products specifically designed to reduce resource use during their use phase?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "product_design",
+    "metric_id": "sustainability_rd_percent",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-065",
+    "question_text": "What is your total annual water withdrawal divided by annual revenue (m³/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_intensity_bus",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-066",
+    "question_text": "What is your total annual water withdrawal divided by annual revenue (m³/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_intensity_cg",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-067",
+    "question_text": "What is your total annual water withdrawal divided by annual revenue (m³/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_intensity_const",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-068",
+    "question_text": "What is your total annual water withdrawal divided by annual revenue (m³/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_intensity_food",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-069",
+    "question_text": "What is your total annual water withdrawal divided by annual revenue (m³/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_intensity_manuf",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-070",
+    "question_text": "What percentage of waste generated is diverted from disposal (recycled or recovered) at your manufacturing facilities?",
+    "response_type": "percent",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_diverted_percent",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-071",
+    "question_text": "What is your total annual waste generated divided by annual revenue (kg/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_intensity_bus",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-072",
+    "question_text": "What is your total annual waste generated divided by annual revenue (kg/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_intensity_cg",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-073",
+    "question_text": "What is your total annual waste generated divided by annual revenue (kg/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_intensity_const",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-074",
+    "question_text": "What is your total annual waste generated divided by annual revenue (kg/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_intensity_food",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-075",
+    "question_text": "What is your total annual waste generated divided by annual revenue (kg/USD)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "waste_management",
+    "metric_id": "waste_intensity_manuf",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "I-076",
+    "question_text": "Does your company perform stakeholder engagement as part of project-planning or site-selection due diligence?",
+    "response_type": "categorical",
+    "category": "Community",
+    "subcategory": "stakeholder_engagement",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "I-077",
+    "question_text": "Has your company identified and addressed any nutritional or health concerns related to your products?",
+    "response_type": "categorical",
+    "category": "Community",
+    "subcategory": "product_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-078",
+    "question_text": "Does your company assess the adequacy of existing public infrastructure (electricity, water, wastewater) when selecting sites?",
+    "response_type": "categorical",
+    "category": "Community",
+    "subcategory": "urban_planning",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "I-079",
+    "question_text": "Does your company track the share of revenue from products marketed for their health or nutritional benefits?",
+    "response_type": "boolean",
+    "category": "Community",
+    "subcategory": "product_impact",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "IM-1",
+    "question_text": "Does your company have written policies on how it collects, uses, and protects customer data and privacy?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "data_privacy",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "IM-2",
+    "question_text": "Does your company track the share of revenue from products that carry clear safety instructions and responsible-usage information for consumers?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "consumer_protection",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "IM-3",
+    "question_text": "Does your company have a formal workplace health and safety management system that covers all your construction sites and worksites?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "health_safety",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "IM-4",
+    "question_text": "Does your company perform hazard identification and risk assessments for all operational processes?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "health_safety",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "IM-5",
+    "question_text": "What is your total water withdrawal broken down by source (groundwater, surface water, municipal supply)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_withdrawal_m3",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "IM-6",
+    "question_text": "What is your total water withdrawal broken down by source (groundwater, surface water, municipal supply)?",
+    "response_type": "numeric",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "water_withdrawal_m3",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-001",
+    "question_text": "Are your Scope 1 and Scope 2 emissions verified by an independent third party?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "audit_assurance",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Internal review only",
+      "Limited external assurance",
+      "Reasonable external assurance"
+    ]
+  },
+  {
+    "question_id": "M-002",
+    "question_text": "Has your company established mechanisms to prevent illegal or unfair business practices?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "compliance",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-003",
+    "question_text": "Does your company disclose the total number of directors on your board?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-004",
+    "question_text": "Does your company disclose the total number of directors on your board?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-005",
+    "question_text": "Does your company publicly disclose material sustainability-related risks that could affect its business?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "risk_management",
+    "metric_id": "",
+    "options": [
+      "No policy",
+      "Informal",
+      "Formal"
+    ]
+  },
+  {
+    "question_id": "M-006",
+    "question_text": "Does your company publish the assurance provider's full report alongside its emissions disclosure?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "audit_assurance",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-007",
+    "question_text": "Does your company ensure timely payment of all applicable taxes, levies, and duties?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "compliance",
+    "metric_id": "",
+    "options": [
+      "Never",
+      "Sometimes",
+      "Always"
+    ]
+  },
+  {
+    "question_id": "M-008",
+    "question_text": "Does your company have a Whistleblowing Policy to protect employees who report concerns?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "",
+    "options": [
+      "No policy",
+      "Informal",
+      "Formal"
+    ]
+  },
+  {
+    "question_id": "M-009",
+    "question_text": "Does your company have a Whistleblowing Policy to protect employees who report concerns?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-010",
+    "question_text": "Does your company publish a sustainability or ESG report aligned with a recognised framework (e.g. GRI, ISSB, SASB)?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "transparency",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-011",
+    "question_text": "Does your company disclose the nature of its business operations and principal sustainability-related activities in a publicly available report?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "transparency",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-012",
+    "question_text": "Has your company identified sustainability risks that could affect its cash flows or financial performance?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "financial_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-013",
+    "question_text": "Has your company identified sustainability risks that could affect its access to finance or investment?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "financial_impact",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-014",
+    "question_text": "Does your company track progress against sustainability plans or commitments you have previously disclosed?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "strategy",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "M-015",
+    "question_text": "Does your company have written procedures for sustainable sourcing of inputs from suppliers?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "procurement",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-016",
+    "question_text": "Does your company maintain a written anti-corruption and anti-bribery policy?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "business_ethics",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Basic",
+      "Formal",
+      "Advanced"
+    ]
+  },
+  {
+    "question_id": "M-017",
+    "question_text": "Do any members of your board or senior leadership have sustainability-linked incentives in their compensation?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "compensation",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-018",
+    "question_text": "How many substantiated customer-privacy-breach complaints has your company received in the past year?",
+    "response_type": "numeric",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "privacy_breaches_count",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-019",
+    "question_text": "How many substantiated customer-privacy-breach complaints has your company received in the past year?",
+    "response_type": "numeric",
+    "category": "Governance",
+    "subcategory": "governance",
+    "metric_id": "privacy_breaches_count",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-020",
+    "question_text": "Does your company disclose its accounting policies or financial-reporting methods in a public document?",
+    "response_type": "boolean",
+    "category": "Governance",
+    "subcategory": "transparency",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-021",
+    "question_text": "Has your company identified climate-related risks (physical or transitional) relevant to its operations or market context?",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "risk_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-022",
+    "question_text": "Do you actively track and report progress against your sustainability targets? (If you don't have targets, leave blank)",
+    "response_type": "categorical",
+    "category": "Governance",
+    "subcategory": "strategy",
+    "metric_id": "",
+    "options": [
+      "Don't track",
+      "Track some",
+      "Track all (don't report)",
+      "Track and report"
+    ]
+  },
+  {
+    "question_id": "M-023",
+    "question_text": "What % of your input materials are sustainably sourced (e.g. certified, recycled, or local) by estimated spend?",
+    "response_type": "percent",
+    "category": "Governance",
+    "subcategory": "procurement",
+    "metric_id": "certified_inputs_pct",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-024",
+    "question_text": "On average, how many training hours does each employee receive per year?",
+    "response_type": "numeric",
+    "category": "People",
+    "subcategory": "training",
+    "metric_id": "labor_training_hours",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-025",
+    "question_text": "On average, how many training hours does each employee receive per year?",
+    "response_type": "numeric",
+    "category": "People",
+    "subcategory": "training",
+    "metric_id": "labor_training_hours",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-026",
+    "question_text": "Have you assessed whether your operations or suppliers are at risk of child or forced labor, and taken steps to address identified risks?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "labor",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-027",
+    "question_text": "Has your company identified operations or suppliers at high risk of child or forced labour?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "labor",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-028",
+    "question_text": "How many recordable workplace injuries occurred per 100 employees in the past year?",
+    "response_type": "numeric",
+    "category": "People",
+    "subcategory": "health_safety",
+    "metric_id": "workplace_injury_rate",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-029",
+    "question_text": "Does your company record child-labour or forced-labour incidents identified in your operations or supply chain?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "labor",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-030",
+    "question_text": "Does your company record child-labour or forced-labour incidents identified in your operations or supply chain?",
+    "response_type": "boolean",
+    "category": "People",
+    "subcategory": "labor",
+    "metric_id": "",
+    "options": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "question_id": "M-031",
+    "question_text": "What percentage of your workers are covered by collective bargaining agreements?",
+    "response_type": "percent",
+    "category": "People",
+    "subcategory": "labor_relations",
+    "metric_id": "collective_bargaining_pct",
+    "options": [
+      "Direct numeric input"
+    ]
+  },
+  {
+    "question_id": "M-032",
+    "question_text": "Has your company identified child-labour or forced-labour risks in your value chain?",
+    "response_type": "categorical",
+    "category": "People",
+    "subcategory": "human_rights",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-033",
+    "question_text": "Does your company have a plan to ensure its business model is compatible with the transition to a 1.5°C climate pathway?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_transition",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "M-034",
+    "question_text": "Does your company have a plan to ensure its business model is compatible with the transition to a 1.5°C climate pathway?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_transition",
+    "metric_id": "",
+    "options": [
+      "None",
+      "Planned",
+      "Partially implemented",
+      "Implemented",
+      "Sustained"
+    ]
+  },
+  {
+    "question_id": "M-035",
+    "question_text": "Has your company explained why climate change is or is not considered a material topic for your business?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "climate_change",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-036",
+    "question_text": "Does your company actively identify non-renewable materials in its production and work to reduce them?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "resource_efficiency",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-037",
+    "question_text": "Does your company use eco-friendly or biodegradable packaging for its products?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "resource_efficiency",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-038",
+    "question_text": "Does your company disclose its spending on sustainability-related research, innovation, or product improvements?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "innovation",
+    "metric_id": "",
+    "options": [
+      "No policy",
+      "Informal",
+      "Formal"
+    ]
+  },
+  {
+    "question_id": "M-039",
+    "question_text": "Has your company implemented a Zero-Liquid-Discharge mechanism or similar advanced water-treatment system?",
+    "response_type": "categorical",
+    "category": "Resources",
+    "subcategory": "water_management",
+    "metric_id": "",
+    "options": [
+      "No",
+      "Some",
+      "Yes"
+    ]
+  },
+  {
+    "question_id": "M-040",
+    "question_text": "What percentage of your input materials are sourced directly from small-scale or micro enterprises?",
+    "response_type": "percent",
+    "category": "Community",
+    "subcategory": "procurement",
+    "metric_id": "local_sourcing_percent",
+    "options": [
+      "Direct numeric input"
+    ]
+  }
+]

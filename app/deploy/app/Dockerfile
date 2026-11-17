@@ -17,6 +17,8 @@ COPY --from=build --chown=node:node /app/.next ./.next
 COPY --from=build --chown=node:node /app/config ./config
 COPY --from=build --chown=node:node /app/public ./public
 COPY --from=build --chown=node:node /app/package.json ./
+ENV PLAYWRIGHT_BROWSERS_PATH=/opt/mosaic-browsers
+RUN node node_modules/playwright-core/cli.js install --with-deps chromium --only-shell && chmod -R a+rX /opt/mosaic-browsers && rm -rf /var/lib/apt/lists/*
 RUN printf '%s\n' 'export default { poweredByHeader: false };' > next.config.mjs
 USER node
 EXPOSE 3000

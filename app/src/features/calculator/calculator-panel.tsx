@@ -1,4 +1,5 @@
 "use client";
+import { sourceLabel } from "../../application/display-value";
 import { cloneElement, createContext, useContext, useEffect, useId, useReducer, useRef, useState, type ReactElement, type ReactNode } from "react";
 import { browserCalculator, initialCalculatorSession, type CalculatorSession } from "../../adapters/calculator-session";
 import { calculateDraft, calculatorEligible, referenceFactors, referenceVersion, type CalculatorDraft } from "../../application/calculator";
@@ -7,6 +8,7 @@ import { activityInCoverage, allowedFactorIds, calculatorUnits } from "../../dom
 
 import { useAssessment } from "../assessment/assessment-context";
 import { displayCalculatorNumber, unavailableMetricReason } from "../../application/calculator-mapping";
+import { periodFeedback } from "./period-feedback";
 import { MetricReview, CalculatorProvenance } from "./metric-review";
 
 type State = CalculatorSession & { ready: boolean; warning: string | null; showErrors: boolean };
@@ -66,7 +68,7 @@ function GeographyPicker({ value, onChange, path }: { value: string; onChange: (
     {value && <button type="button" className="text-link text-small" onClick={() => select("")}>Clear geography selection</button>}
   </div>;
 }
-const fieldNames: Record<string, string> = { site: "Facility/location", source: "Source name", quantity: "Quantity", unit: "Unit", factorId: "Reference factor", geography: "Electricity geography", renewable: "Renewable portion", diverted: "Diverted portion", hazardous: "Hazardous portion", kind: "Activity", evidence: "Evidence reference", periodStart: "Period start", periodEnd: "Period end", referenceAcknowledged: "Historical-factor acknowledgement", "revenue.amount": "Same-period revenue", "revenue.currency": "Revenue currency", "revenue.scale": "Revenue scale" };
+const fieldNames: Record<string, string> = { site: "Facility/location", source: "Source name", quantity: "Quantity", unit: "Unit", factorId: "Reference factor", geography: "Electricity geography", renewable: "Renewable portion", diverted: "Diverted portion", hazardous: "Hazardous portion", kind: "Activity", evidence: "Evidence reference", periodStart: "Period start", periodEnd: "Period end", referenceAcknowledged: "Historical-factor acknowledgement", "revenue.amount": "Annual revenue (USD)", "revenue.currency": "Revenue currency", "revenue.scale": "Revenue scale" };
 function issueLabel(path: string, draft: CalculatorDraft) {
   const parts = path.split(".");
   if (parts[0] === "activities") { const index = Number(parts[1]); const source = draft.activities[index]; return "Source " + (index + 1) + (source?.source ? " (“" + source.source + "”)" : "") + ": " + (fieldNames[parts[2]!] ?? "source entry"); }
@@ -76,6 +78,7 @@ function issueLabel(path: string, draft: CalculatorDraft) {
 export function CalculatorPanel() {
   const { dispatch: assessmentDispatch, session, questions } = useAssessment();
   const eligible = calculatorEligible(session.profile.country);
+  const [replacementUsd, setReplacementUsd] = useState("");
   const [collapsed, setCollapsed] = useState<string[]>([]);
   const [state, dispatch] = useReducer(reducer, { ...initialCalculatorSession(), ready: false, warning: null, showErrors: false });
   const firstSave = useRef(true);
@@ -100,12 +103,17 @@ export function CalculatorPanel() {
     if (!state.ready) return;
     if (firstSave.current) { firstSave.current = false; return; }
     const warning = browserCalculator.save({ draft: state.draft, method: state.method, reviewed: state.reviewed, lastReviewedDraft: state.lastReviewedDraft, priorReviewedDraft: state.priorReviewedDraft });
-    if (warning) dispatch({ type: "warning", warning });
+    dispatch({ type: "warning", warning });
   }, [state.ready, state.draft, state.method, state.reviewed, state.lastReviewedDraft, state.priorReviewedDraft]);
   const { draft } = state;
   const previousInputs = state.reviewed ? state.priorReviewedDraft : state.lastReviewedDraft;
   const outcome = calculateDraft(draft);
   const result = state.reviewed ? outcome.result : null;
+  const periodMessage = periodFeedback(draft.periodStart, draft.periodEnd);
+  const visibleIssues = [
+    ...outcome.issues.filter(issue => (state.showErrors || ((issue.path === "periodStart" || issue.path === "periodEnd") && Boolean(draft.periodStart && draft.periodEnd))) && !(periodMessage && issue.path === "periodEnd")),
+    ...(periodMessage ? [{ path: "periodEnd", message: periodMessage }] : []),
+  ];
   const edit = (next: CalculatorDraft) => { assessmentDispatch({ type: "calculator-invalidate" }); dispatch({ type: "edit", draft: next }); };
   const editSource = (index: number, patch: Partial<CalculatorDraft["activities"][number]>) => {
     const next = { ...draft.activities[index]!, ...patch };
@@ -118,7 +126,7 @@ export function CalculatorPanel() {
   const openErrors = () => setCollapsed(ids => ids.filter(id => !outcome.issues.some(issue => issue.path.startsWith("activities." + draft.activities.findIndex(a => a.id === id) + "."))));
   const saveCalculator = () => browserCalculator.save({ draft, method: state.method, reviewed: state.reviewed, lastReviewedDraft: state.lastReviewedDraft, priorReviewedDraft: state.priorReviewedDraft });
   if (!state.ready) return <p role="status">Restoring data input entries...</p>;
-  return <IssueContext.Provider value={state.showErrors ? outcome.issues : []}>
+  return <IssueContext.Provider value={visibleIssues}>
     {state.warning && <p className="form-error mt-4" role="alert">{state.warning}</p>}
     <CalculatorProvenance />
     <fieldset className="mt-8 grid gap-4">
@@ -133,14 +141,18 @@ export function CalculatorPanel() {
       <h2 id="calculator-heading" className="text-subheading">Emissions, energy, water and waste calculator</h2>
       <p className="mt-4 text-muted">Reference estimates only. The available electricity factors cover China and listed provinces, not other countries. Their reporting-year suitability has not been verified; they are not approved for production reporting. Historical source details are available with the calculation.</p>
       <p className="mt-3 text-muted">Use one entry per physical source for the same reporting period and boundary. Choose fuel OR mileage, and measured OR calculated emissions for each source. Do not enter company totals alongside their site/source components. Blank means unknown; enter 0 only when confirmed. Use a dot for decimals and commas for thousands (12,000.5). Scope 3 is excluded.</p>
-      {previousInputs && <details className="mt-3"><summary className="text-link">Earlier calculation snapshot (history)</summary><p className="text-small text-muted">Saved inputs from an earlier calculation; this is history, not a warning about the current values below.</p><ul>{previousInputs.activities.map(a => <li key={a.id}>{a.site} / {a.source}: {a.quantity || "Unknown"} {a.unit}</li>)}</ul></details>}
+      {previousInputs && <details className="mt-3"><summary className="text-link">Earlier calculation snapshot (history)</summary><p className="text-small text-muted">Saved inputs from an earlier calculation; this is history, not a warning about the current values below.</p><ul>{previousInputs.activities.map(a => <li key={a.id}>{sourceLabel(a)}: {a.quantity || "Unknown"} {a.unit}</li>)}</ul></details>}
       <form id={fieldId("activities")} tabIndex={-1} className="mt-6" noValidate onSubmit={event => { event.preventDefault(); openErrors(); dispatch({ type: "calculate", valid: outcome.result !== null }); requestAnimationFrame(() => feedback.current?.focus()); }}>
+        <p className="mb-4 text-small text-muted">For answer transfer, use one complete annual reporting period, ending the day before the start-date anniversary. Totals can still be reviewed for other valid periods.</p>
         <div className="grid gap-4 md:grid-cols-2">
           <Field path="periodStart" label="Period start"><input className="field-control" type="date" value={draft.periodStart} onChange={e => edit({ ...draft, periodStart: e.target.value })} /></Field>
           <Field path="periodEnd" label="Period end"><input className="field-control" type="date" value={draft.periodEnd} onChange={e => edit({ ...draft, periodEnd: e.target.value })} /></Field>
-          <Field path="revenue.amount" label="Same-period revenue" hint="Optional. Zero or unknown revenue leaves intensity unavailable; absolute quantities remain available."><input className="field-control" inputMode="decimal" placeholder="Optional revenue amount" maxLength={80} value={draft.revenue.amount} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, amount: e.target.value } })} /></Field>
-          <Field path="revenue.currency" label="Revenue currency"><select className="field-control" value={draft.revenue.currency} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, currency: e.target.value as CalculatorDraft["revenue"]["currency"] } })}><option value="USD">USD</option><option value="CNY">CNY</option><option value="other">Other</option></select></Field>
-          <Field path="revenue.scale" label="Revenue scale"><select className="field-control" value={draft.revenue.scale} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, scale: e.target.value as "units" | "millions" } })}><option value="units">Currency units</option><option value="millions">Millions of currency units</option></select></Field>
+          <div className="md:col-span-2">
+            <p className="text-small text-muted">Enter revenue in USD for the same annual reporting period. If your accounts use another currency, convert the amount using a documented rate appropriate to that reporting period before entering it here. This calculator does not convert currencies. Revenue is optional; without USD revenue, absolute quantities and available percentages can still be used.</p>
+            {draft.revenue.currency !== "USD" && <p className="mt-3 text-small" role="status">Saved revenue retained: {draft.revenue.amount || "Not entered"} {draft.revenue.scale === "millions" ? "million " : ""}{draft.revenue.currency === "CNY" ? "CNY" : "(other currency)"}. It has not been converted or relabeled as USD. Enter a converted USD amount below and explicitly replace it to enable USD intensities.</p>}
+          </div>
+          <Field path="revenue.amount" label="Annual revenue (USD)" hint="Optional. Use revenue for the same period and business boundary. Zero or unknown revenue leaves intensity unavailable; absolute quantities remain available."><input className="field-control" inputMode="decimal" placeholder="Optional USD amount" maxLength={80} value={draft.revenue.currency === "USD" ? draft.revenue.amount : replacementUsd} onChange={e => draft.revenue.currency === "USD" ? edit({ ...draft, revenue: { ...draft.revenue, amount: e.target.value } }) : setReplacementUsd(e.target.value)} /></Field>
+          {draft.revenue.currency === "USD" ? <Field path="revenue.scale" label="Revenue scale"><select className="field-control" value={draft.revenue.scale} onChange={e => edit({ ...draft, revenue: { ...draft.revenue, scale: e.target.value as "units" | "millions" } })}><option value="units">USD</option><option value="millions">Millions of USD</option></select></Field> : <div><p className="text-small text-muted">Enter the full USD amount, not millions. Your saved non-USD entry stays unchanged until you replace it.</p><button type="button" className="button-secondary mt-3" disabled={!replacementUsd.trim()} onClick={() => { edit({ ...draft, revenue: { amount: replacementUsd, currency: "USD", scale: "units" } }); setReplacementUsd(""); }}>Replace saved revenue with this USD amount</button></div>}
         </div>
         {draft.activities.map((a,index) => <fieldset key={a.id} className={"mt-6 rounded-lg border border-line border-l-4 p-4 md:p-6 " + (a.kind === "water" ? "border-l-people" : a.kind === "waste" ? "border-l-resources" : "border-l-accent")}>
           <legend className="field-label">Source {index + 1}</legend>
@@ -174,9 +186,9 @@ export function CalculatorPanel() {
         {!result && <p>Values are not yet calculated for these entries. Calculate again after edits; previous results are not reused.</p>}
         {result && <section aria-label="Calculated values for review"><h3 className="text-subheading">Calculated values for review</h3><p className="mt-3 text-muted">{result.periodStart} to {result.periodEnd}. Review units, annual period and coverage, then select and confirm values below to transfer. U-026 uses renewable total-energy share. The inherited benchmark still refers to electricity; that methodology discrepancy remains open for Alan/Henry.</p>
           <dl className="mt-4 grid gap-4 md:grid-cols-2">{Object.entries({ ...result.totals, combinedEmissions: result.combinedEmissions }).map(([key,q]) => <div className="rounded-lg border border-line p-4" key={key}><dt className="field-label">{key === "combinedEmissions" ? "Scope 1 + 2" : key === "scope1" ? "Scope 1" : key === "scope2" ? "Scope 2 (location-based)" : key}</dt><dd>{display(q.value)} {q.unit}{!q.complete && <span className="block text-small text-muted">Incomplete · known subtotal: {display(q.knownSubtotal)} {q.unit}</span>}</dd></div>)}</dl>
-          <dl className="mt-4 grid gap-3 md:grid-cols-2">{Object.entries(result.intensities).map(([key,value]) => <div key={key}><dt>{key} intensity ({({carbon:"tCO2e",energy:"kWh",water:"m3",waste:"kg"} as Record<string,string>)[key]}/USD)</dt><dd>{display(value)}{value === null && <span className="block text-small text-muted">{unavailableMetricReason(key, draft)}</span>}</dd></div>)}{[["Renewable electricity share",result.renewableElectricityShare],["Renewable total-energy share",result.renewableEnergyShare],["Waste diversion",result.diversionShare],["Hazardous waste share",result.hazardousShare]].map(([key,value]) => <div key={String(key)}><dt>{key}</dt><dd>{display(value as number | null)}{value !== null && "%"}{value === null && <span className="block text-small text-muted">{unavailableMetricReason(({"Renewable electricity share":"renewableElectricity","Renewable total-energy share":"renewable","Waste diversion":"diversion","Hazardous waste share":"hazardous"} as Record<string,string>)[String(key)]!, draft)}</span>}</dd></div>)}</dl>
+          <dl className="mt-4 grid gap-3 md:grid-cols-2">{Object.entries(result.intensities).map(([key,value]) => <div key={key}><dt>{key} intensity ({({carbon:"tCO2e",energy:"kWh",water:"m3",waste:"kg"} as Record<string,string>)[key]}/USD)</dt><dd>{display(value, "/USD")}{value === null && <span className="block text-small text-muted">{unavailableMetricReason(key, draft)}</span>}</dd></div>)}{[["Renewable electricity share",result.renewableElectricityShare],["Renewable total-energy share",result.renewableEnergyShare],["Waste diversion",result.diversionShare],["Hazardous waste share",result.hazardousShare]].map(([key,value]) => <div key={String(key)}><dt>{key}</dt><dd>{display(value as number | null, "%")}{value !== null && "%"}{value === null && <span className="block text-small text-muted">{unavailableMetricReason(({"Renewable electricity share":"renewableElectricity","Renewable total-energy share":"renewable","Waste diversion":"diversion","Hazardous waste share":"hazardous"} as Record<string,string>)[String(key)]!, draft)}</span>}</dd></div>)}</dl>
           <ul className="mt-4 text-small text-muted">{result.flags.map(flag => <li key={flag}>{flag}</li>)}</ul>
-          <details className="mt-4"><summary className="text-link">Calculation details and historical provenance</summary><p className="text-small break-words">{result.methodVersion} · {referenceVersion}</p>{result.traces.map(t => <div key={t.id} className="mt-3 border-t border-line pt-3"><h4 className="field-label">{t.site} / {t.source}</h4><p>{t.expression ?? "No emission calculation for this source."}</p><p>Energy: {display(t.energy)} kWh; water: {display(t.water)} m3; waste: {display(t.waste)} kg.</p>{t.factor && <p>{t.factor.cell} · {t.factor.source_label} · {t.factor.geography} · validity year unknown · not production-approved</p>}<p>Evidence: {t.evidence || "Not supplied"}</p>{t.flags.map(f => <p key={f}>{f}</p>)}</div>)}</details>
+          <details className="mt-4"><summary className="text-link">Calculation details and historical provenance</summary><p className="text-small break-words">{result.methodVersion} · {referenceVersion}</p>{result.traces.map(t => <div key={t.id} className="mt-3 border-t border-line pt-3"><h4 className="field-label">{sourceLabel(t)}</h4><p>{t.expression ?? "No emission calculation for this source."}</p><p>Energy: {display(t.energy)} kWh; water: {display(t.water)} m3; waste: {display(t.waste)} kg.</p>{t.factor && <p>{t.factor.cell} · {t.factor.source_label} · {t.factor.geography} · validity year unknown · not production-approved</p>}<p>Evidence: {t.evidence || "Not supplied"}</p>{t.flags.map(f => <p key={f}>{f}</p>)}</div>)}</details>
           <MetricReview key={JSON.stringify(draft)} draft={draft} saveCalculator={saveCalculator} />
         </section>}
       </div>

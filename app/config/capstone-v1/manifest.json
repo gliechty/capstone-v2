@@ -1,5 +1,5 @@
 {
-  "version": "capstone-v1-migrated-1",
+  "version": "capstone-v1-training-routing-2",
   "schema_version": 1,
   "profile_options": {
     "regions": [
@@ -35,7 +35,7 @@
     },
     "MetricBenchmarks": {
       "file": "MetricBenchmarks.json",
-      "sha256": "56099acc8caab058bfae8be80055069cabdf0e49a66c2075f09315edd84ed321",
+      "sha256": "79cc976c7ba0f3d33adad7543a2bbb03a59bea3bd646b9e888d2de83253f907f",
       "source": "BUILD_PACK/04_CONFIG/clean/MetricBenchmarks.csv",
       "source_sha256": "ba26fa11e17a83fede74242cb9b6629194e2c33b4fac99cf95a3888f5295e787",
       "records": 62

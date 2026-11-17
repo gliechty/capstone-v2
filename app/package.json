@@ -20,16 +20,17 @@
     "verify": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e"
   },
   "dependencies": {
-    "next": "16.3.8",
+    "next": "16.4.5",
+    "playwright-core": "1.63.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "zod": "4.6.5"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@eslint-react/eslint-plugin": "5.24.4",
     "@eslint/js": "10.0.1",
-    "@next/eslint-plugin-next": "16.3.8",
+    "@next/eslint-plugin-next": "16.4.5",
     "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "4.3.3",
     "@testing-library/jest-dom": "7.0.1",

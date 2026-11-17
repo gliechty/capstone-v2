@@ -25,7 +25,7 @@ const result = (raw: typeof input) => ({ status: "available", configuration, con
   identity: { inputId: createHash("sha256").update(inputIdentityText(raw)).digest("hex"), configVersion: config.version, methodVersion: score.methodVersion, policyVersion: recommendationPolicy.version, promptVersion: PROMPT_VERSION, provider: { id: "openai", model: settings.model, settings } } });
 test("explicit generation, duplicate suppression, validated display, notes invalidation and refresh", async ({ page }) => {
   let posts = 0; let release!: () => void;
-  await page.addInitScript(s => sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)), session);
+  await page.addInitScript(s => { if(!sessionStorage.getItem("capstone.assessment.ui-preview.v1")) sessionStorage.setItem("capstone.assessment.ui-preview.v1", JSON.stringify(s)); }, session);
   await page.route("**/api/assessment-recommendations", async route => {
     if (route.request().method() === "GET") return route.fulfill({ json: configuration });
     posts++; await new Promise<void>(resolve => { release = resolve; });
@@ -40,7 +40,7 @@ test("explicit generation, duplicate suppression, validated display, notes inval
   release(); await expect(page.getByRole("button", { name: "Regenerate recommendations" })).toBeVisible();
   await page.locator("#actions summary").click();
   await page.locator("#sources > details > summary").click();
-  await expect(page.getByText("Review the observed practice", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Review the observed practice", exact: true })).toBeVisible();
   await expect(page.locator("#sources a[target='_blank']")).toHaveCount(1);
   await page.evaluate(() => { const key = "capstone.assessment.ui-preview.v1"; const value = JSON.parse(sessionStorage.getItem(key)!); value.profile.notes = "Changed notes"; sessionStorage.setItem(key, JSON.stringify(value)); window.dispatchEvent(new Event("capstone:assessment-session-changed")); });
   await expect(page.getByText("Review the observed practice", { exact: true })).toHaveCount(0);
@@ -63,12 +63,16 @@ test("cancelled and stale responses cannot replace deterministic results; failur
   await expect(page.getByText("Review the observed practice", { exact: true })).toHaveCount(0);
   failing = true; await page.getByRole("button", { name: "Retry recommendations" }).click();
   await expect(page.getByText(/Provider quota is exhausted/)).toBeVisible();
+  const report=page.getByRole("group",{name:"Download assessment report",exact:true}).first();
+  await expect(report.getByRole("button")).toBeDisabled();
+  await expect(report.getByRole("group",{name:"Report file format"})).toHaveCount(0);
+  await expect(report.getByRole("button")).toBeDisabled();
   await expect(page.getByRole("heading", { name: "Calculated overall scores" })).toBeVisible();
 });
-test("ordinary browser server is offline and enforces request origin", async ({ request }) => {
+test("ordinary browser server is offline and enforces request origin", async ({ request, baseURL }) => {
   const status = await request.get("/api/assessment-recommendations"); expect(status.ok()).toBe(true); expect(await status.json()).toMatchObject({ ready: false, code: "offline_tests" });
   const blocked = await request.post("/api/assessment-recommendations", { headers: { Origin: "https://untrusted.example" }, data: input }); expect(blocked.status()).toBe(403);
-  const local = await request.post("/api/assessment-recommendations", { headers: { Origin: "http://127.0.0.1:3100" }, data: input }); expect(local.status()).toBe(503); expect(await local.json()).toMatchObject({ code: "provider_not_configured", assessment: { rawOverall: score.rawOverall } });
+  const local = await request.post("/api/assessment-recommendations", { headers: { Origin: new URL(baseURL!).origin }, data: input }); expect(local.status()).toBe(503); expect(await local.json()).toMatchObject({ code: "provider_not_configured", assessment: { rawOverall: score.rawOverall } });
 });
 
 for (const width of [1440, 768, 390]) test("combined partial action generates once and disclosures work at " + width, async ({ page }, testInfo) => {
@@ -143,8 +147,8 @@ for (const interruption of ["refresh", "navigation"] as const) test("in-flight "
  await expect(page.getByRole("button",{name:"Regenerate recommendations",exact:true})).toBeVisible();expect(posts).toBe(2);
 });
 
-for(const width of [1440,768,390]) test("reviewed Results hierarchy and source dialog at "+width,async({page},testInfo)=>{
- await page.emulateMedia({reducedMotion:"reduce"});await page.setViewportSize({width,height:1000});await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+for(const width of [1440,768,390,320,844]) test("reviewed Results hierarchy and source dialog at "+width,async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.setViewportSize({width,height:width===844?390:1000});await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
  const difficulty=width===1440?"Low":width===768?"Medium":"High";
  await page.route("**/api/assessment-recommendations",route=>{const response=result(input);response.content.priority_recommendations[0]!.implementation_difficulty=difficulty;return route.fulfill({json:route.request().method()==="GET"?configuration:response});});
  await page.goto("/results");await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toHaveClass("button-secondary");
@@ -157,6 +161,7 @@ for(const width of [1440,768,390]) test("reviewed Results hierarchy and source d
  expect((await badges.boundingBox())!.y).toBeLessThan((await page.getByRole("heading",{name:"Review the observed practice",exact:true}).boundingBox())!.y);
  await page.locator("#actions").screenshot({path:testInfo.outputPath("expanded-action.png")});
  const source=page.locator("#actions .source-control");await source.focus();await page.keyboard.press("Enter");const dialog=page.getByRole("dialog");await expect(dialog).toBeVisible();await expect(dialog.getByRole("link")).toHaveAttribute("href",citation.link);
+ const close=dialog.getByRole("button",{name:/Close/});await close.scrollIntoViewIfNeeded();await expect(close).toBeInViewport();expect(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);await page.screenshot({path:testInfo.outputPath("open-source-dialog.png")});
  await page.keyboard.press("Escape");await expect(dialog).not.toBeVisible();await expect(source).toBeFocused();
  await page.locator("#sources > details > summary").click();expect(await page.locator("#sources h3").allTextContents()).toEqual(["How recommendations use evidence","Assessment evidence & coverage","Bibliography"]);
@@ -188,7 +193,8 @@ for(const reducedMotion of ["reduce","no-preference"] as const)test("delayed off
 });
 
 
-test("daily budget modal preserves existing results, keyboard access and scores",async({page})=>{
+test("daily budget modal preserves existing results, keyboard access and scores",async({page},info)=>{
+ await page.setViewportSize({width:320,height:568});
  let posts=0;
  await page.addInitScript(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
  await page.route("**/api/assessment-recommendations",async route=>{
@@ -201,6 +207,7 @@ test("daily budget modal preserves existing results, keyboard access and scores"
  const modal=page.getByRole("dialog",{name:"Daily AI budget reached"});await expect(modal).toBeVisible();
  await expect(modal).toContainText("Today’s AI recommendation budget has been reached. Your scores remain available. Please try again tomorrow or contact Guy / the Climate School to arrange additional access.");
  await expect(modal.getByRole("button",{name:"Close",exact:true})).toBeFocused();
+ await modal.getByRole("button",{name:"Close",exact:true}).scrollIntoViewIfNeeded();await expect(modal.getByRole("button",{name:"Close",exact:true})).toBeInViewport();await page.screenshot({path:info.outputPath("budget-mobile.png")});
  expect((await new AxeBuilder({page}).include('dialog[open]').analyze()).violations).toEqual([]);
  await page.keyboard.press('Escape');await expect(modal).not.toBeVisible();await expect(regenerate).toBeFocused();
  await expect(page.locator('.score-values')).toHaveText(scores!);
@@ -249,4 +256,50 @@ for (const fixture of goldenCases) test(fixture.case_id + ": archived recommenda
  await expect(page.locator(".score-values")).toContainText(computed.rawOverall!.toFixed(1));
  expect(posts).toBe(1);expect(goldenExpected(fixture)).toEqual(historical);
  console.log(fixture.case_id+": PASS; "+parsed.content.priority_recommendations.length+" actions, "+parsed.content.key_gaps.length+" gaps, "+citations.length+" citations ("+grouped.length+" bibliography entries); unchanged historical prose and authoritative computed score displayed.");
+});
+
+for(const width of [1440,390])test("report formats, matching refresh restoration and continuous Results navigation "+width,async({page},testInfo)=>{
+ await page.setViewportSize({width,height:900});
+ await page.goto("/");await page.evaluate(s=>sessionStorage.setItem("capstone.assessment.ui-preview.v1",JSON.stringify(s)),session);
+ let posts=0;
+ await page.route("**/api/assessment-recommendations",route=>{
+  if(route.request().method()==="GET")return route.fulfill({json:configuration});
+  posts++;return route.fulfill({json:result(route.request().postDataJSON())});
+ });
+ await page.goto("/results");
+ const group=page.getByRole("group",{name:"Download assessment report",exact:true}).first();
+ const button=group.getByRole("button",{name:"Download report"});
+ await expect(group.getByRole("combobox")).toHaveCount(0);await expect(button).toBeDisabled();
+ await expect(group.getByRole("group",{name:"Report file format"})).toHaveCount(0);
+ await page.getByRole("button",{name:"Generate recommendations",exact:true}).click();await expect(button).toBeEnabled();
+ await page.reload();await expect(page.getByRole("button",{name:"Regenerate recommendations"})).toBeVisible();expect(posts).toBe(1);
+ await expect(button).toBeEnabled();
+ let downloads=0;page.on("download",()=>downloads++);
+ await button.click();await expect(group.getByRole("button",{name:"PDF",exact:true})).toBeVisible();
+ await page.locator("#results-title").click();await expect(button).toHaveAttribute("aria-expanded","false");expect(downloads).toBe(0);
+ await button.focus();await page.keyboard.press("Enter");await page.keyboard.press("Tab");
+ await expect(group.getByRole("button",{name:"PDF",exact:true})).toBeFocused();
+ await page.keyboard.press("Escape");await expect(button).toBeFocused();await expect(button).toHaveAttribute("aria-expanded","false");expect(downloads).toBe(0);
+ const buttonX=(await button.boundingBox())!.x;expect(Math.abs(buttonX-(await group.boundingBox())!.x)).toBeLessThanOrEqual(1);
+ await button.click();await page.screenshot({path:testInfo.outputPath("download-menu-"+width+".png")});
+ await page.route("**/api/assessment-report-html",route=>route.fulfill({status:503,json:{error:"Please retry."}}));
+ await group.getByRole("button",{name:"HTML",exact:true}).click();await expect(group.getByRole("status")).toHaveText("HTML report could not be downloaded. Please retry.");
+ await page.unroute("**/api/assessment-report-html");
+ const pending=page.waitForEvent("download");await button.click();await group.getByRole("button",{name:"HTML",exact:true}).click();const download=await pending;
+ expect(download.suggestedFilename()).toBe("mosaic-assessment-report.html");
+ const body=readFileSync((await download.path())!,"utf8");expect(body).toContain(validTestContent().executive_summary);expect(body).toContain("Controlled test gap.");
+ await expect(group.getByRole("status")).toHaveText("HTML report downloaded.");
+ await button.click();await expect(group.getByRole("status")).not.toContainText("HTML report downloaded");await page.keyboard.press("Escape");
+ for(const scroll of [0,600,1400]){
+  await page.evaluate(y=>window.scrollTo(0,y),scroll);
+  await expect.poll(()=>page.evaluate(()=>{const upper=document.querySelector(".stage-navigation")!.getBoundingClientRect();const lower=document.querySelector(".results-navigation")!.getBoundingClientRect();return Math.abs(lower.top-upper.bottom);})).toBeLessThanOrEqual(1);
+  expect(await page.locator(".results-navigation-stack").evaluate(el=>getComputedStyle(el).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+  await page.screenshot({path:testInfo.outputPath("report-navigation-"+width+"-"+scroll+".png")});
+ }
+ if(width<640)await page.locator(".results-mobile-nav summary").click();
+ await page.getByRole("navigation",{name:"Results sections"}).filter({visible:true}).getByRole("link",{name:"Key Gaps"}).click();
+ await expect.poll(()=>page.evaluate(()=>document.querySelector("#gaps")!.getBoundingClientRect().top-document.querySelector(".results-navigation-stack")!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
+ await page.evaluate(()=>{const key="capstone.assessment.ui-preview.v1";const value=JSON.parse(sessionStorage.getItem(key)!);value.answers["U-001"]="Yes";sessionStorage.setItem(key,JSON.stringify(value));window.dispatchEvent(new Event("capstone:assessment-session-changed"));});
+ await expect(button).toBeDisabled();await page.reload();await expect(button).toBeDisabled();expect(posts).toBe(1);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

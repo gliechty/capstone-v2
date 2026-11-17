@@ -1,0 +1,31 @@
+From a capstone brief to a contextual assessment (about 84 seconds). Illustrative animation.
+
+MOSAIC began as a capstone project in Columbia University’s Master of Science in Sustainability Management program, with a simple-sounding brief:
+
+build a global sustainability rating system for small and medium enterprises.
+
+But what should a global rating measure?
+
+A business can face international frameworks, buyer questionnaires and local expectations, all at once.
+
+They don't use the same words, ask for the same evidence, or weigh the same issues equally.
+
+One universal checklist would miss what makes each business different.
+
+So the team built a different kind of system.
+
+First, standards are broken into individual requirements, each traced back to its source.
+
+Next, the business's context decides which questions apply, and which matter more.
+
+Then fixed rules calculate the scores, the same way for every business.
+
+AI has two bounded jobs: helping prepare the sources, and explaining the results.
+
+Because the method is separate from its sources, it could be configured for any set of standards.
+
+A large buyer or an industry association could generate its own assessment: questions, weights and scoring, built from the standards it cares about most.
+
+MOSAIC. The pieces that matter.
+
+On-screen text in the last scene: Possible configuration · illustrative.

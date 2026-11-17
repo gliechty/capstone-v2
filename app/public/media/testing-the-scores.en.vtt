@@ -1,0 +1,287 @@
+WEBVTT
+
+NOTE Cues sit near the top (line:4%) so they don't cover on-screen labels.
+
+1a-1
+00:00:00.500 --> 00:00:02.988 line:4% align:center
+Can a scoring method like MOSAIC's be checked
+
+1a-2
+00:00:02.988 --> 00:00:04.260 line:4% align:center
+against the real world?
+
+1b-1
+00:00:04.540 --> 00:00:07.703 line:4% align:center
+Alan H. Chan and Hanrui Li, two researchers at
+
+1b-2
+00:00:07.703 --> 00:00:11.140 line:4% align:center
+Columbia University, tested it from the bottom up.
+
+2a-1
+00:00:11.950 --> 00:00:14.198 line:4% align:center
+Instead of asking businesses to fill in a
+
+2a-2
+00:00:14.198 --> 00:00:16.774 line:4% align:center
+questionnaire, they started with what companies
+
+2a-3
+00:00:16.774 --> 00:00:17.980 line:4% align:center
+had already published.
+
+2b-1
+00:00:18.250 --> 00:00:20.410 line:4% align:center
+An AI model read each company's own
+
+2b-2
+00:00:20.410 --> 00:00:23.248 line:4% align:center
+sustainability report and answered a fixed set
+
+2b-3
+00:00:23.248 --> 00:00:25.901 line:4% align:center
+of questions. The set was built on MOSAIC's
+
+2b-4
+00:00:25.901 --> 00:00:28.616 line:4% align:center
+question bank, with extra questions for each
+
+2b-5
+00:00:28.616 --> 00:00:29.850 line:4% align:center
+market and industry.
+
+2c-1
+00:00:30.350 --> 00:00:32.691 line:4% align:center
+They scored about fifteen hundred companies
+
+2c-2
+00:00:32.691 --> 00:00:35.087 line:4% align:center
+listed in mainland China, almost twenty-five
+
+2c-3
+00:00:35.087 --> 00:00:37.592 line:4% align:center
+hundred in Hong Kong, and around eight hundred
+
+2c-4
+00:00:37.592 --> 00:00:38.790 line:4% align:center
+in the European Union.
+
+2d-1
+00:00:39.240 --> 00:00:41.865 line:4% align:center
+The rating comparisons described here focus on
+
+2d-2
+00:00:41.865 --> 00:00:43.520 line:4% align:center
+mainland China and Hong Kong.
+
+3a-1
+00:00:45.060 --> 00:00:47.377 line:4% align:center
+Then they asked a simple question.
+
+3a-2
+00:00:47.377 --> 00:00:50.376 line:4% align:center
+Do these scores put companies in roughly the
+
+3a-3
+00:00:50.376 --> 00:00:53.170 line:4% align:center
+same order as professional ESG raters do?
+
+3b-1
+00:00:53.730 --> 00:00:57.077 line:4% align:center
+In mainland China, they compared against two
+
+3b-2
+00:00:57.077 --> 00:00:59.131 line:4% align:center
+independent Chinese raters.
+
+3b-3
+00:00:59.131 --> 00:01:02.250 line:4% align:center
+In Hong Kong, they compared against MSCI.
+
+4a-1
+00:01:02.960 --> 00:01:04.524 line:4% align:center
+No method matches perfectly.
+
+4a-2
+00:01:04.524 --> 00:01:07.037 line:4% align:center
+Even the two Chinese raters only partly agree
+
+4a-3
+00:01:07.037 --> 00:01:07.930 line:4% align:center
+with each other.
+
+4b-1
+00:01:08.450 --> 00:01:11.443 line:4% align:center
+A comparison using the MOSAIC scoring engine and
+
+4b-2
+00:01:11.443 --> 00:01:14.373 line:4% align:center
+its original base weights agreed with the first
+
+4b-3
+00:01:14.373 --> 00:01:17.304 line:4% align:center
+rater, on the mainland China comparison sample,
+
+4b-4
+00:01:17.304 --> 00:01:20.920 line:4% align:center
+almost as closely as the two raters agree with each other.
+
+4c-1
+00:01:21.940 --> 00:01:25.362 line:4% align:center
+Those base weights, which come from how often an
+
+4c-2
+00:01:25.362 --> 00:01:28.713 line:4% align:center
+indicator recurs across established frameworks,
+
+4c-3
+00:01:28.713 --> 00:01:31.992 line:4% align:center
+did better than simply weighting a question by
+
+4c-4
+00:01:31.992 --> 00:01:34.060 line:4% align:center
+how many companies report it.
+
+4d-1
+00:01:34.310 --> 00:01:38.062 line:4% align:center
+In a separate re-reading of fifty reports, using
+
+4d-2
+00:01:38.062 --> 00:01:41.580 line:4% align:center
+MOSAIC's graded answer scales produced closer
+
+4d-3
+00:01:41.580 --> 00:01:45.098 line:4% align:center
+agreement with external ratings than reducing
+
+4d-4
+00:01:45.098 --> 00:01:46.740 line:4% align:center
+answers to yes or no.
+
+5a-1
+00:01:47.600 --> 00:01:50.565 line:4% align:center
+The team also designed their own weighting,
+
+5a-2
+00:01:50.565 --> 00:01:53.391 line:4% align:center
+which gives greater weight to disclosures
+
+5a-3
+00:01:53.391 --> 00:01:56.425 line:4% align:center
+associated with third-party verification and
+
+5a-4
+00:01:56.425 --> 00:02:00.010 line:4% align:center
+measured quantities. It is not part of MOSAIC today.
+
+5b-1
+00:02:00.360 --> 00:02:03.062 line:4% align:center
+Their alternative weighting increased agreement
+
+5b-2
+00:02:03.062 --> 00:02:06.110 line:4% align:center
+with the external raters in the reported comparisons.
+
+5c-1
+00:02:06.410 --> 00:02:10.263 line:4% align:center
+In Hong Kong, agreement with MSCI was weaker for
+
+5c-2
+00:02:10.263 --> 00:02:12.190 line:4% align:center
+every method they tried.
+
+6a-1
+00:02:13.070 --> 00:02:15.785 line:4% align:center
+These results have limits, and the authors state
+
+6a-2
+00:02:15.785 --> 00:02:16.520 line:4% align:center
+them plainly.
+
+6b-1
+00:02:16.820 --> 00:02:19.660 line:4% align:center
+These were listed companies, not small businesses.
+
+6c-1
+00:02:19.970 --> 00:02:22.770 line:4% align:center
+The scores were compared with other ratings, not
+
+6c-2
+00:02:22.770 --> 00:02:25.220 line:4% align:center
+with what later happened to the companies.
+
+6d-1
+00:02:25.620 --> 00:02:28.688 line:4% align:center
+Two AI readings of the same reports agreed on
+
+6d-2
+00:02:28.688 --> 00:02:30.460 line:4% align:center
+most answers, but not all.
+
+6e-1
+00:02:30.800 --> 00:02:33.845 line:4% align:center
+Weights estimated in mainland China were carried
+
+6e-2
+00:02:33.845 --> 00:02:37.080 line:4% align:center
+over to Hong Kong without being re-estimated there.
+
+6f-1
+00:02:37.650 --> 00:02:41.122 line:4% align:center
+And the study tested MOSAIC's questions, weights
+
+6f-2
+00:02:41.122 --> 00:02:44.450 line:4% align:center
+and scoring. It did not test how MOSAIC builds
+
+6f-3
+00:02:44.450 --> 00:02:47.705 line:4% align:center
+its question bank, sets its configuration, or
+
+6f-4
+00:02:47.705 --> 00:02:49.730 line:4% align:center
+selects evidence for advice.
+
+7a-1
+00:02:50.710 --> 00:02:53.867 line:4% align:center
+These comparisons provide encouraging evidence
+
+7a-2
+00:02:53.867 --> 00:02:56.749 line:4% align:center
+for elements of the MOSAIC scoring design,
+
+7a-3
+00:02:56.749 --> 00:02:59.425 line:4% align:center
+particularly its base weights, category
+
+7a-4
+00:02:59.425 --> 00:03:01.827 line:4% align:center
+structure and graded answer scales.
+
+7a-5
+00:03:01.827 --> 00:03:05.190 line:4% align:center
+They also identify opportunities for improvement.
+
+7b-1
+00:03:05.540 --> 00:03:08.515 line:4% align:center
+They do not yet establish how well the current
+
+7b-2
+00:03:08.515 --> 00:03:10.778 line:4% align:center
+SME application predicts real-world
+
+7b-3
+00:03:10.778 --> 00:03:12.524 line:4% align:center
+sustainability performance.
+
+7b-4
+00:03:12.524 --> 00:03:15.369 line:4% align:center
+The authors recommend testing scores against
+
+7b-5
+00:03:15.369 --> 00:03:17.180 line:4% align:center
+subsequent company outcomes.
+
+7c-1
+00:03:17.730 --> 00:03:20.370 line:4% align:center
+MOSAIC. The pieces that matter.
