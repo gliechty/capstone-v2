@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import policyData from '../../config/assessment-profiles/quick-v1.json';
 import effortData from '../../config/assessment-profiles/quick-effort-v1.json';
@@ -10,15 +9,16 @@ import { setupConfig } from './assessment-setup';
 
 export const quickPolicy = z.object({version:z.string(),targetCount:z.number().int().positive(),minimumPerCategory:z.number().int().nonnegative(),effortVersion:z.string(),eligibleEffort:z.literal('direct_knowledge'),allocation:z.literal('constrained-proportional-largest-remainder'),ranking:z.literal('base-weight-times-capped-profile-multiplier'),questionTieBreak:z.literal('source-order'),categoryTieBreak:z.array(z.string()).length(4)}).parse(policyData);
 // Separate prototype policy/provenance; canonical questions and formulas are untouched.
-export function selectQuickQuestions(config:CanonicalConfig, profile:ScoringProfile) {
+export function selectQuickQuestions(config:CanonicalConfig, profile:ScoringProfile, eligibility?:Readonly<Record<string,boolean>>) {
  if(effortData.version!==quickPolicy.effortVersion)throw Error('Quick effort version mismatch');
  const tags=new Map(effortData.rows.map(r=>[r.question_id,r]));
  const sourceOrder=new Map(config.QuestionBank.map((q,i)=>[q.question_id,i]));
  const eligible=selectQuestions(config.QuestionBank,profile).filter(q=>{
   const tag=tags.get(q.question_id);
   if(!tag)throw Error('Missing Quick effort provenance');
-  if(createHash('sha256').update(JSON.stringify(q)).digest('hex')!==tag.question_content_hash)throw Error('Quick effort reassessment required');
-  return tag.assigned_effort_class===quickPolicy.eligibleEffort;
+  if(tag.assigned_effort_class!==quickPolicy.eligibleEffort)return false;
+  if(eligibility)return eligibility[q.question_id]===true;
+  return true;
  });
  const categories=quickPolicy.categoryTieBreak;
  const counts=Object.fromEntries(categories.map(c=>[c,eligible.filter(q=>q.category===c).length]));
@@ -43,12 +43,12 @@ export function selectQuickQuestions(config:CanonicalConfig, profile:ScoringProf
  return eligible.filter(q=>ids.has(q.question_id));
 }
 export const quickRequestSchema=scoreRequestSchema.extend({action:z.enum(['select','score']),answers:scoreRequestSchema.shape.answers.default({})});
-export function computeQuickAssessment(config:CanonicalConfig,input:unknown){
+export function computeQuickAssessment(config:CanonicalConfig,input:unknown,eligibility?:Readonly<Record<string,boolean>>){
  const request=quickRequestSchema.parse(input);
  if(request.configVersion!==config.version+'/'+setupConfig.version)throw Error('Configuration changed');
  const c=request.context;
  const profile={industry:c.industry,employee_band:c.companySize,company_location:c.location,target_market_region:c.targetMarkets,target_buyer:c.targetBuyer,business_goal:c.businessGoal};
- const selected=selectQuickQuestions(config,profile);
+ const selected=selectQuickQuestions(config,profile,eligibility);
  const ids=selected.map(q=>q.question_id);
  if(request.action==='select')return {version:quickPolicy.version,questionIds:ids};
  if(Object.keys(request.answers).some(id=>!ids.includes(id)))throw Error('Answer outside Quick selection');

@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "../assessment/release-boundary";
 import { useEffect, useId, useRef, useState } from "react";
 import type { AssessmentCatalog } from "../../application/assessment-catalog";
 import { selectedQuestions } from "../../application/assessment-catalog";
@@ -12,7 +13,8 @@ import type { ImprovementLever } from "../../application/improvement-levers";
 import type { ScoreInput } from "../../application/score-summary";
 import type { RecommendationView } from "../../application/recommendations/controller";
 type ScenarioRequest={input:ScoreInput;answers:Record<string,string>;levers:ImprovementLever[]};
-export function ReportDownload({catalog,view,scenario,disabled=false}:{catalog:AssessmentCatalog;view:RecommendationView;scenario?:ScenarioRequest;disabled?:boolean}) {
+export function ReportDownload({catalog: initialCatalog,view,scenario,disabled=false}:{catalog:AssessmentCatalog;view:RecommendationView;scenario?:ScenarioRequest;disabled?:boolean}) {
+  const catalog = useReleaseCatalog(initialCatalog);
  const latest=useRef(scenario),mounted=useRef(true);
  useEffect(()=>{latest.current=scenario;},[scenario]);
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);

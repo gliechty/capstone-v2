@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "../assessment/release-boundary";
 import Link from 'next/link';
 import { useEffect,useReducer } from 'react';
 import { useRouter } from 'next/navigation';
@@ -11,7 +12,8 @@ import type { ScoreSummary } from '../../application/score-summary';
 type Data={version:string;questionIds:string[];score:Pick<ScoreSummary,'categories'|'answered'|'missing'|'rawOverall'|'weightedOverall'>};
 type View={status:'loading'}|{status:'error';message:string}|{status:'ready';data:Data;session:Session};
 const display=(value:number|null)=>value===null?'Not scored':value.toFixed(1);
-export function QuickResults({catalog}:{catalog:AssessmentCatalog}){
+export function QuickResults({catalog: initialCatalog}:{catalog:AssessmentCatalog}){
+  const catalog = useReleaseCatalog(initialCatalog);
  const router=useRouter();
  const [view,setView]=useReducer((_v:View,next:View)=>next,{status:'loading'});
  useEffect(()=>{

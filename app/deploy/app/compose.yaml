@@ -7,6 +7,7 @@ services:
     env_file:
       - /opt/mosaic-app/credential.env
       - /opt/mosaic-app/operating.env
+      - /opt/mosaic-app/admin.env
     environment:
       RECOMMENDATION_PROVIDER: openai
       RECOMMENDATION_MODEL: gpt-5.4-mini
@@ -17,8 +18,16 @@ services:
       RECOMMENDATION_BUDGET_FILE: /budget/public.json
       RECOMMENDATION_VERIFICATION_FILE: /budget/verification-20261019.json
       NEXT_TELEMETRY_DISABLED: "1"
+      MOSAIC_ADMIN_ENABLED: "1"
+      MOSAIC_DEV_IDENTITY: "0"
+      MOSAIC_ADMIN_DATA_DIR: /admin-data
+      MOSAIC_SOURCE_LIBRARY_DIR: /source-library
+      BETTER_AUTH_URL: https://preview.flowagentai.website
     volumes:
       - /opt/mosaic-app/budget:/budget
+      - /opt/mosaic-app/admin-data:/admin-data
+      - /opt/mosaic-app/source-library:/source-library:ro
+      - /opt/mosaic-app/archived-atomic-indicators:/BUILD_PACK/04_CONFIG/raw/atomic_indicators:ro
     read_only: true
     tmpfs:
       - /tmp:size=64m,mode=1777

@@ -1,0 +1,42 @@
+[
+  {
+    "industry": "Business / Export Services",
+    "people_weight": "0.2583",
+    "governance_weight": "0.4226",
+    "community_weight": "0.1",
+    "resources_weight": "0.2191",
+    "notes": "Business / Export Services (n=118) — Governance-dominant (raw 46%), People strong (28%). Services firms have a heavier HR / compliance footprint than a physical one. Community was floored from 2.5% → 10%: few direct neighborhood-impact indicators for office-based activity."
+  },
+  {
+    "industry": "Construction / Materials",
+    "people_weight": "0.1408",
+    "governance_weight": "0.2535",
+    "community_weight": "0.1268",
+    "resources_weight": "0.4789",
+    "notes": "Construction / Materials (n=71) — Resources-dominant (48%). This is the only industry where smoothing was not needed; the raw distribution was already inside [0.10, 0.50]. Also the highest Community share of any industry (13%) — site-based externalities (noise, dust, safety for adjacent populations) show up in the source indicators."
+  },
+  {
+    "industry": "Consumer Goods (Apparel / FMCG)",
+    "people_weight": "0.1588",
+    "governance_weight": "0.2912",
+    "community_weight": "0.1",
+    "resources_weight": "0.45",
+    "notes": "Consumer Goods (Apparel / FMCG) (n=68) — Resources hit the ceiling (raw 50% → capped at 0.50), driven by water, chemicals, packaging, and supply-chain material indicators. Governance remains strong (29%) for traceability and product compliance. Community was floored from 0% → 10% (no community-facing indicators clustered here)."
+  },
+  {
+    "industry": "Food & Agro-processing",
+    "people_weight": "0.1015",
+    "governance_weight": "0.3113",
+    "community_weight": "0.1",
+    "resources_weight": "0.4872",
+    "notes": "Food & Agro-processing (n=144) — Resources-dominant (49%): water, land, biodiversity, food safety, and waste dominate the indicator set. Governance secondary (31%) via certifications/traceability. Both People and Community hit the 10% floor — this sector's source framework is overwhelmingly resource- and governance-weighted."
+  },
+  {
+    "industry": "Manufacturing (Industrial / Components)",
+    "people_weight": "0.1457",
+    "governance_weight": "0.2368",
+    "community_weight": "0.1175",
+    "resources_weight": "0.5",
+    "notes": "Manufacturing (Industrial / Components) (n=129) — Most Resources-skewed sector in the raw data (66%), capped at 0.50 by the ceiling rule; the 16-point surplus was redistributed proportionally, lifting Governance to 24%, People to 15%, and Community to 12%. Reflects the energy, emissions, and materials intensity of industrial production."
+  }
+]

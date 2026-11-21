@@ -2,8 +2,8 @@ import type { ProviderStatus } from "./recommendations/configuration";
 import type { RecommendationRequest } from "../application/recommendations/contracts";
 import type { RecommendationResult } from "../application/recommendations/service";
 const endpoint = "/api/assessment-recommendations";
-export async function recommendationStatus(signal: AbortSignal): Promise<ProviderStatus> {
-  const response = await fetch(endpoint, { signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]), cache: "no-store" });
+export async function recommendationStatus(signal: AbortSignal, version?: string): Promise<ProviderStatus> {
+  const response = await fetch(endpoint + (version ? "?version=" + encodeURIComponent(version) : ""), { signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]), cache: "no-store" });
   if (!response.ok) throw new Error("configuration_unavailable");
   return response.json();
 }

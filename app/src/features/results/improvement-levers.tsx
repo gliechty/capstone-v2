@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "../assessment/release-boundary";
 import { flushSync } from "react-dom";
 import { displayAnswer } from "../../application/display-value";
 
@@ -24,7 +25,8 @@ const number = (v: number | null) => v === null ? "Not scored" : v.toFixed(2);
 const delta = (v: number) => (v > 0 ? "+" : "") + v.toFixed(2);
 const discrete = (lever: ImprovementLever) => lever.kind === "boolean" || lever.kind === "categorical";
 
-export function ImprovementLevers({ catalog, recommendationView }: { catalog: AssessmentCatalog; recommendationView: RecommendationView }) {
+export function ImprovementLevers({ catalog: initialCatalog, recommendationView }: { catalog: AssessmentCatalog; recommendationView: RecommendationView }) {
+  const catalog = useReleaseCatalog(initialCatalog);
   const [retry, retryLoad] = useReducer((n: number) => n + 1, 0);
   const [view, publish] = useReducer((_v: LoadView, v: LoadView) => v, { status: "loading" });
   useEffect(() => {

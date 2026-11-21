@@ -35,6 +35,7 @@ export interface AnswerScalesRecord {
   readonly active: string;
 }
 export interface MetricBenchmarksRecord {
+  readonly formula_parameters?: string;
   readonly metric_id: string;
   readonly metric_name: string;
   readonly benchmark_group_type: string;
@@ -108,7 +109,12 @@ export interface DocumentChunksRecord {
   readonly doc_id: string;
   readonly legacy_doc_title: string;
 }
+export interface ScoringFormulaRecord {
+ readonly formula_id:string; readonly name:string; readonly expression:string;
+ readonly parameters:string; readonly explanation:string; readonly examples:string;
+}
 export interface CanonicalConfig {
+  readonly ScoringFormulas?: readonly ScoringFormulaRecord[];
   readonly version: string;
   readonly regions: readonly string[];
   readonly QuestionBank: readonly QuestionBankRecord[];

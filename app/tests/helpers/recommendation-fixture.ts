@@ -31,7 +31,7 @@ export async function mockSuccessfulRecommendations(page: import("@playwright/te
  const {inputIdentityText}=await import("../../src/application/recommendations/identity");
  const settings={provider:"openai",model:"gpt-5.4-mini",reasoning:"low",timeoutMs:30000,maxOutputTokens:4000};
  const configuration={ready:true,code:"ready",settings,fingerprint:"report-browser-double",configVersion:config.version,sessionVersion:input.configVersion,methodVersion:score.methodVersion,promptVersion:"test-prompt",policyVersion:"test-policy"};
- await page.route("**/api/assessment-recommendations",async route=>{
+ await page.route(url => url.pathname === "/api/assessment-recommendations",async route=>{
   if(route.request().method()==="GET")return route.fulfill({json:configuration});
   return route.fulfill({json:{status:"available",configuration,content:validTestContent(),evidence:{limitations:["Controlled test transport only"]},identity:{inputId:createHash("sha256").update(inputIdentityText(route.request().postDataJSON())).digest("hex"),configVersion:config.version,methodVersion:score.methodVersion,promptVersion:configuration.promptVersion,policyVersion:configuration.policyVersion,provider:{id:settings.provider,model:settings.model,settings}}}});
  });

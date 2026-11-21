@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "../assessment/release-boundary";
 import { recommendationStorage } from "../../adapters/recommendation-storage";
 import { RecommendationViewContext } from "./recommendation-view-context";
 import { ImprovementLevers } from "./improvement-levers";
@@ -15,7 +16,8 @@ import { recommendationRequestFromSession } from "../../application/recommendati
 import { createRecommendationController, type RecommendationView } from "../../application/recommendations/controller";
 import { createAssessmentModel } from "../assessment/model";
 import { catalogProfileErrors } from "../assessment/assessment-context";
-export function Recommendations({ catalog, children }: { catalog: AssessmentCatalog; children?: ReactNode }) {
+export function Recommendations({ catalog: initialCatalog, children }: { catalog: AssessmentCatalog; children?: ReactNode }) {
+  const catalog = useReleaseCatalog(initialCatalog);
   const [view, publish] = useReducer((_state: RecommendationView, next: RecommendationView) => next, { phase: "idle", code: "not_generated", configuration: null });
   const control = useRef<ReturnType<typeof createRecommendationController> | null>(null);
   useEffect(() => {
@@ -26,7 +28,7 @@ export function Recommendations({ catalog, children }: { catalog: AssessmentCata
       return state && ["questions", "review", "boundary"].includes(state.phase) ? recommendationRequestFromSession(state) : null;
     };
     const attempts = recommendationAttempt({ getItem: key => window.sessionStorage.getItem(key), setItem: (key, value) => window.sessionStorage.setItem(key, value) });
-    const controller = createRecommendationController({ read, saved: recommendationStorage({getItem:key=>window.sessionStorage.getItem(key),setItem:(key,value)=>window.sessionStorage.setItem(key,value)}), status: recommendationStatus,
+    const controller = createRecommendationController({ read, saved: recommendationStorage({getItem:key=>window.sessionStorage.getItem(key),setItem:(key,value)=>window.sessionStorage.setItem(key,value)}), status: (signal) => recommendationStatus(signal, catalog.version),
       generate: async (input, configuration, signal) => {
         const id = await browserInputHash(inputIdentityText(input));
         if (signal.aborted) throw new Error("Request interrupted before dispatch");

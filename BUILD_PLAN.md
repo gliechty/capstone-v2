@@ -1,3 +1,20 @@
+## M6 Phase 1 local scope closed; deployment authorized — 21 November 2026
+M6.1–M6.6 local scope CLOSED against owner acceptance and existing evidence. No further local owner acceptance step. Deployment authorized and preparing, not yet live. Canonical record: EXECUTION_PLAN.md, M6 Phase1 closeout and authorized deployment. Source processing/new-KB creation deferred. Supersedes earlier next-step/no-deployment statements below.
+
+## M6.4 hierarchy and original PDFs accepted locally — 21 November 2026
+Owner explicitly accepted the bounded local scope. KB-contained Sources/configuration/history/assessment,44 authenticated original PDFs, real source-import attribution, active-default metadata and visible record details are complete. Accepted editing/Quick/publication/rollback preserved; existing verification reused. Evidence: EXECUTION_PLAN.md, M6.4 KB hierarchy and authenticated original PDFs. This supersedes earlier pending M6.4 entries below. No deployment/regeneration/new-KB feature.
+
+Smallest remaining Phase 1 step: M6.6 local closeout reconciliation of M6.1/M6.2 foundation and existing acceptance/evidence, including named-admin grant/revoke. Their checklist rows still carry obsolete paused/pending notes. Identify only genuinely missing local checks or owner action; do not repeat accepted journeys or include production portability/disaster recovery. This is the next proposed step, not a claim that M6.6 is already accepted.
+
+## M6.4 audit views ready for local owner review — 21 November 2026
+Readable source/excerpt and configuration views, release-identified CSV downloads and secondary legacy-archive viewing implemented locally. Focused checks pass; owner acceptance pending. M6.3/M6.5 accepted lifecycle unchanged. Evidence and limits: EXECUTION_PLAN.md, M6.4 bounded audit viewing. No uploads/regeneration/deployment or original-source recovery.
+
+## M6.5 Phase 1 local scope reconciled / M6.4 next — 21 November 2026
+M6.5 Phase1 local lifecycle complete under owner20Nov acceptance: reviewed save/publication, Make default, immutable session pins, optional notes/history and both rollback paths already verified. Per-question Keep/Exclude replaces historical Quick lockout. No new checks required; evidence matrix in EXECUTION_PLAN.md, M6.5 Phase1 reconciliation. M6.4 remains open only for the next bounded task: readable read-only configuration/source/chunk views and release-identified downloads using current artifacts; archive navigation and missing-original disclosure. Original-source recovery and all processing/deployment remain separate, excluded work. No implementation authorized by this reconciliation.
+
+## M6 editable ScoringFormulas — owner accepted locally, 20 November 2026
+Three global scoring documents now implemented locally: AnswerScales, MetricBenchmarks and ScoringFormulas. Direct benchmark formula edit/new/variation, named parameters, example previews, shared impact review, atomic publication and complete scoring-snapshot rollback reuse existing login/storage/history. Original formula behavior, old sessions and Quick decisions preserved. Owner accepted the current local three-document methodology editor and rollback workflow: “This is perfect for now. Accepted.” M6.3 local scope complete; deployment remains separate. No source pipeline, new-KB creation, deployment or model calls. Evidence: EXECUTION_PLAN.md, M6 editable ScoringFormulas; walkthrough: M6-PLANNING-HANDOFF.md.
+
 ## M13.1 profile links preserved in source2026-11-12
 Already-live LinkedIn/GitHub navigation and Person.sameAs synchronized from server into codex/profile-links-sync for owner-authorized merge. Live mosaic-3649a37927df5bc1d1d2 unchanged; existing desktop/mobile verification reused. No rebuild/redeployment/API work. Release/rollback details in EXECUTION_PLAN.md; broader attribution/affiliation scope unchanged.
 
@@ -830,3 +847,8 @@ M10.3 narrative refinement2026-10-30: fixed context/answer-grounded reading with
 M10.3 supplied icon hierarchy2026-10-30 verified locally: family/category secondary and tertiary icons within portrait only; preview3103. Refinements uncommitted, no API calls/scoring changes/deployment.
 
 M13.2 caption dependency resolved2026-11-03: owner supplied matching20-cue English WebVTT timed0:00.19–1:29.80 to this91.76s film; intentional81.55/83.06 reveal cues preserved verbatim. Attach kind=captions,srcLang=en,label=English,default as existing behavior. Previous VTT remains unchanged for rollback. Owner initially requested waiting, then immediately supplied captions; no measured approval pause claimed. Temporary missing-caption limitation above is superseded; no lint exception used. Resume original authorized live replacement.
+
+## M6 local administrator implementation — 17 November 2026
+Authorized first package: M6.1–M6.5 local storage, roles, restricted editing, inventory, publication/pinning/rollback; M6.6 local verification. Owner acceptance pending. Source processing/regeneration, exclusion of questions, chatbot work and production deployment remain outside scope. Google OAuth may remain unverified pending credentials. Scope/evidence record: EXECUTION_PLAN.md and M6-PLANNING-HANDOFF.md.
+
+M6 local implementation review, 17 November 2026: bounded admin/release slice implemented on codex/m6-local-admin; see M6-PLANNING-HANDOFF.md and EXECUTION_PLAN.md. Google OAuth credentials/login and owner acceptance remain pending. Original artifacts are archived, no regeneration implemented. Changed QuestionBank releases are Full-assessment verified; Quick effort provenance requires separate qualification. No deployment/MAIN/chatbot changes.

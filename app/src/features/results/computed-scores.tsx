@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "../assessment/release-boundary";
 import Link from "next/link";
 import { recommendationRequestFromSession } from "../../application/recommendations/request";
 import type { RecommendationRequest } from "../../application/recommendations/contracts";
@@ -16,7 +17,8 @@ import type { ScoreInput } from "../../application/score-summary";
 import { ScoreExplanation } from "./score-explanation";
 import { requestAssessmentScore } from "../../adapters/assessment-scoring";
 const display = (value: number | null) => value === null ? "Not scored" : value.toFixed(1);
-export function ComputedScores({ catalog }: { catalog: AssessmentCatalog }) {
+export function ComputedScores({ catalog: initialCatalog }: { catalog: AssessmentCatalog }) {
+  const catalog = useReleaseCatalog(initialCatalog);
   const router = useRouter();
   function reviewMissing() {
     const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));

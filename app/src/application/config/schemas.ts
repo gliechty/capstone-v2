@@ -40,12 +40,13 @@ export const AnswerScalesSchema = z.strictObject({
   active: flag,
 });
 export const MetricBenchmarksSchema = z.strictObject({
+  formula_parameters: z.string().max(10000).optional(),
   metric_id: z.string().min(1),
   metric_name: z.string().min(1),
   benchmark_group_type: z.enum(["global", "industry"]),
   benchmark_group_value: z.string(),
   unit: z.string(),
-  normalization_method: z.enum(["banded", "benchmark_inverse_ratio", "exponential_decay", "gaussian", "identity_boolean", "identity_percent", "inverse_count", "inverse_linear_cap", "inverse_percentage", "linear_cap"]),
+  normalization_method: z.string().regex(/^[A-Za-z_][A-Za-z_0-9]{0,79}$/),
   param_1: optionalDecimal,
   param_2: optionalDecimal,
   param_3: optionalDecimal,
