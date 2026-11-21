@@ -1,6 +1,6 @@
 import { withPortraitPotential } from '../../../application/portrait-potential';
 import { ZodError } from "zod";
-import { loadCanonicalConfig } from "../../../adapters/config-repository";
+import { releaseConfigForInput } from "../../../adapters/release-config";
 import { computeAssessment } from "../../../application/score-request";
 import { ScoringError } from "../../../domain/scoring/score-assessment";
 export const runtime = "nodejs";
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     input = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks)));
   } catch { return response({ error: "Assessment data is not valid JSON." }, 400); }
   try {
-    const { config } = loadCanonicalConfig();
+    const { config } = releaseConfigForInput(input);
     const score = withPortraitPotential(config, computeAssessment(config, input));
     // The engine owns the versioned trace; the HTTP boundary only projects its output.
     const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace, portraitPotential } = score;

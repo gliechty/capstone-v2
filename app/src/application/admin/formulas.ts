@@ -1,0 +1,14 @@
+import {z} from 'zod';
+import type {CanonicalConfig} from '../../domain/config/types';
+import type {Change,Issue} from './contracts';
+import {formulasFor,parameterDefinitions,formulaExamples,evaluateFormula,exampleMetric,builtinVariables} from '../../domain/scoring/scoring-formulas';
+import {compileFormula} from '../../domain/scoring/formula-expression';
+export const formulaSchema=z.strictObject({formula_id:z.string().regex(/^[A-Za-z_][A-Za-z_0-9]{0,79}$/),name:z.string().trim().min(1).max(200),expression:z.string().min(1).max(2000),parameters:z.string().max(10000),explanation:z.string().max(4000),examples:z.string().max(1000)});
+export const formulaList=z.array(formulaSchema).max(200).refine(rows=>new Set(rows.map(f=>f.formula_id)).size===rows.length,'Duplicate formula IDs.');
+export function formulaChanges(before:CanonicalConfig,after:CanonicalConfig):Change[]{const a=new Map(formulasFor(before).map(f=>[f.formula_id,f])),b=new Map(formulasFor(after).map(f=>[f.formula_id,f]));const result:Change[]=[];for(const key of new Set([...a.keys(),...b.keys()])){const x=a.get(key),y=b.get(key);if(!x||!y){result.push({entity:'ScoringFormulas',key,field:x?'deleted':'added',before:x?JSON.stringify(x):'',after:y?JSON.stringify(y):''});continue;}for(const field of Object.keys(y) as (keyof typeof y)[])if(x[field]!==y[field])result.push({entity:'ScoringFormulas',key,field,before:x[field],after:y[field]});}return result;}
+export function validateFormulas(config:CanonicalConfig):Issue[]{const result:Issue[]=[];const formulas=formulasFor(config);const add=(id:string,message:string)=>result.push({key:'formula:'+id+':'+message,message:id+': '+message,questions:config.QuestionBank.filter(q=>config.MetricBenchmarks.some(m=>m.metric_id===q.metric_id&&m.normalization_method===id)).map(q=>q.question_id)});
+ if(new Set(formulas.map(f=>f.formula_id)).size!==formulas.length)add('duplicates','Duplicate formula IDs.');
+ for(const f of formulas){try{formulaSchema.parse(f);const definitions=parameterDefinitions(f);compileFormula(f.expression,[...builtinVariables,...definitions.map(p=>p.name)]);const examples=formulaExamples(f);const metrics=config.MetricBenchmarks.filter(m=>m.normalization_method===f.formula_id);for(const m of metrics.length?metrics:[exampleMetric(f)]){for(const percent of config.QuestionBank.some(q=>q.metric_id===m.metric_id&&q.response_type==='percent')?[false,true]:[false])for(const x of examples){const score=evaluateFormula(f,m,x,percent);if(score<0||score>100)throw Error(m.metric_id+' returns '+score+' outside 0–100 at input '+x);}}}catch(e){add(f.formula_id,e instanceof Error?e.message:'Invalid formula');}}
+ for(const m of config.MetricBenchmarks)if(!formulas.some(f=>f.formula_id===m.normalization_method))add(m.normalization_method,'Missing formula; assigned to '+m.metric_id);
+ return result;
+}

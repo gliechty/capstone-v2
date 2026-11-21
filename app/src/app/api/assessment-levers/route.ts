@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { loadCanonicalConfig } from "../../../adapters/config-repository";
+import { releaseConfigForInput } from "../../../adapters/release-config";
 import { computeAssessment } from "../../../application/score-request";
 import { selectImprovementLevers } from "../../../application/improvement-levers";
 import { ScoringError } from "../../../domain/scoring/score-assessment";
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     input = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks)));
   } catch { return response({ error: "Assessment data is not valid JSON." }, 400); }
   try {
-    const { config } = loadCanonicalConfig();
+    const { config } = releaseConfigForInput(input);
     // Never accept a client score or client-supplied ranking/bounds.
     const score = computeAssessment(config, input);
     const { configVersion, methodVersion, categories, answered, missing, rawOverall, weightedOverall, earned, possible, traceSchemaVersion, input: scoredInput, trace } = score;

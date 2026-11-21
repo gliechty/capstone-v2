@@ -1,4 +1,4 @@
-import { loadCanonicalConfig } from '../../../adapters/config-repository';
+import { releaseConfigForInput } from '../../../adapters/release-config';
 import { computeQuickAssessment } from '../../../application/quick-assessment';
 export const runtime='nodejs';
 export async function POST(request:Request){
@@ -9,6 +9,7 @@ export async function POST(request:Request){
   const parts:Uint8Array[]=[];let size=0;
   while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>400000){await reader.cancel();return reply({error:'Assessment data is too large.'},413);}parts.push(part.value);}
   const input=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Buffer.concat(parts)));
-  return reply(computeQuickAssessment(loadCanonicalConfig().config,input));
+  const release = releaseConfigForInput(input);
+  return reply(computeQuickAssessment(release.config,input,'quickEligibility' in release ? release.quickEligibility : undefined));
  }catch{return reply({error:'Quick assessment could not be calculated. Review your setup and answers.'},422);}
 }

@@ -1,3 +1,4 @@
+import { evaluateFormula } from './scoring-formulas';
 import { numericInputLimit } from "./numeric-input-limit";
 import type { CalculationTrace } from "./calculation-trace";
 import type { CanonicalConfig, MetricBenchmarksRecord, QuestionBankRecord } from "../config/types";
@@ -54,6 +55,12 @@ export function normalizeAnswer(config: CanonicalConfig, question: QuestionBankR
   const safeMax = max !== 0 ? max : 100;
   const nonzero = (n: number) => { if (n === 0) throw new ScoringError(question.question_id + ": zero benchmark denominator"); return n; };
   const inputs: Record<string, string | number | boolean> = { x, param_1: p1, param_2: p2, param_3: p3, max_value: max, effective_max: safeMax, unit: metric.unit };
+  if(config.ScoringFormulas){
+    const formula=config.ScoringFormulas.find(f=>f.formula_id===metric.normalization_method);
+    if(!formula)throw new ScoringError(question.question_id+': formula unavailable');
+    try {const value=evaluateFormula(formula,metric,x,question.response_type==='percent');if(value<0||value>100)throw new Error('Formula result must be between 0 and 100.');Object.assign(inputs,{formula_id:formula.formula_id,formula_expression:formula.expression,formula_parameters:metric.formula_parameters||'{}'});return {value,method:metric.normalization_method,benchmark:metric,scale:null,inputs};}
+    catch(e){throw new ScoringError(question.question_id+': '+(e instanceof Error?e.message:'Invalid formula result'));}
+  }
   let value: number;
   switch (text(metric.normalization_method)) {
     case "identity_percent": value = clamp(x, 0, safeMax); break;

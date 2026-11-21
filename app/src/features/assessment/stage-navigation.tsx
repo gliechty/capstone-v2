@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "./release-boundary";
 import { useEffect, useState, useReducer, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import type { Session, Action } from "./model";
@@ -28,7 +29,8 @@ export function StageNavigation({session,catalog,onStage,results=false}:{session
  })}</nav>;
 
 }
-export function ResultsStages({catalog}:{catalog:AssessmentCatalog}) {
+export function ResultsStages({catalog: initialCatalog}:{catalog:AssessmentCatalog}) {
+  const catalog = useReleaseCatalog(initialCatalog);
  const [session,setSession]=useReducer((_state:Session|null,next:Session|null)=>next,null),[error,setError]=useState("");const router=useRouter();
  useEffect(()=>{const model=createAssessmentModel(catalog.version,p=>selectedQuestions(catalog,p),p=>catalogProfileErrors(catalog,p));setSession(browserSession(model.sessionSchema).load().state);},[catalog]);
  if(!session)return null;
@@ -42,7 +44,8 @@ export function ResultsStages({catalog}:{catalog:AssessmentCatalog}) {
 
 // This is a workflow gate, not authorization for a paid request. Only the
 // ephemeral one-use intent can start generation; reload/revisit never grants it.
-export function ResultsGate({catalog,children}:{catalog:AssessmentCatalog;children:ReactNode}) {
+export function ResultsGate({catalog: initialCatalog,children}:{catalog:AssessmentCatalog;children:ReactNode}) {
+  const catalog = useReleaseCatalog(initialCatalog);
  const [access,setAccess]=useReducer((_state:"loading"|"allowed"|"review"|"missing"|"quick",next:"loading"|"allowed"|"review"|"missing"|"quick")=>next,"loading");
  const router=useRouter();
  useEffect(()=>{

@@ -704,3 +704,138 @@ Recovery instructions were clarified: saved release.env uses immutable OCI diges
 
 This is cleanup closeout only, not M6 application acceptance or authorization. Live checklist unchanged; MAIN worktree/local server untouched. Isolated worktree remains detached at31d708226f2c1dadae1b0b0bcc3e10ff51eab6f8; only M6-PLANNING-HANDOFF.md is untracked/uncommitted. No staging, commit, push, PR, merge or application deployment. Existing planning/owner decisions remain separate.
 Cleanup delivery record: existing protocol/live checklist context loaded and reused for continuation of this same authorized package; not a new milestone step. First measured read2026-11-15T16:22:45.8013436+07:00; end2026-11-15T16:41:07.4764553+07:00; measured elapsed 18m21s. Initial commentary/pre-clock seconds unmeasured. Forecast rechecks/removal5–10min +verification2–5min =7–15min; no overlapping intervals added; no explicit pause inside the interval. Actual exceeded forecast due to conservative per-image rechecks and initial diagnostic corrections. No prior equivalent completed cleanup for calibration; prior backup14m54s was a different workload. Coding-token estimate/actual unavailable. One proposed correction: carry verified pointer formats and historical-audit hashes from preparation into execution guards to avoid repeat diagnostic stops. Final readback/chat after endpoint excluded. No further deletion authorized or planned.
+
+
+## M6 local implementation checkpoint — 17 November 2026
+
+This section supersedes earlier planning-only and first-package proposals for the owner's explicitly authorized local slice. Planning was checkpointed first at 7546cef3c1993560010ddbbff977f89ef0f7f5f9. The isolated branch codex/m6-local-admin then incorporated published main 3e4d671; local merge/base HEAD is e2348bb184f6768ebe87ca1b3f72a87d63adbf6e. MAIN's worktree was not changed. Implementation remains uncommitted and unpushed; no PR or deployment. Owner acceptance remains pending.
+
+### Delivered local scope
+
+- URL: http://localhost:3206/admin. Existing Next.js components, typed SQLite adapter using Node 24 node:sqlite, WAL transactions, schema migration version 1, private SHA-256-addressed JSON blobs. Default runtime data: app/.local/m6-admin (ignored by Git and excluded from build tracing). Better Auth 1.7.25 is the planned authentication dependency; no managed database, custom password system or public registration.
+- Initial super admin: guy.liechty@gmail.com. Dong is deliberately unconfigured; Guy can grant/revoke his confirmed Google sign-in email. Admin access is checked server-side on every privileged action; only super admins manage access. Revocation invalidates sessions and removes access. Grants do not send invitations or email.
+- Approved active baseline capstone-v1-training-routing-2: 44 DocumentIndex entries, 428 chunks, 161 QuestionBank records (138 active), 62 benchmark rows and 39 answer-scale option rows. Original creation/publication dates remain unavailable; import time is separate. Original Capstone snapshot from planning base 31d7082 is archived separately in app/config/capstone-original; it is evidence, not silently substituted for the newer approved baseline.
+- Configuration and source metadata/chunks have authenticated View/Download actions. Seven canonical entities remain separate. Twenty archive artifacts are visible (12 atomic/pipeline CSVs and 8 original snapshot JSON files). Original research files are absent; source links do not establish matching original editions. Source ingestion, regeneration, extraction, new methodology and chatbot work are not implemented.
+- Draft editing is restricted server-side to QuestionBank wording/answer-scale/metric-ID assignments and benchmark/answer-scale records. Other question fields and the four other canonical entities are read-only. New/changed benchmark/scale rows require citation, review date/status and rationale; source year and review-due metadata are optional and not fabricated for imported rows.
+- Save never changes active configuration. Draft revision compare-and-swap rejects stale writes (409); publication checks both reviewed revision and unchanged active base. Pending record edits must be applied/discarded before Save/Publish. Review displays actual field changes, blocking errors and warnings. Deletion shows affected question IDs; unresolved required references cannot publish (422).
+- Publication writes an immutable configuration snapshot/manifest and atomically changes the active pointer. Audit records actor, identity mode, timestamp, edits and publication/rollback. Rollback changes only the pointer. Full assessment, score, levers, recommendation identity and report paths resolve the session's immutable release; existing sessions remain pinned, new sessions receive active configuration. Release downloads include release identity and actual snapshot hashes.
+
+### Validation boundaries and preserved exceptions
+
+Validation checks strict record shapes, stable identities, restricted fields, active scale/metric references, option/order uniqueness, normalized ranges, benchmark units, supported methods/parameters and configured industry coverage. Numeric mappings preserve the prior question's known unit/denominator. The existing engine uses option labels/scores for both boolean and categorical questions; approved PARTIAL_3/PROGRESS_5 mappings are supported, not reclassified as defects. Percent-of-revenue units remain valid. No scoring formula or normalization implementation changed.
+
+Only the explicitly enumerated inherited missing-metric record I-045 (inactive and untouched) is exempted from blocking validation. Missing source/provenance information and unchanged U-026 total-energy/electricity wording remain explicit warnings. New unknown structural failures are not automatically grandfathered from a baseline. Historical factors and country-specific recommendation limitations remain unchanged.
+
+**Quick limitation:** its existing per-question content-hash/effort provenance guard remains intact. Editing a selected QuestionBank record can require a separate Quick effort review and prevent Quick selection for affected profiles; this package verifies new releases through Full assessment. It does not reclassify effort, silently substitute old config, or claim changed releases are Quick-qualified. Baseline Quick persistence is tested separately. Deferred methodology/effort decisions remain owner/researcher decisions.
+
+### Owner walkthrough
+
+1. Open http://localhost:3206/admin. Until OAuth is configured, use the clearly labelled development identity with guy.liechty@gmail.com. This proves local role flow only, not Google account ownership.
+2. In Admin access, grant the confirmed email of a local test admin or Dong when known. Sign out and use that email in the development shortcut (or Google after setup). Admins cannot manage access.
+3. Create a draft. Choose a question; edit wording or an assignment. For a benchmark or scale, select/add a record, edit values and citation/review/rationale, then click Apply record to draft. A scale is a group of option rows sharing its ID.
+4. Save draft and validate. Refresh and choose the saved draft to inspect persistence. Review the change summary and resolve every blocking error; unchanged baseline warnings are visible. Publish reviewed draft.
+5. Open Full assessment in a fresh private browser context and compare its displayed release ID with the active release. An already-started session retains its old ID. Downloads carry the selected release and configuration.
+6. In History and rollback, select the earlier release. A fresh context now receives that baseline; existing sessions retain their starting release. Local publication does not deploy anything.
+
+The owner's database is left on the approved baseline, with only Guy configured and no demonstration drafts. Automated journeys use isolated temporary test storage and existing approved configuration, not a synthetic replacement KB.
+
+### Google OAuth setup — still required, not verified
+
+No reusable Google OAuth credential pair was found: inspected standard environment-file locations across all 16 registered local worktrees (3 files existed), reporting only variable names/presence and never secret values. This does not establish that no OAuth client exists in Google Cloud. No credentials were printed and no other worktree was modified.
+
+1. In the MOSAIC-owned Google Cloud project, open Google Auth Platform. Configure Branding/contact details and an External testing audience appropriate for the Gmail owner; add guy.liechty@gmail.com to test users if required. Add a second tester only once its email is confirmed.
+2. Under Clients, reuse a suitable existing Web application client or create one named MOSAIC local admin. Authorized JavaScript origin: http://localhost:3206. Authorized redirect URI (exact): http://localhost:3206/api/auth/callback/google. This uses only openid, email and profile, not Drive/Gmail permissions.
+3. Put GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET into this worktree's ignored app/.env.local, never Git or chat. BETTER_AUTH_URL must remain http://localhost:3206; the generated BETTER_AUTH_SECRET and MOSAIC_SUPER_ADMIN_EMAIL are already local. Set MOSAIC_DEV_IDENTITY=0 when testing Google login.
+4. Restart this worktree's server from app with npm run dev -- --hostname 127.0.0.1 --port 3206. Choose Continue with Google. Verify Guy's super-admin identity, then allowlisted admin login and revocation with a real second account. Until that succeeds, Google authentication remains UNVERIFIED.
+
+Google's web-client/redirect requirements: https://developers.google.com/identity/protocols/oauth2/web-server . Provider integration: https://better-auth.com/docs/authentication/google . Missing OAuth does not block the authorized development-only checks, but does block genuine-login acceptance.
+
+### Local storage / later operations
+
+Keep admin.sqlite, auth.sqlite when created, their WAL/SHM files and blobs together in a private durable directory. For a simple consistent local backup, stop this worktree's server before copying the entire data directory plus recovery environment/configuration; encrypt credential/session-bearing material outside Git. Restart afterwards. For later online operation, use SQLite's backup API and preserve every blob referenced by the snapshot rather than copying a live main SQLite file alone. No backup/restore rehearsal or production portability claim is made in this package. A future deployed package must explicitly include the read-only archive paths and mount private runtime storage; no broad source-tree tracing is used.
+
+### Verification and delivery record
+
+Final results and measured closeout are recorded in EXECUTION_PLAN.md. Local checks do not mark owner acceptance or deployment readiness. The live checklist v2.0 M6.1–M6.6 rows35–40 remains unchecked; deferred source processing, regeneration and operational recovery stay open.
+
+Closeout evidence: final development-only browser journey passed50.2s;13 admin +22 Golden/trace pass; typecheck/lint/build pass. Broader checks retain2 inherited landing-unit and2 stale browser assertions, detailed in EXECUTION_PLAN.md. Live checklist F35:F40 updated/read back with all acceptance boxes false. Google OAuth and owner acceptance remain pending.
+
+
+## M6 Google-login preparation — 17 November 2026
+Owner supplied Google OAuth credentials in Desktop checkout app/.env.local. Copied only GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET into the isolated M6 worktree ignored app/.env.local; source checkout unchanged and values never printed. MOSAIC_DEV_IDENTITY=0 in file and restarted server environment. Local readiness checks PASS: oauthReady=true, developmentIdentity=false, development-login404, auth-session endpoint200, Google sign-in initiation200 targeting accounts.google.com with exact localhost:3206/api/auth/callback/google redirect. Auth database initialization succeeded. Existing drafts/releases/access records preserved. Owner should refresh http://localhost:3206/admin and choose Continue with Google. Actual Google account authentication/callback and owner acceptance remain unverified pending the owner test. No deployment, invitations or paid calls.
+
+
+## Phase 1 wording-only owner review — 19 November 2026
+
+Current local implementation supersedes the earlier combined-form UI: http://localhost:3206/admin. Google login/storage are reused; development identity disabled on this owner preview. M6.0 design and the wording-only journey are owner-accepted. Mapping increment acceptance is separate. Canonical verification and limitations: EXECUTION_PLAN.md, “M6 Phase 1 wording journey — local verification”.
+
+Walkthrough: sign in → Open QuestionBank → search U-001 → select it → edit wording → Review changes → optional Change notes. Check “Wording edit preserves existing meaning and effort classification” only when true; Save version records the exact change and retains original provisional status. A qualified checked save becomes the default for new assessments. Leave unchecked to save with Quick eligibility pending review while retaining the previous default. Version history shows editor/time/notes/before/after. Make default for a pending version explicitly warns Quick is unavailable; existing sessions keep their starting versions. Mapping and universal-document editors are the next increment, not enabled by this slice. No source processing, paid calls or deployment.
+
+
+## Mapping-only increment — local owner review, 19 November 2026
+
+Same preview: http://localhost:3206/admin. The editor now permits AnswerScale and MetricBenchmark assignments with grouped scale option/score and benchmark detail previews. Try U-001 → PARTIAL_3 and U-031 → MET_WASTE_DIV; Review changes → optional notes → Save version → history. Mappings remain Quick-pending and do not change default automatically; Make default explicitly warns Quick is unavailable. Existing sessions retain their versions. Validation blocks missing/incompatible mappings; wording confirmation cannot approve them. Universal document editing remains deferred. Evidence and limitations: EXECUTION_PLAN.md, M6 mapping-only increment. Mapping acceptance remains for the owner; no deployment.
+
+
+## Current Quick eligibility workflow — 20 November 2026
+
+Supersedes the earlier Quick-pending/whole-version lockout and wording-confirmation instructions above. Local preview: http://localhost:3206/admin. Only edited, currently Quick-eligible questions show Keep eligible / Exclude from Quick Assessment during review. Already-ineligible questions have no Quick gate. Save records eligibility decisions separately from unchanged original effort classifications, bound to the exact question/version/editor/time/notes. Exclude removes that question from the candidate pool; Quick remains functional with the others. Validation still blocks incompatible mappings; both modes and old sessions were verified. Legacy releases use their original artifact eligibility unless a versioned eligibility snapshot exists; no implicit exclusion is inferred from an old wording hash. Try U-002 for no choice, U-001 for Keep/Exclude. Current canonical evidence: EXECUTION_PLAN.md, M6 per-question Quick eligibility. Owner acceptance pending; no deployment or model calls.
+
+
+## Current universal scoring-document workflow — 20 November 2026
+
+Local preview: http://localhost:3206/admin (Google ready; development identity disabled). Universal document editing is now implemented, superseding the “next increment/deferred” statements above. Open Universal Scoring Documents → Edit AnswerScales / Edit MetricBenchmarks. Search/select a record, change it or add a new one; scales group their options/scores and support Add option to this scale. Review changes, provide the existing required source/reference and review rationale, optionally add Change notes, then Save and publish. History shows editor/time/version/notes and exact changes; Download retrieves that immutable snapshot as JSON. Discard and browser recovery preserve a minimal edit flow.
+
+Publication applies current universal scoring to new assessments. Existing assessments retain their starting snapshots. Restoring an older configuration uses its QuestionBank with current universal scoring, not historical scoring from that snapshot. Editing a saved configuration also offers current universal mappings. Referenced deletion and incompatible scoring are blocked with affected questions, including saved configurations. NUMERIC_INPUT is protected. Source records and other configuration documents stay read-only; no generation/new KB features added.
+
+Owner test: edit an unused scale/benchmark or make a deliberate reviewed correction → Review → Save and publish → History/Download; keep an assessment open before saving, open a new one after, and refresh the old one to inspect the retained version. Change notes may be blank. Full canonical evidence and resolved failures: EXECUTION_PLAN.md, M6 universal scoring documents. M6.3 remains locally verified / owner acceptance pending; no deployment or model calls.
+
+
+## Current three-document methodology editor — 20 November 2026
+
+Preview: http://localhost:3206/admin. Universal Scoring Documents now contains AnswerScales, MetricBenchmarks and ScoringFormulas, each with Edit/Download/History. This supersedes descriptions above of only two global documents or fixed, non-editable scoring methods. Existing Google login/storage are preserved; development identity is disabled in the owner preview.
+
+Owner walkthrough: open MetricBenchmarks → search working_hours → select its global record → inspect the equation and parameter values → Edit shared formula. Change the equation directly, its named parameters, explanation or example inputs and inspect calculated scores. Create variation for this benchmark copies and assigns a separate formula in the SAME editor; New formula for this benchmark starts a fresh one. Review changes lists affected benchmarks. Provide source/reference and rationale, optionally add notes, then Save and publish; formula and assignment save together. ScoringFormulas offers the same editor independently for cross-system auditing. Existing formulas are imported without endorsement/correction; the Gaussian60h note discrepancy is explicitly identified.
+
+History → Restore scoring snapshot restores all THREE universal documents together as a new publication after confirmation/validation. Existing assessment sessions keep their original mathematics and historical downloads. This differs from configuration Make default, which uses the selected QuestionBank with CURRENT universal scoring. Referenced formulas cannot be deleted until reassigned. Example previews are sampled checks, not proof of methodology correctness over every possible input; runtime also rejects invalid arithmetic/results. No arbitrary JavaScript is executed.
+
+64 focused checks and all4 scoped browser journeys pass with disclosed reused evidence; desktop/mobile inspected. Canonical details, resolved harness/development-prefill issue and limitations: EXECUTION_PLAN.md, M6 editable ScoringFormulas. Owner acceptance remains open; no deployment/models/source processing.
+
+
+## Owner acceptance — 20 November 2026
+
+Owner: “This is perfect for now. Accepted.” The current local three-document methodology editor (AnswerScales, MetricBenchmarks, ScoringFormulas), integrated formula creation/editing/variation, version preservation and scoring-snapshot rollback are accepted. This supersedes pending-acceptance statements above for this delivered scope. M6.3 local scope is complete; existing verification evidence is reused. Deployment, source processing and separate-KB creation remain separate work, not authorized by this acceptance. No runtime changes or additional tests were made for this documentation-only closeout.
+
+
+## M6.5 Phase 1 reconciliation and M6.4 next — 21 November 2026
+
+Current authority for the local lifecycle: edit → review → Save version (QuestionBank) or Save and publish (universal scoring). These saves publish/activate for new assessments; unsaved browser recovery is not a mandatory separate Save draft stage. History Make default selects an earlier QuestionBank with CURRENT universal scoring. History Restore scoring snapshot restores all THREE universal scoring documents as a new publication. Existing sessions retain their exact versions. Editor/time/change history and optional notes are verified.
+
+Only edited currently Quick-eligible questions show Keep eligible / Exclude; already-ineligible edits have no gate, and exclusion leaves Quick functional with the remaining pool. Supersedes the18Nov pause, separate-draft/activation flow and19Nov whole-version Quick-pending notes for this accepted Phase1 implementation. Historical records above remain evidence, not current requirements.
+
+All listed M6.5 contracts map to passing existing tests; no checks rerun. Canonical reconciliation matrix: EXECUTION_PLAN.md, M6.5 Phase1 local reconciliation. Owner20Nov acceptance already closes this delivered local scope; no further owner action needed. Approved-baseline rollback is verified; do not infer a separate archived-Capstone activation feature or infrastructure restore rehearsal. M6.4 readable-view work is not a lifecycle closure dependency. No deployment/source work included.
+
+Smallest M6.4 task remains a read-only presentation increment: reusable readable tables/text for QuestionBank/configuration records,44-source inventory and428 retained chunks, plus links to20 available legacy CSV/JSON artifacts. Preserve release/hashes on downloads; CSV for tabular audit and existing JSON/native archive exports. Show available metadata and original-file unavailability honestly. No original-file retrieval, uploads, replacement, source processing or new export infrastructure. Acceptance should exercise one source/chunk, config and archive journey plus matching downloads/mobile; preserve accepted scoring and login. Planned only here, not implemented.
+
+
+## M6.4 readable audit handoff — 21 November 2026
+Implemented locally, owner visual review pending: http://localhost:3206/admin. Browse sources → search/title → retained excerpts/citations → CSV; Admin Center → Configuration documents → View → search/View record → CSV. Exact JSON is secondary. Version history offers Audit this version. Archived methodology remains collapsed, readable and downloadable with native hashes and provenance limits. Originals and absent dedicated metadata are disclosed unavailable. No uploads, recovery, regeneration, scoring/storage/auth changes or deployment.
+
+Focused unit4/4 and isolated browser1/1 pass; all20 archived artifacts parse and download with matching hashes; CSV/source identity, access enforcement, no saved-state mutation and mobile layout verified. TypeScript/affected lint pass; accepted scoring/versioning evidence reused. Canonical evidence: EXECUTION_PLAN.md, M6.4 bounded audit viewing. Review these screens to accept the bounded local scope; M6.4 remains unchecked pending owner acceptance.
+
+
+## Source originals recovered locally — 21 November 2026
+All44 baseline originals now downloaded into app/.local/capstone-source-library (43 Drive PDFs and1 exact publisher PDF). Open index.html for title links; ZIP alongside library includes originals and manifest/checksums.123MB originals /107MB ZIP;2859pages. PDF parsing, cover inspection and ZIP hash checks passed. Historical extraction-byte identity remains unverified. No app/server integration or regeneration. See EXECUTION_PLAN.md, M6 source PDF collection.
+
+M6.4 owner corrections still pending: actual PDF viewing; KB-contained Sources and Configuration Documents; remove dropdown mixing datasets; visibly open record details. Archived artifacts cover extraction-to-QB only, not complete methodology. Keep M6.4 unaccepted; do not equate earlier automated audit checks with a usable methodology-verification journey.
+
+
+## M6.4 hierarchy + original PDFs accepted locally — 21 November 2026
+
+Owner explicitly accepted this bounded local scope on21Nov; supersedes the pending review wording below. No deployment authorized. Smallest next step is M6.6 local acceptance/evidence reconciliation, especially obsolete M6.1/M6.2 storage/access checklist notes. Reuse existing role, conflict, persistence, publication, Quick and rollback checks; identify only genuine local gaps, without adding source processing or production recovery qualification.
+Supersedes pending integration/hierarchy corrections above: implemented locally at http://localhost:3206/admin. Sources and configuration documents now nest within Knowledge Base — Capstone Baseline; source-import is separate from historical creation and recorded under Guy’s authenticated Google identity.44 PDFs served through authenticated, membership/checksum-verified routes; View PDF opens native browser viewer, Download original preserves bytes. Retained excerpts secondary; provenance qualification unchanged. No cross-document dropdown; record details open a visible modal. Shared scoring outside KB; historical scoring inspection read-only; archive separate/collapsed with corrected extraction/QB label.
+
+Owner walkthrough: inspect KB metadata/default star; Browse sources → View PDF / Download original; return → View QuestionBank/CategoryWeights → View record; inspect history.5 unit checks, audit browser and existing wording/mapping/Quick/session journey pass; types/lint and desktop/mobile/PDF-view screenshots inspected. Canonical detailed evidence and future private persistent-mount packaging: EXECUTION_PLAN.md, M6.4 KB hierarchy and authenticated original PDFs. .env.example documents MOSAIC_SOURCE_LIBRARY_DIR. Local app data retained; no deployment/regeneration or paid calls. Owner acceptance OPEN.
+
+## Phase1 local closeout / deployment authorized — 21 November2026
+Owner directs closure/deployment. M6.1–M6.6 local scope CLOSED using accepted evidence; no repeat walkthrough. Production preparing, not yet complete. See canonical EXECUTION_PLAN.md deployment record. Approved baseline starts production; local test configurations/sessions stay local. Private PDF/admin mounts; Google live callback setup required. Source generation/new-KB work deferred.

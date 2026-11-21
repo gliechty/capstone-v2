@@ -1,6 +1,6 @@
 import { isRecommendationRequest } from "../adapters/recommendations/hosted-boundary";
 import { ZodError } from "zod";
-import { loadCanonicalConfig } from "../adapters/config-repository";
+import { releaseConfigForInput } from "./release-config";
 import { acquirePdfJob, renderReportPdf } from "../adapters/report-pdf";
 import { constructPdfReport, ReportInputError } from "../application/pdf-report";
 import { ScoringError } from "../domain/scoring/score-assessment";
@@ -40,7 +40,7 @@ export async function downloadReport(request: Request, format: "pdf" | "html") {
    return error(failure instanceof RangeError ? "Assessment data is too large." : "Assessment data could not be read. Please retry.",
     failure instanceof RangeError ? 413 : 400);
   } finally { if (timer) clearTimeout(timer); }
-  const { config } = loadCanonicalConfig();
+  const { config } = releaseConfigForInput(raw && typeof raw === "object" && "session" in raw ? raw.session : undefined);
   const report = await constructPdfReport(config, raw);
   const content = format === "pdf" ? new Uint8Array(await renderReportPdf(report.html)) : report.html;
   return new Response(content, { headers: {

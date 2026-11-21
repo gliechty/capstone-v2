@@ -9,7 +9,7 @@ const response = (body: unknown, status: number) => Response.json(body, { status
 const admit = createLocalAdmission();
 export async function GET(request: Request) {
   if (!isRecommendationRequest(request, false)) return response({ status: "unavailable", code: "local_only" }, 403);
-  try { return response(providerStatus(), 200); }
+  try { return response(providerStatus(new URL(request.url).searchParams.get("version") ?? undefined), 200); }
   catch { return response({ status: "unavailable", code: "configuration_unavailable" }, 503); }
 }
 export async function POST(request: Request) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   } catch (error) { return response({ status: "unavailable", code: error === timeoutError ? "request_timeout" : "invalid_request" }, error === timeoutError ? 408 : 400); }
   finally { if (timeout !== undefined) clearTimeout(timeout); }
   try {
-    const configuration = providerStatus();
+    const configuration = providerStatus(input && typeof input === "object" && "configVersion" in input && typeof input.configVersion === "string" ? input.configVersion : undefined);
     const expected = request.headers.get("x-recommendation-configuration");
     if (expected && expected !== configuration.fingerprint) return response({ status: "unavailable", code: "configuration_changed" }, 409);
     const slot = configuration.ready ? admit() : null;

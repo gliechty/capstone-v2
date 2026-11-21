@@ -1,4 +1,5 @@
 "use client";
+import { useReleaseCatalog } from "./release-boundary";
 
 import { createContext, useContext, useEffect, useMemo, useReducer, type Dispatch, type ReactNode } from "react";
 import { browserSession } from "../../adapters/assessment-session";
@@ -20,7 +21,8 @@ export function catalogProfileErrors(catalog: AssessmentCatalog, profile: Profil
 type Envelope = { session: Session; ready: boolean; restoreWarning: string | null; saveWarning: string | null };
 type ProviderAction = Action | { type: "restore"; session: Session; warning: string | null } | { type: "save-status"; warning: string | null };
 const AssessmentContext = createContext<(Envelope & { dispatch: Dispatch<Action>; questions: readonly Question[]; catalog: AssessmentCatalog; startCalculator: (draft: CalculatorDraft, questionIds: string[], confirmed: boolean, saveCalculator: () => string | null) => string | null }) | null>(null);
-export function AssessmentProvider({ children, catalog, quick=false }: { children: ReactNode; catalog: AssessmentCatalog; quick?:boolean }) {
+export function AssessmentProvider({ children, catalog: initialCatalog, quick=false }: { children: ReactNode; catalog: AssessmentCatalog; quick?:boolean }) {
+  const catalog = useReleaseCatalog(initialCatalog);
   const model = useMemo(() => createAssessmentModel(catalog.version, profile => selectedQuestions(catalog, profile), profile => catalogProfileErrors(catalog, profile)), [catalog]);
   const storage = useMemo(() => browserSession(model.sessionSchema), [model]);
   function reducer(state: Envelope, action: ProviderAction): Envelope {

@@ -1,3 +1,4 @@
+import { ReleaseBoundary } from "../features/assessment/release-boundary";
 import { previewEnabled } from "../adapters/preview-mode";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body>{previewEnabled() && <aside className="preview-notice" aria-label="Private preview"><strong>Private offline preview — synthetic recommendation examples</strong><p>No AI provider calls. Use synthetic data only. <a href="/preview">Preview controls</a></p></aside>}{children}</body>
+      <body>{previewEnabled() && <aside className="preview-notice" aria-label="Private preview"><strong>Private offline preview — synthetic recommendation examples</strong><p>No AI provider calls. Use synthetic data only. <a href="/preview">Preview controls</a></p></aside>}<ReleaseBoundary>{children}</ReleaseBoundary></body>
     </html>
   );
 }

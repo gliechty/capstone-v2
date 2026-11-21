@@ -5,6 +5,12 @@ case "$release" in mosaic-[a-f0-9]*) ;; *) echo 'Invalid release'; exit 1;; esac
 cd "$(dirname "$0")/../.."
 test -s /opt/mosaic-app/credential.env
 test -s /opt/mosaic-app/operating.env
+test -s /opt/mosaic-app/admin.env
+test -s /opt/mosaic-app/source-library/manifest.json
+test -d /opt/mosaic-app/archived-atomic-indicators
+mkdir -p /opt/mosaic-app/admin-data
+chown 1000:1000 /opt/mosaic-app/admin-data
+chmod 700 /opt/mosaic-app/admin-data
 # Separate, persistent ledgers. Existing files are never reset.
 mkdir -p /opt/mosaic-app/budget
 for file in public.json verification-20261019.json; do
@@ -17,7 +23,7 @@ chmod 600 /opt/mosaic-app/budget/*.json
 if ! docker network inspect mosaic-ai-egress >/dev/null 2>&1; then docker network create --subnet 172.30.42.0/24 mosaic-ai-egress >/dev/null; fi
 subnet=$(docker network inspect mosaic-ai-egress --format '{{(index .IPAM.Config 0).Subnet}}')
 test "$subnet" = '172.30.42.0/24'
-ips=$(getent ahostsv4 api.openai.com | awk '{print $1}' | sort -u)
+ips=$(getent ahostsv4 api.openai.com oauth2.googleapis.com www.googleapis.com | awk '{print $1}' | sort -u)
 test -n "$ips"
 iptables -N MOSAIC_AI_EGRESS 2>/dev/null || true
 iptables -C DOCKER-USER -s "$subnet" -j MOSAIC_AI_EGRESS 2>/dev/null || iptables -I DOCKER-USER 1 -s "$subnet" -j MOSAIC_AI_EGRESS
